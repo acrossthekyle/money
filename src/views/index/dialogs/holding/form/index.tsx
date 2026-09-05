@@ -80,8 +80,8 @@ export default function Form({
               <option value="other">Other</option>
             </Ui.Form.Select>
           </Ui.Form.Field>
-          <Ui.Form.Field className="!w-26">
-            <Ui.Form.Label id="interest">Interest rate</Ui.Form.Label>
+          <Ui.Form.Field className="!w-34">
+            <Ui.Form.Label id="interest">Interest rate (APR)</Ui.Form.Label>
             <Ui.Form.Percent id="interest" isOptional value={data?.interest} />
           </Ui.Form.Field>
         </Ui.Form.Group>

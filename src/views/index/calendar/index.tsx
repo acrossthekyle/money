@@ -56,7 +56,7 @@ export default function Calendar({ canInteract, days, onAdd, onEdit }: Props) {
                     <ContainerCellBudget
                       isFaded={day.isPad}
                       key={`${index}-week-${key}`}
-                      onClick={canInteract ? () => onEdit(day.date, budget) : undefined}
+                      onClick={canInteract && budget.isBudget ? () => onEdit(day.date, budget) : undefined}
                     >
                       <ContainerCellBudgetName>
                         {budget.name}

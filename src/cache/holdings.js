@@ -33,7 +33,7 @@ const data = [
     "institution": "Capital One",
     "number": "7637",
     "type": "savings",
-    "interest": "3.42",
+    "interest": "3.00",
     "id": "ae88af06-e46e-482e-84e5-a0e25c052e43"
   },
   {
@@ -42,9 +42,8 @@ const data = [
     "institution": "Capital One",
     "number": "7936",
     "type": "savings",
-    "id": "fd5eccf1-f149-4535-8849-1c3011012c52",
-    "category": "account",
-    "interest": ""
+    "interest": "3.00",
+    "id": "fd5eccf1-f149-4535-8849-1c3011012c52"
   },
   {
     "name": "Shared Checking",

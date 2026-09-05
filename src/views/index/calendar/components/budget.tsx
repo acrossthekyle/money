@@ -44,7 +44,7 @@ const styles = tw({
   static: `
     flex items-center justify-between
     w-full
-    p-1.5 py-0.75
+    p-1.5 py-0
     text-sm
   `,
   faded: `

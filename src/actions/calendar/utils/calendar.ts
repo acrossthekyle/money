@@ -12,6 +12,7 @@ export function addToCalendar(calendar: Day[], days: RawDay[]): Day[] {
       amount: budget.amount,
       isTransfer: budget.isTransfer,
       type: budget.displayType,
+      isBudget: budget.isBudget,
     }));
 
     if (foundIndex >= 0) {

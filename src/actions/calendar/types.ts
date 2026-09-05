@@ -9,6 +9,7 @@ export type RawBudget = {
   transfereeHoldingType?: string;
   transfereeType: string;
   displayType: string;
+  isBudget: boolean;
 };
 
 export type RawDay = {

@@ -3,9 +3,12 @@ import {
   endOfMonth,
   endOfWeek,
   format,
+  isAfter,
   isBefore,
+  isLastDayOfMonth,
   isSameMonth,
   isToday,
+  startOfDay,
   startOfMonth,
   startOfWeek,
 } from 'date-fns';
@@ -22,6 +25,7 @@ export function createDays(
   data: RawBudget[],
   selectedMonth: string,
   selectedYear: string,
+  interestRate?: string,
 ): RawDay[] {
   const targetDate = new Date(Number(selectedYear), Number(selectedMonth), 1);
   const monthStart = startOfMonth(targetDate);
@@ -35,6 +39,14 @@ export function createDays(
 
   let balance = Number(amount);
 
+  const parsedInterest = Number(interestRate);
+  const isAllowedType = ['savings', 'retirement', 'taxable'].includes(holdingType);
+  const hasInterest = isAllowedType && interestRate && !isNaN(parsedInterest) && parsedInterest > 0;
+  const monthlyRate = hasInterest ? Math.pow(1 + (parsedInterest / 100), 1 / 12) - 1 : 0;
+  const interestLabel = ['retirement', 'taxable'].includes(holdingType)
+    ? 'Appreciation'
+    : 'Interest';
+
   const days = eachDayOfInterval({ start: calculationStart, end: paddedEnd }).map((current: Date) => {
     const budgetsForCurrent = data.filter((budget: RawBudget) =>
       budget.iterations.includes(format(current, FORMAT))
@@ -43,6 +55,27 @@ export function createDays(
     budgetsForCurrent.forEach((budget: RawBudget) => {
       balance = updateBalance(holdingType, balance, budget);
     });
+
+    if (hasInterest && isLastDayOfMonth(current)) {
+      const today = startOfDay(new Date());
+      const isTodayOrAfter = isToday(current) || isAfter(current, today);
+
+      const interestEarned = balance * monthlyRate;
+      balance += interestEarned;
+
+      if (isTodayOrAfter) {
+        budgetsForCurrent.push({
+          id: `interest-${format(current, FORMAT)}`,
+          name: interestLabel,
+          amount: Math.abs(interestEarned).toFixed(2),
+          type: 'credit',
+          iterations: [format(current, FORMAT)],
+          isTransfer: false,
+          displayType: 'credit',
+          isBudget: false,
+        } as RawBudget);
+      }
+    }
 
     return {
       date: format(current, FORMAT),

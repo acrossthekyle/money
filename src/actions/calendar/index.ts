@@ -1,7 +1,11 @@
 import { db } from '@/db';
 import type { Budget, Day, Holding, Preference } from '@/types';
 
-import { perHolding } from './holdings';
+import { createBudgetIterations } from '../utils';
+
+import type { RawDay, RawBudget } from './types';
+import { displayType } from './utils/type';
+import { createDays } from './utils/dates';
 import { addToCalendar } from './utils/calendar';
 import { assignRealized } from './utils/realized';
 
@@ -9,6 +13,60 @@ type Return = {
   days: Array<Day[]>;
   saved: string;
 };
+
+async function perHolding(
+  holdings: Holding[],
+  holding: Holding,
+  budgets: Budget[],
+  selectedMonth: string,
+  selectedYear: string,
+): Promise<RawDay[]> {
+  const startingBalance = holding.type === 'credit_card' ? -Number(holding.balance) : Number(holding.balance);
+
+  const data = budgets.filter((budget: Budget) => {
+    return budget.parent === holding.id || budget.transferee === holding.id;
+  }).map((budget: Budget) => {
+    const iterations = createBudgetIterations(budget);
+
+    const transfereeHolding = holdings.find((item: Holding) => {
+      if (budget.transferee !== '') {
+        return budget.transferee === item.id;
+      }
+
+      return false;
+    });
+
+    const result = {
+      name: budget.name,
+      id: budget.id,
+      amount: budget.amount,
+      type: budget.type,
+      iterations,
+      isTransfer: budget.transferee !== '',
+      holdingType: holding.type,
+      transfereeHoldingType: transfereeHolding?.type,
+      transfereeType: budget.type === 'debit' ? 'receiver' : 'sender',
+      isBudget: true,
+    };
+
+    return {
+      ...result,
+      displayType: displayType(holding.type, result as RawBudget),
+    };
+  });
+
+  const days = createDays(
+    holding.type,
+    startingBalance,
+    data,
+    selectedMonth,
+    selectedYear,
+    holding.interest,
+  );
+
+  return days;
+};
+
 
 export async function calendar(
   view: string | null,
@@ -51,7 +109,6 @@ export async function calendar(
         budgets,
         month,
         year,
-        false,
       );
 
       calendar = addToCalendar(calendar, days);

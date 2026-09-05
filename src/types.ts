@@ -50,6 +50,7 @@ export type DayBudget = {
   amount: string;
   type: string;
   isTransfer: boolean;
+  isBudget: boolean;
 };
 
 export type Day = {
