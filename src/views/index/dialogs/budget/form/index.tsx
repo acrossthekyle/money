@@ -42,17 +42,13 @@ export default function Form({
     willPurge,
   } = useModel(date, onDone, budget);
 
+  const accounts = holdings.filter(holding => ACCOUNTS.includes(holding.type))
+  const assets = holdings.filter(holding => ASSETS.includes(holding.type))
+
   return (
     <Ui.Form.Container action={action} id="budget-form" key={data?.id || date}>
       <Ui.Form.Inner>
         <Ui.Alerts.Errors items={errors} message="Form validation failed" />
-        <Ui.Form.Input
-          name="parent"
-          type="text"
-          value={parent}
-          readOnly
-          className="hidden"
-        />
         <Ui.Form.Input
           name="date"
           type="text"
@@ -60,6 +56,53 @@ export default function Form({
           readOnly
           className="hidden"
         />
+        {!parent.includes('overview') ? (
+          <Ui.Form.Input
+            name="parent"
+            type="text"
+            value={parent}
+            readOnly
+            className="hidden"
+          />
+        ) : (
+          <Ui.Form.Field>
+            <Ui.Form.Label id="parent">Holding</Ui.Form.Label>
+            <Ui.Form.Select
+              id="parent"
+              name="parent"
+              required
+              defaultValue={data?.parent}
+            >
+              <option value="">Select ...</option>
+              {accounts.length > 0 && (
+                <optgroup label="Financial Accounts">
+                  {accounts.map((account) => (
+                    <option
+                      disabled={account.id === parent}
+                      key={account.id}
+                      value={account.id}
+                    >
+                      {account.name}
+                    </option>
+                  ))}
+                </optgroup>
+              )}
+              {assets.length > 0 && (
+                <optgroup label="Assets">
+                  {assets.map((asset) => (
+                    <option
+                      disabled={asset.id === parent}
+                      key={asset.id}
+                      value={asset.id}
+                    >
+                      {asset.name}
+                    </option>
+                  ))}
+                </optgroup>
+              )}
+            </Ui.Form.Select>
+          </Ui.Form.Field>
+        )}
         <Ui.Form.Group>
           <Ui.Form.Field>
             <Ui.Form.Label id="name">Name</Ui.Form.Label>
@@ -127,47 +170,47 @@ export default function Form({
               </Ui.Form.Field>
             </Ui.Form.Group>
           </Ui.Form.Field>
-          <Ui.Form.Field>
-            <Ui.Form.Label id="transferee">
-              {type === 'debit' && 'Transfer as income to (optional)'}
-              {type === 'credit' && 'Transfer as expense from (optional)'}
-            </Ui.Form.Label>
-            <Ui.Form.Select
-              id="transferee"
-              name="transferee"
-              defaultValue={data?.transferee}
-            >
-              <option value="">Select ...</option>
-              <optgroup label="Financial Accounts">
-                {holdings
-                  .filter(holding => ACCOUNTS.includes(holding.type))
-                  .map((holding) => (
-                    <option
-                      disabled={holding.id === parent}
-                      key={holding.id}
-                      value={holding.id}
-                    >
-                      {holding.name}
-                    </option>
-                  )
+          {holdings.length > 1 && (
+            <Ui.Form.Field>
+              <Ui.Form.Label id="transferee">
+                {type === 'debit' && 'Transfer as income to (optional)'}
+                {type === 'credit' && 'Transfer as expense from (optional)'}
+              </Ui.Form.Label>
+              <Ui.Form.Select
+                id="transferee"
+                name="transferee"
+                defaultValue={data?.transferee}
+              >
+                <option value="">Select ...</option>
+                {accounts.length > 0 && (
+                  <optgroup label="Financial Accounts">
+                    {accounts.map((account) => (
+                      <option
+                        disabled={account.id === parent}
+                        key={account.id}
+                        value={account.id}
+                      >
+                        {account.name}
+                      </option>
+                    ))}
+                  </optgroup>
                 )}
-              </optgroup>
-              <optgroup label="Assets">
-                {holdings
-                  .filter(holding => ASSETS.includes(holding.type))
-                  .map((holding) => (
-                    <option
-                      disabled={holding.id === parent}
-                      key={holding.id}
-                      value={holding.id}
-                    >
-                      {holding.name}
-                    </option>
-                  )
+                {assets.length > 0 && (
+                  <optgroup label="Assets">
+                    {assets.map((asset) => (
+                      <option
+                        disabled={asset.id === parent}
+                        key={asset.id}
+                        value={asset.id}
+                      >
+                        {asset.name}
+                      </option>
+                    ))}
+                  </optgroup>
                 )}
-              </optgroup>
-            </Ui.Form.Select>
-          </Ui.Form.Field>
+              </Ui.Form.Select>
+            </Ui.Form.Field>
+          )}
         </Ui.Form.Group>
         <Ui.Form.Group>
           <Ui.Form.Field>
@@ -335,7 +378,7 @@ export default function Form({
             </Ui.Form.Button>
           )}
           <Ui.Form.Button disabled={isPending} id="submit" type="submit">
-            Submit
+            Continue
           </Ui.Form.Button>
         </div>
       </Ui.Form.Footer>

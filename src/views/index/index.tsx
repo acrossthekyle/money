@@ -15,6 +15,7 @@ import Edit from './edit';
 import Forecast from './forecast';
 import Message from './message';
 import { useModel } from './model';
+import Prompt from './prompt';
 
 type Props = {
   data: {
@@ -33,18 +34,23 @@ export default function View({ data }: Props) {
     handleOnAddHolding,
     handleOnEditHolding,
     handleOnReload,
+    hasHoldings,
     holding,
     message,
   } = useModel(data.holdings, data.view);
 
   return (
     <>
+      {!hasHoldings && (
+        <Prompt onClick={handleOnAddHolding} />
+      )}
       <Container>
         <ContainerSection>
           <ContainerSectionItems>
             <Forecast holdings={data.holdings} view={data.view} />
             <Edit onClick={handleOnEditHolding} view={data.view} />
-            <Add onClick={handleOnAddHolding} />
+            <Add onClick={handleOnAddHolding} type="holding" />
+            <Add onClick={handleOnAddBudget} type="budget" />
           </ContainerSectionItems>
         </ContainerSection>
         <ContainerSection>

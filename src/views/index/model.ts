@@ -78,6 +78,7 @@ export function useModel(holdings: Holding[], view: string) {
     handleOnAddHolding,
     handleOnEditHolding,
     handleOnReload,
+    hasHoldings: holdings.length > 0,
     holding,
     message,
   };

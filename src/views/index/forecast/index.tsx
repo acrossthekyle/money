@@ -1,7 +1,5 @@
 'use client';
 
-import { ACCOUNTS, ASSETS } from '@/constants';
-import { OVERVIEWS } from '@/constants/calendar';
 import type { Holding } from '@/types';
 
 import {
@@ -13,6 +11,7 @@ import {
 } from '../components';
 
 import { useModel } from './model';
+import { getIsOverviewDisabled } from './utils';
 
 type Props = {
   holdings: Holding[];
@@ -20,7 +19,20 @@ type Props = {
 };
 
 export default function Forecast({ holdings, view }: Props) {
-  const { value, handleOnView } = useModel(holdings, view);
+  const {
+    accounts,
+    assets,
+    hasAccounts,
+    hasAssets,
+    hasChecking,
+    hasCreditCards,
+    hasHoldings,
+    hasRetirement,
+    hasSavings,
+    handleOnView,
+    overviews,
+    value,
+  } = useModel(holdings, view);
 
   return (
     <>
@@ -36,8 +48,18 @@ export default function Forecast({ holdings, view }: Props) {
           onChange={handleOnView}
         >
           <ContainerSectionSelectGroup label="Overviews">
-            {OVERVIEWS.map((overview, index) => (
+            {overviews.map((overview, index) => (
               <ContainerSectionSelectOption
+                isDisabled={getIsOverviewDisabled(
+                  overview,
+                  hasAccounts,
+                  hasAssets,
+                  hasChecking,
+                  hasCreditCards,
+                  hasHoldings,
+                  hasRetirement,
+                  hasSavings,
+                )}
                 key={index}
                 value={`overview_${index}`}
               >
@@ -45,32 +67,30 @@ export default function Forecast({ holdings, view }: Props) {
               </ContainerSectionSelectOption>
             ))}
           </ContainerSectionSelectGroup>
-          <ContainerSectionSelectGroup label="Accounts">
-            {holdings
-              .filter(holding => ACCOUNTS.includes(holding.type))
-              .map((holding, index) => (
+          {hasAccounts && (
+            <ContainerSectionSelectGroup label="Accounts">
+              {accounts.map((holding, index) => (
                 <ContainerSectionSelectOption
                   key={index}
                   value={holding.id || ''}
                 >
                   {holding.name} ***{holding.number}
                 </ContainerSectionSelectOption>
-              )
-            )}
-          </ContainerSectionSelectGroup>
-          <ContainerSectionSelectGroup label="Assets">
-            {holdings
-              .filter(holding => ASSETS.includes(holding.type))
-              .map((holding, index) => (
+              ))}
+            </ContainerSectionSelectGroup>
+          )}
+          {hasAssets && (
+            <ContainerSectionSelectGroup label="Assets">
+              {assets.map((holding, index) => (
                 <ContainerSectionSelectOption
                   key={index}
                   value={holding.id || ''}
                 >
                   {holding.name} {!!holding.number ? `***${holding.number}` : ''}
                 </ContainerSectionSelectOption>
-              )
-            )}
-          </ContainerSectionSelectGroup>
+              ))}
+            </ContainerSectionSelectGroup>
+          )}
         </ContainerSectionSelect>
       </ContainerSectionItem>
     </>

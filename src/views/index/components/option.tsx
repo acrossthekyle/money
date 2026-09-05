@@ -1,10 +1,15 @@
 type Props = {
+  isDisabled?: boolean;
   value: string;
 };
 
-export default function Option({ children, value }: React.PropsWithChildren<Props>) {
+export default function Option({
+  children,
+  isDisabled,
+  value,
+}: React.PropsWithChildren<Props>) {
   return (
-    <option value={value}>
+    <option disabled={isDisabled ? true : false} value={value}>
       {children || value}
     </option>
   );

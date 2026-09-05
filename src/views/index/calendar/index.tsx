@@ -24,6 +24,28 @@ type Props = {
 };
 
 export default function Calendar({ canInteract, days, onAdd, onEdit }: Props) {
+  if (days.length === 0) {
+    return (
+      <Container>
+        {Array.from({ length: 35 }, (_, index) => (
+          <ContainerCell isFaded={index < 3} isHighlighted={false} key={index}>
+            <ContainerCellDate
+              isFaded={index < 3 || index > 31}
+              isHighlighted={false}
+              value="2026-01-01"
+            />
+            <ContainerCellBalance
+              isFaded={index < 3 || index > 31}
+              isNegative={false}
+            >
+              {formatNumber(0.00)}
+            </ContainerCellBalance>
+          </ContainerCell>
+        ))}
+      </Container>
+    );
+  }
+
   return (
     <Container>
       {days.map((week, index) => (

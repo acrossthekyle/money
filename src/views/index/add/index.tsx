@@ -1,3 +1,7 @@
+'use client';
+
+import { format } from 'date-fns';
+
 import {
   ContainerSectionItem,
   ContainerSectionIcon,
@@ -6,15 +10,28 @@ import {
 } from '../components';
 
 type Props = {
-  onClick: () => void;
+  onClick: (date: string) => void;
+  type: 'budget' | 'holding';
 };
 
-export default function Add({ onClick }: Props) {
+export default function Add({ onClick, type }: Props) {
+  const handleOnClick = () => {
+    if (type === 'holding') {
+      onClick('');
+
+      return;
+    }
+
+    onClick(format(new Date(), 'yyyy-MM-dd'));
+  };
+
   return (
     <ContainerSectionItem>
-      <ContainerSectionButton onClick={onClick}>
+      <ContainerSectionButton onClick={handleOnClick}>
         <ContainerSectionIcon icon="plus" />
-        <ContainerSectionText>Add Holding</ContainerSectionText>
+        <ContainerSectionText>
+          Add {type === 'budget' ? 'Budget' : 'Holding'}
+        </ContainerSectionText>
       </ContainerSectionButton>
     </ContainerSectionItem>
   );

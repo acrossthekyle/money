@@ -1,9 +1,9 @@
 export const OVERVIEWS: string[] = [
   'Net Worth',
   'All Financial Accounts',
-  'Credit Cards',
+  'Credit Card Accounts',
   'Savings Accounts',
   'Checking Accounts',
   'All Assets',
-  'Retirement Accounts',
+  'Retirement Assets',
 ];
