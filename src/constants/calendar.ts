@@ -1,4 +1,4 @@
-export const OVERVIEWS = [
+export const OVERVIEWS: string[] = [
   'Net Worth',
   'All Financial Accounts',
   'Credit Cards',

@@ -1,17 +1,17 @@
 'use client';
 
-import { ChangeEvent, useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 
 import { put } from '@/actions/holdings/put';
 import tw from '@/styles';
-import type { Holding, HoldingFormState } from '@/types';
+import type { FormStateError, Holding, HoldingFormState } from '@/types';
 
-import { Button, Field, Footer, Group, Input, Label, Prefix, Select } from '../components';
+import { Button, Field, Footer, Group, Input, Label, Select } from '../components';
 
 type Props = {
   holding?: Holding;
-  onDone: (payload: { message: string; }) => void;
+  onDone: () => void;
 };
 
 export default function Form({
@@ -31,15 +31,13 @@ export default function Form({
   const data = state?.data ?? holding;
 
   const [isPurge, setIsPurge] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<FormStateError[]>([]);
 
   useEffect(() => {
     if (state?.isSuccessful) {
-      onDone({
-        message: state?.message,
-      });
+      onDone();
     }
-  }, [state?.isSuccessful]);
+  }, [state?.isSuccessful, onDone]);
 
   useEffect(() => {
     if (state?.hasFailed && state?.errors) {
@@ -54,7 +52,7 @@ export default function Form({
     if (confirm('Are you sure you want to delete this holding and its budgets? This action cannot be undone.')) {
       const form = document.getElementById('holding-form');
 
-      if (form) {
+      if (form instanceof HTMLFormElement) {
         form.requestSubmit();
       }
     } else {

@@ -1,9 +1,9 @@
-import type { Calendar } from '@/types';
+import type { Day } from '@/types';
 
-import type { Day } from '../types';
+import type { RawDay } from '../types';
 
-export function addToCalendar(calendar: Calendar[], days: Day[]): Calendar[] {
-  days.forEach((day: Day) => {
+export function addToCalendar(calendar: Day[], days: RawDay[]): Day[] {
+  days.forEach((day: RawDay) => {
     const foundIndex = calendar.findIndex(date => date.date === day.date);
 
     const cleanedBudgets = day.budgets.map((budget) => ({

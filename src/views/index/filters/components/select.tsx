@@ -7,7 +7,7 @@ type Props = {
   name: string;
   value: string;
   defaultValue: string;
-  onChange: () => void;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 export default function Select({

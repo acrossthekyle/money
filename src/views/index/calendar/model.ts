@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 
 import { useBudget } from '@/hooks/useBudget';
-import type { Budget, CalendarBudget } from '@/types';
+import type { Budget, DayBudget } from '@/types';
 
 export function useModel() {
   const [budget, setBudget] = useState<Budget | undefined>();
@@ -13,7 +13,11 @@ export function useModel() {
 
   const { onBudget } = useBudget();
 
-  const getBudget = async (id: string) => {
+  const getBudget = async (id: string | null) => {
+    if (id === null) {
+      return undefined;
+    }
+
     const response = await fetch(`/api/budgets?id=${id}`);
 
     if (response.ok) {
@@ -25,7 +29,7 @@ export function useModel() {
     return undefined;
   };
 
-  const makeBudgetReady = async (item?: CalendarBudget) => {
+  const makeBudgetReady = async (item?: DayBudget) => {
     if (item !== undefined) {
       const data = await getBudget(item.id);
 
@@ -35,7 +39,7 @@ export function useModel() {
     }
   };
 
-  const handleBudget = async (day: string, item?: CalendarBudget) => {
+  const handleBudget = async (day: string, item?: DayBudget) => {
     setDate(day);
 
     await makeBudgetReady(item);

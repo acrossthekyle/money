@@ -8,7 +8,7 @@ type Props = {
   holdings: Holding[];
   budget?: Budget;
   date: string;
-  onDone: (payload: { message: string; }) => void;
+  onDone: () => void;
   parent: string;
 };
 
@@ -35,10 +35,10 @@ export default function Budget({
     onClose,
   } = useBudget();
 
-  const handleDone = (payload: { message: string; }) => {
+  const handleDone = () => {
     onClose();
 
-    onDone(payload);
+    onDone();
   };
 
   return (

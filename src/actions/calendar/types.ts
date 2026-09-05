@@ -11,9 +11,10 @@ export type RawBudget = {
   displayType: string;
 };
 
-export type Day = {
+export type RawDay = {
   date: string;
   balance: string;
   budgets: RawBudget[];
   isPad: boolean;
+  isToday: boolean;
 };

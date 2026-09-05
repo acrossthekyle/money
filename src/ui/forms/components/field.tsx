@@ -1,14 +1,14 @@
 import tw from '@/styles';
 
 type Props = {
-  className: string;
-  isStacked: boolean
+  className?: string;
+  isStacked?: boolean
 };
 
-export default function Field({ children, className = '', isStacked = true }: React.PropsWithChildren<Props>) {
+export default function Field({ children, className, isStacked }: React.PropsWithChildren<Props>) {
   return (
     <div
-      className={`${styles.container(isStacked)} ${className}`.trim()}
+      className={`${styles.container(isStacked)} ${className || ''}`.trim()}
     >
       {children}
     </div>
@@ -16,7 +16,7 @@ export default function Field({ children, className = '', isStacked = true }: Re
 };
 
 const styles = tw({
-  container: (isStacked) => tw(`
+  container: (isStacked?: boolean) => tw(`
     relative
     flex gap-2
     w-full

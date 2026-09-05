@@ -10,7 +10,7 @@ import {
   startOfWeek,
 } from 'date-fns';
 
-import type { Day, RawBudget } from '../types';
+import type { RawDay, RawBudget } from '../types';
 
 import { updateBalance } from './balance';
 
@@ -22,7 +22,7 @@ export function createDays(
   data: RawBudget[],
   selectedMonth: string,
   selectedYear: string,
-): Day[] {
+): RawDay[] {
   const targetDate = new Date(Number(selectedYear), Number(selectedMonth), 1);
   const monthStart = startOfMonth(targetDate);
   const monthEnd = endOfMonth(targetDate);

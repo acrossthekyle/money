@@ -16,8 +16,6 @@ function balancize(raw: string) {
 };
 
 const Form = z.object({
-  parent: z.string(),
-  date: z.string(),
   name: z.string(),
   amount: z.string(),
   category: z.enum([
@@ -48,9 +46,6 @@ const Form = z.object({
     'yearly',
   ]),
   notes: z.string().nullable().optional(),
-  update: z.enum(['all', 'this', 'prospective', 'future', 'none']),
-  erase: z.enum(['true', 'false']),
-  purge: z.enum(['true', 'false']),
 });
 
 export async function put(
@@ -59,8 +54,6 @@ export async function put(
   formData: FormData,
 ): Promise<BudgetFormState> {
   const validated = Form.safeParse({
-    parent: formData.get('parent'),
-    date: formData.get('date'),
     name: formData.get('name'),
     amount: formData.get('amount'),
     category: formData.get('category'),
@@ -70,9 +63,6 @@ export async function put(
     end: formData.get('end'),
     schedule: formData.get('schedule'),
     notes: formData.get('notes'),
-    update: formData.get('update'),
-    erase: formData.get('erase'),
-    purge: formData.get('purge'),
   });
 
   if (!validated.success) {
@@ -84,7 +74,7 @@ export async function put(
       data: {
         ...state?.data,
         ...rawInput,
-      } as any,
+      } as Budget,
       errors: [
         {
           field: 'name',
@@ -117,28 +107,28 @@ export async function put(
     };
   }
 
-  const writeable = {
-    ...validated.data,
+  const computed = {
+    id: budget === null ? uuidv4() : budget.id,
     amount: balancize(validated.data.amount),
-    transferee: validated.data.transferee === null ? '' : validated.data.transferee,
-    date: undefined,
-    update: undefined,
-    erase: undefined,
-    purge: undefined,
+    transferee: validated.data.transferee === null ? '' : validated.data.transferee || '',
+    end: validated.data.end === null ? '' : validated.data.end || '',
+    notes: validated.data.notes === null ? '' : validated.data.notes || '',
+    parent: formData.get('parent') as string,
+    omissions: budget === null ? [] : budget.omissions,
   };
 
-  const returnable = {
+  const writeable: Budget = {
     ...validated.data,
-    amount: balancize(validated.data.amount),
-    transferee: validated.data.transferee === null ? '' : validated.data.transferee,
+    ...computed,
+  };
+
+  const returnable: Budget = {
+    ...validated.data,
+    ...computed,
   };
 
   if (budget === null) {
-    await db.write('budgets', {
-      ...writeable,
-      id: uuidv4(),
-      omissions: [],
-    });
+    await db.write('budgets', writeable);
 
     return {
       data: returnable,
@@ -150,9 +140,8 @@ export async function put(
 
   writeable.id = budget.id;
   writeable.omissions = budget.omissions;
-  writeable.parent = budget.parent;
 
-  if (validated.data.erase === 'true') {
+  if (formData.get('erase') === 'true') {
     if (budget.schedule === 'once') {
       await db.erase('budgets', budget.id);
     } else {
@@ -160,7 +149,7 @@ export async function put(
         ...budget,
         omissions: [
           ...budget.omissions,
-          validated.data.date,
+          formData.get('date') as string,
         ],
       });
     }
@@ -169,11 +158,11 @@ export async function put(
       data: returnable,
       hasFailed: false,
       isSuccessful: true,
-      message: `Budget on ${validated.data.date} successfully deleted`,
+      message: `Budget on ${formData.get('date')} successfully deleted`,
     };
   }
 
-  if (validated.data.purge === 'true') {
+  if (formData.get('purge') === 'true') {
     await db.erase('budgets', budget.id);
 
     return {
@@ -184,7 +173,7 @@ export async function put(
     };
   }
 
-  if (validated.data.update === 'none' || validated.data.update === 'all') {
+  if (formData.get('update') === 'none' || formData.get('update') === 'all') {
     await db.write('budgets', writeable);
 
     return {
@@ -197,12 +186,12 @@ export async function put(
 
   const iterations = createBudgetIterations(budget);
 
-  if (validated.data.update === 'this') {
-    const thisDateIndex = iterations.findIndex(iteration => iteration === returnable.date);
+  if (formData.get('update') === 'this') {
+    const thisDateIndex = iterations.findIndex(iteration => iteration === formData.get('date'));
 
     if (thisDateIndex >= 0) {
       const past = iterations.slice(0, thisDateIndex);
-      const current = [returnable.date];
+      const current = [formData.get('date')];
       const future = iterations.slice(thisDateIndex + 1);
 
       const updates = [];
@@ -232,7 +221,7 @@ export async function put(
         });
       }
 
-      await db.writeAll('budgets', updates);
+      await db.writeAll('budgets', updates as Budget[]);
 
       return {
         data: returnable,
@@ -243,12 +232,12 @@ export async function put(
     }
   }
 
-  if (validated.data.update === 'prospective') {
-    const thisDateIndex = iterations.findIndex(iteration => iteration === returnable.date);
+  if (formData.get('update') === 'prospective') {
+    const thisDateIndex = iterations.findIndex(iteration => iteration === formData.get('date'));
 
     if (thisDateIndex >= 0) {
       const past = iterations.slice(0, thisDateIndex);
-      const current = [returnable.date];
+      const current = [formData.get('date')];
 
       const updates = [];
 
@@ -267,7 +256,7 @@ export async function put(
         omissions: budget.omissions,
       });
 
-      await db.writeAll('budgets', updates);
+      await db.writeAll('budgets', updates as Budget[]);
 
       return {
         data: returnable,
@@ -278,8 +267,8 @@ export async function put(
     }
   }
 
-  if (validated.data.update === 'future') {
-    const thisDateIndex = iterations.findIndex(iteration => iteration === returnable.date);
+  if (formData.get('update') === 'future') {
+    const thisDateIndex = iterations.findIndex(iteration => iteration === formData.get('date'));
 
     if (thisDateIndex >= 0) {
       const past = iterations.slice(0, thisDateIndex + 1);

@@ -1,4 +1,4 @@
-import type { Calendar, Holding } from '@/types';
+import type { Day, Holding } from '@/types';
 
 import Calendar from './calendar';
 import Filters from './filters';
@@ -6,7 +6,7 @@ import Filters from './filters';
 type Props = {
   data: {
     holdings: Holding[];
-    days: Array<Calendar[]>;
+    days: Array<Day[]>;
     view: string;
   };
 };

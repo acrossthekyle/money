@@ -5,7 +5,7 @@ type Props = {
   onClick: () => void;
 };
 
-export default function Button({ children, isActive, onClick }: React.PropsWithChildren) {
+export default function Button({ children, isActive, onClick }: React.PropsWithChildren<Props>) {
   return (
     <button
       className={`${styles.container} ${isActive ? styles.active : ''}`.trim()}

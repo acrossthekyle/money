@@ -6,7 +6,7 @@ type Props = {
   icon: string;
 };
 
-export default function Icon({ children, icon }: React.PropsWithChildren<Props>) {
+export default function Icon({ icon }: Props) {
   if (icon === 'edit') {
     return (
       <Pen className={styles.small} />

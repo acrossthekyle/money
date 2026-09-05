@@ -1,5 +1,4 @@
 type Props = {
-  name: string;
   label: string;
 };
 

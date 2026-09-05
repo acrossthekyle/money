@@ -3,10 +3,10 @@
 import tw from '@/styles';
 
 type Props = {
-  instance: any; // todo
+  instance: (node: HTMLDialogElement | null) => void;
   isActive: boolean;
-  onBackdrop: () => void;
-  onCancel: () => void;
+  onBackdrop: (event: React.MouseEvent<HTMLDialogElement>) => void;
+  onCancel: (event: React.KeyboardEvent<HTMLDialogElement>) => void;
 };
 
 export default function Dialog({

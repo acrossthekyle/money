@@ -6,14 +6,12 @@ import Ui from '@/ui';
 
 type Props = {
   holding?: Holding;
-  onExit: () => void;
-  onDone: (payload: { message: string; }) => void;
+  onDone: () => void;
 };
 
-export default function Holding({
+export default function Dialog({
   holding,
   onDone,
-  onExit,
 }: Props) {
   const {
     instance,
@@ -23,10 +21,10 @@ export default function Holding({
     onClose,
   } = useHolding();
 
-  const handleDone = (payload: { message: string; }) => {
+  const handleDone = () => {
     onClose();
 
-    onDone(payload);
+    onDone();
   };
 
   return (

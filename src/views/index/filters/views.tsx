@@ -18,13 +18,14 @@ import {
 
 type Props = {
   holdings: Holding[];
-  onHolding: (holding: Holding) => void;
+  onHolding: (view: string | null) => void;
+  onView: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   view: string | null;
 };
 
 function getDisplayName(holdings: Holding[], view: string | null) {
-  if (view.includes('overview')) {
-    return OVERVIEWS[view.replace('overview_', '')];
+  if ((view || '').includes('overview')) {
+    return OVERVIEWS[Number((view || '').replace('overview_', ''))];
   }
 
   const holding = holdings.find(holding => holding.id === view);
@@ -48,7 +49,7 @@ export default function Views({ holdings, onHolding, onView, view }: Props) {
             className="w-60"
             name="Overview"
             value={getDisplayName(holdings, view)}
-            defaultValue={view}
+            defaultValue={view || ''}
             onChange={onView}
           >
             <ContainerSectionSelectGroup label="Overviews">
@@ -62,28 +63,34 @@ export default function Views({ holdings, onHolding, onView, view }: Props) {
               ))}
             </ContainerSectionSelectGroup>
             <ContainerSectionSelectGroup label="Accounts">
-              {holdings.filter(holding => ACCOUNTS.includes(holding.type)).map((holding) => (
-                <ContainerSectionSelectOption
-                  key={holding.id}
-                  value={holding.id}
-                >
-                  {holding.name} ***{holding.number}
-                </ContainerSectionSelectOption>
-              ))}
+              {holdings
+                .filter(holding => ACCOUNTS.includes(holding.type))
+                .map((holding, index) => (
+                  <ContainerSectionSelectOption
+                    key={index}
+                    value={holding.id || ''}
+                  >
+                    {holding.name} ***{holding.number}
+                  </ContainerSectionSelectOption>
+                )
+              )}
             </ContainerSectionSelectGroup>
             <ContainerSectionSelectGroup label="Assets">
-              {holdings.filter(holding => ASSETS.includes(holding.type)).map((holding) => (
-                <ContainerSectionSelectOption
-                  key={holding.id}
-                  value={holding.id}
-                >
-                  {holding.name} {!!holding.number ? `***${holding.number}` : ''}
-                </ContainerSectionSelectOption>
-              ))}
+              {holdings
+                .filter(holding => ASSETS.includes(holding.type))
+                .map((holding, index) => (
+                  <ContainerSectionSelectOption
+                    key={index}
+                    value={holding.id || ''}
+                  >
+                    {holding.name} {!!holding.number ? `***${holding.number}` : ''}
+                  </ContainerSectionSelectOption>
+                )
+              )}
             </ContainerSectionSelectGroup>
           </ContainerSectionSelect>
         </ContainerSectionItem>
-        {!view.includes('overview') && (
+        {!(view || '').includes('overview') && (
           <ContainerSectionItem>
             <ContainerSectionButton onClick={() => onHolding(view)}>
               <ContainerSectionIcon icon="edit" />
@@ -92,7 +99,7 @@ export default function Views({ holdings, onHolding, onView, view }: Props) {
           </ContainerSectionItem>
         )}
         <ContainerSectionItem>
-          <ContainerSectionButton onClick={() => onHolding(undefined)}>
+          <ContainerSectionButton onClick={() => onHolding(null)}>
             <ContainerSectionIcon icon="plus" />
             <ContainerSectionText>Add New Account</ContainerSectionText>
           </ContainerSectionButton>

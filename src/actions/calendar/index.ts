@@ -1,12 +1,13 @@
 import { db } from '@/db';
-import type { Budget, Calendar, Holding } from '@/types';
+import type { Budget, Day, Holding, Preference } from '@/types';
 
 import { perHolding } from './holdings';
 import { addToCalendar } from './utils/calendar';
 import { assignRealized } from './utils/realized';
 
 type Return = {
-  days: Array<Calendar[]>;
+  days: Array<Day[]>;
+  saved: string;
 };
 
 export async function calendar(
@@ -38,7 +39,7 @@ export async function calendar(
     });
   }
 
-  let calendar: Calendar[] = [];
+  let calendar: Day[] = [];
 
   await assignRealized(realizedView, holdings).forEach(async (selectedHolding: string) => {
     const holding = holdings.find((holding: Holding) => selectedHolding === holding.id);

@@ -2,7 +2,7 @@ import type { Holding, Budget } from '@/types';
 
 import { createBudgetIterations } from '../utils';
 
-import type { Day, RawBudget } from './types';
+import type { RawDay, RawBudget } from './types';
 import { displayType } from './utils/index';
 import { createDays } from './utils/dates';
 
@@ -13,7 +13,7 @@ export async function perHolding(
   selectedMonth: string,
   selectedYear: string,
   canDebug: boolean,
-): Promise<Day[]> {
+): Promise<RawDay[]> {
   const startingBalance = holding.type === 'credit_card' ? -Number(holding.balance) : Number(holding.balance);
 
   if (canDebug) {

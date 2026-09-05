@@ -2,7 +2,7 @@
 
 import { Fragment } from 'react';
 
-import type { Calendar, Holding } from '@/types';
+import type { Day, Holding } from '@/types';
 import { formatNumber } from '@/utils';
 
 import Budget from './budget';
@@ -22,7 +22,7 @@ import Message from './message';
 import { useModel } from './model';
 
 type Props = {
-  days: Array<Calendar[]>;
+  days: Array<Day[]>;
   holdings: Holding[];
   parent: string;
 };
@@ -69,7 +69,7 @@ export default function Calendar({ days, holdings, parent }: Props) {
                           {item.name}
                         </ContainerCellBudgetName>
                         <ContainerCellBudgetAmount type={item.type}>
-                          {formatNumber(item.amount)}
+                          {formatNumber(Number(item.amount))}
                         </ContainerCellBudgetAmount>
                       </ContainerCellBudget>
                     ))}

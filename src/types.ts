@@ -1,23 +1,27 @@
+export type FormStateError ={
+  field: string;
+  error: string;
+};
+
 export type Holding = {
-  id: string | null;
+  id: string;
   name: string;
   institution: string;
   balance: string;
   number: string;
   type: string;
-  category: string;
 };
 
 export type HoldingFormState = {
   data?: Holding,
-  errors?: string;
+  errors?: FormStateError[];
   hasFailed?: boolean;
   isSuccessful?: boolean;
-  redirectTo?: string;
+  message: string;
 };
 
 export type Budget = {
-  id: string | null;
+  id: string;
   parent: string;
   name: string;
   amount: string;
@@ -33,13 +37,13 @@ export type Budget = {
 
 export type BudgetFormState = {
   data?: Budget,
-  errors?: string;
+  errors?: FormStateError[];
   hasFailed?: boolean;
   isSuccessful?: boolean;
   message: string;
 };
 
-export type CalendarBudget = {
+export type DayBudget = {
   name: string;
   id: string | null;
   amount: string;
@@ -47,20 +51,20 @@ export type CalendarBudget = {
   isTransfer: boolean;
 };
 
-export type Calendar = {
+export type Day = {
   date: string;
   balance: number;
-  budgets: CalendarBudget[];
+  budgets: DayBudget[];
   isPad: boolean;
   isToday: boolean;
 };
 
 export type Preference = {
   id: string;
-  value: string | string[] | number | object;
+  value: string;
 };
 
-export type Record = Account | Asset | Holding | Budget | Institution | Preference;
+export type Record = Holding | Budget | Preference;
 
 export type LoginFormState = {
   error: string | null;

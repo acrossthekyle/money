@@ -52,7 +52,7 @@ export async function put(
       data: {
         ...state?.data,
         ...rawInput,
-      } as any,
+      } as Holding,
       errors: [
         {
           field: 'name',
@@ -83,33 +83,40 @@ export async function put(
 
   const writeable = {
     ...validated.data,
+    id: holding === null ? '' : holding.id,
     balance: balancize(validated.data.balance),
-    number: validated.data.number === null ? '' : validated.data.number.slice(-4),
-    purge: undefined,
+    institution: validated.data.institution === null ? '' : (validated.data.institution || ''),
+    number: validated.data.number === null ? '' : (validated.data?.number || '').slice(-4),
   };
 
   const returnable = {
     ...validated.data,
+    id: holding === null ? '' : holding.id,
     balance: balancize(validated.data.balance),
-    institution: validated.data.institution === null ? '' : validated.data.institution,
-    number: validated.data.number === null ? '' : validated.data.number.slice(-4),
+    institution: validated.data.institution === null ? '' : (validated.data.institution || ''),
+    number: validated.data.number === null ? '' : (validated.data?.number || '').slice(-4),
   };
 
   if (holding === null) {
+    const identifier = uuidv4();
+
     await db.write('holdings', {
       ...writeable,
-      id: uuidv4(),
+      id: identifier,
     });
 
     return {
-      data: returnable,
+      data: {
+        ...returnable,
+        id: identifier,
+      },
       hasFailed: false,
       isSuccessful: true,
       message: 'Holding successfully created',
     };
   }
 
-  if (validated.data.purge === 'true') {
+  if (formData.get('purge') === 'true' && holding !== null) {
     await db.erase('holdings', holding.id);
 
     return {
@@ -119,8 +126,6 @@ export async function put(
       message: 'Holding successfully deleted',
     };
   }
-
-  writeable.id = holding.id;
 
   await db.write('holdings', writeable);
 

@@ -6,6 +6,5 @@ export function formatNumber(value: number) {
   return new Intl.NumberFormat('en', {
     notation: 'standard',
     minimumFractionDigits: 2,
-  // @ts-expect-error - format is correct
   }).format(Math.abs(value));
 };

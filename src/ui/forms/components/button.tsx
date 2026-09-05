@@ -11,7 +11,7 @@ export default function Button({
   isSoft,
   type,
   ...props
-}: React.PropsWithChildren) {
+}: React.PropsWithChildren<Props>) {
   return (
     <button
       {...props}

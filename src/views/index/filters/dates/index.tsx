@@ -11,7 +11,8 @@ import {
   ContainerSectionText,
   ContainerSectionSelect,
   ContainerSectionSelectOption,
-} from './components';
+} from '../components';
+
 import { useModel } from './model';
 
 const MONTHS = [
@@ -61,12 +62,12 @@ export default function Dates() {
           <ContainerSectionSelect
             className="w-28"
             name="month"
-            value={MONTHS[month]}
+            value={MONTHS[Number(month)]}
             defaultValue={month}
             onChange={handleMonth}
           >
             {MONTHS.map((item, index) => (
-              <ContainerSectionSelectOption key={index} value={index}>
+              <ContainerSectionSelectOption key={index} value={String(index)}>
                 {item}
               </ContainerSectionSelectOption>
             ))}
@@ -87,7 +88,7 @@ export default function Dates() {
             {Array.from({ length: 11 }, (_, index) => (
               <ContainerSectionSelectOption
                 key={index}
-                value={getYear(addYears(new Date, index))}
+                value={String(getYear(addYears(new Date, index)))}
               />
             ))}
           </ContainerSectionSelect>

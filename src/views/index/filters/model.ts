@@ -1,8 +1,7 @@
 'use client';
 
-import { getMonth, getYear } from 'date-fns';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 
 import { useHolding } from '@/hooks/useHolding';
 import type { Holding } from '@/types';
@@ -16,12 +15,6 @@ export function useModel(holdings: Holding[]) {
   const [message, setMessage] = useState('');
 
   const { onHolding } = useHolding();
-
-  const month = searchParams.get('month') || String(getMonth(new Date()));
-  const year = searchParams.get('year') || String(getYear(new Date()));
-
-  const isToday = month === String(getMonth(new Date())) &&
-    year === String(getYear(new Date()));
 
   const updateUrl = (key: string | string[], value: string | string[] | null, reset?: boolean) => {
     const params = new URLSearchParams(reset ? undefined : searchParams.toString());
@@ -40,34 +33,10 @@ export function useModel(holdings: Holding[]) {
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
-  const handleView = (event: ChangeEvent<HTMLSelectElement>) => {
+  const handleView = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
 
     updateUrl('view', value, true);
-  };
-
-  const handleClear = () => {
-    updateUrl('', null, true);
-  };
-
-  const handleNext = () => {
-    updateUrl('month', String(month === '11' ? '0' : Number(month) + 1));
-  };
-
-  const handlePrevious = () => {
-    updateUrl('month', String(month === '0' ? '11' : Number(month) - 1));
-  };
-
-  const handleMonth = (event: ChangeEvent<HTMLSelectElement>) => {
-    updateUrl('month', event.target.value);
-  };
-
-  const handleYear = (event: ChangeEvent<HTMLSelectElement>) => {
-    updateUrl('year', event.target.value);
-  };
-
-  const handleToday = () => {
-    updateUrl(['month', 'year'], [String(getMonth(new Date())), String(getYear(new Date()))]);
   };
 
   const handleHolding = (view: string | null) => {
@@ -78,7 +47,7 @@ export function useModel(holdings: Holding[]) {
     }
   };
 
-  const handleDone = (payload: { message: string; }) => {
+  const handleDone = () => {
     setHolding(undefined);
     setMessage('Reloading');
 
@@ -88,19 +57,10 @@ export function useModel(holdings: Holding[]) {
   };
 
   return {
-    handleClear,
-    handleMonth,
-    handleNext,
-    handlePrevious,
     handleView,
-    handleToday,
-    handleYear,
     handleHolding,
     handleDone,
     holding,
-    isToday,
-    month,
-    year,
     message,
   };
 };

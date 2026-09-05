@@ -1,15 +1,15 @@
 'use client';
 
 import { format, parseISO } from 'date-fns';
-import { ChangeEvent, useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 
 import { put } from '@/actions/budgets/put';
 import { ACCOUNTS, ASSETS, DATE_FORMAT } from '@/constants';
 import tw from '@/styles';
-import type { Budget, BudgetFormState, Holding } from '@/types';
+import type { Budget, BudgetFormState, FormStateError, Holding } from '@/types';
 
-import { Button, Field, Footer, Group, Input, Label, Prefix, Select } from '../components';
+import { Button, Field, Footer, Group, Input, Label, Select } from '../components';
 
 type Props = {
   budget?: Budget;
@@ -37,12 +37,12 @@ export default function Form({
   } as BudgetFormState);
 
   const data = state?.data || budget;
-  const selectedParent = parent || data?.parent;
 
   const [selectedType, setSelectedType] = useState('debit');
   const [isErase, setIsErase] = useState(false);
   const [isPurge, setIsPurge] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<FormStateError[]>([]);
+  const [update, setUpdate] = useState('all');
 
   useEffect(() => {
     if (budget) {
@@ -53,11 +53,9 @@ export default function Form({
 
   useEffect(() => {
     if (state?.isSuccessful) {
-      onDone({
-        message: state?.message,
-      });
+      onDone();
     }
-  }, [state?.isSuccessful]);
+  }, [state?.isSuccessful, onDone]);
 
   useEffect(() => {
     if (state?.hasFailed && state?.errors) {
@@ -72,7 +70,7 @@ export default function Form({
     if (confirm(`Are you sure you want to delete this budget on ${date}? This action cannot be undone.`)) {
       const form = document.getElementById('budget-form');
 
-      if (form) {
+      if (form instanceof HTMLFormElement) {
         await form.requestSubmit();
       }
     } else {
@@ -86,12 +84,16 @@ export default function Form({
     if (confirm('Are you sure you want to delete the entire budget? This action cannot be undone.')) {
       const form = document.getElementById('budget-form');
 
-      if (form) {
+      if (form instanceof HTMLFormElement) {
         form.requestSubmit();
       }
     } else {
       setIsPurge(false);
     }
+  };
+
+  const handleUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdate(event.target.value);
   };
 
   return (
@@ -220,7 +222,7 @@ export default function Form({
               <optgroup label="Financial Accounts">
                 {holdings.filter(holding => ACCOUNTS.includes(holding.type)).map((holding) => (
                   <option
-                    disabled={holding.id === selectedParent}
+                    disabled={holding.id === parent}
                     key={holding.id}
                     value={holding.id || ''}
                   >
@@ -231,7 +233,7 @@ export default function Form({
               <optgroup label="Assets">
                 {holdings.filter(holding => ASSETS.includes(holding.type)).map((holding) => (
                   <option
-                    disabled={holding.id === selectedParent}
+                    disabled={holding.id === parent}
                     key={holding.id}
                     value={holding.id || ''}
                   >
@@ -317,7 +319,8 @@ export default function Form({
                 type="radio"
                 required
                 value="all"
-                defaultChecked={data?.update === 'all' || true}
+                defaultChecked={update === 'all'}
+                onChange={handleUpdate}
               />
               <Label id="all" isNormal>
                 Entire budget (from {format(parseISO(budget.start), 'MM/dd/yyyy')} onwards)
@@ -331,7 +334,8 @@ export default function Form({
                 type="radio"
                 required
                 value="this"
-                defaultChecked={data?.update === 'this'}
+                defaultChecked={update === 'this'}
+                onChange={handleUpdate}
               />
               <Label id="this" isNormal>
                 Only this instance (on {format(parseISO(date), 'MM/dd/yyyy')})
@@ -344,7 +348,8 @@ export default function Form({
                 type="radio"
                 required
                 value="prospective"
-                defaultChecked={data?.update === 'prospective'}
+                defaultChecked={update === 'prospective'}
+                onChange={handleUpdate}
               />
               <Label id="prospective" isNormal>
                 All current and future instances  (from {format(parseISO(date), 'MM/dd/yyyy')} onwards)
@@ -357,7 +362,8 @@ export default function Form({
                 type="radio"
                 required
                 value="future"
-                defaultChecked={data?.update === 'future'}
+                defaultChecked={update === 'future'}
+                onChange={handleUpdate}
               />
               <Label id="future" isNormal>
                 Only future instances (after {format(parseISO(date), 'MM/dd/yyyy')})

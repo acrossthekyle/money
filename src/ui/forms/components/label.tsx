@@ -14,7 +14,7 @@ export default function Label({ children, id, isNormal }: React.PropsWithChildre
 };
 
 const styles = {
-  container: (isNormal: boolean) => tw(`
+  container: (isNormal?: boolean) => tw(`
     text-tiny
     uppercase
     ${isNormal ? 'font-medium' : 'font-black'}

@@ -4,7 +4,7 @@ import type { Holding } from '@/types';
 
 import { Container } from './components';
 import Dates from './dates';
-import Holding from './holding';
+import Dialog from './dialog';
 import Message from './message';
 import { useModel } from './model';
 import Views from './views';
@@ -25,7 +25,7 @@ export default function Filters({ holdings, view }: Props) {
         <Views holdings={holdings} onHolding={handleHolding} onView={handleView} view={view} />
         <Dates />
       </Container>
-      <Holding holding={holding} onDone={handleDone} />
+      <Dialog holding={holding} onDone={handleDone} />
       <Message value={message} />
     </>
   );
