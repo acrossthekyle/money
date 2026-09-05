@@ -19,17 +19,16 @@ const data = [
   },
   {
     "name": "Primary Checking",
-    "balance": "387.13",
+    "balance": "387.20",
     "institution": "Capital One",
     "number": "7690",
     "type": "checking",
-    "id": "87f5367e-e5b7-4c6b-b299-433ffbce8ebe",
-    "category": "account",
-    "interest": ""
+    "interest": "NaN",
+    "id": "87f5367e-e5b7-4c6b-b299-433ffbce8ebe"
   },
   {
     "name": "Primary Savings",
-    "balance": "58917.64",
+    "balance": "59062.39",
     "institution": "Capital One",
     "number": "7637",
     "type": "savings",
@@ -38,7 +37,7 @@ const data = [
   },
   {
     "name": "2600 N Hampden Savings",
-    "balance": "36765.35",
+    "balance": "36451.07",
     "institution": "Capital One",
     "number": "7936",
     "type": "savings",
