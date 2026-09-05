@@ -19,7 +19,13 @@ function getParentDisplayName(holdings: Holding[], parent: string) {
     return '';
   }
 
-  return `"${holdings.filter(holding => holding.id === parent)[0].name}" Holding`;
+  const filtered = holdings.filter(holding => holding.id === parent);
+
+  if (filtered.length > 0) {
+    return `"${filtered[0].name}" Holding`;
+  }
+
+  return `Holding`;
 };
 
 export default function Budget({
@@ -39,6 +45,7 @@ export default function Budget({
 
   return (
     <Ui.Dialog.Dialog
+      id="budget-dialog"
       instance={instance}
       isActive={isActive}
       onBackdrop={onBackdrop}

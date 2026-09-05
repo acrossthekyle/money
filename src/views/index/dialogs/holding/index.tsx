@@ -22,6 +22,7 @@ export default function Dialog({ holding, onDone }: Props) {
 
   return (
     <Ui.Dialog.Dialog
+      id="holding-dialog"
       instance={instance}
       isActive={isActive}
       onBackdrop={onBackdrop}

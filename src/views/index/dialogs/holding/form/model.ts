@@ -3,7 +3,10 @@
 import { useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
+import { useConfirm } from '@/hooks/useConfirm';
 import type { FormStateError, Holding, HoldingFormState } from '@/types';
+
+import { useUpdateUrl } from '../../../hooks';
 
 export function useModel(onDone: () => void, holding?: Holding) {
   const putable = put.bind(null, holding || null);
@@ -15,10 +18,11 @@ export function useModel(onDone: () => void, holding?: Holding) {
     message: '',
   } as HoldingFormState);
 
-  const data = state?.data ?? holding;
-
   const [willDelete, setWillDelete] = useState(false);
   const [errors, setErrors] = useState<FormStateError[]>([]);
+
+  const updateUrl = useUpdateUrl();
+  const confirm = useConfirm();
 
   useEffect(() => {
     if (state?.isSuccessful) {
@@ -36,21 +40,30 @@ export function useModel(onDone: () => void, holding?: Holding) {
   const handleOnDelete = async () => {
     setWillDelete(true);
 
-    if (confirm('Are you sure you want to delete this holding and its budgets? This action cannot be undone.')) {
-      const form = document.getElementById('holding-form');
+    const result = await confirm({
+      target: '#holding-dialog',
+      text: 'This action cannot be undone. This will permanently delete this holding and its budgets.',
+    });
 
-      if (form instanceof HTMLFormElement) {
-        form.requestSubmit();
-      }
-    } else {
+    if (!result.isConfirmed) {
       setWillDelete(false);
+
+      return;
+    }
+
+    const form = document.getElementById('holding-form');
+
+    if (form instanceof HTMLFormElement) {
+      form.requestSubmit();
+
+      updateUrl('view', 'overview_0');
     }
   };
 
   return {
     action,
     canDelete: holding !== undefined,
-    data,
+    data: state?.data ?? holding,
     errors,
     handleOnDelete,
     isPending,

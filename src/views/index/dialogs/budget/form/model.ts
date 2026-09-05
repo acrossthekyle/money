@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useState } from 'react';
 
+import { useConfirm } from '@/hooks/useConfirm';
 import { put } from '@/actions/budgets/put';
 import type { Budget, FormStateError, BudgetFormState } from '@/types';
 
@@ -15,13 +16,13 @@ export function useModel(date: string, onDone: () => void, budget?: Budget) {
     message: '',
   } as BudgetFormState);
 
-  const data = state?.data ?? budget;
-
   const [type, setType] = useState('debit');
   const [willDelete, setWillDelete] = useState(false);
   const [willPurge, setWillPurge] = useState(false);
   const [errors, setErrors] = useState<FormStateError[]>([]);
   const [update, setUpdate] = useState('all');
+
+  const confirm = useConfirm();
 
   useEffect(() => {
     if (budget) {
@@ -46,28 +47,42 @@ export function useModel(date: string, onDone: () => void, budget?: Budget) {
   const handleOnDelete = async () => {
     setWillDelete(true);
 
-    if (confirm(`Are you sure you want to delete this budget on ${date}? This action cannot be undone.`)) {
-      const form = document.getElementById('budget-form');
+    const result = await confirm({
+      target: '#budget-dialog',
+      text: `This action cannot be undone. This will permanently delete this budget on ${date}.`,
+    });
 
-      if (form instanceof HTMLFormElement) {
-        form.requestSubmit();
-      }
-    } else {
+    if (!result.isConfirmed) {
       setWillDelete(false);
+
+      return;
+    }
+
+    const form = document.getElementById('budget-form');
+
+    if (form instanceof HTMLFormElement) {
+      form.requestSubmit();
     }
   };
 
   const handleOnPurge = async () => {
-    await setWillPurge(true);
+    setWillPurge(true);
 
-    if (confirm('Are you sure you want to delete the entire budget? This action cannot be undone.')) {
-      const form = document.getElementById('budget-form');
+    const result = await confirm({
+      target: '#budget-dialog',
+      text: `This action cannot be undone. This will permanently delete the entire budget.`,
+    });
 
-      if (form instanceof HTMLFormElement) {
-        form.requestSubmit();
-      }
-    } else {
+    if (!result.isConfirmed) {
       setWillPurge(false);
+
+      return;
+    }
+
+    const form = document.getElementById('budget-form');
+
+    if (form instanceof HTMLFormElement) {
+      form.requestSubmit();
     }
   };
 
@@ -82,7 +97,7 @@ export function useModel(date: string, onDone: () => void, budget?: Budget) {
   return {
     action,
     canDelete: budget !== undefined,
-    data,
+    data: state?.data ?? budget,
     errors,
     handleOnDelete,
     handleOnPurge,

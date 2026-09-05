@@ -3,6 +3,7 @@
 import tw from '@/styles';
 
 type Props = {
+  id: string;
   instance: (node: HTMLDialogElement | null) => void;
   isActive: boolean;
   onBackdrop: (event: React.MouseEvent<HTMLDialogElement>) => void;
@@ -11,6 +12,7 @@ type Props = {
 
 export default function Dialog({
   children,
+  id,
   instance,
   isActive,
   onBackdrop,
@@ -21,7 +23,7 @@ export default function Dialog({
       aria-labelledby="dialog-header"
       className={`${styles.container} ${isActive ? 'is-active' : ''}`.trim()}
       closedby="none"
-      id="dialog"
+      id={id}
       onClick={onBackdrop}
       ref={instance}
       onKeyDown={onCancel}
