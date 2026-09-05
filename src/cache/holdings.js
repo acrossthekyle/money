@@ -70,8 +70,8 @@ const data = [
     "institution": "Fidelity",
     "number": "",
     "type": "retirement",
-    "id": "0ccf2204-ac05-4b2e-9cf5-4e30b81f74af",
-    "interest": ""
+    "interest": "8.00",
+    "id": "0ccf2204-ac05-4b2e-9cf5-4e30b81f74af"
   },
   {
     "name": "Brokerage",
@@ -79,8 +79,8 @@ const data = [
     "institution": "Fidelity",
     "number": "",
     "type": "taxable",
-    "id": "48fc8288-9dbd-4450-929c-61d7e0cf700c",
-    "interest": ""
+    "interest": "4.00",
+    "id": "48fc8288-9dbd-4450-929c-61d7e0cf700c"
   },
   {
     "name": "Traditional IRA",
@@ -88,8 +88,8 @@ const data = [
     "institution": "Fidelity",
     "number": "",
     "type": "retirement",
-    "id": "3c037573-3792-4778-93e9-bafecc85cc96",
-    "interest": ""
+    "interest": "8.00",
+    "id": "3c037573-3792-4778-93e9-bafecc85cc96"
   },
   {
     "name": "HSA",
@@ -97,9 +97,9 @@ const data = [
     "institution": "Fidelity",
     "number": "",
     "type": "health",
-    "id": "8c833ffa-2732-4e86-b032-b39b3a1ba2d4",
-    "interest": ""
+    "interest": "8.00",
+    "id": "8c833ffa-2732-4e86-b032-b39b3a1ba2d4"
   }
 ];
 
-export default data;
+export default data;

@@ -40,10 +40,10 @@ export function createDays(
   let balance = Number(amount);
 
   const parsedInterest = Number(interestRate);
-  const isAllowedType = ['savings', 'retirement', 'taxable'].includes(holdingType);
+  const isAllowedType = ['savings', 'retirement', 'taxable', 'health'].includes(holdingType);
   const hasInterest = isAllowedType && interestRate && !isNaN(parsedInterest) && parsedInterest > 0;
   const monthlyRate = hasInterest ? Math.pow(1 + (parsedInterest / 100), 1 / 12) - 1 : 0;
-  const interestLabel = ['retirement', 'taxable'].includes(holdingType)
+  const interestLabel = ['retirement', 'taxable', 'health'].includes(holdingType)
     ? 'Appreciation'
     : 'Interest';
 
@@ -60,10 +60,11 @@ export function createDays(
       const today = startOfDay(new Date());
       const isTodayOrAfter = isToday(current) || isAfter(current, today);
 
-      const interestEarned = balance * monthlyRate;
-      balance += interestEarned;
-
       if (isTodayOrAfter) {
+        const interestEarned = balance * monthlyRate;
+
+        balance += interestEarned;
+
         budgetsForCurrent.push({
           id: `interest-${format(current, FORMAT)}`,
           name: interestLabel,
