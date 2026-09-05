@@ -6,14 +6,7 @@ import * as z from 'zod';
 import { db } from '@/db';
 import type { Budget, BudgetFormState } from '@/types';
 
-import { createBudgetIterations } from '../utils';
-
-function balancize(raw: string) {
-  const cleaned = raw.replace(/,/g, '').replace('$', '');
-  const number = parseFloat(cleaned);
-
-  return number.toFixed(2);
-};
+import { balancize, createBudgetIterations } from '../utils';
 
 const Form = z.object({
   name: z.string(),

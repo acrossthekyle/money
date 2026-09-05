@@ -33,9 +33,8 @@ const data = [
     "institution": "Capital One",
     "number": "7637",
     "type": "savings",
-    "id": "ae88af06-e46e-482e-84e5-a0e25c052e43",
-    "category": "account",
-    "interest": ""
+    "interest": "3.42",
+    "id": "ae88af06-e46e-482e-84e5-a0e25c052e43"
   },
   {
     "name": "2600 N Hampden Savings",
@@ -104,4 +103,4 @@ const data = [
   }
 ];
 
-export default data;
+export default data;

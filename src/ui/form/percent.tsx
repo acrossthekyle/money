@@ -6,22 +6,26 @@ import tw from '@/styles';
 
 type Props = {
   id: string;
+  isOptional?: boolean;
   value?: string;
 };
 
-export default function Currency({ id, value }: Props) {
+export default function Percent({ id, isOptional, value }: Props) {
   return (
     <Input
+      allowNegativeValue={false}
       className={styles.container}
       id={id}
       name={id}
-      required
+      required={!isOptional}
       placeholder="0.00"
       defaultValue={value}
       decimalsLimit={2}
       decimalScale={2}
+      disableGroupSeparators
       fixedDecimalLength={2}
-      prefix="$"
+      maxLength={5}
+      prefix="% "
     />
   );
 };

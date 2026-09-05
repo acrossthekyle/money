@@ -45,14 +45,14 @@ export default function Form({
             />
           </Ui.Form.Field>
           <Ui.Form.Field className={styles.balance}>
-            <Ui.Form.Label id="balance">Current balance or value</Ui.Form.Label>
+            <Ui.Form.Label id="balance">Current balance / value</Ui.Form.Label>
             <Ui.Form.Currency id="balance" value={data?.balance} />
           </Ui.Form.Field>
         </Ui.Form.Group>
         <Ui.Form.Group>
           <Ui.Form.Field>
             <Ui.Form.Label id="number">
-              Last 4 Account Numbers (Optional)
+              Number (Last 4, optional)
             </Ui.Form.Label>
             <Ui.Form.Input
               id="number"
@@ -79,6 +79,10 @@ export default function Form({
               <option value="property">Property</option>
               <option value="other">Other</option>
             </Ui.Form.Select>
+          </Ui.Form.Field>
+          <Ui.Form.Field className="!w-26">
+            <Ui.Form.Label id="interest">Interest rate</Ui.Form.Label>
+            <Ui.Form.Percent id="interest" isOptional value={data?.interest} />
           </Ui.Form.Field>
         </Ui.Form.Group>
         <Ui.Form.Field>

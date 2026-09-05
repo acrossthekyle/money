@@ -30,6 +30,16 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <Suspense fallback={null}>
         <DialogProvider>
           <LayoutBody>
+            <noscript>
+              <div
+                aria-live="polite"
+                className="fixed inset-0 bg-(--background) z-1000 flex items-center justify-center"
+              >
+                <p className="w-full max-w-sm text-sm">
+                  <span className="font-black uppercase text-xs">Warning:</span> JavaScript is disabled in your browser. This site will not work properly. Please enable JavaScript and then refresh this page. Thank you.
+                </p>
+              </div>
+            </noscript>
             <ThemeProvider>
               <LayoutHeader />
               <main>

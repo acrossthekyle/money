@@ -10,6 +10,7 @@ export type Holding = {
   balance: string;
   number: string;
   type: string;
+  interest: string;
 };
 
 export type HoldingFormState = {

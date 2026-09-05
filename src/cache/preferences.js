@@ -1,7 +1,7 @@
 const data = [
   {
     "id": "saved_view",
-    "value": "3fa1757f-d49e-4b65-a987-4cb074ea30eb"
+    "value": "ae88af06-e46e-482e-84e5-a0e25c052e43"
   }
 ];
 

@@ -6,12 +6,7 @@ import * as z from 'zod';
 import { db } from '@/db';
 import type { Holding, HoldingFormState } from '@/types';
 
-function balancize(raw: string) {
-  const cleaned = raw.replace(/,/g, '').replace('$', '');
-  const number = parseFloat(cleaned);
-
-  return number.toFixed(2);
-};
+import { balancize, interestize } from '../utils';
 
 const Form = z.object({
   name: z.string(),
@@ -28,6 +23,7 @@ const Form = z.object({
     'property',
     'other',
   ]),
+  interest: z.string().nullable().optional(),
 });
 
 export async function put(
@@ -41,6 +37,7 @@ export async function put(
     institution: formData.get('institution'),
     number: formData.get('number'),
     type: formData.get('type'),
+    interest: formData.get('interest'),
   });
 
   if (!validated.success) {
@@ -74,6 +71,10 @@ export async function put(
           field: 'number',
           error: errors?.number?.[0] || '',
         },
+        {
+          field: 'interest',
+          error: errors?.interest?.[0] || '',
+        },
       ].filter(item => !!item.error),
       hasFailed: true,
       isSuccessful: false,
@@ -81,20 +82,22 @@ export async function put(
     };
   }
 
-  const writeable = {
-    ...validated.data,
+  const computed = {
     id: holding === null ? '' : holding.id,
     balance: balancize(validated.data.balance),
     institution: validated.data.institution === null ? '' : (validated.data.institution || ''),
     number: validated.data.number === null ? '' : (validated.data?.number || '').slice(-4),
+    interest: interestize(validated.data.interest === null ? '' : (validated.data.interest || '')),
+  };
+
+  const writeable = {
+    ...validated.data,
+    ...computed,
   };
 
   const returnable = {
     ...validated.data,
-    id: holding === null ? '' : holding.id,
-    balance: balancize(validated.data.balance),
-    institution: validated.data.institution === null ? '' : (validated.data.institution || ''),
-    number: validated.data.number === null ? '' : (validated.data?.number || '').slice(-4),
+    ...computed,
   };
 
   if (holding === null) {
