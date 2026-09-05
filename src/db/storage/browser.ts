@@ -19,7 +19,7 @@ export async function read(table: string, id?: string): Promise<Record[]> {
     return [];
   }
 
-  const data = localStorage.getItem(table);
+  const data = sessionStorage.getItem(table);
 
   const results = safeParse(data);
 
@@ -34,7 +34,7 @@ export async function write(table: string, data: Record[]): Promise<void> {
   }
 
   try {
-    localStorage.setItem(table, JSON.stringify(data));
+    sessionStorage.setItem(table, JSON.stringify(data));
 
     return;
   } catch (error) {
@@ -47,7 +47,7 @@ export async function write(table: string, data: Record[]): Promise<void> {
     if (isQuotaExceeded) {
       console.error(`Storage limit exceeded for table: ${table}`);
     } else {
-      console.error('Failed to write to localStorage:', error);
+      console.error('Failed to write to sessionStorage:', error);
     }
 
     return;
