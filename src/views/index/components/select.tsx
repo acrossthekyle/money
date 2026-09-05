@@ -5,8 +5,8 @@ import tw from '@/styles';
 type Props = {
   className?: string;
   name: string;
-  value: string;
   defaultValue: string;
+  display: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
@@ -14,8 +14,8 @@ export default function Select({
   children,
   className,
   name,
-  value,
   defaultValue,
+  display,
   onChange,
 }: React.PropsWithChildren<Props>) {
   return (
@@ -23,13 +23,13 @@ export default function Select({
       <select
         className={styles.select}
         name={name}
-        defaultValue={defaultValue}
+        value={defaultValue}
         onChange={onChange}
       >
         {children}
       </select>
       <span className={`${styles.cta} ${className || ''}`.trim()}>
-        <span>{value}</span>
+        <span>{display}</span>
         <ChevronDown className={styles.icon} />
       </span>
     </>

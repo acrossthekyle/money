@@ -4,6 +4,8 @@ import { useBudget } from '@/hooks/useBudget';
 import type { Budget, Holding } from '@/types';
 import Ui from '@/ui';
 
+import Form from './form';
+
 type Props = {
   holdings: Holding[];
   budget?: Budget;
@@ -27,15 +29,9 @@ export default function Budget({
   onDone,
   parent,
 }: Props) {
-  const {
-    instance,
-    isActive,
-    onBackdrop,
-    onCancel,
-    onClose,
-  } = useBudget();
+  const { instance, isActive, onBackdrop, onCancel, onClose } = useBudget();
 
-  const handleDone = () => {
+  const handleOnDone = () => {
     onClose();
 
     onDone();
@@ -56,17 +52,14 @@ export default function Budget({
             <>Creating Budget for {getParentDisplayName(holdings, parent)}</>
           )}
         </Ui.Dialog.DialogHeader>
-        <Ui.Forms.Budget
+        <Form
           holdings={holdings}
           budget={budget}
           date={date}
           parent={parent}
-          onDone={handleDone}
-        >
-          <Ui.Forms.Components.Button onClick={onClose}>
-            Cancel
-          </Ui.Forms.Components.Button>
-        </Ui.Forms.Budget>
+          onClose={onClose}
+          onDone={handleOnDone}
+        />
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>
   );

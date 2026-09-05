@@ -4,24 +4,17 @@ import { useHolding } from '@/hooks/useHolding';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
 
+import Form from './form';
+
 type Props = {
   holding?: Holding;
   onDone: () => void;
 };
 
-export default function Dialog({
-  holding,
-  onDone,
-}: Props) {
-  const {
-    instance,
-    isActive,
-    onBackdrop,
-    onCancel,
-    onClose,
-  } = useHolding();
+export default function Dialog({ holding, onDone }: Props) {
+  const { instance, isActive, onBackdrop, onCancel, onClose } = useHolding();
 
-  const handleDone = () => {
+  const handleOnDone = () => {
     onClose();
 
     onDone();
@@ -36,17 +29,14 @@ export default function Dialog({
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
         <Ui.Dialog.DialogHeader onClose={onClose}>
-          {holding ? `Edit "${holding.name}"` : 'Add'} Holding
+          {holding ? `Editing "${holding.name}"` : 'Add'} Holding
         </Ui.Dialog.DialogHeader>
-        <Ui.Forms.Holding
+        <Form
           holding={holding}
           key={holding?.id || 'add'}
-          onDone={handleDone}
-        >
-          <Ui.Forms.Components.Button onClick={onClose}>
-            Cancel
-          </Ui.Forms.Components.Button>
-        </Ui.Forms.Holding>
+          onClose={onClose}
+          onDone={handleOnDone}
+        />
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>
   );

@@ -45,7 +45,7 @@ export type BudgetFormState = {
 
 export type DayBudget = {
   name: string;
-  id: string | null;
+  id: string;
   amount: string;
   type: string;
   isTransfer: boolean;

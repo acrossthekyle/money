@@ -5,7 +5,7 @@ type Props = {
   isStacked?: boolean
 };
 
-export default function Field({ children, className, isStacked }: React.PropsWithChildren<Props>) {
+export default function Field({ children, className, isStacked = true }: React.PropsWithChildren<Props>) {
   return (
     <div
       className={`${styles.container(isStacked)} ${className || ''}`.trim()}

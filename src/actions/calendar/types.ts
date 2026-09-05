@@ -1,6 +1,6 @@
 export type RawBudget = {
   name: string;
-  id: string | null;
+  id: string;
   amount: string;
   type: string;
   iterations: string[];

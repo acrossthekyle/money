@@ -1,34 +1,59 @@
 'use client';
 
+import { ThumbsUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
+import { clear } from '@/actions/alerts/clear';
 import tw from '@/styles';
 
 type Props = {
   isFromCookie?: boolean;
-  value?: string;
+  value: string;
 };
 
 export default function Banner({ isFromCookie, value }: Props) {
-  const [message] = useState(value);
+  const [message] = useState<{ text: string; type: string; } | undefined>(!!value ? JSON.parse(value) : undefined);
 
   useEffect(() => {
-    if (value && isFromCookie) {
-      document.cookie = "alert=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; max-age=0;";
+    if (isFromCookie) {
+      clear();
     }
-  }, [isFromCookie, value]);
+  }, [isFromCookie]);
 
-  if (!value) {
+  if (!value || message === undefined) {
     return null;
   }
 
+  const isSuccess = message.type === 'success';
+
   return (
-    <p aria-live="polite" className={styles.container}>
-      {message}
-    </p>
+    <div
+      aria-live="polite"
+      className={styles.container(isSuccess)}
+    >
+      <p>{message.text}</p>
+      {isSuccess && (
+        <ThumbsUp className={styles.icon} />
+      )}
+    </div>
   );
 };
 
-const styles = tw({
-  container: ``,
-});
+const styles = {
+  container: (isSuccess: boolean) => tw(`
+    flex items-center justify-between
+    p-2.5
+    rounded-md
+    border
+    ${isSuccess
+      ? `border-green-900 bg-green-800`
+      : `border-red-400 bg-red-500`
+    }
+    text-xs
+    font-bold
+  `),
+  icon: `
+    w-3.5 h-3.5
+    stroke-3
+  `,
+};

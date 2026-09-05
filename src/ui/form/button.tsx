@@ -54,7 +54,7 @@ const styles = tw({
     border-red-900/22.5
   `,
   soft: `
-    bg-orange-700
-    border-orange-700/22.5
+    bg-mauve-700
+    border-mauve-800/22.5
   `,
 });

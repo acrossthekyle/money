@@ -32,11 +32,11 @@ const MONTHS = [
 
 export default function Dates() {
   const {
-    handleMonth,
-    handleNext,
-    handlePrevious,
-    handleToday,
-    handleYear,
+    handleOnMonth,
+    handleOnNext,
+    handleOnPrevious,
+    handleOnToday,
+    handleOnYear,
     isToday,
     month,
     year,
@@ -47,14 +47,14 @@ export default function Dates() {
       <ContainerSectionItems>
         {!isToday && (
           <ContainerSectionItem>
-            <ContainerSectionButton onClick={handleToday}>
+            <ContainerSectionButton onClick={handleOnToday}>
               <ContainerSectionIcon icon="undo" />
               <ContainerSectionText>Today</ContainerSectionText>
             </ContainerSectionButton>
           </ContainerSectionItem>
         )}
         <ContainerSectionItem>
-          <ContainerSectionButton onClick={handlePrevious}>
+          <ContainerSectionButton onClick={handleOnPrevious}>
             <ContainerSectionIcon icon="left" />
           </ContainerSectionButton>
         </ContainerSectionItem>
@@ -62,9 +62,9 @@ export default function Dates() {
           <ContainerSectionSelect
             className="w-28"
             name="month"
-            value={MONTHS[Number(month)]}
             defaultValue={month}
-            onChange={handleMonth}
+            display={MONTHS[Number(month)]}
+            onChange={handleOnMonth}
           >
             {MONTHS.map((item, index) => (
               <ContainerSectionSelectOption key={index} value={String(index)}>
@@ -74,21 +74,21 @@ export default function Dates() {
           </ContainerSectionSelect>
         </ContainerSectionItem>
         <ContainerSectionItem>
-          <ContainerSectionButton onClick={handleNext}>
+          <ContainerSectionButton onClick={handleOnNext}>
             <ContainerSectionIcon icon="right" />
           </ContainerSectionButton>
         </ContainerSectionItem>
         <ContainerSectionItem>
           <ContainerSectionSelect
             name="year"
-            value={year}
             defaultValue={year}
-            onChange={handleYear}
+            display={year}
+            onChange={handleOnYear}
           >
             {Array.from({ length: 11 }, (_, index) => (
               <ContainerSectionSelectOption
                 key={index}
-                value={String(getYear(addYears(new Date, index)))}
+                value={String(getYear(addYears(new Date(), index)))}
               />
             ))}
           </ContainerSectionSelect>

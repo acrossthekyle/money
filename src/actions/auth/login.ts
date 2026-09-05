@@ -27,7 +27,7 @@ export async function login(
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    maxAge: 60 * 60 , // 1 hour
+    maxAge: Number(process.env.AUTH_SESSION_TIME || 60 * 60),
     path: '/',
   });
 

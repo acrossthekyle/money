@@ -7,10 +7,14 @@ type Props = {
 };
 
 export default function Message({ value }: Props) {
+  if (!value) {
+    return null;
+  }
+
   return (
     <>
-      <div className={styles.backdrop(!!value)} role="presentation" />
-      <p aria-live="polite" className={styles.container(!!value)}>
+      <div className={styles.backdrop} role="presentation" />
+      <p aria-live="polite" className={styles.container}>
         <LoaderCircle className={styles.icon} />
         <span>{value}...</span>
       </p>
@@ -19,8 +23,8 @@ export default function Message({ value }: Props) {
 };
 
 const styles = tw({
-  container: (canRender: boolean) => tw(`
-    absolute bottom-4 z-100
+  container: `
+    absolute left-4 bottom-4 z-100
     flex items-center gap-2
     text-tiny
     font-bold
@@ -30,26 +34,15 @@ const styles = tw({
     bg-green-900
     rounded-md
     p-2.5
-
-    motion-safe:duration-300
-
-    ${canRender
-      ? `left-4 opacity-100 scale-100`
-      : `-left-40 opacity-0 scale-90`
-    }
-  `),
+  `,
   icon: `
     animate-spin
     w-3 h-3
   `,
-  backdrop: (canRender: boolean) => tw(`
-    absolute top-0 left-0 right-0
+  backdrop: `
+    absolute top-0 left-0 right-0 z-40
     h-svh
     bg-(--background)/32
     backdrop-blur-xs
-
-    motion-safe:duration-300
-
-    ${canRender ? 'opacity-100 z-40' : 'opacity-0 -z-1'}
-  `),
+  `,
 });

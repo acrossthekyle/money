@@ -5,7 +5,8 @@ const data = [
     "institution": "Capital One",
     "number": "0975",
     "type": "credit_card",
-    "id": "d1687294-faff-4ad3-b416-fc2300a054aa"
+    "id": "d1687294-faff-4ad3-b416-fc2300a054aa",
+    "interest": ""
   },
   {
     "name": "Savor",
@@ -13,7 +14,8 @@ const data = [
     "institution": "Capital One",
     "number": "8576",
     "type": "credit_card",
-    "id": "0af2b899-af8b-4121-afd4-36051426cdc1"
+    "id": "0af2b899-af8b-4121-afd4-36051426cdc1",
+    "interest": ""
   },
   {
     "name": "Primary Checking",
@@ -22,7 +24,8 @@ const data = [
     "number": "7690",
     "type": "checking",
     "id": "87f5367e-e5b7-4c6b-b299-433ffbce8ebe",
-    "category": "account"
+    "category": "account",
+    "interest": ""
   },
   {
     "name": "Primary Savings",
@@ -31,7 +34,8 @@ const data = [
     "number": "7637",
     "type": "savings",
     "id": "ae88af06-e46e-482e-84e5-a0e25c052e43",
-    "category": "account"
+    "category": "account",
+    "interest": ""
   },
   {
     "name": "2600 N Hampden Savings",
@@ -40,7 +44,8 @@ const data = [
     "number": "7936",
     "type": "savings",
     "id": "fd5eccf1-f149-4535-8849-1c3011012c52",
-    "category": "account"
+    "category": "account",
+    "interest": ""
   },
   {
     "name": "Shared Checking",
@@ -48,7 +53,8 @@ const data = [
     "institution": "Capital One",
     "number": "8400",
     "type": "checking",
-    "id": "3fa1757f-d49e-4b65-a987-4cb074ea30eb"
+    "id": "3fa1757f-d49e-4b65-a987-4cb074ea30eb",
+    "interest": ""
   },
   {
     "name": "House",
@@ -57,7 +63,8 @@ const data = [
     "number": "",
     "id": "8199505e-dd20-4cf7-875a-8b63124fb41b",
     "type": "property",
-    "category": "asset"
+    "category": "asset",
+    "interest": ""
   },
   {
     "name": "401K",
@@ -65,7 +72,8 @@ const data = [
     "institution": "Fidelity",
     "number": "",
     "type": "retirement",
-    "id": "0ccf2204-ac05-4b2e-9cf5-4e30b81f74af"
+    "id": "0ccf2204-ac05-4b2e-9cf5-4e30b81f74af",
+    "interest": ""
   },
   {
     "name": "Brokerage",
@@ -73,7 +81,8 @@ const data = [
     "institution": "Fidelity",
     "number": "",
     "type": "taxable",
-    "id": "48fc8288-9dbd-4450-929c-61d7e0cf700c"
+    "id": "48fc8288-9dbd-4450-929c-61d7e0cf700c",
+    "interest": ""
   },
   {
     "name": "Traditional IRA",
@@ -81,7 +90,8 @@ const data = [
     "institution": "Fidelity",
     "number": "",
     "type": "retirement",
-    "id": "3c037573-3792-4778-93e9-bafecc85cc96"
+    "id": "3c037573-3792-4778-93e9-bafecc85cc96",
+    "interest": ""
   },
   {
     "name": "HSA",
@@ -89,8 +99,9 @@ const data = [
     "institution": "Fidelity",
     "number": "",
     "type": "health",
-    "id": "8c833ffa-2732-4e86-b032-b39b3a1ba2d4"
+    "id": "8c833ffa-2732-4e86-b032-b39b3a1ba2d4",
+    "interest": ""
   }
 ];
 
-export default data;
+export default data;

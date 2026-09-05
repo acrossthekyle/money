@@ -1,12 +1,21 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 
 import { login } from '@/actions/auth/login';
 import tw from '@/styles';
 import type { LoginFormState } from '@/types';
+import Ui from '@/ui';
 
-export default function LoginPage() {
+type Props = {
+  data: {
+    alert: string;
+  };
+};
+
+export default function View({ data }: Props) {
+  const [alert] = useState(data.alert);
+
   const [state, action, isPending] = useActionState(login, {
     error: null,
     success: false,
@@ -15,6 +24,7 @@ export default function LoginPage() {
   return (
     <main className={styles.container}>
       <form className={styles.form} action={action}>
+        <Ui.Alerts.Banner isFromCookie value={alert} />
         <h2 className={styles.header}>Login</h2>
         {state?.error && <p style={{ color: "red" }}>{state.error}</p>}
         <input
