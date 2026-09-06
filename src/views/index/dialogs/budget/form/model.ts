@@ -55,7 +55,7 @@ export function useModel(
 
     const result = await confirm({
       target: '#budget-dialog',
-      text: `This action cannot be undone. This will permanently delete this budget on ${date}.`,
+      text: `This will permanently delete this budget on ${date}. This action cannot be undone.`,
     });
 
     if (!result.isConfirmed) {
@@ -76,7 +76,7 @@ export function useModel(
 
     const result = await confirm({
       target: '#budget-dialog',
-      text: `This action cannot be undone. This will permanently delete the entire budget.`,
+      text: `This will permanently delete the entire budget. This action cannot be undone.`,
     });
 
     if (!result.isConfirmed) {

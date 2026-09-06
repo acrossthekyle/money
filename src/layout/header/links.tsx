@@ -8,6 +8,7 @@ export default async function Links() {
     <nav className={styles.container}>
       <Link className={styles.link} href="/">
         <Scale className={styles.icon} />
+        <span>Money: A budgeting application</span>
       </Link>
     </nav>
   );
@@ -18,7 +19,7 @@ const styles = tw({
     flex items-center gap-2
   `,
   link: `
-    flex items-center gap-1
+    flex items-center gap-2
     p-2
     text-tiny
     uppercase

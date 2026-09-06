@@ -39,6 +39,6 @@ const styles = tw({
     opacity-33
   `,
   highlighted: `
-    bg-slate-700
+    bg-slate-200 dark:bg-slate-700
   `,
 });

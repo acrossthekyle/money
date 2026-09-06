@@ -1,5 +1,6 @@
 import tw from '@/styles';
 
+import Credit from './credit';
 import Links from './links';
 import Logout from './logout';
 import Theme from './theme';
@@ -11,6 +12,7 @@ export default function Header() {
       <div className={styles.group}>
         <Logout />
         <Theme />
+        <Credit />
       </div>
     </header>
   );
