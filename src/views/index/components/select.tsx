@@ -41,6 +41,7 @@ const styles = tw({
     absolute inset-0 z-2
     opacity-0
     cursor-pointer
+    text-base
   `,
   cta: `
     relative z-1

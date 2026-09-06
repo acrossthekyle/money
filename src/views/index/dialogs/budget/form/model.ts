@@ -1,5 +1,6 @@
 'use client';
 
+import { format, parseISO } from 'date-fns';
 import { useActionState, useEffect, useState } from 'react';
 
 import { useConfirm } from '@/hooks/useConfirm';
@@ -9,6 +10,7 @@ import type { Budget, FormStateError, BudgetFormState } from '@/types';
 export function useModel(
   date: string,
   onDone: () => void,
+  parent: string,
   budget?: Budget,
 ) {
   const putable = put.bind(null, budget || null);
@@ -21,11 +23,11 @@ export function useModel(
   } as BudgetFormState);
 
   const [type, setType] = useState('debit');
+  const [holding, setHolding] = useState(parent);
   const [willDelete, setWillDelete] = useState(false);
   const [willPurge, setWillPurge] = useState(false);
   const [errors, setErrors] = useState<FormStateError[]>([]);
-  const [update, setUpdate] = useState('all');
-  const [hasContinued, setHasContinued] = useState(false);
+  const [update, setUpdate] = useState('');
 
   const confirm = useConfirm();
 
@@ -33,7 +35,7 @@ export function useModel(
     if (budget) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setType(budget.type);
-      setHasContinued(false);
+      setUpdate('');
     }
   }, [budget]);
 
@@ -92,39 +94,62 @@ export function useModel(
     }
   };
 
-  const handleOnUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdate(event.target.value);
-  };
-
   const handleOnType = (event: React.ChangeEvent<HTMLInputElement>) => {
     setType(event.target.value);
   };
 
-  const handleOnContinue = () => {
-    setTimeout(() => {
-      setHasContinued(true);
-    }, 100);
+  const handleOnHolding = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setHolding(event.target.value);
   };
 
-  const handleOnBack = () => {
+  const handleOnContinue = async () => {
+    const result = await confirm({
+      cancelButtonText: 'Back',
+      confirmButtonText: 'Update',
+      target: '#budget-dialog',
+      title: 'How to apply these changes?',
+      input: 'radio',
+      inputOptions: {
+        'all': `Entire budget (from ${format(parseISO(budget?.start || ''), 'MM/dd/yyyy')} onwards)`,
+        'this': `Only this instance (on ${format(parseISO(date), 'MM/dd/yyyy')})`,
+        'prospective': `All current and future instances (from ${format(parseISO(date), 'MM/dd/yyyy')} onwards)`,
+        'future': `Only future instances (after ${format(parseISO(date), 'MM/dd/yyyy')})`,
+      },
+      inputValidator: (value: string): string => {
+        if (!value) {
+          return ' ';
+        };
+
+        return '';
+      },
+    });
+
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    setUpdate(result.value);
+
     setTimeout(() => {
-      setHasContinued(false);
+      const form = document.getElementById('budget-form');
+
+      if (form instanceof HTMLFormElement) {
+        form.requestSubmit();
+      }
     }, 100);
   };
 
   return {
     action,
-    canContinue: budget !== undefined,
     canDelete: budget !== undefined,
     data: state?.data ?? budget,
     errors,
-    handleOnBack,
     handleOnContinue,
     handleOnDelete,
+    handleOnHolding,
     handleOnPurge,
     handleOnType,
-    handleOnUpdate,
-    hasContinued,
+    holding,
     isPending,
     type,
     update,

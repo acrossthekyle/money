@@ -22,7 +22,7 @@ function getParentDisplayName(holdings: Holding[], parent: string) {
   const filtered = holdings.filter(holding => holding.id === parent);
 
   if (filtered.length > 0) {
-    return `"${filtered[0].name}" Holding`;
+    return `${filtered[0].name}`;
   }
 
   return `Holding`;
