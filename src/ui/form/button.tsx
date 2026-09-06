@@ -1,12 +1,14 @@
 import tw from '@/styles';
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  isContinue?: boolean;
   isDestructive?: boolean;
   isSoft?: boolean;
 };
 
 export default function Button({
   children,
+  isContinue,
   isDestructive,
   isSoft,
   type,
@@ -18,6 +20,7 @@ export default function Button({
       className={[
         styles.container,
         type === 'submit' && styles.submit,
+        isContinue && styles.continue,
         isDestructive && styles.destructive,
         isSoft && styles.soft,
       ].filter(Boolean).join(' ')}
@@ -56,5 +59,9 @@ const styles = tw({
   soft: `
     bg-mauve-700
     border-mauve-800/22.5
+  `,
+  continue: `
+    bg-(--foreground)/80
+    text-(--background)
   `,
 });

@@ -58,12 +58,12 @@ export default function Budget({
           {!parent.includes('overview') && budget && <>Update budget for {getParentDisplayName(holdings, budget.parent)}</>}
         </Ui.Dialog.DialogHeader>
         <Form
-          holdings={holdings}
           budget={budget}
           date={date}
-          parent={parent}
+          holdings={holdings}
           onClose={onClose}
           onDone={handleOnDone}
+          parent={parent}
         />
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>

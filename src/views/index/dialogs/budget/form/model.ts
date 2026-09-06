@@ -6,7 +6,11 @@ import { useConfirm } from '@/hooks/useConfirm';
 import { put } from '@/actions/budgets/put';
 import type { Budget, FormStateError, BudgetFormState } from '@/types';
 
-export function useModel(date: string, onDone: () => void, budget?: Budget) {
+export function useModel(
+  date: string,
+  onDone: () => void,
+  budget?: Budget,
+) {
   const putable = put.bind(null, budget || null);
 
   const [state, action, isPending] = useActionState(putable, {
@@ -21,6 +25,7 @@ export function useModel(date: string, onDone: () => void, budget?: Budget) {
   const [willPurge, setWillPurge] = useState(false);
   const [errors, setErrors] = useState<FormStateError[]>([]);
   const [update, setUpdate] = useState('all');
+  const [hasContinued, setHasContinued] = useState(false);
 
   const confirm = useConfirm();
 
@@ -28,6 +33,7 @@ export function useModel(date: string, onDone: () => void, budget?: Budget) {
     if (budget) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setType(budget.type);
+      setHasContinued(false);
     }
   }, [budget]);
 
@@ -94,15 +100,31 @@ export function useModel(date: string, onDone: () => void, budget?: Budget) {
     setType(event.target.value);
   };
 
+  const handleOnContinue = () => {
+    setTimeout(() => {
+      setHasContinued(true);
+    }, 100);
+  };
+
+  const handleOnBack = () => {
+    setTimeout(() => {
+      setHasContinued(false);
+    }, 100);
+  };
+
   return {
     action,
+    canContinue: budget !== undefined,
     canDelete: budget !== undefined,
     data: state?.data ?? budget,
     errors,
+    handleOnBack,
+    handleOnContinue,
     handleOnDelete,
     handleOnPurge,
     handleOnType,
     handleOnUpdate,
+    hasContinued,
     isPending,
     type,
     update,
