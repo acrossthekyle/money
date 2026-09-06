@@ -19,19 +19,19 @@ export default function Prompt({ onClick }: Props) {
       >
         <h1 className={styles.header}>Money: A Free Budgeting Application</h1>
         <p className={styles.paragraph}>
-          This is a financial tool, based on bank accounts and asset balances, that helps with budgeting repeating expenses by calculating and forecasting these balances by as much as 10 years into the future.
+          This is a financial tool based on bank accounts and asset that helps with budgeting repeating expenses by calculating and forecasting their balances month-by-month, and up to as much as 10 years.
         </p>
         <p className={styles.paragraph}>
-          Each of these bank accounts or assets are referred to as a <span className={styles.emphasis}>Holding</span>, with each having their own series of <span className={styles.emphasis}>Budgets</span>. These can include monthly streaming payments, cell phone bills, random shopping sprees, etc.
+          Each of these bank accounts or assets are referred to as <span className={styles.emphasis}>Forecasts</span>, with each having their own series of <span className={styles.emphasis}>Budgets</span>. These can include monthly streaming payments, cell phone bills, random shopping sprees, etc.
         </p>
         <p className={styles.paragraph}>
-          <strong>Disclaimer:</strong> All balances and budgets need to be manually updated; there is no integration with financial platforms in this app.
+          <strong>Disclaimer:</strong> All <span className={styles.emphasis}>Forecasts</span> starting balances, and budget amounts, need to be manually updated; there is no integration with financial platforms.
         </p>
         <p className={styles.paragraph}>
           Click or tap the button below to get started.
         </p>
         <button className={styles.button} onClick={onClick} type="button">
-          <span>Add Holding</span>
+          <span>Add Forecast</span>
           <Plus className={styles.icon} />
         </button>
       </div>

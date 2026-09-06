@@ -144,7 +144,7 @@ export default function Form({
             </Ui.Form.Button>
           ) : (
             <Ui.Form.Button isContinue onClick={handleOnContinue}>
-              Continue
+              Submit
             </Ui.Form.Button>
           )}
         </div>

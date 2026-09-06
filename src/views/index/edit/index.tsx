@@ -18,7 +18,7 @@ export default function Edit({ onClick, view }: Props) {
         onClick={onClick}
       >
         <ContainerSectionIcon icon="edit" />
-        <ContainerSectionText>Edit Holding</ContainerSectionText>
+        <ContainerSectionText>Edit Forecast</ContainerSectionText>
       </ContainerSectionButton>
     </ContainerSectionItem>
   );

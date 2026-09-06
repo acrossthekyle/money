@@ -112,7 +112,7 @@ export default function Form({
             onClick={handleOnDelete}
             type="button"
           >
-            Delete
+            Delete Forecast
           </Ui.Form.Button>
         ) : <span />}
         <div className={styles.ctas}>
@@ -120,7 +120,7 @@ export default function Form({
             Cancel
           </Ui.Form.Button>
           <Ui.Form.Button disabled={isPending} id="submit" type="submit">
-            Submit
+            {holding ? 'Update' : 'Create'}
           </Ui.Form.Button>
         </div>
       </Ui.Form.Footer>

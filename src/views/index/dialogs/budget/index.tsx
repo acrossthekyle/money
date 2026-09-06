@@ -53,9 +53,9 @@ export default function Budget({
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
         <Ui.Dialog.DialogHeader onClose={onClose}>
-          {parent.includes('overview') && !budget && <>Create budget</>}
-          {!parent.includes('overview') && !budget && <>Create Budget for {getParentDisplayName(holdings, parent)}</>}
-          {!parent.includes('overview') && budget && <>Update budget for {getParentDisplayName(holdings, budget.parent)}</>}
+          {parent.includes('overview') && !budget && <>Add budget</>}
+          {!parent.includes('overview') && !budget && <>Add Budget for: {getParentDisplayName(holdings, parent)}</>}
+          {!parent.includes('overview') && budget && <>Update budget for: {getParentDisplayName(holdings, budget.parent)}</>}
         </Ui.Dialog.DialogHeader>
         <Form
           budget={budget}

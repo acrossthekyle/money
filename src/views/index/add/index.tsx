@@ -30,7 +30,7 @@ export default function Add({ onClick, type }: Props) {
       <ContainerSectionButton onClick={handleOnClick}>
         <ContainerSectionIcon icon="plus" />
         <ContainerSectionText>
-          Add {type === 'budget' ? 'Budget' : 'Holding'}
+          Add {type === 'budget' ? 'Budget' : 'Forecast'}
         </ContainerSectionText>
       </ContainerSectionButton>
     </ContainerSectionItem>
