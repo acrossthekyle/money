@@ -7,9 +7,9 @@ import Ui from '@/ui';
 import Add from './add';
 import Calendar from './calendar';
 import {
-  Container,
-  ContainerSection,
-  ContainerSectionItems,
+  Options,
+  OptionsSection,
+  OptionsSectionItems,
 } from './components';
 import Dates from './dates';
 import Forecast from './forecast';
@@ -35,19 +35,19 @@ export default function View({ data }: Props) {
 
   return (
     <>
-      <Container>
-        <ContainerSection>
-          <ContainerSectionItems>
+      <Options>
+        <OptionsSection>
+          <OptionsSectionItems>
             <Forecast holdings={data.holdings} view={data.view} />
             <Add onClick={handleOnAddBudget} type="budget" />
-          </ContainerSectionItems>
-        </ContainerSection>
-        <ContainerSection>
-          <ContainerSectionItems>
+          </OptionsSectionItems>
+        </OptionsSection>
+        <OptionsSection>
+          <OptionsSectionItems>
             <Dates />
-          </ContainerSectionItems>
-        </ContainerSection>
-      </Container>
+          </OptionsSectionItems>
+        </OptionsSection>
+      </Options>
       <Calendar
         days={data.days}
         canInteract={!data.view.includes('overview')}

@@ -3,11 +3,11 @@
 import type { Holding } from '@/types';
 
 import {
-  ContainerSectionItem,
-  ContainerSectionSelect,
-  ContainerSectionSelectGroup,
-  ContainerSectionSelectOption,
-  ContainerSectionText,
+  OptionsSectionItem,
+  OptionsSectionSelect,
+  OptionsSectionSelectGroup,
+  OptionsSectionSelectOption,
+  OptionsSectionText,
 } from '../components';
 
 import { useModel } from './model';
@@ -37,20 +37,20 @@ export default function Forecast({ holdings, view }: Props) {
 
   return (
     <>
-      <ContainerSectionItem>
-        <ContainerSectionText>Forecast:</ContainerSectionText>
-      </ContainerSectionItem>
-      <ContainerSectionItem>
-        <ContainerSectionSelect
+      <OptionsSectionItem>
+        <OptionsSectionText>Forecast:</OptionsSectionText>
+      </OptionsSectionItem>
+      <OptionsSectionItem>
+        <OptionsSectionSelect
           className="w-60"
           name="Overview"
           defaultValue={view}
           display={value}
           onChange={handleOnView}
         >
-          <ContainerSectionSelectGroup label="Overviews">
+          <OptionsSectionSelectGroup label="Overviews">
             {Object.entries(overviews).map(([key, value]) => (
-              <ContainerSectionSelectOption
+              <OptionsSectionSelectOption
                 isDisabled={getIsOverviewDisabled(
                   value,
                   hasAccounts,
@@ -66,35 +66,35 @@ export default function Forecast({ holdings, view }: Props) {
                 value={value}
               >
                 {getOverviewDisplayText(value)}
-              </ContainerSectionSelectOption>
+              </OptionsSectionSelectOption>
             ))}
-          </ContainerSectionSelectGroup>
+          </OptionsSectionSelectGroup>
           {hasAccounts && (
-            <ContainerSectionSelectGroup label="Accounts">
+            <OptionsSectionSelectGroup label="Accounts">
               {accounts.map((holding, index) => (
-                <ContainerSectionSelectOption
+                <OptionsSectionSelectOption
                   key={index}
                   value={holding.id || ''}
                 >
                   {holding.name} ***{holding.number}
-                </ContainerSectionSelectOption>
+                </OptionsSectionSelectOption>
               ))}
-            </ContainerSectionSelectGroup>
+            </OptionsSectionSelectGroup>
           )}
           {hasAssets && (
-            <ContainerSectionSelectGroup label="Assets">
+            <OptionsSectionSelectGroup label="Assets">
               {assets.map((holding, index) => (
-                <ContainerSectionSelectOption
+                <OptionsSectionSelectOption
                   key={index}
                   value={holding.id || ''}
                 >
                   {holding.name} {!!holding.number ? `***${holding.number}` : ''}
-                </ContainerSectionSelectOption>
+                </OptionsSectionSelectOption>
               ))}
-            </ContainerSectionSelectGroup>
+            </OptionsSectionSelectGroup>
           )}
-        </ContainerSectionSelect>
-      </ContainerSectionItem>
+        </OptionsSectionSelect>
+      </OptionsSectionItem>
     </>
   );
 };

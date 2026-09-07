@@ -17,7 +17,7 @@ export default function Prompt({ onClick }: Props) {
         aria-label="welcome, start here"
         className={styles.container}
       >
-        <h1 className={styles.header}>Money: A Free Budgeting Application</h1>
+        <h1 className={styles.header}>A Budgeting Application</h1>
         <p className={styles.paragraph}>
           This is a financial tool based on bank accounts and asset that helps with budgeting repeating expenses by calculating and forecasting their balances month-by-month, and up to as much as 10 years.
         </p>

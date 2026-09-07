@@ -10,7 +10,8 @@ export default function Container({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    h-[calc(100svh-5.75rem)] w-full
+    h-[calc(100svh-5.75rem)]
+    w-full
     p-4
   `,
   content: `
@@ -18,7 +19,7 @@ const styles = tw({
     h-full w-full
     bg-(--background)
     border border-current/22.5
-    rounded-md
+    rounded-lg
 
     *:nth-[7n]:border-r-0
     [&>li:nth-last-child(-n+7)]:border-b-0

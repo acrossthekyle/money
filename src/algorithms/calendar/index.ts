@@ -1,8 +1,7 @@
 import { OVERVIEWS } from '@/constants';
 import { db } from '@/db';
 import type { Budget, Day, Holding, Preference } from '@/types';
-
-import { createBudgetIterations } from '../utils';
+import { createBudgetIterations } from '@/utils/budgets';
 
 import type { RawDay, RawBudget } from './types';
 import { displayType } from './utils/type';

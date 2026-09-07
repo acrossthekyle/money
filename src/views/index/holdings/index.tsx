@@ -33,8 +33,6 @@ export default function Holdings({ items, onAdd, onBudget, onEdit }: Props) {
 const styles = tw({
   items: `
     grid grid-cols-1 gap-4
-    w-full max-w-7xl
-    mx-auto
     px-4 pb-4
 
     lg:grid-cols-2

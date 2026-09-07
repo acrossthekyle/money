@@ -5,8 +5,9 @@ import * as z from 'zod';
 
 import { db } from '@/db';
 import type { Budget, BudgetFormState } from '@/types';
+import { createBudgetIterations } from '@/utils/budgets';
 
-import { balancize, createBudgetIterations } from '../utils';
+import { balancize } from '../utils';
 
 const Form = z.object({
   name: z.string(),

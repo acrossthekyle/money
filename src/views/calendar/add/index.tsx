@@ -3,10 +3,10 @@
 import { format } from 'date-fns';
 
 import {
-  ContainerSectionItem,
-  ContainerSectionIcon,
-  ContainerSectionButton,
-  ContainerSectionText,
+  OptionsSectionItem,
+  OptionsSectionIcon,
+  OptionsSectionButton,
+  OptionsSectionText,
 } from '../components';
 
 type Props = {
@@ -26,13 +26,13 @@ export default function Add({ onClick, type }: Props) {
   };
 
   return (
-    <ContainerSectionItem>
-      <ContainerSectionButton isActive onClick={handleOnClick}>
-        <ContainerSectionIcon icon="plus" />
-        <ContainerSectionText>
+    <OptionsSectionItem>
+      <OptionsSectionButton isActive onClick={handleOnClick}>
+        <OptionsSectionIcon icon="plus" />
+        <OptionsSectionText>
           Add {type === 'budget' ? 'Budget' : 'Forecast'}
-        </ContainerSectionText>
-      </ContainerSectionButton>
-    </ContainerSectionItem>
+        </OptionsSectionText>
+      </OptionsSectionButton>
+    </OptionsSectionItem>
   );
 };

@@ -1,13 +1,11 @@
-import { cookies } from 'next/headers';
-
 import { logout } from '@/actions/auth/logout';
 import tw from '@/styles';
+import { authentication } from '@/utils/authentication';
 
 export default async function Logout() {
-  const cookieStore = await cookies();
-  const isLoggedIn = cookieStore.has('app_session');
+  const { isAuthenticated } = await authentication();
 
-  if (!isLoggedIn) {
+  if (!isAuthenticated) {
     return null;
   }
 

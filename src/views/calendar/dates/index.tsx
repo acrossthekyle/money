@@ -3,14 +3,14 @@
 import { addYears, getYear } from 'date-fns';
 
 import {
-  ContainerSection,
-  ContainerSectionItems,
-  ContainerSectionItem,
-  ContainerSectionIcon,
-  ContainerSectionButton,
-  ContainerSectionText,
-  ContainerSectionSelect,
-  ContainerSectionSelectOption,
+  OptionsSection,
+  OptionsSectionItems,
+  OptionsSectionItem,
+  OptionsSectionIcon,
+  OptionsSectionButton,
+  OptionsSectionText,
+  OptionsSectionSelect,
+  OptionsSectionSelectOption,
 } from '../components';
 
 import { useModel } from './model';
@@ -43,23 +43,23 @@ export default function Dates() {
   } = useModel();
 
   return (
-    <ContainerSection>
-      <ContainerSectionItems>
+    <OptionsSection>
+      <OptionsSectionItems>
         {!isToday && (
-          <ContainerSectionItem>
-            <ContainerSectionButton onClick={handleOnToday}>
-              <ContainerSectionIcon icon="undo" />
-              <ContainerSectionText>Today</ContainerSectionText>
-            </ContainerSectionButton>
-          </ContainerSectionItem>
+          <OptionsSectionItem>
+            <OptionsSectionButton onClick={handleOnToday}>
+              <OptionsSectionIcon icon="undo" />
+              <OptionsSectionText>Today</OptionsSectionText>
+            </OptionsSectionButton>
+          </OptionsSectionItem>
         )}
-        <ContainerSectionItem>
-          <ContainerSectionButton onClick={handleOnPrevious}>
-            <ContainerSectionIcon icon="left" />
-          </ContainerSectionButton>
-        </ContainerSectionItem>
-        <ContainerSectionItem>
-          <ContainerSectionSelect
+        <OptionsSectionItem>
+          <OptionsSectionButton onClick={handleOnPrevious}>
+            <OptionsSectionIcon icon="left" />
+          </OptionsSectionButton>
+        </OptionsSectionItem>
+        <OptionsSectionItem>
+          <OptionsSectionSelect
             className="w-28"
             name="month"
             defaultValue={month}
@@ -67,33 +67,33 @@ export default function Dates() {
             onChange={handleOnMonth}
           >
             {MONTHS.map((item, index) => (
-              <ContainerSectionSelectOption key={index} value={String(index)}>
+              <OptionsSectionSelectOption key={index} value={String(index)}>
                 {item}
-              </ContainerSectionSelectOption>
+              </OptionsSectionSelectOption>
             ))}
-          </ContainerSectionSelect>
-        </ContainerSectionItem>
-        <ContainerSectionItem>
-          <ContainerSectionButton onClick={handleOnNext}>
-            <ContainerSectionIcon icon="right" />
-          </ContainerSectionButton>
-        </ContainerSectionItem>
-        <ContainerSectionItem>
-          <ContainerSectionSelect
+          </OptionsSectionSelect>
+        </OptionsSectionItem>
+        <OptionsSectionItem>
+          <OptionsSectionButton onClick={handleOnNext}>
+            <OptionsSectionIcon icon="right" />
+          </OptionsSectionButton>
+        </OptionsSectionItem>
+        <OptionsSectionItem>
+          <OptionsSectionSelect
             name="year"
             defaultValue={year}
             display={year}
             onChange={handleOnYear}
           >
             {Array.from({ length: 11 }, (_, index) => (
-              <ContainerSectionSelectOption
+              <OptionsSectionSelectOption
                 key={index}
                 value={String(getYear(addYears(new Date(), index)))}
               />
             ))}
-          </ContainerSectionSelect>
-        </ContainerSectionItem>
-      </ContainerSectionItems>
-    </ContainerSection>
+          </OptionsSectionSelect>
+        </OptionsSectionItem>
+      </OptionsSectionItems>
+    </OptionsSection>
   );
 };

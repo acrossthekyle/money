@@ -9,8 +9,8 @@ import { LayoutBody, LayoutHeader } from '@/layout';
 
 export const metadata: Metadata = {
   title: {
-    template: `%s ⌁ Money`,
-    default: 'Calendar ⌁ Money',
+    template: `%s`,
+    default: 'Dashboard',
   },
   formatDetection: {
     telephone: false,

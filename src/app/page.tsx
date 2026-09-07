@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
-import { all as allBudgets } from '@/actions/budgets/all';
-import { all as allHoldings } from '@/actions/holdings/all';
+import { all as allBudgets } from '@/getters/budgets';
+import { all as allHoldings } from '@/getters/holdings';
 import Ui from '@/ui';
 import View from '@/views/index';
 

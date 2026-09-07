@@ -1,8 +1,9 @@
 import { getMonth, getYear } from 'date-fns';
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
-import { all as allHoldings } from '@/actions/holdings/all';
-import { calendar } from '@/actions/calendar';
+import { calendar } from '@/algorithms/calendar';
+import { all as allHoldings } from '@/getters/holdings';
 import Ui from '@/ui';
 import View from '@/views/calendar';
 
@@ -10,6 +11,10 @@ type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
 type Props = {
   searchParams: SearchParams;
+};
+
+export const metadata: Metadata = {
+  title: 'Calendar',
 };
 
 export default async function Page({
