@@ -1,8 +1,15 @@
 import tw from '@/styles';
 
-export default function Section({ children }: React.PropsWithChildren) {
+type Props = {
+  className?: string;
+};
+
+export default function Section({
+  children,
+  className = '',
+}: React.PropsWithChildren<Props>) {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${className}`.trim()}>
       {children}
     </div>
   );
@@ -10,6 +17,6 @@ export default function Section({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-
+    flex flex-row gap-2
   `,
 });

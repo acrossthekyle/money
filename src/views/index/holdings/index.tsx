@@ -35,6 +35,6 @@ const styles = tw({
     grid grid-cols-1 gap-4
     px-4 pb-4
 
-    lg:grid-cols-2
+    md:grid-cols-2
   `,
 });

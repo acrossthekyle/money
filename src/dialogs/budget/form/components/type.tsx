@@ -44,6 +44,6 @@ export default function Type({ onChange, value }: Props) {
 
 const styles = tw({
   container: `
-    !w-44
+    sm:!w-44
   `,
 });

@@ -112,29 +112,24 @@ export async function put(
     omissions: budget === null ? [] : budget.omissions,
   };
 
-  const writeable: Budget = {
-    ...validated.data,
-    ...computed,
-  };
-
-  const returnable: Budget = {
+  const result: Budget = {
     ...validated.data,
     ...computed,
   };
 
   if (budget === null) {
-    await db.write('budgets', writeable);
+    await db.write('budgets', result);
 
     return {
-      data: returnable,
+      data: result,
       hasFailed: false,
       isSuccessful: true,
       message: 'Budget successfully created',
     };
   }
 
-  writeable.id = budget.id;
-  writeable.omissions = budget.omissions;
+  result.id = budget.id;
+  result.omissions = budget.omissions;
 
   if (formData.get('erase') === 'true') {
     if (budget.schedule === 'once') {
@@ -150,7 +145,7 @@ export async function put(
     }
 
     return {
-      data: returnable,
+      data: result,
       hasFailed: false,
       isSuccessful: true,
       message: `Budget on ${formData.get('date')} successfully deleted`,
@@ -161,7 +156,7 @@ export async function put(
     await db.erase('budgets', budget.id);
 
     return {
-      data: returnable,
+      data: result,
       hasFailed: false,
       isSuccessful: true,
       message: 'Budget successfully deleted',
@@ -169,10 +164,10 @@ export async function put(
   }
 
   if (formData.get('update') === 'none' || formData.get('update') === 'all') {
-    await db.write('budgets', writeable);
+    await db.write('budgets', result);
 
     return {
-      data: returnable,
+      data: result,
       hasFailed: false,
       isSuccessful: true,
       message: `Entire budget successfully updated`,
@@ -201,8 +196,8 @@ export async function put(
       }
 
       updates.push({
-        ...writeable,
-        id: iterations.length === 1 ? writeable.id : uuidv4(),
+        ...result,
+        id: iterations.length === 1 ? result.id : uuidv4(),
         start: current[0],
         end: current[0],
         schedule: 'once',
@@ -219,7 +214,7 @@ export async function put(
       await db.writeAll('budgets', updates as Budget[]);
 
       return {
-        data: returnable,
+        data: result,
         hasFailed: false,
         isSuccessful: true,
         message: `Budget instance successfully updated`,
@@ -246,7 +241,7 @@ export async function put(
       }
 
       updates.push({
-        ...writeable,
+        ...result,
         start: current[0],
         omissions: budget.omissions,
       });
@@ -254,7 +249,7 @@ export async function put(
       await db.writeAll('budgets', updates as Budget[]);
 
       return {
-        data: returnable,
+        data: result,
         hasFailed: false,
         isSuccessful: true,
         message: `All current and future budget instances successfully updated`,
@@ -282,7 +277,7 @@ export async function put(
 
       if (future.length > 0) {
         updates.push({
-          ...writeable,
+          ...result,
           start: future[0],
         });
       }
@@ -290,7 +285,7 @@ export async function put(
       await db.writeAll('budgets', updates);
 
       return {
-        data: returnable,
+        data: result,
         hasFailed: false,
         isSuccessful: true,
         message: `All future budget instances successfully updated`,
@@ -299,7 +294,7 @@ export async function put(
   }
 
   return {
-    data: returnable,
+    data: result,
     hasFailed: false,
     isSuccessful: true,
     message: 'No action taken',

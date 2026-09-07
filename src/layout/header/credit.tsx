@@ -1,4 +1,3 @@
-import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
 import tw from '@/styles';
@@ -11,20 +10,15 @@ export default async function Credit() {
       target="_blank"
     >
       <span>About the Developer</span>
-      <ArrowUpRight className={styles.icon} />
     </Link>
   );
 };
 
 const styles = tw({
   container: `
-    flex items-center gap-1
     p-2
     text-tiny
     uppercase
     font-bold
-  `,
-  icon: `
-    w-3 h-3
   `,
 });

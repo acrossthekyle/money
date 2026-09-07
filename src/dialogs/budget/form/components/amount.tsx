@@ -16,6 +16,6 @@ export default function Amount({ value }: Props) {
 
 const styles = tw({
   container: `
-    !w-26
+    sm:!w-26
   `,
 });

@@ -1,6 +1,7 @@
 import tw from '@/styles';
 
 type Props = {
+  className?: string;
   isActive?: boolean;
   isDisabled?: boolean;
   onClick: () => void;
@@ -8,6 +9,7 @@ type Props = {
 
 export default function Button({
   children,
+  className = '',
   isActive,
   isDisabled,
   onClick,
@@ -16,6 +18,7 @@ export default function Button({
     <button
       className={[
         styles.container,
+        className,
         isActive && styles.active,
         isDisabled && styles.disabled,
       ].filter(Boolean).join(' ')}
@@ -31,10 +34,12 @@ export default function Button({
 const styles = tw({
   container: `
     flex items-center gap-1
+    w-fit
+    h-6
     rounded-full
     bg-(--background)
     border border-current/22.5
-    p-1.25 px-2
+    py-1.25 px-2
     font-medium
 
     motion-safe:duration-300

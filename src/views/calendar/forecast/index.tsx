@@ -1,14 +1,9 @@
 'use client';
 
 import type { Holding } from '@/types';
+import tw from '@/styles';
 
-import {
-  OptionsSectionItem,
-  OptionsSectionSelect,
-  OptionsSectionSelectGroup,
-  OptionsSectionSelectOption,
-  OptionsSectionText,
-} from '../components';
+import { OptionsSectionSelect } from '../components';
 
 import { useModel } from './model';
 import { getIsOverviewDisabled, getOverviewDisplayText } from './utils';
@@ -36,65 +31,63 @@ export default function Forecast({ holdings, view }: Props) {
   } = useModel(holdings, view);
 
   return (
-    <>
-      <OptionsSectionItem>
-        <OptionsSectionText>Forecast:</OptionsSectionText>
-      </OptionsSectionItem>
-      <OptionsSectionItem>
-        <OptionsSectionSelect
-          className="w-60"
-          name="Overview"
-          defaultValue={view}
-          display={value}
-          onChange={handleOnView}
-        >
-          <OptionsSectionSelectGroup label="Overviews">
-            {Object.entries(overviews).map(([key, value]) => (
-              <OptionsSectionSelectOption
-                isDisabled={getIsOverviewDisabled(
-                  value,
-                  hasAccounts,
-                  hasAssets,
-                  hasChecking,
-                  hasCreditCards,
-                  hasHoldings,
-                  hasOtherAssets,
-                  hasRetirement,
-                  hasSavings,
-                )}
-                key={key}
-                value={value}
-              >
-                {getOverviewDisplayText(value)}
-              </OptionsSectionSelectOption>
-            ))}
-          </OptionsSectionSelectGroup>
-          {hasAccounts && (
-            <OptionsSectionSelectGroup label="Accounts">
-              {accounts.map((holding, index) => (
-                <OptionsSectionSelectOption
-                  key={index}
-                  value={holding.id || ''}
-                >
-                  {holding.name} ***{holding.number}
-                </OptionsSectionSelectOption>
-              ))}
-            </OptionsSectionSelectGroup>
-          )}
-          {hasAssets && (
-            <OptionsSectionSelectGroup label="Assets">
-              {assets.map((holding, index) => (
-                <OptionsSectionSelectOption
-                  key={index}
-                  value={holding.id || ''}
-                >
-                  {holding.name} {!!holding.number ? `***${holding.number}` : ''}
-                </OptionsSectionSelectOption>
-              ))}
-            </OptionsSectionSelectGroup>
-          )}
-        </OptionsSectionSelect>
-      </OptionsSectionItem>
-    </>
+    <OptionsSectionSelect
+      className={styles.container}
+      name="Overview"
+      defaultValue={view}
+      display={value}
+      onChange={handleOnView}
+    >
+      <optgroup label="Overviews">
+        {Object.entries(overviews).map(([key, value]) => (
+          <option
+            disabled={getIsOverviewDisabled(
+              value,
+              hasAccounts,
+              hasAssets,
+              hasChecking,
+              hasCreditCards,
+              hasHoldings,
+              hasOtherAssets,
+              hasRetirement,
+              hasSavings,
+            )}
+            key={key}
+            value={value}
+          >
+            {getOverviewDisplayText(value)}
+          </option>
+        ))}
+      </optgroup>
+      {hasAccounts && (
+        <optgroup label="Bank Accounts">
+          {accounts.map((holding, index) => (
+            <option key={index} value={holding.id || ''}>
+              {holding.name} {!!holding.number ? `... ${holding.number}` : ''}
+            </option>
+          ))}
+        </optgroup>
+      )}
+      {hasAssets && (
+        <optgroup label="Assets">
+          {assets.map((holding, index) => (
+            <option key={index} value={holding.id || ''}>
+              {holding.name} {!!holding.number ? `... ${holding.number}` : ''}
+            </option>
+          ))}
+        </optgroup>
+      )}
+    </OptionsSectionSelect>
   );
 };
+
+const styles = tw({
+  container: `
+    col-span-2
+    order-2
+    !w-full
+
+    md:!w-56
+    md:order-1
+  `,
+});

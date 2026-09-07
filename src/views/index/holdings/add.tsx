@@ -16,7 +16,7 @@ export default function Add({ onClick }: Props) {
         onClick={onClick}
         type="button"
       >
-        <Plus className={styles.icon} /> Add
+        <Plus className={styles.icon} /> Add Account/Asset
       </button>
     </li>
   );
@@ -27,13 +27,9 @@ const styles = tw({
     flex items-center justify-center
     w-full h-48
     rounded-lg
-    border border-current/22.5
+    border border-current/12.5
     bg-(--background)
     p-4
-
-    motion-safe:duration-300
-
-    hover:border-current/62.5
   `,
   action: `
     flex items-center gap-1

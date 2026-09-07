@@ -1,16 +1,14 @@
 'use client';
 
 import { Dialogs } from '@/dialogs';
+import tw from '@/styles';
 import type { Day, Holding } from '@/types';
 import Ui from '@/ui';
 
 import Add from './add';
+import Back from './back';
 import Calendar from './calendar';
-import {
-  Options,
-  OptionsSection,
-  OptionsSectionItems,
-} from './components';
+import { Options, OptionsSection } from './components';
 import Dates from './dates';
 import Forecast from './forecast';
 import { useModel } from './model';
@@ -18,7 +16,7 @@ import { useModel } from './model';
 type Props = {
   data: {
     holdings: Holding[];
-    days: Array<Day[]>;
+    days: Day[];
     view: string;
   };
 };
@@ -36,17 +34,14 @@ export default function View({ data }: Props) {
   return (
     <>
       <Options>
-        <OptionsSection>
-          <OptionsSectionItems>
-            <Forecast holdings={data.holdings} view={data.view} />
+        <OptionsSection className={styles.section}>
+          <Back />
+          <Forecast holdings={data.holdings} view={data.view} />
+          {data.holdings.length > 0 && (
             <Add onClick={handleOnAddBudget} type="budget" />
-          </OptionsSectionItems>
+          )}
         </OptionsSection>
-        <OptionsSection>
-          <OptionsSectionItems>
-            <Dates />
-          </OptionsSectionItems>
-        </OptionsSection>
+        <Dates />
       </Options>
       <Calendar
         days={data.days}
@@ -65,3 +60,13 @@ export default function View({ data }: Props) {
     </>
   );
 };
+
+const styles = tw({
+  section: `
+    grid grid-cols-2 gap-4
+
+    md:gap-2
+    md:flex
+    md:flex-row
+  `,
+});

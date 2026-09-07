@@ -2,26 +2,13 @@ import { Scale } from 'lucide-react';
 import Link from 'next/link';
 
 import tw from '@/styles';
-import { authentication } from '@/utils/authentication';
 
-export default async function Links() {
-  const { isAuthenticated } = await authentication();
-
+export default function Links() {
   return (
     <nav className={styles.container}>
       <Link className={styles.link} href="/">
         <Scale className={styles.icon} />
       </Link>
-      {isAuthenticated && (
-        <>
-          <Link className={styles.link} href="/">
-            Overview
-          </Link>
-          <Link className={styles.link} href="/calendar">
-            Calendar
-          </Link>
-        </>
-      )}
     </nav>
   );
 };

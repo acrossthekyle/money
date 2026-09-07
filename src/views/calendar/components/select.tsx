@@ -19,7 +19,7 @@ export default function Select({
   onChange,
 }: React.PropsWithChildren<Props>) {
   return (
-    <>
+    <div className={`${styles.container} ${className || ''}`.trim()}>
       <select
         className={styles.select}
         name={name}
@@ -28,15 +28,20 @@ export default function Select({
       >
         {children}
       </select>
-      <span className={`${styles.cta} ${className || ''}`.trim()}>
+      <span className={styles.cta}>
         <span>{display}</span>
         <ChevronDown className={styles.icon} />
       </span>
-    </>
+    </div>
   );
 };
 
 const styles = tw({
+  container: `
+    group
+    relative
+    w-fit
+  `,
   select: `
     absolute inset-0 z-2
     opacity-0

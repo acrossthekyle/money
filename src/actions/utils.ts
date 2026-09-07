@@ -7,6 +7,11 @@ export function balancize(raw: string) {
 
 export function interestize(raw: string) {
   const cleaned = raw.replace(/,/g, '').replace('%', '').trim();
+
+  if (cleaned === '') {
+    return '';
+  }
+
   const number = parseFloat(cleaned);
 
   return number.toFixed(2);

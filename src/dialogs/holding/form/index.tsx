@@ -45,7 +45,7 @@ export default function Form({
             />
           </Ui.Form.Field>
           <Ui.Form.Field className={styles.balance}>
-            <Ui.Form.Label id="balance">Current balance / value</Ui.Form.Label>
+            <Ui.Form.Label id="balance">Current balance or value</Ui.Form.Label>
             <Ui.Form.Currency id="balance" value={data?.balance} />
           </Ui.Form.Field>
         </Ui.Form.Group>
@@ -58,6 +58,7 @@ export default function Form({
               id="number"
               name="number"
               type="text"
+              maxLength={4}
               defaultValue={data?.number || ''}
               placeholder="1234"
             />
@@ -80,7 +81,7 @@ export default function Form({
               <option value="other">Other</option>
             </Ui.Form.Select>
           </Ui.Form.Field>
-          <Ui.Form.Field className="!w-34">
+          <Ui.Form.Field className={styles.interest}>
             <Ui.Form.Label id="interest">Interest rate (APY)</Ui.Form.Label>
             <Ui.Form.Percent id="interest" isOptional value={data?.interest} />
           </Ui.Form.Field>
@@ -130,7 +131,10 @@ export default function Form({
 
 const styles = tw({
   balance: `
-    !w-48
+    sm:!w-48
+  `,
+  interest: `
+    sm:!w-34
   `,
   ctas: `
     flex gap-4

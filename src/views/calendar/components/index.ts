@@ -6,5 +6,3 @@ export { default as OptionsSectionItem } from './item';
 export { default as OptionsSectionIcon } from './icon';
 export { default as OptionsSectionButton } from './button';
 export { default as OptionsSectionSelect } from './select';
-export { default as OptionsSectionSelectGroup } from './group';
-export { default as OptionsSectionSelectOption } from './option';

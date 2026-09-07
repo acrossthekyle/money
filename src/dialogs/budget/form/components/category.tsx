@@ -32,6 +32,6 @@ export default function Category({ value }: Props) {
 
 const styles = tw({
   container: `
-    !w-62
+    sm:!w-62
   `,
 });

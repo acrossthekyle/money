@@ -2,8 +2,9 @@
 
 import { format } from 'date-fns';
 
+import tw from '@/styles';
+
 import {
-  OptionsSectionItem,
   OptionsSectionIcon,
   OptionsSectionButton,
   OptionsSectionText,
@@ -26,13 +27,25 @@ export default function Add({ onClick, type }: Props) {
   };
 
   return (
-    <OptionsSectionItem>
-      <OptionsSectionButton isActive onClick={handleOnClick}>
-        <OptionsSectionIcon icon="plus" />
-        <OptionsSectionText>
-          Add {type === 'budget' ? 'Budget' : 'Forecast'}
-        </OptionsSectionText>
-      </OptionsSectionButton>
-    </OptionsSectionItem>
+    <OptionsSectionButton
+      className={styles.container}
+      isActive
+      onClick={handleOnClick}
+    >
+      <OptionsSectionIcon icon="plus" />
+      <OptionsSectionText>
+        Budget
+      </OptionsSectionText>
+    </OptionsSectionButton>
   );
 };
+
+const styles = tw({
+  container: `
+    order-1
+    w-full
+
+    md:w-fit
+    md:order-2
+  `,
+});

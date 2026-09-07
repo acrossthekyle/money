@@ -90,12 +90,7 @@ export async function put(
     interest: interestize(validated.data.interest === null ? '' : (validated.data.interest || '')),
   };
 
-  const writeable = {
-    ...validated.data,
-    ...computed,
-  };
-
-  const returnable = {
+  const result = {
     ...validated.data,
     ...computed,
   };
@@ -104,13 +99,13 @@ export async function put(
     const identifier = uuidv4();
 
     await db.write('holdings', {
-      ...writeable,
+      ...result,
       id: identifier,
     });
 
     return {
       data: {
-        ...returnable,
+        ...result,
         id: identifier,
       },
       hasFailed: false,
@@ -123,17 +118,17 @@ export async function put(
     await db.erase('holdings', holding.id);
 
     return {
-      data: returnable,
+      data: result,
       hasFailed: false,
       isSuccessful: true,
       message: 'Holding successfully deleted',
     };
   }
 
-  await db.write('holdings', writeable);
+  await db.write('holdings', result);
 
   return {
-    data: returnable,
+    data: result,
     hasFailed: false,
     isSuccessful: true,
     message: 'Holding successfully updated',

@@ -10,7 +10,7 @@ import { addToCalendar } from './utils/calendar';
 import { assignRealized } from './utils/realized';
 
 type Return = {
-  days: Array<Day[]>;
+  days: Day[];
   saved: string;
 };
 
@@ -115,17 +115,8 @@ export async function calendar(
     }
   });
 
-  const output = [];
-  const chunkSize = 7;
-
-  for (let i = 0; i < calendar.length; i += chunkSize) {
-    const chunk = calendar.slice(i, i + chunkSize);
-
-    output.push(chunk);
-  }
-
   return {
-    days: output,
+    days: calendar,
     saved: realizedView,
   };
 }

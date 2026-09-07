@@ -28,19 +28,18 @@ export default function Holding({ item, onBudget, onEdit }: Props) {
         <h3 className={styles.header}>
           <span className={styles.title}>{holding.name}</span>
           <span className={styles.footnote}>
-            {holding.type.replace('_', ' ')} {holding.number && '***'}{holding.number}
+            {holding.type.replace('_', ' ')} {holding.number && '...'} {holding.number}
           </span>
         </h3>
         <p className={styles.balance}>
           <span className={styles.amount(isNegative)}>
             {isNegative ? '-' : ''}${formatNumber(Number(holding.balance))}
           </span>
-          <span className={styles.footnote}>Current balance</span>
         </p>
       </div>
       <div className={styles.footer}>
         <p className={styles.budgets}>
-          <span className={styles.count}>{budgets}</span> Budgets
+          <span className={styles.count}>{budgets}</span> Budget{budgets > 1 ? 's' : ''}
         </p>
         <nav
           aria-label="account/asset supplementary actions"
@@ -65,7 +64,7 @@ export default function Holding({ item, onBudget, onEdit }: Props) {
             className={styles.action}
             href={`/calendar?view=${holding.id}`}
           >
-            View Forecast
+            View
             <ChevronRight className={styles.icon} />
           </Link>
         </nav>
@@ -79,49 +78,59 @@ const styles = tw({
     flex flex-col gap-2 justify-between
     w-full h-48
     rounded-lg
-    border border-current/22.5
+    border border-current/12.5
     bg-(--background)
     p-4
-
-    motion-safe:duration-300
-
-    hover:border-current/62.5
   `,
   row: `
     flex items-start justify-between
     mb-4
   `,
-  footer: `
-    flex items-end justify-between
-  `,
   header: `
     flex-2
-    flex flex-col gap-2
+    flex flex-col gap-1
+
+    lg:gap-2
   `,
   title: `
     font-thin
-    text-4xl
+    text-xl
+
+    md:text-2xl
+    lg:text-3xl
   `,
   footnote: `
-    text-current/80
-    text-xtiny
+    text-current/60
+    text-tiny
     uppercase
     capitalize
+    font-light
     tracking-wide
   `,
   balance: `
     flex-1
-    flex flex-col gap-2 items-end
+    flex flex-col gap-0 items-end
+    mt-1
   `,
   amount: (isNegative: boolean) => tw(`
-    font-bold
-    text-2xl
+    font-light
+    text-lg
     ${isNegative ? 'text-rose-500' : 'text-current'}
+
+    md:text-xl
+    lg:text-2xl
   `),
+  footer: `
+    flex flex-col justify-between gap-4
+
+    lg:flex-row
+    lg:items-end
+  `,
   budgets: `
     text-tiny
     uppercase
-    tracking-wide
+    tracking-wider
+    font-light
   `,
   count: `
     font-black

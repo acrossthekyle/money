@@ -10,7 +10,9 @@ export default function Group({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    flex justify-between gap-4
+    flex flex-col justify-between gap-4
     w-full
+
+    sm:flex-row
   `,
 });
