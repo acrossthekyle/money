@@ -18,6 +18,10 @@ type Props = {
 export default function Holding({ item, onBudget, onEdit }: Props) {
   const { holding, budgets } = item;
 
+  const isNegative = holding.type === 'credit_card'
+    ? Number(holding.balance) > 0 ? true : false
+    : Number(holding.balance) < 0;
+
   return (
     <li className={styles.container}>
       <div className={styles.row}>
@@ -28,8 +32,8 @@ export default function Holding({ item, onBudget, onEdit }: Props) {
           </span>
         </h3>
         <p className={styles.balance}>
-          <span className={styles.amount}>
-            ${formatNumber(Number(holding.balance))}
+          <span className={styles.amount(isNegative)}>
+            {isNegative ? '-' : ''}${formatNumber(Number(holding.balance))}
           </span>
           <span className={styles.footnote}>Current balance</span>
         </p>
@@ -109,10 +113,11 @@ const styles = tw({
     flex-1
     flex flex-col gap-2 items-end
   `,
-  amount: `
+  amount: (isNegative: boolean) => tw(`
     font-bold
     text-2xl
-  `,
+    ${isNegative ? 'text-rose-400' : 'text-current'}
+  `),
   budgets: `
     text-tiny
     uppercase
