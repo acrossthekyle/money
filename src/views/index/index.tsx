@@ -6,7 +6,6 @@ import Ui from '@/ui';
 
 import Holdings from './holdings';
 import { useModel } from './model';
-import Prompt from './prompt';
 
 type Props = {
   data: {
@@ -30,9 +29,6 @@ export default function View({ data }: Props) {
 
   return (
     <>
-      {holdings.length === 0 && (
-        <Prompt onClick={handleOnAddHolding} />
-      )}
       <Holdings
         onAdd={handleOnAddHolding}
         onBudget={handleOnAddBudget}
