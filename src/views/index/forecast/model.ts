@@ -1,14 +1,15 @@
 'use client';
 
-import { ACCOUNTS, ASSETS } from '@/constants';
-import { OVERVIEWS } from '@/constants/calendar';
+import { ACCOUNTS, ASSETS, OVERVIEWS } from '@/constants';
 import type { Holding } from '@/types';
 
 import { useUpdateUrl } from '../hooks';
 
+import { getOverviewDisplayText } from './utils';
+
 function getDisplayValue(holdings: Holding[], view: string) {
-  if (view.includes('overview')) {
-    return OVERVIEWS[Number(view.replace('overview_', ''))];
+  if (Object.values(OVERVIEWS).includes(view)) {
+    return getOverviewDisplayText(view);
   }
 
   const holding = holdings.find(holding => holding.id === view);
@@ -36,6 +37,7 @@ export function useModel(holdings: Holding[], view: string) {
   const hasSavings = accounts.filter(account => account.type === 'savings').length > 0;
   const hasChecking = accounts.filter(account => account.type === 'checking').length > 0;
   const hasRetirement = assets.filter(asset => asset.type === 'retirement').length > 0;
+  const hasOtherAssets = assets.filter(asset => asset.type !== 'retirement').length > 0;
 
   return {
     accounts,
@@ -45,6 +47,7 @@ export function useModel(holdings: Holding[], view: string) {
     hasChecking,
     hasCreditCards,
     hasHoldings: holdings.length > 0,
+    hasOtherAssets,
     hasRetirement,
     hasSavings,
     handleOnView,

@@ -11,7 +11,7 @@ import {
 } from '../components';
 
 import { useModel } from './model';
-import { getIsOverviewDisabled } from './utils';
+import { getIsOverviewDisabled, getOverviewDisplayText } from './utils';
 
 type Props = {
   holdings: Holding[];
@@ -27,6 +27,7 @@ export default function Forecast({ holdings, view }: Props) {
     hasChecking,
     hasCreditCards,
     hasHoldings,
+    hasOtherAssets,
     hasRetirement,
     hasSavings,
     handleOnView,
@@ -48,22 +49,23 @@ export default function Forecast({ holdings, view }: Props) {
           onChange={handleOnView}
         >
           <ContainerSectionSelectGroup label="Overviews">
-            {overviews.map((overview, index) => (
+            {Object.entries(overviews).map(([key, value]) => (
               <ContainerSectionSelectOption
                 isDisabled={getIsOverviewDisabled(
-                  overview,
+                  value,
                   hasAccounts,
                   hasAssets,
                   hasChecking,
                   hasCreditCards,
                   hasHoldings,
+                  hasOtherAssets,
                   hasRetirement,
                   hasSavings,
                 )}
-                key={index}
-                value={`overview_${index}`}
+                key={key}
+                value={value}
               >
-                {overview}
+                {getOverviewDisplayText(value)}
               </ContainerSectionSelectOption>
             ))}
           </ContainerSectionSelectGroup>

@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
+import { OVERVIEWS } from '@/constants';
 import { useConfirm } from '@/hooks/useConfirm';
 import type { FormStateError, Holding, HoldingFormState } from '@/types';
 
@@ -56,7 +57,7 @@ export function useModel(onDone: () => void, holding?: Holding) {
     if (form instanceof HTMLFormElement) {
       form.requestSubmit();
 
-      updateUrl('view', 'overview_0');
+      updateUrl('view', OVERVIEWS.netWorth);
     }
   };
 

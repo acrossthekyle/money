@@ -1,3 +1,4 @@
+import { OVERVIEWS } from '@/constants';
 import { db } from '@/db';
 import type { Budget, Day, Holding, Preference } from '@/types';
 
@@ -77,7 +78,7 @@ export async function calendar(
   const budgets = await db.read('budgets') as Budget[];
   const preferences = await db.read('preferences') as Preference[];
 
-  let realizedView = view === null ? 'overview_0' : view;
+  let realizedView = view === null ? OVERVIEWS.netWorth : view;
 
   const saved = preferences.find(preference => preference.id === 'saved_view');
 

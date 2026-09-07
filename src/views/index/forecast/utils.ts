@@ -1,3 +1,28 @@
+import { OVERVIEWS } from '@/constants';
+
+export function getOverviewDisplayText(key: string) {
+  switch (key) {
+    case OVERVIEWS.netWorth:
+      return 'Net Worth';
+    case OVERVIEWS.allBankAccounts:
+      return 'All Bank Accounts';
+    case OVERVIEWS.creditCardAccounts:
+      return 'Credit Card Accounts';
+    case OVERVIEWS.savingsAccounts:
+      return 'Savings Accounts';
+    case OVERVIEWS.checkingAccounts:
+      return 'Checking Accounts';
+    case OVERVIEWS.allAssets:
+      return 'All Assets';
+    case OVERVIEWS.retirementAssets:
+      return 'Retirement Assets';
+    case OVERVIEWS.allOtherAssets:
+      return 'All Other Assets';
+    default:
+      return '';
+  };
+};
+
 export function getIsOverviewDisabled(
   overview: string,
   hasAccounts: boolean,
@@ -5,34 +30,39 @@ export function getIsOverviewDisabled(
   hasChecking: boolean,
   hasCreditCards: boolean,
   hasHoldings: boolean,
+  hasOtherAssets: boolean,
   hasRetirement: boolean,
   hasSavings: boolean,
 ) {
-  if (overview.toLowerCase() === 'net worth' && hasHoldings) {
+  if (overview === OVERVIEWS.netWorth && hasHoldings) {
     return false;
   }
 
-  if (overview.toLowerCase() === 'all financial accounts' && hasAccounts) {
+  if (overview === OVERVIEWS.allBankAccounts && hasAccounts) {
     return false;
   }
 
-  if (overview.toLowerCase() === 'credit card accounts' && hasCreditCards) {
+  if (overview === OVERVIEWS.creditCardAccounts && hasCreditCards) {
     return false;
   }
 
-  if (overview.toLowerCase() === 'savings accounts' && hasSavings) {
+  if (overview === OVERVIEWS.savingsAccounts && hasSavings) {
     return false;
   }
 
-  if (overview.toLowerCase() === 'checking accounts' && hasChecking) {
+  if (overview === OVERVIEWS.checkingAccounts && hasChecking) {
     return false;
   }
 
-  if (overview.toLowerCase() === 'all assets' && hasAssets) {
+  if (overview === OVERVIEWS.allAssets && hasAssets) {
     return false;
   }
 
-  if (overview.toLowerCase() === 'retirement assets' && hasRetirement) {
+  if (overview === OVERVIEWS.retirementAssets && hasRetirement) {
+    return false;
+  }
+
+  if (overview === OVERVIEWS.allOtherAssets && hasOtherAssets) {
     return false;
   }
 
