@@ -116,7 +116,7 @@ const styles = tw({
   amount: (isNegative: boolean) => tw(`
     font-bold
     text-2xl
-    ${isNegative ? 'text-rose-400' : 'text-current'}
+    ${isNegative ? 'text-rose-500' : 'text-current'}
   `),
   budgets: `
     text-tiny
