@@ -58,8 +58,8 @@ export default function Holding({ item, onBudget, onEdit }: Props) {
             onClick={() => onBudget(holding)}
             type="button"
           >
-            Add Budget
             <Plus className={styles.icon} />
+            Add Budget
           </button>
           <Link
             className={styles.action}
@@ -130,7 +130,7 @@ const styles = tw({
     flex gap-4
   `,
   action: `
-    flex items-center gap-1
+    flex items-center gap-2
     border border-(--foreground)/22.5
     px-3 py-1
     rounded-full
