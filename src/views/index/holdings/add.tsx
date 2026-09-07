@@ -16,7 +16,7 @@ export default function Add({ onClick }: Props) {
         onClick={onClick}
         type="button"
       >
-        <Plus className={styles.icon} /> Add Another
+        <Plus className={styles.icon} /> Add
       </button>
     </li>
   );
