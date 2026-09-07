@@ -1,9 +1,8 @@
 'use client';
 
 import { ACCOUNTS, ASSETS, OVERVIEWS } from '@/constants';
+import { useUpdateUrl } from '@/hooks/useUpdateUrl';
 import type { Holding } from '@/types';
-
-import { useUpdateUrl } from '../hooks';
 
 import { getOverviewDisplayText } from './utils';
 

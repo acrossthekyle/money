@@ -27,7 +27,7 @@ export default function Add({ onClick, type }: Props) {
 
   return (
     <ContainerSectionItem>
-      <ContainerSectionButton onClick={handleOnClick}>
+      <ContainerSectionButton isActive onClick={handleOnClick}>
         <ContainerSectionIcon icon="plus" />
         <ContainerSectionText>
           Add {type === 'budget' ? 'Budget' : 'Forecast'}

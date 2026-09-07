@@ -31,7 +31,7 @@ export default function Parent({
         >
           <option value="">Select ...</option>
           {accounts.length > 0 && (
-            <optgroup label="Financial Accounts">
+            <optgroup label="Bank Accounts">
               {accounts.map((account) => (
                 <option
                   disabled={account.id === parent}

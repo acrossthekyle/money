@@ -30,7 +30,7 @@ export default function Dialog({ holding, onDone }: Props) {
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
         <Ui.Dialog.DialogHeader onClose={onClose}>
-          {holding ? holding.name : 'Add'} Forecast
+          {holding ? `Edit: ${holding.name}` : 'Add'}
         </Ui.Dialog.DialogHeader>
         <Form
           holding={holding}

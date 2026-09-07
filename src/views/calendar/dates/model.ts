@@ -4,7 +4,7 @@ import { getMonth, getYear } from 'date-fns';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
-import { useUpdateUrl } from '../hooks';
+import { useUpdateUrl } from '@/hooks/useUpdateUrl';
 
 export function useModel() {
   const searchParams = useSearchParams();

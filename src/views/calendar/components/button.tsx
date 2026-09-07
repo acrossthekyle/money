@@ -35,14 +35,19 @@ const styles = tw({
     bg-(--background)
     border border-current/22.5
     p-1.25 px-2
+    font-medium
 
     motion-safe:duration-300
 
     hover:border-current/62.5
   `,
   active: `
-    bg-(--background)
-    text-(--foreground)
+    bg-(--foreground)/90
+    text-(--background)
+
+    hover:bg-(--background)
+    hover:text-(--foreground)
+    hover:border-(--foreground)/62.5
   `,
   disabled: `
     opacity-50

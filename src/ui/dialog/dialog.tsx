@@ -26,7 +26,7 @@ export default function Dialog({
       id={id}
       onClick={onBackdrop}
       ref={instance}
-      onKeyDown={onCancel}
+      onCancel={onCancel}
     >
       {children}
     </dialog>
@@ -35,12 +35,14 @@ export default function Dialog({
 
 const styles = tw({
   container: `
-    absolute
+    absolute inset-0
     w-full max-w-full
-    h-full max-h-full
+    h-full max-h-none
+    flex flex-col items-center
+    p-4
     bg-transparent
     outline-none
-    overflow-hidden
+    overflow-y-auto
     duration-450
 
     backdrop:absolute

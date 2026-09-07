@@ -5,11 +5,9 @@ import { useState } from 'react';
 
 import { useBudget } from '@/hooks/useBudget';
 import { useHolding } from '@/hooks/useHolding';
-import type { Budget, DayBudget, Holding } from '@/types';
+import type { Budget, Holding } from '@/types';
 
-export function useModel(holdings: Holding[], view: string) {
-  const [budget, setBudget] = useState<Budget | undefined>();
-  const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
+export function useModel(holdings: Holding[], budgets: Budget[]) {
   const [holding, setHolding] = useState<Holding | undefined>();
   const [message, setMessage] = useState('');
 
@@ -24,36 +22,8 @@ export function useModel(holdings: Holding[], view: string) {
     }, 1500);
   };
 
-  const getBudget = async (id: string) => {
-    const response = await fetch(`/api/budgets?id=${id}`);
-
-    if (response.ok) {
-      const result = await response.json();
-
-      return result;
-    }
-
-    return undefined;
-  };
-
-  const makeBudgetReady = async (item: DayBudget) => {
-    const data = await getBudget(item.id);
-
-    setBudget(data);
-  };
-
-  const handleOnAddBudget = (day: string) => {
-    setDate(day);
-
-    setBudget(undefined);
-
-    onBudget();
-  };
-
-  const handleOnEditBudget = async (day: string, item: DayBudget) => {
-    setDate(day);
-
-    await makeBudgetReady(item);
+  const handleOnAddBudget = (item: Holding) => {
+    setHolding(item);
 
     onBudget();
   };
@@ -64,22 +34,28 @@ export function useModel(holdings: Holding[], view: string) {
     onHolding();
   };
 
-  const handleOnEditHolding = () => {
-    setHolding(holdings.find(holding => holding.id === view));
+  const handleOnEditHolding = (item: Holding) => {
+    setHolding(item);
 
     onHolding();
   };
 
+  const mapped = holdings.map((holding) => {
+    return {
+      holding,
+      budgets: budgets.filter(budget => budget.parent === holding.id).length,
+    };
+  });
+
   return {
-    budget,
-    date,
+    date: format(new Date(), 'yyyy-MM-dd'),
     handleOnAddBudget,
-    handleOnEditBudget,
     handleOnAddHolding,
     handleOnEditHolding,
     handleOnReload,
-    hasHoldings: holdings.length > 0,
+    holdings: mapped,
     holding,
+    parent: holding?.id || '',
     message,
   };
 }

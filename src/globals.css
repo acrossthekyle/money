@@ -38,6 +38,16 @@ body {
     height: var(--dialog-backdrop-height, 100vh);
   }
 
+  dialog {
+    z-index: -1;
+    visibility: hidden;
+  }
+
+  dialog.is-active {
+    z-index: 0;
+    visibility: visible;
+  }
+
   dialog.is-active::backdrop {
     opacity: 1;
   }

@@ -8,7 +8,13 @@ export default async function Links() {
     <nav className={styles.container}>
       <Link className={styles.link} href="/">
         <Scale className={styles.icon} />
-        <span>Money: A budgeting application</span>
+        <span>Money</span>
+      </Link>
+      <Link className={styles.link} href="/">
+        Overview
+      </Link>
+      <Link className={styles.link} href="/calendar">
+        Calendar
       </Link>
     </nav>
   );

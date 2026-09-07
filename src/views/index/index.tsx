@@ -1,82 +1,55 @@
 'use client';
 
-import type { Day, Holding } from '@/types';
+import { Dialogs } from '@/dialogs';
+import type { Budget, Holding } from '@/types';
+import Ui from '@/ui';
 
-import Add from './add';
-import Calendar from './calendar';
-import {
-  Container,
-  ContainerSection,
-  ContainerSectionItems,
-} from './components';
-import Dates from './dates';
-import Dialogs from './dialogs';
-import Edit from './edit';
-import Forecast from './forecast';
-import Message from './message';
+import Holdings from './holdings';
 import { useModel } from './model';
 import Prompt from './prompt';
 
 type Props = {
   data: {
+    budgets: Budget[];
     holdings: Holding[];
-    days: Array<Day[]>;
-    view: string;
   };
 };
 
 export default function View({ data }: Props) {
   const {
-    budget,
     date,
     handleOnAddBudget,
-    handleOnEditBudget,
     handleOnAddHolding,
     handleOnEditHolding,
     handleOnReload,
-    hasHoldings,
+    holdings,
     holding,
     message,
-  } = useModel(data.holdings, data.view);
+    parent,
+  } = useModel(data.holdings, data.budgets);
 
   return (
     <>
-      {!hasHoldings && (
+      {holdings.length === 0 && (
         <Prompt onClick={handleOnAddHolding} />
       )}
-      <Container>
-        <ContainerSection>
-          <ContainerSectionItems>
-            <Forecast holdings={data.holdings} view={data.view} />
-            <Edit onClick={handleOnEditHolding} view={data.view} />
-            <Add onClick={handleOnAddHolding} type="holding" />
-            <Add onClick={handleOnAddBudget} type="budget" />
-          </ContainerSectionItems>
-        </ContainerSection>
-        <ContainerSection>
-          <ContainerSectionItems>
-            <Dates />
-          </ContainerSectionItems>
-        </ContainerSection>
-      </Container>
-      <Calendar
-        days={data.days}
-        canInteract={!data.view.includes('overview')}
-        onAdd={handleOnAddBudget}
-        onEdit={handleOnEditBudget}
+      <Holdings
+        onAdd={handleOnAddHolding}
+        onBudget={handleOnAddBudget}
+        onEdit={handleOnEditHolding}
+        items={holdings}
       />
       <Dialogs.Budget
-        budget={budget}
         date={date}
         holdings={data.holdings}
         onDone={handleOnReload}
-        parent={data.view}
+        parent={parent}
       />
       <Dialogs.Holding
         holding={holding}
         onDone={handleOnReload}
       />
-      <Message value={message} />
+      <Ui.Alerts.Message value={message} />
     </>
   );
 };

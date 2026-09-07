@@ -1,4 +1,3 @@
-import { Lock } from 'lucide-react';
 import { cookies } from 'next/headers';
 
 import { logout } from '@/actions/auth/logout';
@@ -15,7 +14,6 @@ export default async function Logout() {
   return (
     <form action={logout}>
       <button className={styles.container} type="submit">
-        <Lock className={styles.icon} />
         Logout
       </button>
     </form>
@@ -29,8 +27,5 @@ const styles = tw({
     text-tiny
     font-bold
     p-2
-  `,
-  icon: `
-    w-3 h-3
   `,
 });

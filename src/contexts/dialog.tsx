@@ -43,15 +43,50 @@ export default function DialogProvider({ children }: PropsWithChildren) {
     updateBackdropHeight();
   }, [updateBackdropHeight]);
 
+  const handleOnClose = useCallback(() => {
+    const activeNode = dialogRefs.current[dialog];
+
+    setIsOpen(false);
+    setDialog('');
+
+    if (!activeNode) {
+      return;
+    }
+
+    const handleTransitionEnd = () => {
+      activeNode.close();
+    };
+
+    activeNode.addEventListener('transitionend', handleTransitionEnd, { once: true });
+  }, [dialog]);
+
+  const handleOnEscape = useCallback((event: WindowEventMap['keyup']) => {
+    const activeNode = dialogRefs.current[dialog];
+
+    if (!activeNode) {
+      return;
+    }
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+
+      handleOnClose();
+    }
+  }, [dialog, handleOnClose]);
+
   useLayoutEffect(() => {
     if (isOpen) {
       updateBackdropHeight();
 
       window.addEventListener('resize', handleOnWindowResize);
+      window.addEventListener('keyup', handleOnEscape);
 
-      return () => window.removeEventListener('resize', handleOnWindowResize);
+      return () => {
+        window.removeEventListener('resize', handleOnWindowResize);
+        window.removeEventListener('keyup', handleOnEscape);
+      };
     }
-  }, [handleOnWindowResize, isOpen, updateBackdropHeight]);
+  }, [handleOnEscape, handleOnWindowResize, isOpen, updateBackdropHeight]);
 
   const handleOnRegister = useCallback((name: string, node: HTMLDialogElement | null) => {
     dialogRefs.current[name] = node;
@@ -73,32 +108,21 @@ export default function DialogProvider({ children }: PropsWithChildren) {
     requestAnimationFrame(() => {
       setIsOpen(true);
       setDialog(name);
+
+      setTimeout(() => {
+        const firstButton = activeNode.querySelector('button');
+
+        if (firstButton) {
+          firstButton.focus();
+        }
+      }, 2000);
     });
   }, [updateBackdropHeight]);
 
-  const handleOnClose = useCallback(() => {
-    const activeNode = dialogRefs.current[dialog];
+  const handleOnCancel = useCallback((event: React.SyntheticEvent<HTMLDialogElement>) => {
+    event.preventDefault();
 
-    setIsOpen(false);
-    setDialog('');
-
-    if (!activeNode) {
-      return;
-    }
-
-    const handleTransitionEnd = () => {
-      activeNode.close();
-    };
-
-    activeNode.addEventListener('transitionend', handleTransitionEnd, { once: true });
-  }, [dialog]);
-
-  const handleOnCancel = useCallback((event: KeyboardEvent<HTMLDialogElement>) => {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-
-      handleOnClose();
-    }
+    handleOnClose();
   }, [handleOnClose]);
 
   const handleOnBackdrop = useCallback((event: MouseEvent<HTMLDialogElement>) => {

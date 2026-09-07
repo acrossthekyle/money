@@ -24,6 +24,7 @@ export default function Category({ value }: Props) {
         <option value="insurance">Insurance</option>
         <option value="taxes">Taxes</option>
         <option value="payment">Payment</option>
+        <option value="shopping">Shopping</option>
       </Ui.Form.Select>
     </Ui.Form.Field>
   );

@@ -1,9 +1,9 @@
 import Budget from './budget';
+import Disclaimer from './disclaimer';
 import Holding from './holding';
 
-const dialogs = {
+export const Dialogs = {
   Budget,
+  Disclaimer,
   Holding,
 };
-
-export default dialogs;

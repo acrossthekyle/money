@@ -10,7 +10,7 @@ export default async function Credit() {
       href="https://acrossthekyle.com"
       target="_blank"
     >
-      <span>Created By</span>
+      <span>About the Developer</span>
       <ArrowUpRight className={styles.icon} />
     </Link>
   );

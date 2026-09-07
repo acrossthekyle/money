@@ -5,9 +5,8 @@ import { useActionState, useEffect, useState } from 'react';
 import { put } from '@/actions/holdings/put';
 import { OVERVIEWS } from '@/constants';
 import { useConfirm } from '@/hooks/useConfirm';
+import { useUpdateUrl } from '@/hooks/useUpdateUrl';
 import type { FormStateError, Holding, HoldingFormState } from '@/types';
-
-import { useUpdateUrl } from '../../../hooks';
 
 export function useModel(onDone: () => void, holding?: Holding) {
   const putable = put.bind(null, holding || null);

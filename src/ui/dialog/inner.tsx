@@ -14,18 +14,17 @@ export default function Inner({ children, isActive }: React.PropsWithChildren<Pr
 
 const styles = {
   container: (isActive: boolean) => tw(`
-    absolute left-1/2
-    -translate-x-1/2
     w-full max-w-xl
-    overflow-y-scroll
-    scroll-smooth
+    h-auto
+    mt-auto
     bg-(--background)
     border border-current/12.5
-    rounded-md
+    rounded-lg
 
     motion-safe:duration-300
+    transition-all
     ${isActive
-      ? `bottom-4 scale-100 opacity-100`
-      : `-bottom-30 scale-90 opacity-0`}
+      ? `scale-100 opacity-100 translate-y-0`
+      : `scale-90 opacity-0 translate-y-8`}
   `),
 };

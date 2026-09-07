@@ -21,6 +21,7 @@ const Form = z.object({
     'insurance',
     'taxes',
     'payment',
+    'shopping',
   ]),
   type: z.enum(['debit', 'credit']),
   transferee: z.string().nullable().optional(),

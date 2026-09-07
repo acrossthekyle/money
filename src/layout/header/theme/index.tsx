@@ -31,6 +31,7 @@ const styles = tw({
     text-xtiny
     uppercase
     tracking-widest
+    p-2
   `,
   circle: `
     w-4 h-4
