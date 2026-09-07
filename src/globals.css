@@ -34,18 +34,21 @@ body {
     cursor: pointer;
   }
 
+  dialog {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: -100vw;
+    width: 100vw;
+  }
+
   dialog::backdrop {
     height: var(--dialog-backdrop-height, 100vh);
   }
 
-  dialog {
-    z-index: -1;
-    visibility: hidden;
-  }
-
   dialog.is-active {
     z-index: 0;
-    visibility: visible;
+    left: 0;
   }
 
   dialog.is-active::backdrop {

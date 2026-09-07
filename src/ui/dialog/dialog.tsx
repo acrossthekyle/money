@@ -43,7 +43,6 @@ const styles = tw({
     bg-transparent
     outline-none
     overflow-y-auto
-    duration-450
 
     backdrop:absolute
     backdrop:outline-none

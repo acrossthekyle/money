@@ -58,7 +58,7 @@ export default function View({ data }: Props) {
 const styles = tw({
   container: `
     flex items-center justify-center
-    h-svh
+    h-[calc(100svh-4rem)]
   `,
   form: `
     flex flex-col gap-4
