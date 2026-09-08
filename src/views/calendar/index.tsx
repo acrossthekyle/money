@@ -1,5 +1,6 @@
 'use client';
 
+import { OVERVIEWS } from '@/constants';
 import { Dialogs } from '@/dialogs';
 import tw from '@/styles';
 import type { Day, Holding } from '@/types';
@@ -32,7 +33,7 @@ export default function View({ data }: Props) {
   } = useModel();
 
   return (
-    <>
+    <main>
       <Options>
         <OptionsSection className={styles.section}>
           <Back />
@@ -45,7 +46,7 @@ export default function View({ data }: Props) {
       </Options>
       <Calendar
         days={data.days}
-        canInteract={!data.view.includes('overview')}
+        canInteract={!Object.values(OVERVIEWS).includes(data.view)}
         onAdd={handleOnAddBudget}
         onEdit={handleOnEditBudget}
       />
@@ -57,7 +58,7 @@ export default function View({ data }: Props) {
         parent={data.view}
       />
       <Ui.Alerts.Message value={message} />
-    </>
+    </main>
   );
 };
 

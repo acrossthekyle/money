@@ -1,5 +1,6 @@
 'use client';
 
+import { OVERVIEWS } from '@/constants';
 import type { Budget, Holding } from '@/types';
 import Ui from '@/ui';
 
@@ -11,6 +12,31 @@ type Props = {
   parent: string;
 };
 
+type GroupProps = {
+  label: string;
+  shouldGroup: boolean;
+};
+
+function Group({
+  children,
+  label,
+  shouldGroup,
+}: React.PropsWithChildren<GroupProps>) {
+  if (shouldGroup) {
+    return (
+      <optgroup label={label}>
+        {children}
+      </optgroup>
+    );
+  }
+
+  return (
+    <>
+      {children}
+    </>
+  );
+}
+
 export default function Parent({
   accounts,
   assets,
@@ -18,10 +44,14 @@ export default function Parent({
   onChange,
   parent,
 }: Props) {
-  if (parent.includes('overview')) {
+  if (Object.values(OVERVIEWS).includes(parent)) {
+    const shouldGroup = accounts.length > 0 && assets.length > 0;
+
     return (
       <Ui.Form.Field>
-        <Ui.Form.Label id="parent">Holding</Ui.Form.Label>
+        <Ui.Form.Label id="parent">
+          Account/Asset
+        </Ui.Form.Label>
         <Ui.Form.Select
           id="parent"
           name="parent"
@@ -30,32 +60,28 @@ export default function Parent({
           onChange={onChange}
         >
           <option value="">Select ...</option>
-          {accounts.length > 0 && (
-            <optgroup label="Bank Accounts">
-              {accounts.map((account) => (
-                <option
-                  disabled={account.id === parent}
-                  key={account.id}
-                  value={account.id}
-                >
-                  {account.name}
-                </option>
-              ))}
-            </optgroup>
-          )}
-          {assets.length > 0 && (
-            <optgroup label="Assets">
-              {assets.map((asset) => (
-                <option
-                  disabled={asset.id === parent}
-                  key={asset.id}
-                  value={asset.id}
-                >
-                  {asset.name}
-                </option>
-              ))}
-            </optgroup>
-          )}
+          <Group label="Bank Accounts" shouldGroup={shouldGroup}>
+            {accounts.map((account) => (
+              <option
+                disabled={account.id === parent}
+                key={account.id}
+                value={account.id}
+              >
+                {account.name}
+              </option>
+            ))}
+          </Group>
+          <Group label="Assets" shouldGroup={shouldGroup}>
+            {assets.map((asset) => (
+              <option
+                disabled={asset.id === parent}
+                key={asset.id}
+                value={asset.id}
+              >
+                {asset.name}
+              </option>
+            ))}
+          </Group>
         </Ui.Form.Select>
       </Ui.Form.Field>
     );

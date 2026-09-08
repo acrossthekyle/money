@@ -5,9 +5,9 @@ import { useState } from 'react';
 
 import { useBudget } from '@/hooks/useBudget';
 import { useHolding } from '@/hooks/useHolding';
-import type { Budget, Holding } from '@/types';
+import type { Holding } from '@/types';
 
-export function useModel(holdings: Holding[], budgets: Budget[]) {
+export function useModel() {
   const [holding, setHolding] = useState<Holding | undefined>();
   const [message, setMessage] = useState('');
 
@@ -40,20 +40,12 @@ export function useModel(holdings: Holding[], budgets: Budget[]) {
     onHolding();
   };
 
-  const mapped = holdings.map((holding) => {
-    return {
-      holding,
-      budgets: budgets.filter(budget => budget.parent === holding.id).length,
-    };
-  });
-
   return {
     date: format(new Date(), 'yyyy-MM-dd'),
     handleOnAddBudget,
     handleOnAddHolding,
     handleOnEditHolding,
     handleOnReload,
-    holdings: mapped,
     holding,
     parent: holding?.id || '',
     message,

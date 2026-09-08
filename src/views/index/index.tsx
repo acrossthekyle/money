@@ -1,16 +1,21 @@
 'use client';
 
 import { Dialogs } from '@/dialogs';
-import type { Budget, Holding } from '@/types';
+import tw from '@/styles';
+import type { Holding, Metric } from '@/types';
 import Ui from '@/ui';
 
 import Holdings from './holdings';
 import { useModel } from './model';
+import Prompt from './prompt';
+import Snapshots from './snapshots';
 
 type Props = {
   data: {
-    budgets: Budget[];
     holdings: Holding[];
+    metrics: {
+      monthly: Metric[];
+    };
   };
 };
 
@@ -21,20 +26,27 @@ export default function View({ data }: Props) {
     handleOnAddHolding,
     handleOnEditHolding,
     handleOnReload,
-    holdings,
     holding,
     message,
     parent,
-  } = useModel(data.holdings, data.budgets);
+  } = useModel();
 
   return (
     <>
-      <Holdings
-        onAdd={handleOnAddHolding}
-        onBudget={handleOnAddBudget}
-        onEdit={handleOnEditHolding}
-        items={holdings}
-      />
+      <main className={styles.container}>
+        <Holdings
+          onAdd={handleOnAddHolding}
+          onBudget={handleOnAddBudget}
+          onEdit={handleOnEditHolding}
+          items={data.holdings}
+          metrics={data.metrics}
+        />
+        <Snapshots items={data.holdings} />
+        <Ui.Alerts.Message value={message} />
+        {data.holdings.length === 0 && (
+          <Prompt onClick={handleOnAddHolding} />
+        )}
+      </main>
       <Dialogs.Budget
         date={date}
         holdings={data.holdings}
@@ -45,7 +57,13 @@ export default function View({ data }: Props) {
         holding={holding}
         onDone={handleOnReload}
       />
-      <Ui.Alerts.Message value={message} />
     </>
   );
 };
+
+const styles = tw({
+  container: `
+    grid grid-cols-24 gap-4
+    px-4 pb-4
+  `,
+});

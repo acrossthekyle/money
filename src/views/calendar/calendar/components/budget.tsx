@@ -36,7 +36,7 @@ const styles = tw({
     rounded-sm
     p-1.5 py-0.75
     leading-[1]
-    bg-(--background)
+    bg-(--foreground)/5
 
     motion-safe:duration-300
     motion-safe:hover:border-current/62.5

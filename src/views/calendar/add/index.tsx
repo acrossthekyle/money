@@ -29,7 +29,6 @@ export default function Add({ onClick, type }: Props) {
   return (
     <OptionsSectionButton
       className={styles.container}
-      isActive
       onClick={handleOnClick}
     >
       <OptionsSectionIcon icon="plus" />

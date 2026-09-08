@@ -99,7 +99,7 @@ export default function Form({
         <Ui.Form.Input
           name="update"
           type="text"
-          value={budget === undefined || budget?.schedule === 'once' ? 'none' : update}
+          value={budget === undefined || budget?.schedule === 'once' ? 'this' : update}
           readOnly
           required={budget !== undefined}
           className="hidden"
@@ -144,7 +144,7 @@ export default function Form({
             </Ui.Form.Button>
           ) : (
             <Ui.Form.Button isContinue onClick={handleOnContinue}>
-              Submit
+              {budget?.schedule === 'once' ? 'Update' : 'Submit'}
             </Ui.Form.Button>
           )}
         </div>

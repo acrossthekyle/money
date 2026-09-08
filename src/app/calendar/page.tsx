@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 import { calendar } from '@/algorithms/calendar';
+import { preferences } from '@/algorithms/preferences';
+import { all as allBudgets } from '@/getters/budgets';
 import { all as allHoldings } from '@/getters/holdings';
 import Ui from '@/ui';
 import View from '@/views/calendar';
@@ -22,15 +24,18 @@ export default async function Page({
 }: Props) {
   const params = await searchParams;
 
-  const view = params.view || null;
-  const month = params.month || getMonth(new Date);
-  const year = params.year || getYear(new Date);
+  const month = Number(params.month || getMonth(new Date));
+  const year = Number(params.year || getYear(new Date));
 
+  const { saved } = await preferences(params.view as string || null);
+  const { budgets } = await allBudgets();
   const { holdings } = await allHoldings();
-  const { days, saved } = await calendar(
-    view as string | null,
-    month as string,
-    year as string,
+  const { days } = await calendar(
+    holdings,
+    budgets,
+    saved,
+    month,
+    year,
   );
 
   return (

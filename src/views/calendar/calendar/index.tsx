@@ -1,5 +1,3 @@
-import { addDays, format, startOfMonth } from 'date-fns';
-
 import type { Day, DayBudget } from '@/types';
 import { formatNumber } from '@/utils';
 
@@ -24,30 +22,6 @@ type Props = {
 };
 
 export default function Calendar({ canInteract, days, onAdd, onEdit }: Props) {
-  if (days.length === 0) {
-    const today = addDays(startOfMonth(new Date()), -3);
-
-    return (
-      <Container>
-        {Array.from({ length: 35 }, (_, index) => (
-          <ContainerCell isFaded={index < 3} isHighlighted={false} key={index}>
-            <ContainerCellDate
-              isFaded={index < 3 || index > 32}
-              isHighlighted={false}
-              value={format(addDays(today, index), 'yyyy-MM-dd')}
-            />
-            <ContainerCellBalance
-              isFaded={index < 3 || index > 32}
-              isNegative={false}
-            >
-              {formatNumber(0.00)}
-            </ContainerCellBalance>
-          </ContainerCell>
-        ))}
-      </Container>
-    );
-  }
-
   return (
     <Container>
       {days.map((day) => (

@@ -35,7 +35,6 @@ const styles = tw({
   container: `
     flex items-center gap-1
     w-fit
-    h-6
     rounded-full
     bg-(--background)
     border border-current/22.5

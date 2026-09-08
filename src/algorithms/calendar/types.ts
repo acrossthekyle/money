@@ -19,3 +19,14 @@ export type RawDay = {
   isPad: boolean;
   isToday: boolean;
 };
+
+export type RawInterval = {
+  balance: string;
+  budgets: RawBudget[];
+  current: Date;
+  date: string;
+  isLastDayOfMonth: boolean;
+  isPad: boolean;
+  isToday: boolean;
+  isTodayOrAfter: boolean;
+};

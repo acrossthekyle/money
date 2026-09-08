@@ -4,157 +4,185 @@ import { ChevronRight, Pen, Plus } from 'lucide-react';
 import Link from 'next/link';
 
 import tw from '@/styles';
-import type { Holding } from '@/types';
+import type { Holding, Metric } from '@/types';
 import { formatNumber } from '@/utils';
 
-import type { MappedHolding } from '../types';
-
 type Props = {
-  item: MappedHolding;
+  data?: Metric;
+  item: Holding;
   onBudget: (holding: Holding) => void;
   onEdit: (holding: Holding) => void;
 };
 
-export default function Holding({ item, onBudget, onEdit }: Props) {
-  const { holding, budgets } = item;
-
-  const isNegative = holding.type === 'credit_card'
-    ? Number(holding.balance) > 0 ? true : false
-    : Number(holding.balance) < 0;
+export default function Holding({ data, item, onBudget, onEdit }: Props) {
+  const isNegative = item.type === 'credit_card'
+    ? Number(item.balance) > 0 ? true : false
+    : Number(item.balance) < 0;
 
   return (
     <li className={styles.container}>
-      <div className={styles.row}>
-        <h3 className={styles.header}>
-          <span className={styles.title}>{holding.name}</span>
-          <span className={styles.footnote}>
-            {holding.type.replace('_', ' ')} {holding.number && '...'} {holding.number}
-          </span>
-        </h3>
-        <p className={styles.balance}>
-          <span className={styles.amount(isNegative)}>
-            {isNegative ? '-' : ''}${formatNumber(Number(holding.balance))}
-          </span>
+      <div className={styles.upper}>
+        <h2 className={styles.header}>
+          {item.name}
+        </h2>
+        <p className={styles.footnote}>
+          {item.type.replace('_', ' ')} {item.number && '...'} {item.number}
         </p>
-      </div>
-      <div className={styles.footer}>
+        <p className={styles.balance(isNegative)}>
+          {isNegative ? '-' : ''}${formatNumber(Number(item.balance))}
+        </p>
+        <p className={styles.footnote}>
+          Current Balance
+        </p>
         <p className={styles.budgets}>
-          <span className={styles.count}>{budgets}</span> Budget{budgets > 1 ? 's' : ''}
+          {data?.next ? (
+            <span>
+              Next Budget:
+              <span className={styles.faded}>{' '}{data.next.name}</span>
+            </span>
+          ) : (
+            <span>0 Budgets</span>
+          )}
         </p>
-        <nav
-          aria-label="account/asset supplementary actions"
-          className={styles.actions}
+        <button
+          className={`${styles.action} ${styles.edit}`}
+          onClick={() => onEdit(item)}
+          type="button"
         >
-          <button
-            className={styles.action}
-            onClick={() => onEdit(holding)}
-            type="button"
-          >
-            <Pen className={styles.icon} /> Edit
-          </button>
-          <button
-            className={styles.action}
-            onClick={() => onBudget(holding)}
-            type="button"
-          >
-            <Plus className={styles.icon} />
-            Add Budget
-          </button>
-          <Link
-            className={styles.action}
-            href={`/calendar?view=${holding.id}`}
-          >
-            View
-            <ChevronRight className={styles.icon} />
-          </Link>
-        </nav>
+          <Pen className={styles.icon} /> Edit
+        </button>
+        <ul className={styles.averages}>
+          <li>
+            <h3 className={`${styles.heading} ${styles.positive}`}>
+              Income <span className={styles.faded}>this month</span>
+            </h3>
+            <p className={styles.average}>
+              ${data?.income ? formatNumber(Number(data.income)) : '0.00'}
+            </p>
+          </li>
+          <li>
+            <h3 className={`${styles.heading} ${styles.negative}`}>
+              Expenses <span className={styles.faded}>this month</span>
+            </h3>
+            <p className={styles.average}>
+              ${data?.expenses ? formatNumber(Number(data.expenses)) : '0.00'}
+            </p>
+          </li>
+        </ul>
       </div>
+      <nav
+        aria-label="account/asset supplementary actions"
+        className={styles.footer}
+      >
+        <button
+          className={styles.action}
+          onClick={() => onBudget(item)}
+          type="button"
+        >
+          <Plus className={styles.icon} />
+          Add Budget
+        </button>
+        <Link
+          className={styles.action}
+          href={`/calendar?view=${item.id}`}
+        >
+          View Budgets
+          <ChevronRight className={styles.icon} />
+        </Link>
+      </nav>
     </li>
   );
 };
 
 const styles = tw({
   container: `
-    flex flex-col gap-2 justify-between
-    w-full h-48
+    flex flex-col justify-between
+    w-full
     rounded-lg
     border border-current/12.5
     bg-(--background)
+  `,
+  upper: `
+    relative
     p-4
   `,
-  row: `
-    flex items-start justify-between
-    mb-4
-  `,
   header: `
-    flex-2
-    flex flex-col gap-1
-
-    lg:gap-2
-  `,
-  title: `
-    font-thin
-    text-xl
-
-    md:text-2xl
+    pr-16
+    font-black
+    text-lg
+    truncate
   `,
   footnote: `
     text-current/60
-    text-tiny
+    text-xtiny
     uppercase
     capitalize
-    font-light
-    tracking-wide
   `,
-  balance: `
-    flex-1
-    flex flex-col gap-0 items-end
-    mt-1
-  `,
-  amount: (isNegative: boolean) => tw(`
+  balance: (isNegative: boolean) => tw(`
+    mt-2
     font-light
-    text-lg
-    ${isNegative ? 'text-rose-500' : 'text-current'}
-
-    md:text-xl
-    lg:text-2xl
+    text-2xl
+    ${isNegative ? 'text-red-600 dark:text-red-300' : 'text-current'}
   `),
-  footer: `
-    flex flex-col justify-between gap-4
-
-    lg:flex-row
-    lg:items-end
-  `,
   budgets: `
+    mt-3 pr-18
     text-tiny
+    font-medium
     uppercase
-    tracking-wider
-    font-light
+    truncate
   `,
-  count: `
-    font-black
-  `,
-  actions: `
-    flex gap-4
+  edit: `
+    absolute top-4 right-3.5
   `,
   action: `
     flex items-center gap-2
+    w-fit
     border border-(--foreground)/22.5
-    px-3 py-1
+    px-2 py-1.25
+    bg-(--background)
     rounded-full
-    text-tiny text-(--background)
+    text-xtiny
     font-medium
-    bg-(--foreground)/90
     uppercase
 
     motion-safe:duration-300
 
-    hover:bg-(--background)
-    hover:text-(--foreground)
     hover:border-(--foreground)/62.5
   `,
   icon: `
     w-2.5 h-2.5
     stroke-3
+  `,
+  footer: `
+    flex flex-col justify-end gap-4
+    p-3
+    border-t border-current/12.5
+    bg-(--foreground)/5
+
+    lg:flex-row
+    lg:justify-between
+    lg:items-end
+  `,
+  averages: `
+    absolute bottom-3 right-4
+    flex flex-col gap-1.5
+    text-right
+  `,
+  heading: `
+    font-medium
+    text-xtiny
+    uppercase
+  `,
+  average: `
+    text-base
+  `,
+  faded: `
+    text-current/50
+  `,
+  positive: `
+    text-green-900 dark:text-green-200
+  `,
+  negative: `
+    text-red-900 dark:text-red-200
   `,
 });

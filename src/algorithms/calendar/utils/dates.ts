@@ -13,21 +13,33 @@ import {
   startOfWeek,
 } from 'date-fns';
 
-import type { RawDay, RawBudget } from '../types';
+import { DATE_FORMAT } from '@/constants';
+
+import type { RawDay, RawBudget, RawInterval } from '../types';
 
 import { updateBalance } from './balance';
+import {
+  createImmutableInterestBudget,
+  calculateInterestEarned,
+  calculateMonthlyInterestRate,
+} from './interest';
 
-const FORMAT = 'yyyy-MM-dd';
+export function trimCalendarIntervals(
+  intervals: { intervals: RawInterval[]; paddedStart: Date; },
+) {
+  const index = intervals.intervals
+    .findIndex(interval =>
+      interval.date === format(intervals.paddedStart, DATE_FORMAT)
+    );
 
-export function createDays(
-  holdingType: string,
-  amount: number,
-  data: RawBudget[],
-  selectedMonth: string,
-  selectedYear: string,
-  interestRate?: string,
-): RawDay[] {
-  const targetDate = new Date(Number(selectedYear), Number(selectedMonth), 1);
+  return index !== -1 ? intervals.intervals.slice(index) : intervals.intervals;
+};
+
+export function createCalendarIntervals(
+  month: number,
+  year: number,
+): { intervals: RawInterval[]; paddedStart: Date; } {
+  const targetDate = new Date(year, month, 1);
   const monthStart = startOfMonth(targetDate);
   const monthEnd = endOfMonth(targetDate);
 
@@ -37,58 +49,66 @@ export function createDays(
   const todayStart = startOfMonth(new Date());
   const calculationStart = isBefore(paddedStart, todayStart) ? paddedStart : todayStart;
 
+  return {
+    intervals: eachDayOfInterval({ start: calculationStart, end: paddedEnd })
+      .map(current => ({
+        balance: '0',
+        budgets: [],
+        current,
+        date: format(current, DATE_FORMAT),
+        isLastDayOfMonth: isLastDayOfMonth(current),
+        isPad: !isSameMonth(current, monthStart),
+        isToday: isToday(current),
+        isTodayOrAfter: isToday(current) || isAfter(current, startOfDay(new Date())),
+      })),
+    paddedStart,
+  };
+};
+
+export function createDays(
+  holdingType: string,
+  amount: number,
+  data: RawBudget[],
+  month: number,
+  year: number,
+  interestRate?: string,
+): RawDay[] {
   let balance = Number(amount);
 
-  const parsedInterest = Number(interestRate);
-  const isAllowedType = ['savings', 'checking', 'retirement', 'taxable', 'health'].includes(holdingType);
-  const hasInterest = isAllowedType && interestRate && !isNaN(parsedInterest) && parsedInterest > 0;
-  const monthlyRate = hasInterest ? Math.pow(1 + (parsedInterest / 100), 1 / 12) - 1 : 0;
-  const interestLabel = ['retirement', 'taxable', 'health'].includes(holdingType)
-    ? 'Appreciation'
-    : 'Interest';
+  const interest = calculateMonthlyInterestRate(holdingType, interestRate);
 
-  const days = eachDayOfInterval({ start: calculationStart, end: paddedEnd }).map((current: Date) => {
-    const budgetsForCurrent = data.filter((budget: RawBudget) =>
-      budget.iterations.includes(format(current, FORMAT))
-    );
+  const intervals = createCalendarIntervals(month, year);
 
-    budgetsForCurrent.forEach((budget: RawBudget) => {
-      balance = updateBalance(holdingType, balance, budget);
-    });
+  return trimCalendarIntervals({
+    ...intervals,
+    intervals: intervals.intervals.map(interval => {
+      const budgets = data.filter((budget: RawBudget) =>
+        budget.iterations.includes(format(interval.current, DATE_FORMAT))
+      );
 
-    if (hasInterest && isLastDayOfMonth(current)) {
-      const today = startOfDay(new Date());
-      const isTodayOrAfter = isToday(current) || isAfter(current, today);
+      budgets.forEach((budget: RawBudget) => {
+        balance = updateBalance(holdingType, balance, budget);
+      });
 
-      if (isTodayOrAfter) {
-        const interestEarned = balance * monthlyRate;
+      if (interest.rate > 0 && interval.isLastDayOfMonth && interval.isTodayOrAfter) {
+        const interestEarned = calculateInterestEarned(balance, interest.rate);
 
         balance += interestEarned;
 
-        budgetsForCurrent.push({
-          id: `interest-${format(current, FORMAT)}`,
-          name: interestLabel,
-          amount: Math.abs(interestEarned).toFixed(2),
-          type: 'credit',
-          iterations: [format(current, FORMAT)],
-          isTransfer: false,
-          displayType: 'credit',
-          isBudget: false,
-        } as RawBudget);
+        budgets.push(
+          createImmutableInterestBudget(
+            interval.date,
+            interest.label,
+            interestEarned,
+          ) as RawBudget
+        );
       }
-    }
 
-    return {
-      date: format(current, FORMAT),
-      balance: balance.toFixed(2),
-      budgets: budgetsForCurrent,
-      isPad: !isSameMonth(current, monthStart),
-      isToday: isToday(current),
-    };
+      return {
+        ...interval,
+        balance: balance.toFixed(2),
+        budgets,
+      };
+    }),
   });
-
-  const paddedStartString = format(paddedStart, FORMAT);
-  const gridStartIndex = days.findIndex(day => day.date === paddedStartString);
-
-  return gridStartIndex !== -1 ? days.slice(gridStartIndex) : days;
 };

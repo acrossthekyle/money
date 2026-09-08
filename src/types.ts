@@ -68,6 +68,19 @@ export type Preference = {
 
 export type Record = Holding | Budget | Preference;
 
+export type Metric = {
+  count: number;
+  expenses: number;
+  holding: string;
+  income: number;
+  next?: {
+    date: string;
+    name: string;
+    amount: string;
+    type: string;
+  };
+};
+
 export type LoginFormState = {
   error: string | null;
   success: boolean;

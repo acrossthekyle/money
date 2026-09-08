@@ -6,7 +6,7 @@ import tw from '@/styles';
 export default function Back() {
   return (
     <Link className={styles.container} href="/">
-      <ChevronLeft className={styles.icon} /> Accounts/Assets
+      <ChevronLeft className={styles.icon} /> Dashboard
     </Link>
   );
 };

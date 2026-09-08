@@ -14,20 +14,6 @@ type Props = {
   parent: string;
 };
 
-function getParentDisplayName(holdings: Holding[], parent: string) {
-  if (parent.includes('overview')) {
-    return '';
-  }
-
-  const filtered = holdings.filter(holding => holding.id === parent);
-
-  if (filtered.length > 0) {
-    return `${filtered[0].name}`;
-  }
-
-  return `Holding`;
-};
-
 export default function Budget({
   holdings,
   budget,
@@ -53,9 +39,7 @@ export default function Budget({
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
         <Ui.Dialog.DialogHeader onClose={onClose}>
-          {parent.includes('overview') && !budget && <>Add budget</>}
-          {!parent.includes('overview') && !budget && <>Add Budget for: {getParentDisplayName(holdings, parent)}</>}
-          {!parent.includes('overview') && budget && <>Update budget for: {getParentDisplayName(holdings, budget.parent)}</>}
+          {budget ? 'Edit' : 'Add'} budget
         </Ui.Dialog.DialogHeader>
         <Form
           budget={budget}

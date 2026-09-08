@@ -103,32 +103,36 @@ export function useModel(
   };
 
   const handleOnContinue = async () => {
-    const result = await confirm({
-      cancelButtonText: 'Back',
-      confirmButtonText: 'Update',
-      target: '#budget-dialog',
-      title: 'How to apply these changes?',
-      input: 'radio',
-      inputOptions: {
-        'all': `Entire budget (from ${format(parseISO(budget?.start || ''), 'MM/dd/yyyy')} onwards)`,
-        'this': `Only this instance (on ${format(parseISO(date), 'MM/dd/yyyy')})`,
-        'prospective': `All current and future instances (from ${format(parseISO(date), 'MM/dd/yyyy')} onwards)`,
-        'future': `Only future instances (after ${format(parseISO(date), 'MM/dd/yyyy')})`,
-      },
-      inputValidator: (value: string): string => {
-        if (!value) {
-          return ' ';
-        };
+    if (budget?.schedule === 'once') {
+      setUpdate('this');
+    } else {
+      const result = await confirm({
+        cancelButtonText: 'Back',
+        confirmButtonText: 'Update',
+        target: '#budget-dialog',
+        title: 'How to apply these changes?',
+        input: 'radio',
+        inputOptions: {
+          'all': `Entire budget (from ${format(parseISO(budget?.start || ''), 'MM/dd/yyyy')} onwards)`,
+          'this': `Only this instance (on ${format(parseISO(date), 'MM/dd/yyyy')})`,
+          'prospective': `All current and future instances (from ${format(parseISO(date), 'MM/dd/yyyy')} onwards)`,
+          'future': `Only future instances (after ${format(parseISO(date), 'MM/dd/yyyy')})`,
+        },
+        inputValidator: (value: string): string => {
+          if (!value) {
+            return ' ';
+          };
 
-        return '';
-      },
-    });
+          return '';
+        },
+      });
 
-    if (!result.isConfirmed) {
-      return;
+      if (!result.isConfirmed) {
+        return;
+      }
+
+      setUpdate(result.value);
     }
-
-    setUpdate(result.value);
 
     setTimeout(() => {
       const form = document.getElementById('budget-form');

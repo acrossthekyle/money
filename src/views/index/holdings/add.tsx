@@ -25,7 +25,7 @@ export default function Add({ onClick }: Props) {
 const styles = tw({
   container: `
     flex items-center justify-center
-    w-full h-48
+    w-full
     rounded-lg
     border border-current/12.5
     bg-(--background)

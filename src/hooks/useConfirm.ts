@@ -27,6 +27,7 @@ export function useConfirm() {
       title: 'Are you absolutely sure?',
       theme: 'auto',
       customClass: {
+        container: `!backdrop-blur-sm`,
         popup: '!rounded-md bg-(--background) border-(--foreground)/22.5 text-left text-(--foreground) w-full !max-w-md !grid-cols-none !pb-0 !overflow-hidden',
         title: '!text-left !text-(--foreground) !text-sm !font-bold !w-full !col-start-1 !col-end-3 !p-4 !pb-0',
         htmlContainer: `!text-left !p-4 !pt-2 !text-sm !text-current/90 !font-normal !col-start-1 !col-end-3 !leading-[1.6]`,

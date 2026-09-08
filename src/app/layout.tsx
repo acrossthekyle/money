@@ -42,9 +42,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
             </noscript>
             <ThemeProvider>
               <LayoutHeader />
-              <main>
-                {children}
-              </main>
+              {children}
             </ThemeProvider>
           </LayoutBody>
         </DialogProvider>

@@ -115,7 +115,7 @@ export default function DialogProvider({ children }: PropsWithChildren) {
         if (firstButton) {
           firstButton.focus();
         }
-      }, 2000);
+      }, 50);
     });
   }, [updateBackdropHeight]);
 
