@@ -97,7 +97,6 @@ const styles = tw({
     text-xl
 
     md:text-2xl
-    lg:text-3xl
   `,
   footnote: `
     text-current/60
