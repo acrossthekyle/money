@@ -13,10 +13,12 @@ const styles = tw({
     h-[calc(100svh-5.75rem)]
     w-full
     p-4
+    overflow-x-auto
   `,
   content: `
     grid grid-cols-7
-    h-full w-full
+    h-full
+    w-full min-w-[64rem]
     bg-(--background)
     border border-current/22.5
     rounded-lg
