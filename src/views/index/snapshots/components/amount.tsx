@@ -19,7 +19,7 @@ export default function Amount({
         isPositive && styles.positive,
       ].filter(Boolean).join(' ')}
     >
-      {isNegative ? '-' : ''}${formatNumber(Number(children as string))}
+      ${formatNumber(Number(children as string))}
     </span>
   );
 };

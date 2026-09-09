@@ -3,7 +3,7 @@ import path from 'path';
 
 import type { Record } from '@/types';
 
-const FILE_OUTPUT = path.join(process.cwd(), './src/cache');
+const FILE_OUTPUT = path.join(process.cwd(), './src/storage/cache');
 
 async function fileDirectory(output: string) {
   try {
@@ -27,7 +27,7 @@ export async function read(table: string, id?: string): Promise<Record[]> {
   let results = undefined;
 
   try {
-    results = await import(`@/cache/${table}.js`);
+    results = await import(`@/storage/cache/${table}.js`);
   } catch {
     // do nothing
   }

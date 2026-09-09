@@ -42,7 +42,7 @@ export default function Holding({ data, item, onBudget, onEdit }: Props) {
           {item.type.replace('_', ' ')} {item.number && '...'} {item.number}
         </ItemContentFootnote>
         <ItemContentBalance isNegative={isNegative}>
-          {isNegative ? '-' : ''}${formatNumber(Number(item.balance))}
+          ${formatNumber(Number(item.balance))}
         </ItemContentBalance>
         <ItemContentFootnote>
           Current Balance
