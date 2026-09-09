@@ -10,9 +10,10 @@ export default function Container({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    col-span-1
-    border border-current/12.5
+    flex flex-col justify-between
+    w-full
     rounded-lg
+    border border-current/12.5
     bg-(--background)
     overflow-hidden
   `,

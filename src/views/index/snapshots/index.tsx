@@ -41,11 +41,16 @@ export default function Snapshots({ items }: Props) {
 
 const styles = tw({
   container: `
-    col-span-10
+    order-0
+
+    md:block
+    md:order-1
+    md:col-span-14
+    lg:col-span-10
   `,
   items: `
     grid grid-cols-1 gap-4
 
-    md:grid-cols-2
+    xs:grid-cols-2
   `,
 });

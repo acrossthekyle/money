@@ -63,7 +63,10 @@ export default function View({ data }: Props) {
 
 const styles = tw({
   container: `
-    grid grid-cols-24 gap-4
+    flex flex-col gap-4
     px-4 pb-4
+
+    md:grid
+    md:grid-cols-24
   `,
 });

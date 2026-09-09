@@ -22,19 +22,15 @@ export default function Holdings({ items, metrics, onAdd, onBudget, onEdit }: Pr
   return (
     <section aria-label="accounts/assets" className={styles.container}>
       <ul className={styles.items}>
-        {items.map((item, index) => {
-          const data = metrics.monthly.find(metric => metric.holding === item.id);
-
-          return (
-            <Item
-              data={data}
-              item={item}
-              key={index}
-              onBudget={onBudget}
-              onEdit={onEdit}
-            />
-          );
-        })}
+        {items.map((item, index) => (
+          <Item
+            data={metrics.monthly.find(metric => metric.holding === item.id)}
+            item={item}
+            key={index}
+            onBudget={onBudget}
+            onEdit={onEdit}
+          />
+        ))}
         <Add onClick={onAdd} />
       </ul>
     </section>
@@ -43,11 +39,16 @@ export default function Holdings({ items, metrics, onAdd, onBudget, onEdit }: Pr
 
 const styles = tw({
   container: `
-    col-span-14
+    order-1
+
+    md:block
+    md:order-0
+    md:col-span-10
+    lg:col-span-14
   `,
   items: `
     grid grid-cols-1 gap-4
 
-    md:grid-cols-2
+    lg:grid-cols-2
   `,
 });

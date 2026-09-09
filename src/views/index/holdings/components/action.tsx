@@ -1,0 +1,60 @@
+'use client';
+
+import Link from 'next/link';
+
+import tw from '@/styles';
+
+type Props = {
+  isAbsolute?: boolean;
+  onClick?: () => void;
+  uri?: string;
+};
+
+export default function Action({
+  children,
+  isAbsolute = false,
+  onClick,
+  uri = '/',
+}: React.PropsWithChildren<Props>) {
+  if (onClick) {
+    return (
+      <button
+        className={[
+          styles.container,
+          isAbsolute && styles.absolute,
+        ].filter(Boolean).join(' ')}
+        onClick={onClick}
+        type="button"
+      >
+        {children}
+      </button>
+    );
+  }
+
+  return (
+    <Link className={styles.container} href={uri}>
+      {children}
+    </Link>
+  );
+};
+
+const styles = tw({
+  container: `
+    flex items-center gap-2
+    w-fit
+    border border-(--foreground)/22.5
+    px-2 py-1.25
+    bg-(--background)
+    rounded-full
+    text-xtiny
+    font-medium
+    uppercase
+
+    motion-safe:duration-300
+
+    hover:border-(--foreground)/62.5
+  `,
+  absolute: `
+    absolute top-4 right-3.5
+  `,
+});

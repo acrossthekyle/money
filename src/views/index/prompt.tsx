@@ -52,7 +52,7 @@ const styles = tw({
     border border-(--foreground)/22.5
     px-3 py-1
     rounded-full
-    font-bold
+    font-medium
     text-tiny text-(--background)
     uppercase
 
