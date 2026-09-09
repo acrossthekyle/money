@@ -10,18 +10,22 @@ export default function Container({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    h-[calc(100svh-5.75rem)]
+    h-[calc(100svh-10.75rem)]
     w-full
     p-4
     overflow-x-auto
+
+    md:h-[calc(100svh-5.75rem)]
   `,
   content: `
     grid grid-cols-7
-    h-full
-    w-full min-w-[64rem]
+    h-auto
+    w-full
     bg-(--background)
     border border-current/22.5
     rounded-lg
+
+    md:h-full
 
     *:nth-[7n]:border-r-0
     [&>li:nth-last-child(-n+7)]:border-b-0

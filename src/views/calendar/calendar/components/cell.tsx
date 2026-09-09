@@ -27,12 +27,16 @@ const styles = tw({
   container: `
     group
     relative
+    h-23
     border-r border-b border-current/22.5
+
+    md:h-full
   `,
   hover: `
     motion-safe:duration-300
-    motion-safe:hover:bg-(--foreground)/2.5
-    motion-safe:dark:hover:bg-(--foreground)/7.5
+
+    hover:bg-(--foreground)/2.5
+    dark:hover:bg-(--foreground)/7.5
   `,
   highlighted: `
     !bg-(--foreground)/7.5 dark:!bg-(--foreground)/10.5

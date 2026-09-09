@@ -24,10 +24,13 @@ type Props = {
 
 export default function View({ data }: Props) {
   const {
+    balance,
     budget,
+    budgets,
     date,
     handleOnAddBudget,
     handleOnEditBudget,
+    handleOnMore,
     handleOnReload,
     message,
   } = useModel();
@@ -46,9 +49,9 @@ export default function View({ data }: Props) {
       </Options>
       <Calendar
         days={data.days}
-        canInteract={!Object.values(OVERVIEWS).includes(data.view)}
         onAdd={handleOnAddBudget}
         onEdit={handleOnEditBudget}
+        onMore={handleOnMore}
       />
       <Dialogs.Budget
         budget={budget}
@@ -56,6 +59,11 @@ export default function View({ data }: Props) {
         holdings={data.holdings}
         onDone={handleOnReload}
         parent={data.view}
+      />
+      <Dialogs.Date
+        balance={balance}
+        budgets={budgets}
+        date={date}
       />
       <Ui.Alerts.Message value={message} />
     </main>

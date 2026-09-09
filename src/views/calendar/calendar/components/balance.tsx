@@ -1,31 +1,38 @@
 import tw from '@/styles';
+import { formatNumber } from '@/utils';
 
 type Props = {
   isFaded?: boolean;
-  isNegative: boolean;
+  value: number;
 };
 
-export default function Balance({
-  children,
-  isFaded,
-  isNegative,
-}: React.PropsWithChildren<Props>) {
+export default function Balance({ isFaded, value }: Props) {
+  const isNegative = value < 0;
+
   return (
     <span
-      className={
-        `${styles.container} ${isNegative ? styles.negative : ''} ${isFaded ? styles.faded : ''}`.trim()
-      }
+      className={[
+        styles.container,
+        isNegative && styles.negative,
+        isFaded && styles.faded,
+      ].filter(Boolean).join(' ')}
     >
-      ${children}
+      <span className={styles.expanded}>${formatNumber(value)}</span>
+      <span className={styles.compact}>${formatNumber(value, true)}</span>
     </span>
   );
 };
 
 const styles = tw({
   container: `
-    absolute top-2 left-2
-    text-xs
+    hidden
+    absolute top-1.5 left-2
+    text-tiny
     font-mono
+
+    md:block
+    md:text-tiny
+    xl:text-xs
   `,
   negative: `
     text-red-400
@@ -33,5 +40,15 @@ const styles = tw({
   faded: `
     opacity-33
     pointer-events-none
+  `,
+  expanded: `
+    hidden
+
+    lg:block
+  `,
+  compact: `
+    block
+
+    lg:hidden
   `,
 });

@@ -16,20 +16,27 @@ export default function Add({ onClick }: Props) {
 
 const styles = tw({
   container: `
-    absolute top-2 right-10
-    bg-(--background)
+    hidden
+    absolute top-1 right-1 z-10
+    bg-(--foreground)
+    text-(--background)
     border border-(--foreground)/22.5
-    p-1.25
+    p-1.5 py-1.25
     rounded-sm
     opacity-0
     invisible
 
+    xl:block
+
     motion-safe:duration-300
-    motion-safe:group-hover:opacity-100
-    motion-safe:group-hover:visible
-    motion-safe:hover:border-current/62.5
+
+    group-hover:opacity-100
+    group-hover:visible
+    hover:bg-(--background)
+    hover:text-(--foreground)
   `,
   icon: `
     w-3 h-3
+    stroke-3
   `,
 });

@@ -4,14 +4,18 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 
 import { useBudget } from '@/hooks/useBudget';
+import { useDate } from '@/hooks/useDate';
 import type { Budget, DayBudget } from '@/types';
 
 export function useModel() {
+  const [balance, setBalance] = useState(0);
   const [budget, setBudget] = useState<Budget | undefined>();
+  const [budgets, setBudgets] = useState<DayBudget[]>([]);
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [message, setMessage] = useState('');
 
   const { onBudget } = useBudget();
+  const { onDate } = useDate();
 
   const handleOnReload = () => {
     setMessage('Reloading');
@@ -55,11 +59,22 @@ export function useModel() {
     onBudget();
   };
 
+  const handleOnMore = (amount: number, day: string, items: DayBudget[]) => {
+    setDate(day);
+    setBalance(amount);
+    setBudgets(items);
+
+    onDate();
+  };
+
   return {
+    balance,
     budget,
+    budgets,
     date,
     handleOnAddBudget,
     handleOnEditBudget,
+    handleOnMore,
     handleOnReload,
     message,
   };

@@ -10,7 +10,11 @@ export default function Budget({ children, isFaded, onClick }: React.PropsWithCh
     <li>
       {onClick ? (
         <button
-          className={`${styles.clickable} ${isFaded ? styles.faded : ''}`.trim()}
+          className={[
+            styles.container,
+            styles.clickable,
+            isFaded && styles.faded,
+          ].filter(Boolean).join(' ')}
           onClick={onClick}
           type="button"
         >
@@ -18,7 +22,11 @@ export default function Budget({ children, isFaded, onClick }: React.PropsWithCh
         </button>
       ) : (
         <span
-          className={`${styles.static} ${isFaded ? styles.faded : ''}`.trim()}
+          className={[
+            styles.container,
+            styles.static,
+            isFaded && styles.faded,
+          ].filter(Boolean).join(' ')}
         >
           {children}
         </span>
@@ -28,24 +36,30 @@ export default function Budget({ children, isFaded, onClick }: React.PropsWithCh
 };
 
 const styles = tw({
-  clickable: `
+  container: `
     flex items-center justify-between
     w-full
-    text-sm
-    border border-current/22.5
-    rounded-sm
-    p-1.5 py-0.75
+    px-1.5
+    text-tiny
+
+    md:text-xs
+    xl:text-sm
+  `,
+  clickable: `
+    rounded-lg
+    py-0.75
     leading-[1]
-    bg-(--foreground)/5
+
+    md:border
+    md:border-current/22.5
+    md:bg-(--background)
 
     motion-safe:duration-300
-    motion-safe:hover:border-current/62.5
+
+    hover:border-current/62.5
   `,
   static: `
-    flex items-center justify-between
-    w-full
-    p-1.5 py-0
-    text-sm
+    md:bg-transparent
   `,
   faded: `
     opacity-33
