@@ -20,7 +20,6 @@ export default function Currency({ id, value }: Props) {
       defaultValue={value}
       decimalsLimit={2}
       decimalScale={2}
-      fixedDecimalLength={2}
       prefix="$"
     />
   );
