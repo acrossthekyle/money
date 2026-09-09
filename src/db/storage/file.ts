@@ -35,7 +35,7 @@ export async function read(table: string, id?: string): Promise<Record[]> {
   results = ((results?.default || results) || []);
 
   return id !== undefined
-    ? [...results].filter(result => result.id === id)
+    ? results.filter((result: Record) => result.id === id)
     : [...results];
 };
 

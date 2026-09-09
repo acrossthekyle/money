@@ -1,4 +1,4 @@
-import * as browser from './browser';
+import * as cloud from './cloud';
 import * as file from './file';
 
 export async function storage() {
@@ -6,5 +6,5 @@ export async function storage() {
     return file;
   }
 
-  return browser;
+  return cloud;
 };
