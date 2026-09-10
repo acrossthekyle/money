@@ -42,7 +42,7 @@ export default function Snapshots({ metrics }: Props) {
 const styles = tw({
   container: `
     order-0
-    border-b border-current/12.5
+    border-b border-current/7.5
     pb-4
 
     md:block
