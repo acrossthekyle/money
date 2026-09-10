@@ -1,12 +1,17 @@
 import tw from '@/styles';
 
 type Props = {
+  className?: string;
   isActive: boolean;
 };
 
-export default function Inner({ children, isActive }: React.PropsWithChildren<Props>) {
+export default function Inner({
+  children,
+  className = '',
+  isActive,
+}: React.PropsWithChildren<Props>) {
   return (
-    <div className={styles.container(isActive)}>
+    <div className={`${styles.container(isActive)} ${className}`.trim()}>
       {children}
     </div>
   );

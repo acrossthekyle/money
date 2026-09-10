@@ -83,11 +83,9 @@ export default function Forecast({ holdings, view }: Props) {
 
 const styles = tw({
   container: `
-    col-span-2
-    order-2
+    order-0
     !w-full
 
     md:!w-56
-    md:order-1
   `,
 });

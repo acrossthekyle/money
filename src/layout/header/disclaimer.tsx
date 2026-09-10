@@ -10,7 +10,7 @@ export default function Disclaimer() {
   return (
     <>
       <button className={styles.container} onClick={onDisclaimer} type="button">
-        Disclaimer
+        T.O.S.
       </button>
       <Dialogs.Disclaimer />
     </>

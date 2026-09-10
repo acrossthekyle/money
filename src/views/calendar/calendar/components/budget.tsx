@@ -11,11 +11,12 @@ export default function Budget({ children, isFaded, onClick }: React.PropsWithCh
       {onClick ? (
         <button
           className={[
-            styles.container,
+            styles.content,
             styles.clickable,
             isFaded && styles.faded,
           ].filter(Boolean).join(' ')}
           onClick={onClick}
+          title="View/Edit Budget"
           type="button"
         >
           {children}
@@ -23,7 +24,7 @@ export default function Budget({ children, isFaded, onClick }: React.PropsWithCh
       ) : (
         <span
           className={[
-            styles.container,
+            styles.content,
             styles.static,
             isFaded && styles.faded,
           ].filter(Boolean).join(' ')}
@@ -36,18 +37,19 @@ export default function Budget({ children, isFaded, onClick }: React.PropsWithCh
 };
 
 const styles = tw({
-  container: `
+  content: `
     flex items-center justify-between
     w-full
     px-1.5
-    text-tiny
+    font-mono
+    text-xtiny
 
-    md:text-xs
-    xl:text-sm
+    md:text-tiny
+    xl:text-xs
   `,
   clickable: `
     rounded-lg
-    py-0.75
+    py-1.25
     leading-[1]
 
     md:border
@@ -59,6 +61,10 @@ const styles = tw({
     hover:border-current/62.5
   `,
   static: `
+    py-1.25
+    leading-[1]
+
+    md:py-0
     md:bg-transparent
   `,
   faded: `

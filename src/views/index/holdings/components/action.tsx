@@ -43,7 +43,7 @@ const styles = tw({
     flex items-center gap-2
     w-fit
     border border-(--foreground)/22.5
-    px-2 py-1.25
+    pl-3 pr-2 py-2
     bg-(--background)
     rounded-full
     text-xtiny
@@ -53,6 +53,8 @@ const styles = tw({
     motion-safe:duration-300
 
     hover:border-(--foreground)/62.5
+
+    md:py-1.25
   `,
   absolute: `
     absolute top-4 right-3.5

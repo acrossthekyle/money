@@ -42,9 +42,5 @@ export default function Add({ onClick, type }: Props) {
 const styles = tw({
   container: `
     order-1
-    w-full
-
-    md:w-fit
-    md:order-2
   `,
 });

@@ -9,13 +9,18 @@ export default function Links() {
       <Link className={styles.link} href="/">
         <Scale className={styles.icon} />
       </Link>
+      <Link className={styles.link} href="/">
+        Dashboard
+      </Link>
     </nav>
   );
 };
 
 const styles = tw({
   container: `
-    flex items-center gap-2
+    flex items-center
+
+    md:gap-2
   `,
   link: `
     flex items-center gap-2

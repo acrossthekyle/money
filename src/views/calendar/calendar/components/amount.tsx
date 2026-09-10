@@ -23,32 +23,34 @@ const styles = tw({
   container: `
     absolute left-0
     font-mono
-    text-tiny
-    w-2 h-2
+    text-xtiny
+    w-full h-2
     rounded-full
 
     md:left-2
-    xl:left-auto
-    xl:w-auto
-    xl:h-auto
-    xl:relative
+    md:w-2
+    lg:left-auto
+    lg:w-auto
+    lg:h-auto
+    lg:relative
+    lg:text-tiny
     xl:text-xs
   `,
   credit: `
     bg-teal-400
     text-teal-400
 
-    xl:bg-transparent
+    lg:bg-transparent
   `,
   debit: `
     bg-red-400
     text-red-400
 
-    xl:bg-transparent
+    lg:bg-transparent
   `,
   number: `
     hidden
 
-    xl:block
+    lg:block
   `,
 });

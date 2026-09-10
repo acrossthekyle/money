@@ -78,6 +78,7 @@ export default function Form({
               <option value="taxable">Taxable Account</option>
               <option value="health">Health Account</option>
               <option value="property">Property</option>
+              <option value="car">Car</option>
               <option value="other">Other</option>
             </Ui.Form.Select>
           </Ui.Form.Field>

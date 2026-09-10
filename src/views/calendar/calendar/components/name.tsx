@@ -10,18 +10,14 @@ export default function Name({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
+    hidden
     pl-4
-    ml-2
-    h-2
     whitespace-nowrap
     truncate
-    bg-(--foreground)
-    rounded-full
 
-    md:bg-transparent
+    md:block
     md:h-auto
-    md:ml-0
-    xl:pr-4
-    xl:pl-0
+    lg:pl-0
+    lg:pr-2
   `,
 });

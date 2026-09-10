@@ -21,6 +21,7 @@ const Form = z.object({
     'taxable',
     'health',
     'property',
+    'car',
     'other',
   ]),
   interest: z.string().nullable().optional(),

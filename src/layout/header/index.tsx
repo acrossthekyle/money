@@ -30,6 +30,8 @@ const styles = tw({
     mb-4
   `,
   group: `
-    flex items-center gap-1
+    flex items-center
+
+    md:gap-1
   `,
 });

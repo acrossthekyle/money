@@ -17,6 +17,6 @@ export default function Section({
 
 const styles = tw({
   container: `
-    flex flex-row gap-2
+    flex gap-2
   `,
 });

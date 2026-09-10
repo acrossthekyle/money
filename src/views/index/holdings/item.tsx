@@ -58,7 +58,7 @@ export default function Holding({ data, item, onBudget, onEdit }: Props) {
           )}
         </ItemContentBudgets>
         <ItemAction isAbsolute onClick={() => onEdit(item)}>
-          <ItemActionIcon name="pen" /> Edit
+          Edit <ItemActionIcon name="pen" />
         </ItemAction>
         <ItemContentExchanges>
           <ItemContentExchangesItem>
@@ -81,8 +81,8 @@ export default function Holding({ data, item, onBudget, onEdit }: Props) {
       </ItemContent>
       <ItemFooter>
         <ItemAction onClick={() => onBudget(item)}>
-          <ItemActionIcon name="plus" />
           Add Budget
+          <ItemActionIcon name="plus" />
         </ItemAction>
         <ItemAction uri={`/calendar?view=${item.id}`}>
           View Budgets

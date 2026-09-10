@@ -38,12 +38,14 @@ const styles = tw({
     rounded-full
     bg-(--background)
     border border-current/22.5
-    py-1.25 px-2
+    py-2 px-2 pr-3
     font-medium
 
     motion-safe:duration-300
 
     hover:border-current/62.5
+
+    md:py-1.25
   `,
   active: `
     bg-(--foreground)/90

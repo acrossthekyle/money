@@ -14,9 +14,6 @@ export function useModel() {
   const [month, setMonth] = useState(searchParams.get('month') || String(getMonth(new Date())));
   const [year, setYear] = useState(searchParams.get('year') || String(getYear(new Date())));
 
-  const isToday = month === String(getMonth(new Date())) &&
-    year === String(getYear(new Date()));
-
   const handleOnNext = () => {
     const monthUpdated = String(month === '11' ? '0' : Number(month) + 1);
     let yearUpdated = year;
@@ -77,7 +74,6 @@ export function useModel() {
     handleOnPrevious,
     handleOnToday,
     handleOnYear,
-    isToday,
     month,
     year,
   };

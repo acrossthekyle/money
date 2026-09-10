@@ -1,3 +1,5 @@
+import { LogOut } from 'lucide-react';
+
 import { logout } from '@/actions/auth/logout';
 import tw from '@/styles';
 import { authentication } from '@/utils/authentication';
@@ -12,7 +14,7 @@ export default async function Logout() {
   return (
     <form action={logout}>
       <button className={styles.container} type="submit">
-        Logout
+        <LogOut className={styles.icon} />
       </button>
     </form>
   );
@@ -25,5 +27,9 @@ const styles = tw({
     text-tiny
     font-bold
     p-2
+  `,
+  icon: `
+    w-3 h-3
+    stroke-3
   `,
 });

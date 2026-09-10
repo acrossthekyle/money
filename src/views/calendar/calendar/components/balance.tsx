@@ -29,6 +29,7 @@ const styles = tw({
     absolute top-1.5 left-2
     text-tiny
     font-mono
+    pointer-events-none
 
     md:block
     md:text-tiny

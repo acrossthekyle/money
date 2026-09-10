@@ -23,7 +23,7 @@ export default function Container({
 const styles = tw({
   container: `
     absolute bottom-2 left-2 right-2
-    flex flex-col gap-1
+    flex flex-col gap-2
 
     md:gap-1
   `,

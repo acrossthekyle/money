@@ -8,7 +8,7 @@ type Props = {
 
 export default function Icon({ name }: Props) {
   if (name === 'pen') {
-    return <Pen className={styles.icon} />;
+    return <Pen className={styles.small} />;
   }
 
   if (name === 'plus') {
@@ -25,6 +25,10 @@ export default function Icon({ name }: Props) {
 const styles = tw({
   icon: `
     w-2.5 h-2.5
+    stroke-3
+  `,
+  small: `
+    w-2 h-2
     stroke-3
   `,
 });

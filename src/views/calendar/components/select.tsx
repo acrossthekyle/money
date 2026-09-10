@@ -40,7 +40,6 @@ const styles = tw({
   container: `
     group
     relative
-    w-fit
   `,
   select: `
     absolute inset-0 z-2
@@ -51,7 +50,7 @@ const styles = tw({
   cta: `
     relative z-1
     flex items-center justify-between gap-2
-    px-3 py-1 pr-2
+    px-3 py-2 pr-2
     border border-current/22.5
     bg-(--background)
     rounded-full
@@ -61,6 +60,8 @@ const styles = tw({
 
     motion-safe:duration-300
     motion-safe:group-hover:border-current/62.5
+
+    md:py-1
   `,
   icon: `
     w-3.5 h-3.5

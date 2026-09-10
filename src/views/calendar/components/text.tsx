@@ -1,8 +1,15 @@
 import tw from '@/styles';
 
-export default function Text({ children }: React.PropsWithChildren) {
+type Props = {
+  className?: string;
+};
+
+export default function Text({
+  children,
+  className = '',
+}: React.PropsWithChildren<Props>) {
   return (
-    <span className={styles.container}>
+    <span className={`${styles.container} ${className}`.trim()}>
       {children}
     </span>
   );

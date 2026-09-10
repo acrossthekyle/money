@@ -10,10 +10,9 @@ export default function Container({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    h-[calc(100svh-10.75rem)]
+    h-full
     w-full
     p-4
-    overflow-x-auto
 
     md:h-[calc(100svh-5.75rem)]
   `,

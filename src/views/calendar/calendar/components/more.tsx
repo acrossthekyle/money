@@ -7,11 +7,10 @@ type Props = {
 };
 
 export default function More({
-  children,
   count,
   isFaded,
   onClick,
-}: React.PropsWithChildren<Props>) {
+}: Props) {
   return (
     <button
       className={[
@@ -20,6 +19,7 @@ export default function More({
         count <= 0 && styles.hidden,
       ].filter(Boolean).join(' ')}
       onClick={onClick}
+      title="View all budgets"
       type="button"
     >
       {count > 0 && (
@@ -35,18 +35,17 @@ const styles = tw({
   container: `
     absolute inset-0 z-100
     flex items-end
-    text-tiny
+    text-xtiny
     leading-[1]
     whitespace-nowrap
 
-    md:py-0.75
     md:top-auto
-    md:left-2
-    md:right-2
-    md:bottom-2
-    md:pl-0.5
-    md:text-xs
-    xl:text-sm
+    md:left-0
+    md:right-0
+    md:bottom-0
+    md:p-2
+    md:text-tiny
+    xl:text-xs
   `,
   faded: `
     opacity-33
@@ -55,7 +54,9 @@ const styles = tw({
   text: `
     flex items-center gap-1
     px-2 pb-2
+    font-bold font-mono
 
+    md:font-normal
     md:p-0
   `,
   label: `
