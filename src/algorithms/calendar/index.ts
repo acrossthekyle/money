@@ -5,7 +5,6 @@ import type { RawBudget } from './types';
 import { displayType } from './utils/type';
 import { createCalendarIntervals, createDays, trimCalendarIntervals } from './utils/dates';
 import { addToCalendar } from './utils/calendar';
-import { assignRealized } from './utils/realized';
 
 type Return = {
   days: Day[];
@@ -36,17 +35,20 @@ export async function calendar(
     };
   }
 
-  await assignRealized(view, holdings).forEach(async (selectedHolding: string) => {
-    const holding = holdings.find((holding: Holding) => selectedHolding === holding.id);
+  const selectedHolding = view === null ? holdings[0].id : view;
 
-    if (holding) {
-      const startingBalance = holding.type === 'credit_card'
-        ? -Number(holding.balance)
-        : Number(holding.balance);
+  const holding = holdings.find(holding => selectedHolding === holding.id);
 
-      const data = budgets.filter((budget: Budget) =>
+  if (holding) {
+    const startingBalance = holding.type === 'credit_card'
+      ? -Number(holding.balance)
+      : Number(holding.balance);
+
+    const data = budgets
+      .filter((budget: Budget) =>
         budget.parent === holding.id || budget.transferee === holding.id
-      ).map((budget: Budget) => {
+      )
+      .map((budget: Budget) => {
         const iterations = createBudgetIterations(budget);
 
         const transfereeHolding = holdings.find((item: Holding) => {
@@ -76,18 +78,17 @@ export async function calendar(
         };
       });
 
-      const days = createDays(
-        holding.type,
-        startingBalance,
-        data,
-        month,
-        year,
-        holding.interest,
-      );
+    const days = createDays(
+      holding.type,
+      startingBalance,
+      data,
+      month,
+      year,
+      holding.interest,
+    );
 
-      calendar = addToCalendar(calendar, days);
-    }
-  });
+    calendar = addToCalendar(calendar, days);
+  }
 
   return {
     days: calendar,
