@@ -9,16 +9,14 @@ import View from '@/views/index';
 export default async function Page() {
   const { holdings } = await allHoldings();
   const { budgets } = await allBudgets();
-  const { monthly } = await metrics(holdings, budgets);
+  const calculations = await metrics(holdings, budgets);
 
   return (
     <Suspense fallback={<Ui.Loaders.Spinner />}>
       <View
         data={{
           holdings,
-          metrics: {
-            monthly,
-          },
+          metrics: calculations,
         }}
       />
     </Suspense>

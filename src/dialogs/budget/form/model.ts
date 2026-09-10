@@ -10,7 +10,6 @@ import type { Budget, FormStateError, BudgetFormState } from '@/types';
 export function useModel(
   date: string,
   onDone: () => void,
-  parent: string,
   budget?: Budget,
 ) {
   const putable = put.bind(null, budget || null);
@@ -23,7 +22,6 @@ export function useModel(
   } as BudgetFormState);
 
   const [type, setType] = useState('debit');
-  const [holding, setHolding] = useState(parent);
   const [willDelete, setWillDelete] = useState(false);
   const [willPurge, setWillPurge] = useState(false);
   const [errors, setErrors] = useState<FormStateError[]>([]);
@@ -98,10 +96,6 @@ export function useModel(
     setType(event.target.value);
   };
 
-  const handleOnHolding = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setHolding(event.target.value);
-  };
-
   const handleOnContinue = async () => {
     if (budget?.schedule === 'once') {
       setUpdate('this');
@@ -150,10 +144,8 @@ export function useModel(
     errors,
     handleOnContinue,
     handleOnDelete,
-    handleOnHolding,
     handleOnPurge,
     handleOnType,
-    holding,
     isPending,
     type,
     update,

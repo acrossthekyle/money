@@ -10,6 +10,7 @@ export default function Container({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
+    relative
     col-span-1
     border border-current/12.5
     rounded-lg

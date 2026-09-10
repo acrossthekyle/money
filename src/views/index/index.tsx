@@ -13,9 +13,7 @@ import Snapshots from './snapshots';
 type Props = {
   data: {
     holdings: Holding[];
-    metrics: {
-      monthly: Metric[];
-    };
+    metrics: Metric[];
   };
 };
 
@@ -38,10 +36,9 @@ export default function View({ data }: Props) {
           onAdd={handleOnAddHolding}
           onBudget={handleOnAddBudget}
           onEdit={handleOnEditHolding}
-          items={data.holdings}
           metrics={data.metrics}
         />
-        <Snapshots items={data.holdings} />
+        <Snapshots metrics={data.metrics} />
         <Ui.Alerts.Message value={message} />
         {data.holdings.length === 0 && (
           <Prompt onClick={handleOnAddHolding} />

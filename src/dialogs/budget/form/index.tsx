@@ -43,16 +43,14 @@ export default function Form({
     errors,
     handleOnContinue,
     handleOnDelete,
-    handleOnHolding,
     handleOnPurge,
     handleOnType,
-    holding,
     isPending,
     type,
     update,
     willDelete,
     willPurge,
-  } = useModel(date, onDone, parent, budget);
+  } = useModel(date, onDone, budget);
 
   const accounts = holdings.filter(holding => ACCOUNTS.includes(holding.type));
   const assets = holdings.filter(holding => ASSETS.includes(holding.type));
@@ -68,13 +66,7 @@ export default function Form({
           readOnly
           className="hidden"
         />
-        <Parent
-          accounts={accounts}
-          assets={assets}
-          data={data}
-          onChange={handleOnHolding}
-          parent={parent}
-        />
+        <Parent parent={parent} />
         <Ui.Form.Group>
           <Name value={data?.name} />
           <Amount value={data?.amount} />
@@ -85,7 +77,7 @@ export default function Form({
           <Transferee
             accounts={accounts}
             assets={assets}
-            holding={holding}
+            holding={parent}
             type={type}
             value={data?.transferee}
           />

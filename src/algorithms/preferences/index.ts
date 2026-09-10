@@ -1,17 +1,19 @@
-import { OVERVIEWS } from '@/constants';
 import { db } from '@/db';
-import type { Preference } from '@/types';
+import type { Holding, Preference } from '@/types';
 
 type Return = {
   saved: string;
 };
 
-export async function preferences(view: string | null): Promise<Return> {
+export async function preferences(
+  view: string | null,
+  holdings: Holding[],
+): Promise<Return> {
   const records = await db.read('preferences') as Preference[];
 
   const saved = records.find(preference => preference.id === 'saved_view');
 
-  let realizedView = view === null ? OVERVIEWS.netWorth : view;
+  let realizedView = view === null ? holdings[0].id : view;
 
   if (saved) {
     if (view === null) {

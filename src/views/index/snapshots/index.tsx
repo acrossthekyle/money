@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 
 import tw from '@/styles';
-import type { Holding } from '@/types';
+import type { Metric } from '@/types';
 
 import Accounts from './accounts';
 import Assets from './assets';
@@ -13,11 +13,11 @@ import Retirement from './retirement';
 import Savings from './savings';
 
 type Props = {
-  items: Holding[];
+  metrics: Metric[];
 };
 
-export default function Snapshots({ items }: Props) {
-  if (items.length === 0) {
+export default function Snapshots({ metrics }: Props) {
+  if (metrics.length === 0) {
     return null;
   }
 
@@ -26,14 +26,14 @@ export default function Snapshots({ items }: Props) {
   return (
     <section aria-label="data overviews/snapshots" className={styles.container}>
       <ul className={styles.items}>
-        <NetWorth date={today} items={items} />
-        <Accounts date={today} items={items} />
-        <Savings date={today} items={items} />
-        <Checking date={today} items={items} />
-        <Credit date={today} items={items} />
-        <Assets date={today} items={items} />
-        <Retirement date={today} items={items} />
-        <Other date={today} items={items} />
+        <NetWorth date={today} metrics={metrics} />
+        <Accounts date={today} metrics={metrics} />
+        <Savings date={today} metrics={metrics} />
+        <Checking date={today} metrics={metrics} />
+        <Credit date={today} metrics={metrics} />
+        <Assets date={today} metrics={metrics} />
+        <Retirement date={today} metrics={metrics} />
+        <Other date={today} metrics={metrics} />
       </ul>
     </section>
   );
@@ -42,15 +42,16 @@ export default function Snapshots({ items }: Props) {
 const styles = tw({
   container: `
     order-0
+    border-b border-current/12.5
+    pb-4
 
     md:block
-    md:order-1
-    md:col-span-14
-    lg:col-span-10
+    md:col-span-24
   `,
   items: `
     grid grid-cols-1 gap-4
 
-    xs:grid-cols-2
+    xxs:grid-cols-2
+    md:grid-cols-4
   `,
 });

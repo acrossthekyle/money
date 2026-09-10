@@ -3,9 +3,7 @@
 import { useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
-import { OVERVIEWS } from '@/constants';
 import { useConfirm } from '@/hooks/useConfirm';
-import { useUpdateUrl } from '@/hooks/useUpdateUrl';
 import type { FormStateError, Holding, HoldingFormState } from '@/types';
 
 export function useModel(onDone: () => void, holding?: Holding) {
@@ -21,7 +19,6 @@ export function useModel(onDone: () => void, holding?: Holding) {
   const [willDelete, setWillDelete] = useState(false);
   const [errors, setErrors] = useState<FormStateError[]>([]);
 
-  const updateUrl = useUpdateUrl();
   const confirm = useConfirm();
 
   useEffect(() => {
@@ -42,7 +39,7 @@ export function useModel(onDone: () => void, holding?: Holding) {
 
     const result = await confirm({
       target: '#holding-dialog',
-      text: 'This action cannot be undone. This will permanently delete this holding and its budgets.',
+      text: 'This action cannot be undone. This will permanently delete this account/asset and its budgets.',
     });
 
     if (!result.isConfirmed) {
@@ -55,8 +52,6 @@ export function useModel(onDone: () => void, holding?: Holding) {
 
     if (form instanceof HTMLFormElement) {
       form.requestSubmit();
-
-      updateUrl('view', OVERVIEWS.netWorth);
     }
   };
 

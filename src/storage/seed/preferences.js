@@ -1,7 +1,7 @@
 const data = [
   {
     "id": "saved_view",
-    "value": "net_worth"
+    "value": "3cec391d-5ebd-4b41-b369-076c707819f2"
   }
 ];
 

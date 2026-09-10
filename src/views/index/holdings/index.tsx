@@ -5,27 +5,24 @@ import Add from './add';
 import Item from './item';
 
 type Props = {
-  items: Holding[];
-  metrics: {
-    monthly: Metric[];
-  };
+  metrics: Metric[];
   onAdd: () => void;
   onBudget: (holding: Holding) => void;
   onEdit: (holding: Holding) => void;
 };
 
-export default function Holdings({ items, metrics, onAdd, onBudget, onEdit }: Props) {
-  if (items.length === 0) {
+export default function Holdings({ metrics, onAdd, onBudget, onEdit }: Props) {
+  if (metrics.length === 0) {
     return null;
   }
 
   return (
     <section aria-label="accounts/assets" className={styles.container}>
       <ul className={styles.items}>
-        {items.map((item, index) => (
+        {metrics.map((metric, index) => (
           <Item
-            data={metrics.monthly.find(metric => metric.holding === item.id)}
-            item={item}
+            current={metric.months.current}
+            holding={metric.holding}
             key={index}
             onBudget={onBudget}
             onEdit={onEdit}
@@ -42,13 +39,12 @@ const styles = tw({
     order-1
 
     md:block
-    md:order-0
-    md:col-span-10
-    lg:col-span-14
+    md:col-span-24
   `,
   items: `
     grid grid-cols-1 gap-4
 
-    lg:grid-cols-2
+    md:grid-cols-2
+    lg:grid-cols-3
   `,
 });

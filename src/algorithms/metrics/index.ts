@@ -1,11 +1,9 @@
 import type { Budget, Holding } from '@/types';
 
-import { monthly } from './monthly';
+import { calculate } from './calculate';
 
 export async function metrics(holdings: Holding[], budgets: Budget[]) {
-  const monthlyMetrics = await monthly(holdings, budgets);
+  const metrics = await calculate(holdings, budgets);
 
-  return {
-    monthly: monthlyMetrics,
-  };
+  return metrics;
 };

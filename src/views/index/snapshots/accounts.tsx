@@ -1,40 +1,44 @@
-import { ACCOUNTS, OVERVIEWS } from '@/constants';
-import type { Holding } from '@/types';
+import { ACCOUNTS } from '@/constants';
+import type { Metric } from '@/types';
 
 import * as Components from './components';
 
 type Props = {
   date: string;
-  items: Holding[];
+  metrics: Metric[];
 };
 
-export default function Accounts({ date, items }: Props) {
-  const filtered = items.filter(item => ACCOUNTS.includes(item.type));
+export default function Accounts({ date, metrics }: Props) {
+  const filtered = metrics.filter(metric => ACCOUNTS.includes(metric.holding.type));
 
   if (filtered.length === 0) {
     return null;
   }
 
-  const value = filtered.reduce((accumulator, item) => {
-    if (item.type === 'credit_card') {
-      return accumulator - Number(item.balance);
+  const current = filtered.reduce((accumulator, metric) => {
+    if (metric.holding.type === 'credit_card') {
+      return accumulator - Number(metric.months.current.balance.today);
     }
 
-    return accumulator + Number(item.balance);
+    return accumulator + Number(metric.months.current.balance.today);
+  }, 0);
+
+  const next = filtered.reduce((accumulator, metric) => {
+    if (metric.holding.type === 'credit_card') {
+      return accumulator - Number(metric.months.next.balance.today);
+    }
+
+    return accumulator + Number(metric.months.next.balance.today);
   }, 0);
 
   return (
     <Components.Item>
       <Components.ItemHeading>All Bank Accounts</Components.ItemHeading>
       <Components.ItemContent>
-        <Components.ItemContentAmount>{value}</Components.ItemContentAmount>
+        <Components.ItemContentAmount>{current}</Components.ItemContentAmount>
         <Components.ItemContentDate>{date}</Components.ItemContentDate>
+        <Components.ItemContentChange current={current} next={next} />
       </Components.ItemContent>
-      <Components.ItemFooter>
-        <Components.ItemFooterAnchor>
-          {OVERVIEWS.allBankAccounts}
-        </Components.ItemFooterAnchor>
-      </Components.ItemFooter>
     </Components.Item>
   );
 };

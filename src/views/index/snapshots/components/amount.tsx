@@ -27,7 +27,9 @@ export default function Amount({
 const styles = tw({
   container: `
     font-light
-    text-2xl
+    text-xl
+
+    lg:text-2xl
   `,
   negative: `
     text-red-600 dark:text-red-300

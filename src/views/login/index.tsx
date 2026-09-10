@@ -32,6 +32,7 @@ export default function View({ data }: Props) {
           name="username"
           type="text"
           placeholder="Username"
+          defaultValue={state?.data?.username}
           required
           disabled={isPending}
         />

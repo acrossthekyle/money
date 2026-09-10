@@ -27,9 +27,9 @@ export default async function Page({
   const month = Number(params.month || getMonth(new Date));
   const year = Number(params.year || getYear(new Date));
 
-  const { saved } = await preferences(params.view as string || null);
-  const { budgets } = await allBudgets();
   const { holdings } = await allHoldings();
+  const { saved } = await preferences(params.view as string || null, holdings);
+  const { budgets } = await allBudgets();
   const { days } = await calendar(
     holdings,
     budgets,

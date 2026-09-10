@@ -6,7 +6,6 @@ import tw from '@/styles';
 import { OptionsSectionSelect } from '../components';
 
 import { useModel } from './model';
-import { getIsOverviewDisabled, getOverviewDisplayText } from './utils';
 
 type Props = {
   holdings: Holding[];
@@ -19,46 +18,18 @@ export default function Forecast({ holdings, view }: Props) {
     assets,
     hasAccounts,
     hasAssets,
-    hasChecking,
-    hasCreditCards,
-    hasHoldings,
-    hasOtherAssets,
-    hasRetirement,
-    hasSavings,
     handleOnView,
-    overviews,
     value,
   } = useModel(holdings, view);
 
   return (
     <OptionsSectionSelect
       className={styles.container}
-      name="Overview"
+      name="forecast"
       defaultValue={view}
       display={value}
       onChange={handleOnView}
     >
-      <optgroup label="Overviews">
-        {Object.entries(overviews).map(([key, value]) => (
-          <option
-            disabled={getIsOverviewDisabled(
-              value,
-              hasAccounts,
-              hasAssets,
-              hasChecking,
-              hasCreditCards,
-              hasHoldings,
-              hasOtherAssets,
-              hasRetirement,
-              hasSavings,
-            )}
-            key={key}
-            value={value}
-          >
-            {getOverviewDisplayText(value)}
-          </option>
-        ))}
-      </optgroup>
       {hasAccounts && (
         <optgroup label="Bank Accounts">
           {accounts.map((holding, index) => (

@@ -114,7 +114,7 @@ export default function Form({
             onClick={handleOnDelete}
             type="button"
           >
-            Delete Forecast
+            Delete
           </Ui.Form.Button>
         ) : <span />}
         <div className={styles.ctas}>

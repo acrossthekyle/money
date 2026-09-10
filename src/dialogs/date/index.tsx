@@ -26,6 +26,8 @@ export default function Dialog({
 }: Props) {
   const { instance, isActive, onBackdrop, onCancel, onClose } = useDate();
 
+  const isNegative = balance < 0;
+
   const handleAdd = () => {
     onClose();
 
@@ -49,7 +51,7 @@ export default function Dialog({
       <Ui.Dialog.DialogInner className="!max-w-sm xs:aspect-square" isActive={isActive} key={date}>
         <header>
           <h2 className={styles.header} id="dialog-header">
-            <span>
+            <span className={isNegative ? styles.debit : ''}>
               ${formatNumber(balance)}
             </span>
             <span className={styles.date}>
@@ -101,7 +103,7 @@ const styles = tw({
     flex justify-between gap-4
     p-4
     mr-8 mb-12
-    text-xs
+    text-sm
     font-mono font-bold
 
     xs:absolute
@@ -133,7 +135,7 @@ const styles = tw({
     flex items-center justify-between gap-2
     w-full h-8
     px-2.5 py-2
-    text-xs text-left
+    text-sm text-left
     font-mono
     rounded-lg
     leading-[1]
