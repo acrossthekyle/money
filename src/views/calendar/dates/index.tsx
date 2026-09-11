@@ -163,12 +163,12 @@ const styles = tw({
   full: `
     hidden
 
-    xs:block
-    xs:w-28
+    xxs:block
+    xxs:w-28
   `,
   abbreviated: `
     w-20
 
-    xs:hidden
+    xxs:hidden
   `,
 });

@@ -88,10 +88,9 @@ const styles = tw({
   `,
   submit: (isProcessing: boolean) => tw(`
     py-3.5
-    bg-(--foreground)/7.5
-    border border-current/12.5
-    rounded-lg
-    text-xs
+    bg-(--foreground)
+    rounded-full
+    text-xs text-(--background)
     uppercase
     tracking-wide
     ${isProcessing ? 'cursor-not-allowed' : 'cursor-pointer'}

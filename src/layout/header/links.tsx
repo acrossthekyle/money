@@ -1,22 +1,13 @@
-import { Scale } from 'lucide-react';
 import Link from 'next/link';
 
 import tw from '@/styles';
-import { authentication } from '@/utils/authentication';
 
 export default async function Links() {
-  const { isAuthenticated } = await authentication();
-
   return (
     <nav className={styles.container}>
       <Link className={styles.link} href="/">
-        <Scale className={styles.icon} />
+        [Basalt]
       </Link>
-      {isAuthenticated && (
-        <Link className={styles.link} href="/">
-          Accounts/Assets
-        </Link>
-      )}
     </nav>
   );
 };
@@ -32,17 +23,8 @@ const styles = tw({
     p-2
     text-xs
     uppercase
-    font-black
-    tracking-wide
+    font-black font-mono
 
-    md:text-tiny
-  `,
-  icon: `
-    w-6 h-6
-    stroke-1
-
-    md:w-4.5
-    md:h-4.5
-    md:stroke-2
+    md:text-xs
   `,
 });

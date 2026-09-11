@@ -35,15 +35,16 @@ const styles = tw({
   container: `
     flex items-center justify-between gap-2
     px-3 py-2
-    border border-current/22.5
     bg-(--background)
     rounded-full
     text-tiny
     font-medium dark:font-normal
     uppercase
+    border border-current/22.5
 
     motion-safe:duration-300
-    motion-safe:hover:border-current/62.5
+
+    hover:border-current/62.5
 
     disabled:opacity-50
     disabled:pointer-events-none
@@ -51,9 +52,11 @@ const styles = tw({
     md:py-1
   `,
   submit: `
-    bg-green-200 dark:bg-green-900
-    text-green-900 dark:text-(--foreground)
-    border-green-900/22.5
+    bg-(--foreground)
+    text-(--background)
+    border-0
+
+    hover:bg-(--foreground)/50
   `,
   destructive: `
     bg-red-200 dark:bg-red-900
