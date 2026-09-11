@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { useBudget } from '@/hooks/useBudget';
 import { useDate } from '@/hooks/useDate';
+import { useHolding } from '@/hooks/useHolding';
 import type { Budget, Day, DayBudget } from '@/types';
 
 export function useModel(days: Day[]) {
@@ -19,6 +20,7 @@ export function useModel(days: Day[]) {
 
   const { onBudget } = useBudget();
   const { onClose: onCloseDate, onDate } = useDate();
+  const { onHolding } = useHolding();
 
   useEffect(() => {
     if (today !== undefined) {
@@ -67,6 +69,10 @@ export function useModel(days: Day[]) {
     onBudget();
   };
 
+  const handleOnAddHolding = () => {
+    onHolding();
+  };
+
   const handleOnEditBudget = async (day: string, item: DayBudget) => {
     onCloseDate();
 
@@ -102,6 +108,7 @@ export function useModel(days: Day[]) {
     budgets,
     date,
     handleOnAddBudget,
+    handleOnAddHolding,
     handleOnCloseMore,
     handleOnEditBudget,
     handleOnMore,

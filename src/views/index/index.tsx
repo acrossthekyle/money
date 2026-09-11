@@ -7,7 +7,6 @@ import Ui from '@/ui';
 
 import Holdings from './holdings';
 import { useModel } from './model';
-import Prompt from './prompt';
 import Snapshots from './snapshots';
 
 type Props = {
@@ -41,7 +40,7 @@ export default function View({ data }: Props) {
         <Snapshots metrics={data.metrics} />
         <Ui.Alerts.Message value={message} />
         {data.holdings.length === 0 && (
-          <Prompt onClick={handleOnAddHolding} />
+          <Ui.Alerts.Prompt onClick={handleOnAddHolding} />
         )}
       </main>
       <Dialogs.Budget

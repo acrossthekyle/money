@@ -27,12 +27,24 @@ export default function View({ data }: Props) {
     budgets,
     date,
     handleOnAddBudget,
+    handleOnAddHolding,
     handleOnCloseMore,
     handleOnEditBudget,
     handleOnMore,
     handleOnReload,
     message,
   } = useModel(data.days);
+
+  if (data.holdings.length === 0) {
+    return (
+      <>
+        <main className={styles.container}>
+          <Ui.Alerts.Prompt onClick={handleOnAddHolding} />
+        </main>
+        <Dialogs.Holding onDone={handleOnReload} />
+      </>
+    );
+  }
 
   return (
     <>

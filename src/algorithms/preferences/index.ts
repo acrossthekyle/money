@@ -9,6 +9,12 @@ export async function preferences(
   view: string | null,
   holdings: Holding[],
 ): Promise<Return> {
+  if (holdings.length === 0) {
+    return {
+      saved: '',
+    };
+  }
+
   const records = await db.read('preferences') as Preference[];
 
   const saved = records.find(preference => preference.id === 'saved_view');
