@@ -66,11 +66,14 @@ const styles = tw({
   container: `
     flex items-center justify-center
     h-[calc(100svh-3rem)]
-    bg-(--foreground)/5.5
   `,
   form: `
     flex flex-col gap-4
-    w-full max-w-2xs
+    w-full max-w-xs
+    bg-(--foreground)/5.5
+    border border-current/7.5
+    p-4
+    rounded-lg
   `,
   header: `
     font-black
@@ -78,7 +81,7 @@ const styles = tw({
     uppercase
   `,
   input: `
-    border border-current/22.5
+    border border-current/12.5
     bg-(--background)
     rounded-lg
     p-2
