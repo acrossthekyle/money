@@ -11,7 +11,6 @@ export default function Container({ children }: React.PropsWithChildren) {
 const styles = tw({
   container: `
     flex flex-col justify-between gap-4
-    px-4
 
     md:flex-row
     md:gap-1

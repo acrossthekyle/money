@@ -12,7 +12,9 @@ const styles = tw({
   container: `
     pr-16
     font-black
-    text-lg
+    text-xl
     truncate
+
+    md:text-lg
   `,
 });

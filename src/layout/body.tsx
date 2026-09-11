@@ -11,7 +11,7 @@ export default function Body({ children }: React.PropsWithChildren) {
 const styles = tw({
   container: `
     antialiased
-    bg-(--foreground)/2.5 dark:bg-(--background)/7.5
+    bg-(--background)
     text-(--foreground)
     scroll-smooth
     h-full

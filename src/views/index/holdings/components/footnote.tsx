@@ -11,8 +11,10 @@ export default function Footnote({ children }: React.PropsWithChildren) {
 const styles = tw({
   container: `
     text-current/60
-    text-xtiny
+    text-tiny
     uppercase
     capitalize
+
+    md:text-xtiny
   `,
 });

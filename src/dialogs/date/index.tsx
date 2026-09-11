@@ -48,7 +48,11 @@ export default function Dialog({
       onBackdrop={onBackdrop}
       onCancel={onCancel}
     >
-      <Ui.Dialog.DialogInner className="!max-w-sm xs:aspect-square" isActive={isActive} key={date}>
+      <Ui.Dialog.DialogInner
+        className={styles.container}
+        isActive={isActive}
+        key={date}
+      >
         <header>
           <h2 className={styles.header} id="dialog-header">
             <span className={isNegative ? styles.debit : ''}>
@@ -99,6 +103,11 @@ export default function Dialog({
 };
 
 const styles = tw({
+  container: `
+    !max-w-sm
+
+    xs:aspect-square
+  `,
   header: `
     flex justify-between gap-4
     p-4
@@ -119,7 +128,7 @@ const styles = tw({
     absolute right-4 top-4
   `,
   icon: `
-    w-4 h-4
+    w-5 h-5
     stroke-2
   `,
   budgets: `

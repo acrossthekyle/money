@@ -10,6 +10,8 @@ export default function Amount({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    text-base
+    text-lg
+
+    md:text-base
   `,
 });

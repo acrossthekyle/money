@@ -1,7 +1,5 @@
 import tw from '@/styles';
 
-import Credit from './credit';
-import Disclaimer from './disclaimer';
 import Links from './links';
 import Logout from './logout';
 import Theme from './theme';
@@ -11,8 +9,6 @@ export default function Header() {
     <header className={styles.container}>
       <Links />
       <div className={styles.group}>
-        <Disclaimer />
-        <Credit />
         <Logout />
         <Theme />
       </div>
@@ -23,14 +19,15 @@ export default function Header() {
 const styles = tw({
   container: `
     flex items-center justify-between
-    h-12
+    h-16
     px-2
     bg-(--background)
     border-b border-current/10
-    mb-4
+
+    md:h-12
   `,
   group: `
-    flex items-center
+    flex items-center gap-2
 
     md:gap-1
   `,

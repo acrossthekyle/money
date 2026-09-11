@@ -17,16 +17,22 @@ export default function View({ data }: Props) {
   const [alert] = useState(data.alert);
 
   const [state, action, isPending] = useActionState(login, {
+    data: {
+      username: '',
+    },
     error: null,
-    success: false,
   } as LoginFormState);
+
+  console.log('state: ', state);
 
   return (
     <main className={styles.container}>
       <form className={styles.form} action={action}>
         <Ui.Alerts.Banner isFromCookie value={alert} />
+        {state?.error !== null && (
+          <Ui.Alerts.Banner isPositive={false} value={state?.error} />
+        )}
         <h2 className={styles.header}>Login</h2>
-        {state?.error && <p style={{ color: "red" }}>{state.error}</p>}
         <input
           className={styles.input}
           name="username"
@@ -60,6 +66,7 @@ const styles = tw({
   container: `
     flex items-center justify-center
     h-[calc(100svh-4rem)]
+    bg-(--foreground)/5.5
   `,
   form: `
     flex flex-col gap-4
@@ -72,14 +79,18 @@ const styles = tw({
   `,
   input: `
     border border-current/22.5
-    rounded-md
+    bg-(--background)
+    rounded-lg
     p-2
-    text-sm
+    text-base
+
+    md:text-sm
   `,
   submit: (isProcessing: boolean) => tw(`
-    p-2
+    py-3.5
     bg-(--foreground)/7.5
-    rounded-md
+    border border-current/12.5
+    rounded-lg
     text-xs
     uppercase
     tracking-wide
@@ -88,5 +99,7 @@ const styles = tw({
     motion-safe:duration-300
 
     hover:bg-(--foreground)/12.5
+
+    md:py-2
   `),
 });

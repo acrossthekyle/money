@@ -39,7 +39,7 @@ const styles = tw({
     w-full max-w-full
     h-full max-h-none
     flex flex-col items-center
-    p-4
+    p-4 pb-8
     bg-transparent
     outline-none
     overflow-y-auto
@@ -47,7 +47,7 @@ const styles = tw({
     backdrop:absolute
     backdrop:outline-none
     backdrop:bg-(--background)/32
-    backdrop:backdrop-blur-xs
+    backdrop:backdrop-blur-sm
 
     motion-safe:backdrop:opacity-0
     motion-safe:backdrop:transition-opacity

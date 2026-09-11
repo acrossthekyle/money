@@ -22,9 +22,11 @@ export default function Balance({
 
 const styles = tw({
   container: `
-    mt-2
+    mt-4
     font-light
     text-2xl
+
+    md:mt-2
   `,
   negative: `
     text-red-600 dark:text-red-300

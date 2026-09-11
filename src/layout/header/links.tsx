@@ -14,7 +14,7 @@ export default async function Links() {
       </Link>
       {isAuthenticated && (
         <Link className={styles.link} href="/">
-          Dashboard
+          Accounts/Assets
         </Link>
       )}
     </nav>
@@ -30,11 +30,19 @@ const styles = tw({
   link: `
     flex items-center gap-2
     p-2
-    text-tiny
+    text-xs
     uppercase
     font-black
+    tracking-wide
+
+    md:text-tiny
   `,
   icon: `
-    w-4 h-4
+    w-6 h-6
+    stroke-1
+
+    md:w-4.5
+    md:h-4.5
+    md:stroke-2
   `,
 });

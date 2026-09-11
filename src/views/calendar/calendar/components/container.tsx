@@ -12,16 +12,16 @@ const styles = tw({
   container: `
     h-full
     w-full
-    p-4
+    pt-4
 
-    md:h-[calc(100svh-5.75rem)]
+    md:h-[calc(100svh-6.75rem)]
   `,
   content: `
     grid grid-cols-7
     h-auto
     w-full
     bg-(--background)
-    border border-current/22.5
+    border border-current/17.5
     rounded-lg
 
     md:h-full

@@ -20,6 +20,6 @@ const styles = tw({
     relative
     flex gap-2
     w-full
-    ${isStacked ? 'flex-col pb-2' : 'flex-row items-center pt-3'}
+    ${isStacked ? 'flex-col pb-0 md:pb-2' : 'flex-row items-center pt-3'}
   `),
 });

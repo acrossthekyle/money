@@ -26,8 +26,10 @@ export default function Heading({
 const styles = tw({
   container: `
     font-medium
-    text-xtiny
+    text-tiny
     uppercase
+
+    md:text-xtiny
   `,
   positive: `
     text-green-900 dark:text-green-200

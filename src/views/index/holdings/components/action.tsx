@@ -46,7 +46,7 @@ const styles = tw({
     pl-3 pr-2 py-2
     bg-(--background)
     rounded-full
-    text-xtiny
+    text-tiny
     font-medium
     uppercase
 
@@ -55,6 +55,7 @@ const styles = tw({
     hover:border-(--foreground)/62.5
 
     md:py-1.25
+    md:text-xtiny
   `,
   absolute: `
     absolute top-4 right-3.5

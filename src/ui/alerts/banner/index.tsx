@@ -1,6 +1,6 @@
 'use client';
 
-import { ThumbsUp } from 'lucide-react';
+import { CircleCheck, CircleX } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { clear } from '@/actions/alerts/clear';
@@ -8,11 +8,16 @@ import tw from '@/styles';
 
 type Props = {
   isFromCookie?: boolean;
+  isPositive?: boolean;
   value: string;
 };
 
-export default function Banner({ isFromCookie, value }: Props) {
-  const [message] = useState<{ text: string; type: string; } | undefined>(!!value ? JSON.parse(value) : undefined);
+export default function Banner({
+  isFromCookie,
+  isPositive = true,
+  value,
+}: Props) {
+  const [message] = useState(value);
 
   useEffect(() => {
     if (isFromCookie) {
@@ -20,40 +25,58 @@ export default function Banner({ isFromCookie, value }: Props) {
     }
   }, [isFromCookie]);
 
-  if (!value || message === undefined) {
+  if (!value) {
     return null;
   }
 
-  const isSuccess = message.type === 'success';
+  const parsed = isFromCookie ? JSON.parse(message) : message;
+
+  const text = isFromCookie ? parsed.text : message;
+  const isSuccess = isFromCookie ? parsed.type === 'success' : isPositive;
 
   return (
     <div
       aria-live="polite"
-      className={styles.container(isSuccess)}
+      className={
+        [
+          styles.container,
+          isSuccess && styles.positive,
+          !isSuccess && styles.negative,
+        ].filter(Boolean).join(' ')
+      }
     >
-      <p>{message.text}</p>
+      <p>{text}</p>
       {isSuccess && (
-        <ThumbsUp className={styles.icon} />
+        <CircleCheck className={styles.icon} />
+      )}
+      {!isSuccess && (
+        <CircleX className={styles.icon} />
       )}
     </div>
   );
 };
 
-const styles = {
-  container: (isSuccess: boolean) => tw(`
+const styles = tw({
+  container: `
     flex items-center justify-between
     p-2.5
     rounded-md
     border
-    ${isSuccess
-      ? `border-green-900 bg-green-800`
-      : `border-red-400 bg-red-500`
-    }
     text-xs
     font-bold
-  `),
-  icon: `
-    w-3.5 h-3.5
-    stroke-3
   `,
-};
+  positive: `
+    border-green-700
+    bg-green-200
+    text-green-700
+  `,
+  negative: `
+    border-red-700
+    bg-red-200
+    text-red-700
+  `,
+  icon: `
+    w-4 h-4
+    stroke-2
+  `,
+});

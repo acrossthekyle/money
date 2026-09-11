@@ -27,9 +27,10 @@ const styles = {
     rounded-lg
 
     motion-safe:duration-300
+
     transition-all
     ${isActive
       ? `scale-100 opacity-100 translate-y-0`
-      : `scale-90 opacity-0 translate-y-8`}
+      : `scale-90 opacity-0 translate-y-16`}
   `),
 };

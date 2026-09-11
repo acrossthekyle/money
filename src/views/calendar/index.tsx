@@ -1,6 +1,7 @@
 'use client';
 
 import { Dialogs } from '@/dialogs';
+import tw from '@/styles';
 import type { Day, Holding } from '@/types';
 import Ui from '@/ui';
 
@@ -33,7 +34,7 @@ export default function View({ data }: Props) {
   } = useModel();
 
   return (
-    <main>
+    <main className={styles.container}>
       <Options>
         <OptionsSection>
           <Forecast holdings={data.holdings} view={data.view} />
@@ -67,3 +68,10 @@ export default function View({ data }: Props) {
     </main>
   );
 };
+
+const styles = tw({
+  container: `
+    p-4
+    bg-(--foreground)/5.5
+  `,
+});

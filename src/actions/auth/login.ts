@@ -17,6 +17,10 @@ export async function login(
     password !== process.env.APP_PASSWORD
   ) {
     return {
+      data: {
+        username,
+        password: '',
+      },
       error: 'Invalid username or password',
       success: false,
     };

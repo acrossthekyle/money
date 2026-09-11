@@ -36,7 +36,7 @@ const styles = tw({
     border border-(--foreground)/22.5
     px-3 py-1
     rounded-full
-    text-tiny text-(--background)
+    text-xs text-(--background)
     font-medium
     bg-(--foreground)/90
     uppercase
@@ -46,6 +46,8 @@ const styles = tw({
     hover:bg-(--background)
     hover:text-(--foreground)
     hover:border-(--foreground)/62.5
+
+    md:text-tiny
   `,
   icon: `
     w-2.5 h-2.5
