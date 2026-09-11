@@ -22,10 +22,12 @@ export default async function Header() {
 const styles = tw({
   container: `
     flex items-center justify-between
-    h-16
+    m-4 mb-0
+    h-14
     px-2
     bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
-    border-b border-current/7.5
+    border border-current/7.5
+    rounded-lg
 
     md:h-12
   `,
