@@ -4,11 +4,7 @@ import { format } from 'date-fns';
 
 import tw from '@/styles';
 
-import {
-  OptionsSectionIcon,
-  OptionsSectionButton,
-  OptionsSectionText,
-} from '../components';
+import { OptionsSectionIcon, OptionsSectionButton } from '../components';
 
 type Props = {
   onClick: (date: string) => void;
@@ -29,12 +25,10 @@ export default function Add({ onClick, type }: Props) {
   return (
     <OptionsSectionButton
       className={styles.container}
+      isActive
       onClick={handleOnClick}
     >
       <OptionsSectionIcon icon="plus" />
-      <OptionsSectionText>
-        Budget
-      </OptionsSectionText>
     </OptionsSectionButton>
   );
 };
@@ -42,5 +36,6 @@ export default function Add({ onClick, type }: Props) {
 const styles = tw({
   container: `
     order-1
+    !pr-3
   `,
 });

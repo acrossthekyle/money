@@ -1,11 +1,11 @@
 import Budget from './budget';
-import Date from './date';
 import Disclaimer from './disclaimer';
 import Holding from './holding';
+import More from './more';
 
 export const Dialogs = {
   Budget,
-  Date,
   Disclaimer,
   Holding,
+  More,
 };

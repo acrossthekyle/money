@@ -7,7 +7,7 @@ import Ui from '@/ui';
 
 import Add from './add';
 import Calendar from './calendar';
-import { Options, OptionsSection } from './components';
+import { Budgets, Options, OptionsSection } from './components';
 import Dates from './dates';
 import Forecast from './forecast';
 import { useModel } from './model';
@@ -27,29 +27,41 @@ export default function View({ data }: Props) {
     budgets,
     date,
     handleOnAddBudget,
+    handleOnCloseMore,
     handleOnEditBudget,
     handleOnMore,
     handleOnReload,
     message,
-  } = useModel();
+  } = useModel(data.days);
 
   return (
-    <main className={styles.container}>
-      <Options>
-        <OptionsSection>
-          <Forecast holdings={data.holdings} view={data.view} />
-          {data.holdings.length > 0 && (
-            <Add onClick={handleOnAddBudget} type="budget" />
-          )}
-        </OptionsSection>
-        <Dates />
-      </Options>
-      <Calendar
-        days={data.days}
-        onAdd={handleOnAddBudget}
-        onEdit={handleOnEditBudget}
-        onMore={handleOnMore}
-      />
+    <>
+      <main className={styles.container}>
+        <Options>
+          <OptionsSection>
+            <Forecast holdings={data.holdings} view={data.view} />
+            {data.holdings.length > 0 && (
+              <Add onClick={handleOnAddBudget} type="budget" />
+            )}
+          </OptionsSection>
+          <Dates />
+        </Options>
+        <Calendar
+          date={date}
+          days={data.days}
+          onAdd={handleOnAddBudget}
+          onEdit={handleOnEditBudget}
+          onMore={handleOnMore}
+        />
+        <section className={styles.budgets}>
+          <Budgets
+            balance={balance}
+            budgets={budgets}
+            date={date}
+            onEdit={handleOnEditBudget}
+          />
+        </section>
+      </main>
       <Dialogs.Budget
         budget={budget}
         date={date}
@@ -57,20 +69,28 @@ export default function View({ data }: Props) {
         onDone={handleOnReload}
         parent={data.view}
       />
-      <Dialogs.Date
-        balance={balance}
-        budgets={budgets}
-        date={date}
-        onAdd={handleOnAddBudget}
-        onEdit={handleOnEditBudget}
-      />
+      <Dialogs.More>
+        <Budgets
+          balance={balance}
+          budgets={budgets}
+          canClose
+          date={date}
+          onClose={handleOnCloseMore}
+          onEdit={handleOnEditBudget}
+        />
+      </Dialogs.More>
       <Ui.Alerts.Message value={message} />
-    </main>
+    </>
   );
 };
 
 const styles = tw({
   container: `
     p-4
+  `,
+  budgets: `
+    block
+
+    md:hidden
   `,
 });

@@ -3,38 +3,67 @@ import tw from '@/styles';
 type Props = {
   count: number;
   isFaded: boolean;
-  onClick: () => void;
+  onClick: (useModal: boolean) => void;
 };
+
+type ContainerProps = {
+  classNames: string;
+  onClick: (useModal: boolean) => void;
+};
+
+function Container({
+  children,
+  classNames,
+  onClick,
+}: React.PropsWithChildren<ContainerProps>) {
+  return (
+    <>
+      <button
+        className={[classNames, styles.modal].join(' ')}
+        onClick={() => onClick(true)}
+        title="View all budgets"
+        type="button"
+      >
+        {children}
+      </button>
+      <button
+        className={[classNames, styles.list].join(' ')}
+        onClick={() => onClick(false)}
+        title="View all budgets"
+        type="button"
+      >
+        {children}
+      </button>
+    </>
+  );
+}
 
 export default function More({
   count,
   isFaded,
   onClick,
 }: Props) {
+  const classNames = [
+    styles.container,
+    isFaded && styles.faded,
+    count <= 0 && styles.hidden,
+  ].filter(Boolean).join(' ');
+
   return (
-    <button
-      className={[
-        styles.container,
-        isFaded && styles.faded,
-        count <= 0 && styles.hidden,
-      ].filter(Boolean).join(' ')}
-      onClick={onClick}
-      title="View all budgets"
-      type="button"
-    >
+    <Container classNames={classNames} onClick={onClick}>
       {count > 0 && (
         <span className={styles.text}>
           +{count} <span className={styles.label}>more</span>
         </span>
       )}
-    </button>
+    </Container>
   );
 };
 
 const styles = tw({
   container: `
     absolute inset-0 z-100
-    flex items-end
+    items-end
     text-xtiny
     leading-[1]
     whitespace-nowrap
@@ -65,6 +94,16 @@ const styles = tw({
     xs:block
   `,
   hidden: `
+    md:hidden
+  `,
+  modal: `
+    hidden
+
+    md:flex
+  `,
+  list: `
+    flex
+
     md:hidden
   `,
 });

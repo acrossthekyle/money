@@ -56,7 +56,7 @@ const styles = tw({
     hover:!border-(--foreground)/17.5
   `,
   active: `
-    bg-(--foreground)/90
+    bg-(--foreground)
     text-(--background)
 
     hover:bg-(--background)

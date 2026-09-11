@@ -14,19 +14,25 @@ import {
 } from './components';
 
 type Props = {
+  date: string;
   days: Day[];
   onAdd: (date: string) => void;
   onEdit: (date: string, budget: DayBudget) => void;
-  onMore: (balance: number, date: string, budgets: DayBudget[]) => void;
+  onMore: (
+    balance: number,
+    date: string,
+    budgets: DayBudget[],
+    useModal: boolean,
+  ) => void;
 };
 
-export default function Calendar({ days, onAdd, onEdit, onMore }: Props) {
+export default function Calendar({ date, days, onAdd, onEdit, onMore }: Props) {
   return (
     <Container>
       {days.map((day) => (
         <ContainerCell
           isFaded={day.isPad}
-          isHighlighted={day.isToday}
+          isHighlighted={day.date === date}
           key={day.date}
         >
           {!day.isPad && (
@@ -62,7 +68,7 @@ export default function Calendar({ days, onAdd, onEdit, onMore }: Props) {
           <ContainerCellBudgetMore
             count={day.budgets.length - 2}
             isFaded={day.isPad}
-            onClick={() => onMore(day.balance, day.date, day.budgets)}
+            onClick={useModal => onMore(day.balance, day.date, day.budgets, useModal)}
           />
         </ContainerCell>
       ))}

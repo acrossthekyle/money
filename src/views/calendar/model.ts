@@ -1,21 +1,37 @@
 'use client';
 
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useBudget } from '@/hooks/useBudget';
 import { useDate } from '@/hooks/useDate';
-import type { Budget, DayBudget } from '@/types';
+import type { Budget, Day, DayBudget } from '@/types';
 
-export function useModel() {
-  const [balance, setBalance] = useState(0);
+export function useModel(days: Day[]) {
+  const today = days.find(day => day.isToday);
+  const firstOfDays = days.find(day => !day.isPad);
+
+  const [balance, setBalance] = useState(today?.balance || 0);
   const [budget, setBudget] = useState<Budget | undefined>();
-  const [budgets, setBudgets] = useState<DayBudget[]>([]);
+  const [budgets, setBudgets] = useState<DayBudget[]>(today?.budgets || []);
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [message, setMessage] = useState('');
 
   const { onBudget } = useBudget();
-  const { onDate } = useDate();
+  const { onClose: onCloseDate, onDate } = useDate();
+
+  useEffect(() => {
+    if (today !== undefined) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setBalance(today?.balance || 0);
+      setBudgets(today?.budgets || []);
+      setDate(format(new Date(), 'yyyy-MM-dd'));
+    } else {
+      setBalance(firstOfDays?.balance || 0);
+      setBudgets(firstOfDays?.budgets || []);
+      setDate(firstOfDays?.date || '');
+    }
+  }, [firstOfDays, today]);
 
   const handleOnReload = () => {
     setMessage('Reloading');
@@ -52,6 +68,8 @@ export function useModel() {
   };
 
   const handleOnEditBudget = async (day: string, item: DayBudget) => {
+    onCloseDate();
+
     setDate(day);
 
     await makeBudgetReady(item);
@@ -59,12 +77,23 @@ export function useModel() {
     onBudget();
   };
 
-  const handleOnMore = (amount: number, day: string, items: DayBudget[]) => {
+  const handleOnMore = (
+    amount: number,
+    day: string,
+    items: DayBudget[],
+    useModal: boolean,
+  ) => {
     setDate(day);
     setBalance(amount);
     setBudgets(items);
 
-    onDate();
+    if (useModal) {
+      onDate();
+    }
+  };
+
+  const handleOnCloseMore = () => {
+    onCloseDate();
   };
 
   return {
@@ -73,6 +102,7 @@ export function useModel() {
     budgets,
     date,
     handleOnAddBudget,
+    handleOnCloseMore,
     handleOnEditBudget,
     handleOnMore,
     handleOnReload,

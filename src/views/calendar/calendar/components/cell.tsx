@@ -27,7 +27,7 @@ const styles = tw({
   container: `
     group
     relative
-    h-23
+    h-20
     border-r border-b border-current/7.5
 
     md:h-full
