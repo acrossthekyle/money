@@ -14,9 +14,9 @@ export default function Prompt({ onClick }: Props) {
         aria-label="welcome, start here"
         className={styles.container}
       >
-        <h1 className={styles.header}>So I created a budgeting app...</h1>
+        <h1 className={styles.header}>[BASALT]</h1>
         <p className={styles.paragraph}>
-          Feel free to look around and try it out. If you notice any issues don't hesitate to reach out and let me know! Click or tap the button below to get started.
+          Click or tap the button below to get started.
         </p>
         <button className={styles.button} onClick={onClick} type="button">
           Add Account/Asset
@@ -48,8 +48,7 @@ const styles = tw({
     flex items-center gap-2
     w-fit
     mt-2 mb-3
-    bg-(--foreground)/80
-    border border-(--foreground)/22.5
+    bg-(--foreground)
     px-3 py-1
     rounded-full
     font-medium
@@ -58,7 +57,8 @@ const styles = tw({
 
     motion-safe:duration-300
 
-    hover:bg-(--foreground)/90
+    hover:bg-(--foreground)/70
+    hover:dark:bg-(--foreground)/80
   `,
   emphasis: `
     font-black

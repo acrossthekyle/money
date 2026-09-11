@@ -1,6 +1,7 @@
 import tw from '@/styles';
 
 type Props = {
+  canDim?: boolean;
   className?: string;
   isActive?: boolean;
   isDisabled?: boolean;
@@ -8,6 +9,7 @@ type Props = {
 };
 
 export default function Button({
+  canDim = false,
   children,
   className = '',
   isActive,
@@ -18,6 +20,7 @@ export default function Button({
     <button
       className={[
         styles.container,
+        canDim && styles.dim,
         className,
         isActive && styles.active,
         isDisabled && styles.disabled,
@@ -37,8 +40,8 @@ const styles = tw({
     w-fit
     rounded-full
     bg-(--background)
-    border border-current/22.5
-    py-2 px-2 pr-3
+    border border-current/17.5
+    py-1.5 pl-3 pr-4
     font-medium
 
     motion-safe:duration-300
@@ -46,6 +49,11 @@ const styles = tw({
     hover:border-current/62.5
 
     md:py-1.25
+  `,
+  dim: `
+    !cursor-default
+
+    hover:!border-(--foreground)/17.5
   `,
   active: `
     bg-(--foreground)/90

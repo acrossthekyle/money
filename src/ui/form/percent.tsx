@@ -13,7 +13,7 @@ type Props = {
 export default function Percent({ id, isOptional, value }: Props) {
   return (
     <Input
-      allowNegativeValue={false}
+      allowNegativeValue={true}
       className={styles.container}
       id={id}
       name={id}

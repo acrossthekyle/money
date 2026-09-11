@@ -85,7 +85,7 @@ export default function Holding({ current, holding, onBudget, onEdit }: Props) {
           <ItemActionIcon name="plus" />
         </ItemAction>
         <ItemAction uri={`/calendar?view=${holding.id}`}>
-          View Budgets
+          View calendar
           <ItemActionIcon name="right" />
         </ItemAction>
       </ItemFooter>

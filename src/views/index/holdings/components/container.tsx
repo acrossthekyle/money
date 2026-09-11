@@ -13,8 +13,8 @@ const styles = tw({
     flex flex-col justify-between
     w-full
     rounded-lg
-    border border-current/12.5
-    bg-(--background)
+    bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
+    border border-current/7.5
     overflow-hidden
   `,
 });

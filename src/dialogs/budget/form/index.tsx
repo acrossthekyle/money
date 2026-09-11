@@ -43,7 +43,6 @@ export default function Form({
     errors,
     handleOnContinue,
     handleOnDelete,
-    handleOnPurge,
     handleOnType,
     isPending,
     type,
@@ -117,12 +116,9 @@ export default function Form({
             <Ui.Form.Button
               disabled={isPending}
               isDestructive
-              onClick={handleOnPurge}
+              onClick={handleOnDelete}
             >
-              Delete Budget
-            </Ui.Form.Button>
-            <Ui.Form.Button disabled={isPending} onClick={handleOnDelete}>
-              Delete Date
+              Delete
             </Ui.Form.Button>
           </div>
         ) : <div />}

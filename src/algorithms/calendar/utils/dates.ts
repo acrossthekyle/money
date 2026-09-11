@@ -90,7 +90,7 @@ export function createDays(
         balance = updateBalance(holdingType, balance, budget);
       });
 
-      if (interest.rate > 0 && interval.isLastDayOfMonth && interval.isTodayOrAfter) {
+      if (interest.hasInterest && interval.isLastDayOfMonth && interval.isTodayOrAfter) {
         const interestEarned = calculateInterestEarned(balance, interest.rate);
 
         balance += interestEarned;
@@ -100,6 +100,7 @@ export function createDays(
             interval.date,
             interest.label,
             interestEarned,
+            interest.rate > 0,
           ) as RawBudget
         );
       }

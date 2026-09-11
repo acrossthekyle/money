@@ -20,8 +20,8 @@ const styles = tw({
     grid grid-cols-7
     h-auto
     w-full
-    bg-(--background)
-    border border-current/17.5
+    bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
+    border border-current/7.5
     rounded-lg
 
     md:h-full

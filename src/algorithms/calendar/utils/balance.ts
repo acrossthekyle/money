@@ -41,7 +41,7 @@ export function updateBalance(
 
       if (
         holdingType === 'savings' &&
-        ['credit_card', 'retirement', 'taxable', 'property', 'other', 'health'].includes(budget.transfereeHoldingType || '')
+        ['credit_card', 'retirement', 'property'].includes(budget.transfereeHoldingType || '')
       ) {
         return Number(current) - Number(budget.amount);
       }

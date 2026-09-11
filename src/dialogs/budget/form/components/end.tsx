@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 
 import { DATE_FORMAT } from '@/constants';
+import tw from '@/styles';
 import Ui from '@/ui';
 
 type Props = {
@@ -9,7 +10,7 @@ type Props = {
 
 export default function End({ value }: Props) {
   return (
-    <Ui.Form.Field>
+    <Ui.Form.Field className={styles.container}>
       <Ui.Form.Label id="end">End (optional)</Ui.Form.Label>
       <Ui.Form.Input
         id="end"
@@ -21,3 +22,9 @@ export default function End({ value }: Props) {
     </Ui.Form.Field>
   );
 };
+
+const styles = tw({
+  container: `
+    sm:!w-34
+  `,
+});

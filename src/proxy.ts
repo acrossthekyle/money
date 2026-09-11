@@ -5,12 +5,14 @@ export default function proxy(request: NextRequest) {
   const sessionToken = request.cookies.get('app_session')?.value;
   const { pathname } = request.nextUrl;
 
-  if (pathname === '/login' || pathname.startsWith('/api/login')) {
+  if (pathname === '/login') {
     return NextResponse.next();
   }
 
-  if (!sessionToken || sessionToken !== process.env.AUTH_COOKIE_VALUE) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  if (process.env.AUTH_SESSION_MODE !== 'guest') {
+    if (!sessionToken || sessionToken !== process.env.AUTH_COOKIE_VALUE) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
   }
 
   return NextResponse.next();

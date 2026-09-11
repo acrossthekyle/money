@@ -6,7 +6,11 @@ export function balancize(raw: string) {
 };
 
 export function interestize(raw: string) {
-  const cleaned = raw.replace(/,/g, '').replace('%', '').trim();
+  const isNegative = raw.includes('-');
+  const cleaned = raw
+    .replace(/,/g, '')
+    .replace('%', '')
+    .replace('-', '').trim();
 
   if (cleaned === '') {
     return '';
@@ -14,5 +18,5 @@ export function interestize(raw: string) {
 
   const number = parseFloat(cleaned);
 
-  return number.toFixed(2);
+  return `${isNegative ? '-' : ''}${number.toFixed(2)}`;
 };

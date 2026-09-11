@@ -19,10 +19,12 @@ export default function Action({
   if (onClick) {
     return (
       <button
-        className={[
-          styles.container,
-          isAbsolute && styles.absolute,
-        ].filter(Boolean).join(' ')}
+        className={
+          [
+            styles.container,
+            isAbsolute && styles.absolute,
+          ].filter(Boolean).join(' ')
+        }
         onClick={onClick}
         type="button"
       >
@@ -32,7 +34,10 @@ export default function Action({
   }
 
   return (
-    <Link className={styles.container} href={uri}>
+    <Link
+      className={[styles.container, styles.link].join(' ')}
+      href={uri}
+    >
       {children}
     </Link>
   );
@@ -59,5 +64,13 @@ const styles = tw({
   `,
   absolute: `
     absolute top-4 right-3.5
+  `,
+  link: `
+    bg-(--foreground)
+    text-(--background)
+    border-0
+
+    hover:bg-(--foreground)/70
+    hover:dark:bg-(--foreground)/80
   `,
 });

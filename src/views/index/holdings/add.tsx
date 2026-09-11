@@ -27,8 +27,8 @@ const styles = tw({
     flex items-center justify-center
     w-full h-50
     rounded-lg
-    border border-current/12.5
-    bg-(--background)
+    bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
+    border border-current/7.5
     p-4
   `,
   action: `
@@ -38,7 +38,7 @@ const styles = tw({
     rounded-full
     text-xs text-(--background)
     font-medium
-    bg-(--foreground)/90
+    bg-(--foreground)
     uppercase
 
     motion-safe:duration-300

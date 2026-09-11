@@ -11,9 +11,8 @@ import {
   startOfDay,
 } from 'date-fns';
 
+import { DATE_FORMAT } from '@/constants';
 import type { Budget } from '@/types';
-
-const FORMAT = 'yyyy-MM-dd';
 
 export function getBudgetIterationLength(schedule: string) {
   switch (schedule) {
@@ -83,7 +82,7 @@ export function createBudgetIterations(budget: Budget): string[] {
     Array.from({ length: budgetIterationLength }, () => {
       date = addIteration(date, budget.schedule);
 
-      const formatted = format(date, FORMAT);
+      const formatted = format(date, DATE_FORMAT);
       const isTodayOrFuture = isAfter(date, today) || isSameDay(date, today);
 
       if (
@@ -97,18 +96,4 @@ export function createBudgetIterations(budget: Budget): string[] {
   }
 
   return budgetIterations;
-};
-
-export function balancize(raw: string) {
-  const cleaned = raw.replace(/,/g, '').replace('$', '').trim();
-  const number = parseFloat(cleaned);
-
-  return number.toFixed(2);
-};
-
-export function interestize(raw: string) {
-  const cleaned = raw.replace(/,/g, '').replace('%', '').trim();
-  const number = parseFloat(cleaned);
-
-  return number.toFixed(2);
 };

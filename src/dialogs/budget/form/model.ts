@@ -51,45 +51,46 @@ export function useModel(
   }, [state?.hasFailed, state?.errors]);
 
   const handleOnDelete = async () => {
+    setWillPurge(true);
     setWillDelete(true);
 
     const result = await confirm({
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Delete',
       target: '#budget-dialog',
-      text: `This will permanently delete this budget on ${date}. This action cannot be undone.`,
+      title: 'Are you absolutely sure?',
+      text: `This will be a permanent deletion. This action cannot be undone. Choose an option:`,
+      input: 'radio',
+      inputOptions: {
+        'all': `Entire budget series`,
+        'this': `Only this date`,
+      },
+      inputValidator: (value: string): string => {
+        if (!value) {
+          return ' ';
+        };
+
+        return '';
+      },
     });
 
     if (!result.isConfirmed) {
+      return;
+    }
+
+    if (result.value === 'all') {
       setWillDelete(false);
-
-      return;
-    }
-
-    const form = document.getElementById('budget-form');
-
-    if (form instanceof HTMLFormElement) {
-      form.requestSubmit();
-    }
-  };
-
-  const handleOnPurge = async () => {
-    setWillPurge(true);
-
-    const result = await confirm({
-      target: '#budget-dialog',
-      text: `This will permanently delete the entire budget. This action cannot be undone.`,
-    });
-
-    if (!result.isConfirmed) {
+    } else {
       setWillPurge(false);
-
-      return;
     }
 
-    const form = document.getElementById('budget-form');
+    setTimeout(() => {
+      const form = document.getElementById('budget-form');
 
-    if (form instanceof HTMLFormElement) {
-      form.requestSubmit();
-    }
+      if (form instanceof HTMLFormElement) {
+        form.requestSubmit();
+      }
+    }, 100);
   };
 
   const handleOnType = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,6 +106,7 @@ export function useModel(
         confirmButtonText: 'Update',
         target: '#budget-dialog',
         title: 'How to apply these changes?',
+        text: 'Choose an option:',
         input: 'radio',
         inputOptions: {
           'all': `Entire budget (from ${format(parseISO(budget?.start || ''), 'MM/dd/yyyy')} onwards)`,
@@ -144,7 +146,6 @@ export function useModel(
     errors,
     handleOnContinue,
     handleOnDelete,
-    handleOnPurge,
     handleOnType,
     isPending,
     type,

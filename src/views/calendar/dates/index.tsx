@@ -72,15 +72,20 @@ export default function Dates() {
     handleOnPrevious,
     handleOnToday,
     handleOnYear,
+    isToday,
     month,
     year,
   } = useModel();
 
   return (
     <OptionsSection className={styles.section}>
-      <OptionsSectionButton className={styles.today} onClick={handleOnToday}>
-        <OptionsSectionIcon icon="calendar" />
-        <OptionsSectionText className={styles.text}>
+      <OptionsSectionButton
+        canDim={isToday}
+        className={styles.today}
+        onClick={handleOnToday}
+      >
+        <OptionsSectionIcon canDim={isToday} icon="calendar" />
+        <OptionsSectionText canDim={isToday} className={styles.text}>
           Today
         </OptionsSectionText>
       </OptionsSectionButton>
@@ -98,19 +103,6 @@ export default function Dates() {
           {MONTHS.map((item, index) => (
             <option key={index} value={String(index)}>
               {item.full}
-            </option>
-          ))}
-        </OptionsSectionSelect>
-        <OptionsSectionSelect
-          className={styles.abbreviated}
-          name="month"
-          defaultValue={month}
-          display={MONTHS[Number(month)].abbreviated}
-          onChange={handleOnMonth}
-        >
-          {MONTHS.map((item, index) => (
-            <option key={index} value={String(index)}>
-              {item.abbreviated}
             </option>
           ))}
         </OptionsSectionSelect>
@@ -144,7 +136,7 @@ const styles = tw({
     md:justify-end
   `,
   today: `
-    !pl-2.25 !pr-2.25
+    !pl-3 !pr-3
   `,
   text: `
     hidden
@@ -155,20 +147,18 @@ const styles = tw({
     flex gap-2
   `,
   left: `
-    !pr-2.25
-  `,
-  right: `
-    !pl-2.25 !pr-2
-  `,
-  full: `
     hidden
+    !pr-3
 
     xxs:block
-    xxs:w-28
   `,
-  abbreviated: `
-    w-20
+  right: `
+    hidden
+    !pl-3 !pr-3
 
-    xxs:hidden
+    xxs:block
+  `,
+  full: `
+    xxs:w-28
   `,
 });

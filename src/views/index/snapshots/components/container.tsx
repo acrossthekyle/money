@@ -12,9 +12,9 @@ const styles = tw({
   container: `
     relative
     col-span-1
-    border border-current/12.5
     rounded-lg
-    bg-(--background)
+    bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
+    border border-current/7.5
     overflow-hidden
   `,
 });

@@ -1,30 +1,47 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import tw from '@/styles';
 
-export default async function Links() {
+import Navigation from './navigation';
+
+type Props = {
+  isAuthenticated: boolean;
+};
+
+export default function Links({ isAuthenticated }: Props) {
+  const pathname = usePathname();
+
   return (
-    <nav className={styles.container}>
+    <nav aria-label="primary navigation" className={styles.container}>
       <Link className={styles.link} href="/">
         [Basalt]
       </Link>
+      <Navigation current={pathname} isAuthenticated={isAuthenticated} />
     </nav>
   );
 };
 
 const styles = tw({
   container: `
-    flex items-center
+    flex items-center gap-3
 
-    md:gap-2
+    xxs:gap-4
   `,
   link: `
-    flex items-center gap-2
     p-2
     text-xs
     uppercase
     font-black font-mono
+  `,
+  cta: `
+    py-0.5
+    text-xs
+    uppercase
+    border-b border-current/62.5
 
-    md:text-xs
+    md:text-tiny
   `,
 });

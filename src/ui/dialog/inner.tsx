@@ -19,7 +19,7 @@ export default function Inner({
 
 const styles = {
   container: (isActive: boolean) => tw(`
-    w-full max-w-xl
+    w-full max-w-lg
     h-auto
     mt-auto
     bg-(--background)

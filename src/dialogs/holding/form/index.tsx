@@ -72,14 +72,10 @@ export default function Form({
               defaultValue={data?.type}
             >
               <option value="credit_card">Credit Card</option>
-              <option value="savings">Savings Account</option>
-              <option value="checking">Checking Account</option>
-              <option value="retirement">Retirement Account</option>
-              <option value="taxable">Taxable Account</option>
-              <option value="health">Health Account</option>
+              <option value="savings">Savings</option>
+              <option value="checking">Checking</option>
+              <option value="retirement">Retirement</option>
               <option value="property">Property</option>
-              <option value="car">Car</option>
-              <option value="other">Other</option>
             </Ui.Form.Select>
           </Ui.Form.Field>
           <Ui.Form.Field className={styles.interest}>

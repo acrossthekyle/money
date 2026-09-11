@@ -36,7 +36,7 @@ export function displayType(
 
       if (
         holdingType === 'savings' &&
-        ['credit_card', 'retirement', 'taxable', 'property', 'other', 'health'].includes(budget.transfereeHoldingType || '')
+        ['credit_card', 'retirement', 'property'].includes(budget.transfereeHoldingType || '')
       ) {
         return 'debit';
       }

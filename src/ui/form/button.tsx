@@ -59,8 +59,8 @@ const styles = tw({
     hover:bg-(--foreground)/50
   `,
   destructive: `
-    bg-red-200 dark:bg-red-900
-    text-red-900 dark:text-(--foreground)
+    bg-red-200 dark:bg-red-300
+    text-red-900 dark:text-red-900
     border-red-900/22.5
   `,
   soft: `

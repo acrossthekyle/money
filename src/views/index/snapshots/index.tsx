@@ -8,7 +8,7 @@ import Assets from './assets';
 import Checking from './checking';
 import Credit from './credit';
 import NetWorth from './net';
-import Other from './other';
+import Property from './property';
 import Retirement from './retirement';
 import Savings from './savings';
 
@@ -28,12 +28,12 @@ export default function Snapshots({ metrics }: Props) {
       <ul className={styles.items}>
         <NetWorth date={today} metrics={metrics} />
         <Accounts date={today} metrics={metrics} />
+        <Assets date={today} metrics={metrics} />
         <Savings date={today} metrics={metrics} />
         <Checking date={today} metrics={metrics} />
         <Credit date={today} metrics={metrics} />
-        <Assets date={today} metrics={metrics} />
         <Retirement date={today} metrics={metrics} />
-        <Other date={today} metrics={metrics} />
+        <Property date={today} metrics={metrics} />
       </ul>
     </section>
   );
@@ -42,7 +42,7 @@ export default function Snapshots({ metrics }: Props) {
 const styles = tw({
   container: `
     order-0
-    border-b border-current/7.5
+    border-b border-current/7.5 dark:border-current/12.5
     pb-4
 
     md:block

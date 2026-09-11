@@ -50,8 +50,8 @@ const styles = tw({
   cta: `
     relative z-1
     flex items-center justify-between gap-2
-    px-3 py-2 pr-2
-    border border-current/22.5
+    px-3 py-1.5 pr-2
+    border border-current/17.5
     bg-(--background)
     rounded-full
     text-tiny

@@ -18,11 +18,7 @@ const Form = z.object({
     'checking',
     'savings',
     'retirement',
-    'taxable',
-    'health',
     'property',
-    'car',
-    'other',
   ]),
   interest: z.string().nullable().optional(),
 });

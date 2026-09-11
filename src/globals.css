@@ -2,7 +2,7 @@
 
 @theme inline {
   --breakpoint-xs: 28.125rem; /* 450px */
-  --breakpoint-xxs: 22.5rem; /* 360px */
+  --breakpoint-xxs: 22.8125rem; /* 365px */
 
   --text-tiny: 0.625rem; /* 10px */
   --text-xtiny: 0.5rem; /* 8px */

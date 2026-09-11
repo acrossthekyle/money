@@ -72,6 +72,5 @@ export default function View({ data }: Props) {
 const styles = tw({
   container: `
     p-4
-    bg-(--foreground)/5.5
   `,
 });

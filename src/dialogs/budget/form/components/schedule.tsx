@@ -7,14 +7,14 @@ type Props = {
 export default function Schedule({ value }: Props) {
   return (
     <Ui.Form.Field>
-      <Ui.Form.Label id="schedule">Frequency</Ui.Form.Label>
+      <Ui.Form.Label id="schedule">Repeats</Ui.Form.Label>
       <Ui.Form.Select
         id="schedule"
         name="schedule"
         required
         defaultValue={value}
       >
-        <option value="once">Once</option>
+        <option value="once">Never</option>
         <option value="daily">Daily</option>
         <option value="bi-daily">Every other day</option>
         <option value="weekly">Weekly</option>

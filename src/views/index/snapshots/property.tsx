@@ -1,4 +1,3 @@
-import { ASSETS } from '@/constants';
 import type { Metric } from '@/types';
 
 import * as Components from './components';
@@ -8,10 +7,8 @@ type Props = {
   metrics: Metric[];
 };
 
-export default function Other({ date, metrics }: Props) {
-  const filtered = metrics
-    .filter(metric => ASSETS.includes(metric.holding.type))
-    .filter(metric => metric.holding.type !== 'retirement');
+export default function Property({ date, metrics }: Props) {
+  const filtered = metrics.filter(metric => metric.holding.type === 'property');
 
   if (filtered.length === 0) {
     return null;
@@ -27,7 +24,7 @@ export default function Other({ date, metrics }: Props) {
 
   return (
     <Components.Item>
-      <Components.ItemHeading>All Other Assets</Components.ItemHeading>
+      <Components.ItemHeading>Property</Components.ItemHeading>
       <Components.ItemContent>
         <Components.ItemContentAmount>{current}</Components.ItemContentAmount>
         <Components.ItemContentDate>{date}</Components.ItemContentDate>

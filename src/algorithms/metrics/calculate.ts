@@ -61,7 +61,9 @@ function calculatePerHolding(
           const target = day.budgets[0];
 
           if (
-            !['appreciation', 'interest'].includes(target.name.toLowerCase())
+            ![
+              'appreciation', 'depreciation', 'growth', 'loss', 'interest'
+            ].includes(target.name.toLowerCase())
           ) {
             next = {
               date: day.date,

@@ -1,11 +1,12 @@
 import { logout } from '@/actions/auth/logout';
 import tw from '@/styles';
-import { authentication } from '@/utils/authentication';
 
-export default async function Logout() {
-  const { isAuthenticated } = await authentication();
+type Props = {
+  isAuthenticated: boolean;
+};
 
-  if (!isAuthenticated) {
+export default function Logout({ isAuthenticated }: Props) {
+  if (!isAuthenticated || process.env.AUTH_SESSION_MODE === 'guest') {
     return null;
   }
 
@@ -20,16 +21,17 @@ export default async function Logout() {
 
 const styles = tw({
   container: `
-    flex items-center gap-2
     uppercase
     text-xs
-    font-black
-    p-2
+    font-medium
+    py-0.5
+    mb-1
+    border-b border-transparent
+
+    motion-safe:duration-200
+
+    hover:border-current/62.5
 
     md:text-tiny
-  `,
-  icon: `
-    w-3 h-3
-    stroke-3
   `,
 });
