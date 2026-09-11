@@ -24,14 +24,14 @@ export default function Message({ value }: Props) {
 
 const styles = tw({
   container: `
-    absolute left-4 bottom-4 z-100
+    fixed left-4 bottom-4 z-100
     flex items-center gap-2
-    text-tiny
+    text-tiny text-green-900
     font-bold
     tracking-wide
     uppercase
-    border border-green-300/22.5
-    bg-green-900
+    border border-green-900/22.5
+    bg-green-200
     rounded-md
     p-2.5
   `,
@@ -40,7 +40,7 @@ const styles = tw({
     w-3 h-3
   `,
   backdrop: `
-    absolute top-0 left-0 right-0 z-40
+    fixed top-0 left-0 right-0 z-40
     h-svh
     bg-(--background)/32
     backdrop-blur-xs
