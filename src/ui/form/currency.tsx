@@ -27,9 +27,15 @@ export default function Currency({ id, value }: Props) {
 
 const styles = tw({
   container: `
-    p-2 pl-3
-    border border-current/20.5
-    rounded-md
-    text-sm
+    peer
+    border border-current/12.5 dark:border-current/27.5
+    rounded-sm
+    outline-none
+    py-2.25 pt-2.75 pl-3
+    text-base
+    bg-(--background)
+
+    focus:border-orange-400
+    focus:dark:border-teal-600
   `,
 });

@@ -35,19 +35,16 @@ export default function Dialog({
 
 const styles = tw({
   container: `
-    absolute inset-0
+    fixed inset-0
     w-full max-w-full
     h-full max-h-none
     flex flex-col items-center
-    p-4 pb-8
+    p-4 pb-2
     bg-transparent
     outline-none
     overflow-y-auto
 
-    backdrop:absolute
-    backdrop:outline-none
-    backdrop:bg-(--background)/32
-    backdrop:backdrop-blur-sm
+    backdrop:hidden
 
     motion-safe:backdrop:opacity-0
     motion-safe:backdrop:transition-opacity

@@ -1,8 +1,15 @@
 import tw from '@/styles';
 
-export default function Inner({ children }: React.PropsWithChildren) {
+type Props = {
+  className?: string;
+};
+
+export default function Inner({
+  children,
+  className = '',
+}: React.PropsWithChildren<Props>) {
   return (
-    <div className={styles.container}>
+    <div className={[styles.container, className].filter(Boolean).join(' ')}>
       {children}
     </div>
   );
@@ -10,7 +17,7 @@ export default function Inner({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    flex flex-col gap-4
-    px-4 py-2
+    grid grid-cols-24 xs:gap-x-4 gap-y-6
+    p-4 pt-1
   `,
 });

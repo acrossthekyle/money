@@ -93,7 +93,7 @@ export function useModel(
     }, 100);
   };
 
-  const handleOnType = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnType = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setType(event.target.value);
   };
 

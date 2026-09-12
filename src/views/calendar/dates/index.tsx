@@ -141,7 +141,7 @@ const styles = tw({
   text: `
     hidden
 
-    md:block
+    xs:block
   `,
   group: `
     flex gap-2

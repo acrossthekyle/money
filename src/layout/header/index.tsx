@@ -22,14 +22,8 @@ export default async function Header() {
 const styles = tw({
   container: `
     flex items-center justify-between
-    m-4 mb-0
-    h-14
-    px-2
-    bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
-    border border-current/7.5
-    rounded-lg
-
-    md:h-12
+    px-3 py-2
+    border-b border-current/12.5
   `,
   group: `
     flex items-center gap-2

@@ -2,13 +2,20 @@ import tw from '@/styles';
 
 type Props = {
   className?: string;
-  isStacked?: boolean
 };
 
-export default function Field({ children, className, isStacked = true }: React.PropsWithChildren<Props>) {
+export default function Field({
+  children,
+  className = '',
+}: React.PropsWithChildren<Props>) {
   return (
     <div
-      className={`${styles.container(isStacked)} ${className || ''}`.trim()}
+      className={
+        [
+          styles.container,
+          className,
+        ].filter(Boolean).join(' ')
+      }
     >
       {children}
     </div>
@@ -16,10 +23,8 @@ export default function Field({ children, className, isStacked = true }: React.P
 };
 
 const styles = tw({
-  container: (isStacked?: boolean) => tw(`
+  container: `
     relative
-    flex gap-2
-    w-full
-    ${isStacked ? 'flex-col pb-0 md:pb-2' : 'flex-row items-center pt-3'}
-  `),
+    flex flex-col
+  `,
 });

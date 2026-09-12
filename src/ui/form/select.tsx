@@ -20,17 +20,23 @@ export default function Select({ children, ...props }: React.PropsWithChildren<P
 
 const styles = tw({
   container: `
+    peer
     appearance-none
-    border border-current/20.5
-    rounded-md
-    p-2 pr-8
+    border border-current/12.5 dark:border-current/27.5
+    rounded-sm
+    outline-none
+    py-2.25 pt-2.75 pl-3.25 pr-8
+    text-base
+    bg-(--background)
     truncate
-    text-sm
+
+    focus:border-orange-400
+    focus:dark:border-teal-600
   `,
   icon: `
-    absolute top-8.25 right-2
+    absolute top-4 right-2
     w-4.5 h-4.5
-    stroke-2
+    stroke-2 stroke-current/50
     pointer-events-none
   `,
 });

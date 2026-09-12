@@ -1,3 +1,4 @@
+import tw from '@/styles';
 import Ui from '@/ui';
 
 type Props = {
@@ -6,18 +7,22 @@ type Props = {
 
 export default function Notes({ value }: Props) {
   return (
-    <Ui.Form.Field>
-      <Ui.Form.Label id="notes">
-        Memo (Optional)
-      </Ui.Form.Label>
+    <Ui.Form.Field className={styles.container}>
       <Ui.Form.Input
-        placeholder="Max length: 64 Characters"
+        placeholder=""
         id="notes"
         name="notes"
         type="text"
         defaultValue={value}
         maxLength={64}
       />
+      <Ui.Form.Label htmlFor="notes">Memo</Ui.Form.Label>
     </Ui.Form.Field>
   );
 };
+
+const styles = tw({
+  container: `
+    col-span-24
+  `,
+});

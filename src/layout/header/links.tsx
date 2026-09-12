@@ -17,7 +17,7 @@ export default function Links({ isAuthenticated }: Props) {
   return (
     <nav aria-label="primary navigation" className={styles.container}>
       <Link className={styles.link} href="/">
-        [Basalt]
+        Basalt
       </Link>
       <Navigation current={pathname} isAuthenticated={isAuthenticated} />
     </nav>
@@ -32,16 +32,10 @@ const styles = tw({
   `,
   link: `
     p-2
-    text-xs
+    text-sm
     uppercase
-    font-black font-mono
-  `,
-  cta: `
-    py-0.5
-    text-xs
-    uppercase
-    border-b border-current/62.5
+    font-mono
 
-    md:text-tiny
+    md:text-xs
   `,
 });

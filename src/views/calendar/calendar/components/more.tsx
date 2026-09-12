@@ -83,9 +83,8 @@ const styles = tw({
   text: `
     flex items-center gap-1
     px-2 pb-2
-    font-bold font-mono
+    font-normal font-mono
 
-    md:font-normal
     md:p-0
   `,
   label: `

@@ -12,7 +12,6 @@ type Props = {
 export default function Start({ date, value }: Props) {
   return (
     <Ui.Form.Field className={styles.container}>
-      <Ui.Form.Label id="start">Start</Ui.Form.Label>
       <Ui.Form.Input
         id="start"
         name="start"
@@ -20,12 +19,17 @@ export default function Start({ date, value }: Props) {
         required
         defaultValue={value || format(parseISO(date), DATE_FORMAT)}
       />
+      <Ui.Form.Label htmlFor="start" isRequired>Start</Ui.Form.Label>
     </Ui.Form.Field>
   );
 };
 
 const styles = tw({
   container: `
-    sm:!w-34
+    col-span-12
+    mr-2
+
+    xs:mr-0
+    sm:col-span-7
   `,
 });

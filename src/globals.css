@@ -32,29 +32,35 @@ body:has(dialog[open]) {
   overflow: hidden !important;
 }
 
+body:has(dialog[open]) {
+  opacity: 20%;
+}
+
 body {
+  transition: opacity 0.3s ease-in-out;
+
   button {
     cursor: pointer;
   }
 
-  dialog {
-    z-index: -1;
-    position: fixed;
-    top: 0;
-    left: -100vw;
-    width: 100vw;
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+    color: transparent;
+    background: transparent;
+    cursor: pointer;
   }
 
-  dialog::backdrop {
-    height: var(--dialog-backdrop-height, 100vh);
+  dialog {
+    left: -100vw;
+    width: 100vw;
+    transition: left 0s linear 450ms;
   }
 
   dialog.is-active {
-    z-index: 0;
     left: 0;
-  }
-
-  dialog.is-active::backdrop {
-    opacity: 1;
+    transition-delay: 0s;
   }
 }

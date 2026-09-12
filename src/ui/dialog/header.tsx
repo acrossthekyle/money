@@ -23,17 +23,16 @@ const styles = tw({
   container: `
     relative
     flex items-center justify-between
-    px-4 py-2 mb-4
-    border-b border-current/12.5
-    bg-(--foreground)/5
+    px-4 py-2 mb-2
   `,
   header: `
-    font-black
+    font-normal
     text-xs
     uppercase
   `,
   close: `
     p-2
+    -mr-2
   `,
   icon: `
     w-4 h-4

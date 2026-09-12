@@ -11,7 +11,6 @@ type Props = {
 export default function End({ value }: Props) {
   return (
     <Ui.Form.Field className={styles.container}>
-      <Ui.Form.Label id="end">End (optional)</Ui.Form.Label>
       <Ui.Form.Input
         id="end"
         name="end"
@@ -19,12 +18,17 @@ export default function End({ value }: Props) {
         min={format(new Date(), DATE_FORMAT)}
         defaultValue={value || ''}
       />
+      <Ui.Form.Label htmlFor="end">End</Ui.Form.Label>
     </Ui.Form.Field>
   );
 };
 
 const styles = tw({
   container: `
-    sm:!w-34
+    col-span-12
+    ml-2
+
+    xs:ml-0
+    sm:col-span-7
   `,
 });

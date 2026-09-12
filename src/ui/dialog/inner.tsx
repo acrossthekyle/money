@@ -19,18 +19,21 @@ export default function Inner({
 
 const styles = {
   container: (isActive: boolean) => tw(`
-    w-full max-w-lg
+    relative bottom-4
+    w-full
     h-auto
     mt-auto
     bg-(--background)
-    border border-current/12.5
+    border border-current/5.5 dark:border-current/10
     rounded-lg
+    shadow-lg/25 dark:shadow-lg/75
 
     motion-safe:duration-300
 
-    transition-all
     ${isActive
       ? `scale-100 opacity-100 translate-y-0`
-      : `scale-90 opacity-0 translate-y-16`}
+      : `scale-80 opacity-0 translate-y-24`}
+
+    sm:max-w-lg
   `),
 };

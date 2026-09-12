@@ -8,7 +8,6 @@ type Props = {
 export default function Category({ value }: Props) {
   return (
     <Ui.Form.Field className={styles.container}>
-      <Ui.Form.Label id="category">Category</Ui.Form.Label>
       <Ui.Form.Select
         id="category"
         name="category"
@@ -26,12 +25,15 @@ export default function Category({ value }: Props) {
         <option value="payment">Payment</option>
         <option value="shopping">Shopping</option>
       </Ui.Form.Select>
+      <Ui.Form.Label htmlFor="category" isRequired>Category</Ui.Form.Label>
     </Ui.Form.Field>
   );
 };
 
 const styles = tw({
   container: `
-    sm:!w-62
+    col-span-24
+
+    xs:col-span-12
   `,
 });

@@ -1,23 +1,46 @@
 import tw from '@/styles';
 
-type Props = React.InputHTMLAttributes<HTMLInputElement>;
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
+  className?: string;
+};
 
-export default function Input({ className, ...props }: Props) {
+export default function Input({ className = '', type, ...rest }: Props) {
   return (
     <input
-      className={`${styles.container} ${className || ''}`.trim()}
-      {...props}
+      className={
+        [
+          styles.container,
+          className,
+          type === 'date' && styles.date,
+        ].filter(Boolean).join(' ')
+      }
+      type={type}
+      {...rest}
     />
   );
 };
 
 const styles = tw({
   container: `
-    border border-current/20.5
-    rounded-md
-    p-2 pl-3
+    peer
+    appearance-none
+    relative
+    border border-current/12.5 dark:border-current/27.5
+    rounded-sm
+    outline-none
+    pb-2.25 pt-2.75 px-3
     text-base
+    bg-(--background)
 
-    md:text-sm
+    focus:border-orange-400
+    focus:dark:border-teal-600
+  `,
+  date: `
+    uppercase
+    !pr-2
+    text-sm
+    h-11.5
+
+    xxs:text-base
   `,
 });

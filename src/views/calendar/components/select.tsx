@@ -54,13 +54,14 @@ const styles = tw({
     border border-current/17.5
     bg-(--background)
     rounded-full
-    text-tiny
+    text-xs
     font-medium dark:font-normal
     uppercase
 
     motion-safe:duration-300
     motion-safe:group-hover:border-current/62.5
 
+    md:text-tiny
     md:py-1
   `,
   icon: `

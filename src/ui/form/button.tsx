@@ -36,7 +36,7 @@ const styles = tw({
     flex items-center justify-between gap-2
     px-3 py-2
     bg-(--background)
-    rounded-full
+    rounded-sm
     text-tiny
     font-medium dark:font-normal
     uppercase
@@ -54,9 +54,10 @@ const styles = tw({
   submit: `
     bg-(--foreground)
     text-(--background)
-    border-0
 
-    hover:bg-(--foreground)/50
+    hover:bg-(--background)
+    hover:border-(--foreground)
+    hover:text-(--foreground)
   `,
   destructive: `
     bg-red-200 dark:bg-red-300

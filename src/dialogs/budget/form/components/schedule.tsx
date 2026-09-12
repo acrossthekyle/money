@@ -1,3 +1,4 @@
+import tw from '@/styles';
 import Ui from '@/ui';
 
 type Props = {
@@ -6,8 +7,7 @@ type Props = {
 
 export default function Schedule({ value }: Props) {
   return (
-    <Ui.Form.Field>
-      <Ui.Form.Label id="schedule">Repeats</Ui.Form.Label>
+    <Ui.Form.Field className={styles.container}>
       <Ui.Form.Select
         id="schedule"
         name="schedule"
@@ -25,6 +25,15 @@ export default function Schedule({ value }: Props) {
         <option value="bi-annually">Every six months</option>
         <option value="yearly">Yearly</option>
       </Ui.Form.Select>
+      <Ui.Form.Label htmlFor="schedule" isRequired>Repeats</Ui.Form.Label>
     </Ui.Form.Field>
   );
 };
+
+const styles = tw({
+  container: `
+    col-span-24
+
+    sm:col-span-10
+  `,
+});

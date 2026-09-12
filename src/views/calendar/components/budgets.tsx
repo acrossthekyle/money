@@ -38,15 +38,10 @@ export default function Budgets({
           <X className={styles.icon} />
         </button>
       )}
-      <ul className={styles.budgets}>
+      <ul className={styles.items}>
         {budgets.map((budget, index) => (
-          <li key={index}>
-            <button
-              className={styles.budget}
-              onClick={budget.isBudget ? () => onEdit(date, budget) : () => {}}
-              title="View/Edit Budget"
-              type="button"
-            >
+          <li className={styles.item} key={index}>
+            <h3 className={styles.heading}>
               <span className={styles.name}>{budget.name}</span>
               <span
                 className={
@@ -55,7 +50,16 @@ export default function Budgets({
               >
                 ${formatNumber(Number(budget.amount))}
               </span>
-            </button>
+            </h3>
+            {budget.isBudget && (
+              <button
+                className={styles.edit}
+                onClick={() => onEdit(date, budget)}
+                type="button"
+              >
+                Edit
+              </button>
+            )}
           </li>
         ))}
       </ul>
@@ -84,30 +88,48 @@ const styles = tw({
     w-5 h-5
     stroke-2
   `,
-  budgets: `
+  items: `
     flex flex-col gap-2
+    divide-y divide-current/12.5
+
+    md:mt-2
   `,
-  budget: `
-    flex items-center justify-between gap-2
-    w-full h-8
-    px-2.5 py-2
-    text-sm text-left
-    font-mono
-    rounded-lg
-    leading-[1]
-    border border-current/22.5
+  item: `
+    flex items-center justify-between
+    pb-2
+
+    last:pb-0
+  `,
+  heading: `
+    flex flex-col gap-1
+    text-sm
+  `,
+  edit: `
+    flex items-center gap-1
+    px-3 py-1
+    border border-(--foreground)/22.5
+    rounded-full
+    bg-(--background)
+    text-xs text-(--foreground)
+    uppercase
 
     motion-safe:duration-300
 
-    hover:border-current/62.5
+    hover:border-(--foreground)/62.5
+
+    md:text-tiny
   `,
   name: `
     truncate
   `,
   credit: `
+    font-mono
+    text-xs
     text-teal-400
   `,
   debit: `
+    font-mono
+    text-xs
     text-red-400
   `,
 });

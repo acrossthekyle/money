@@ -27,9 +27,10 @@ const styles = tw({
   container: `
     group
     relative
-    h-20
+    h-18
     border-r border-b border-current/7.5
 
+    sm:h-20
     md:h-full
   `,
   hover: `

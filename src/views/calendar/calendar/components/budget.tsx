@@ -40,16 +40,14 @@ const styles = tw({
   content: `
     flex items-center justify-between
     w-full
-    px-1.5
-    font-mono
     text-xtiny
 
     md:text-tiny
     xl:text-xs
   `,
   clickable: `
-    rounded-lg
-    py-1.25
+    rounded-sm
+    px-1.5 py-1.25
     leading-[1]
 
     md:border
@@ -61,7 +59,7 @@ const styles = tw({
     hover:border-current/62.5
   `,
   static: `
-    py-1.25
+    px-0.5 py-1.25
     leading-[1]
 
     md:py-0

@@ -21,11 +21,10 @@ export default function Logout({ isAuthenticated }: Props) {
 
 const styles = tw({
   container: `
+    relative -top-0.5
     uppercase
     text-xs
     font-medium
-    py-0.5
-    mb-1
     border-b border-transparent
 
     motion-safe:duration-200

@@ -11,7 +11,6 @@ import {
   End,
   Name,
   Notes,
-  Parent,
   Schedule,
   Start,
   Transferee,
@@ -56,38 +55,38 @@ export default function Form({
 
   return (
     <Ui.Form.Container action={action} id="budget-form" key={data?.id || date}>
+      <Ui.Alerts.Errors items={errors} message="Form validation failed" />
       <Ui.Form.Inner>
-        <Ui.Alerts.Errors items={errors} message="Form validation failed" />
-        <Ui.Form.Input
+        <Name value={data?.name} />
+        <Amount value={data?.amount} />
+        <Type onChange={handleOnType} value={data?.type} />
+        <Category value={data?.category} />
+        <Transferee
+          accounts={accounts}
+          assets={assets}
+          holding={parent}
+          type={type}
+          value={data?.transferee}
+        />
+        <Start date={date} value={data?.start} />
+        <End value={data?.end} />
+        <Schedule value={data?.schedule} />
+        <Notes value={data?.notes} />
+        <input
           name="date"
           type="text"
           value={date}
           readOnly
           className="hidden"
         />
-        <Parent parent={parent} />
-        <Ui.Form.Group>
-          <Name value={data?.name} />
-          <Amount value={data?.amount} />
-          <Category value={data?.category} />
-        </Ui.Form.Group>
-        <Ui.Form.Group>
-          <Type onChange={handleOnType} value={data?.type} />
-          <Transferee
-            accounts={accounts}
-            assets={assets}
-            holding={parent}
-            type={type}
-            value={data?.transferee}
-          />
-        </Ui.Form.Group>
-        <Ui.Form.Group>
-          <Start date={date} value={data?.start} />
-          <End value={data?.end} />
-          <Schedule value={data?.schedule} />
-        </Ui.Form.Group>
-        <Notes value={data?.notes} />
-        <Ui.Form.Input
+        <input
+          name="parent"
+          type="text"
+          value={parent}
+          readOnly
+          className="hidden"
+        />
+        <input
           name="update"
           type="text"
           value={budget === undefined || budget?.schedule === 'once' ? 'this' : update}
@@ -95,14 +94,14 @@ export default function Form({
           required={budget !== undefined}
           className="hidden"
         />
-        <Ui.Form.Input
+        <input
           name="erase"
           type="text"
           value={willDelete ? 'true' : 'false'}
           readOnly
           className="hidden"
         />
-        <Ui.Form.Input
+        <input
           name="purge"
           type="text"
           value={willPurge ? 'true' : 'false'}

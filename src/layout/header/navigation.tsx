@@ -42,9 +42,8 @@ export default function Navigation({ current, isAuthenticated }: Props) {
 
 const styles = tw({
   link: `
-    py-0.5
-    text-xs
     uppercase
+    text-xs
     font-medium
     border-b border-transparent
 

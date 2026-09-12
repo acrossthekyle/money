@@ -68,9 +68,9 @@ const styles = tw({
   link: `
     bg-(--foreground)
     text-(--background)
-    border-0
 
-    hover:bg-(--foreground)/70
-    hover:dark:bg-(--foreground)/80
+    hover:bg-(--background)
+    hover:border-(--foreground)
+    hover:text-(--foreground)
   `,
 });
