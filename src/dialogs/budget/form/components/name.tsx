@@ -14,7 +14,7 @@ export default function Name({ value }: Props) {
         type="text"
         required
         defaultValue={value}
-        placeholder=""
+        placeholder=" "
         maxLength={36}
       />
       <Ui.Form.Label htmlFor="title" isRequired>Name</Ui.Form.Label>

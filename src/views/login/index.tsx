@@ -41,7 +41,7 @@ export default function View({ data }: Props) {
                 id="username"
                 name="username"
                 type="text"
-                placeholder=""
+                placeholder=" "
                 defaultValue={state?.data?.username}
                 required
                 disabled={isPending}
@@ -55,7 +55,7 @@ export default function View({ data }: Props) {
                 id="password"
                 name="password"
                 type="password"
-                placeholder=""
+                placeholder=" "
                 required
                 disabled={isPending}
               />

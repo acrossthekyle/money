@@ -15,6 +15,7 @@ export default function End({ value }: Props) {
         id="end"
         name="end"
         type="date"
+        placeholder=" "
         min={format(new Date(), DATE_FORMAT)}
         defaultValue={value || ''}
       />

@@ -9,7 +9,7 @@ export default function Notes({ value }: Props) {
   return (
     <Ui.Form.Field className={styles.container}>
       <Ui.Form.Input
-        placeholder=""
+        placeholder=" "
         id="notes"
         name="notes"
         type="text"

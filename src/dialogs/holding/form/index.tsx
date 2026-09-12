@@ -38,7 +38,7 @@ export default function Form({
             type="text"
             required
             defaultValue={data?.name}
-            placeholder=""
+            placeholder=" "
             maxLength={48}
           />
           <Ui.Form.Label htmlFor="holding_name" isRequired>Name</Ui.Form.Label>
@@ -88,7 +88,7 @@ export default function Form({
             name="institution"
             type="text"
             defaultValue={data?.institution}
-            placeholder=""
+            placeholder=" "
             maxLength={48}
           />
           <Ui.Form.Label htmlFor="institution">Institution</Ui.Form.Label>
