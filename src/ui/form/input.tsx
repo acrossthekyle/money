@@ -1,22 +1,37 @@
+import { format, parseISO } from 'date-fns';
+
 import tw from '@/styles';
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
 };
 
-export default function Input({ className = '', type, ...rest }: Props) {
+export default function Input({
+  className = '',
+  type,
+  value,
+  ...rest
+}: Props) {
   return (
-    <input
-      className={
-        [
-          styles.container,
-          className,
-          type === 'date' && styles.date,
-        ].filter(Boolean).join(' ')
-      }
-      type={type}
-      {...rest}
-    />
+    <>
+      <input
+        className={
+          [
+            styles.container,
+            className,
+            type === 'date' && styles.date,
+          ].filter(Boolean).join(' ')
+        }
+        type={type}
+        value={value}
+        {...rest}
+      />
+      {type === 'date' && (
+        <span aria-hidden="true" className={styles.mask} role="presentation">
+          {!!value ? format(parseISO(String(value)), 'MM/dd/yyyy') : '...'}
+        </span>
+      )}
+    </>
   );
 };
 
@@ -36,11 +51,13 @@ const styles = tw({
     focus:dark:border-teal-600
   `,
   date: `
-    uppercase
-    !pr-2
-    text-sm
     h-11.5
-
-    xxs:text-base
+    cursor-pointer
+  `,
+  mask: `
+    absolute top-3 bottom-2 left-3.25 right-2 z-1
+    pt-0.25
+    bg-(--background)
+    pointer-events-none
   `,
 });

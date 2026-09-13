@@ -7,17 +7,19 @@ import Ui from '@/ui';
 import Form from './form';
 
 type Props = {
-  holdings: Holding[];
   budget?: Budget;
   date: string;
+  holding?: Holding;
+  holdings: Holding[];
   onDone: () => void;
   parent: string;
 };
 
 export default function Budget({
-  holdings,
   budget,
   date,
+  holding,
+  holdings,
   onDone,
   parent,
 }: Props) {
@@ -39,7 +41,7 @@ export default function Budget({
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
         <Ui.Dialog.DialogHeader onClose={onClose}>
-          {budget ? 'Edit' : 'Add'} budget
+          {budget ? 'Edit budget' : `Add budget for ${holding?.name || ''}`}
         </Ui.Dialog.DialogHeader>
         <Form
           budget={budget}

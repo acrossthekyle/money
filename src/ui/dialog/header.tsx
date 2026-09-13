@@ -26,16 +26,17 @@ const styles = tw({
     px-4 py-2 mb-2
   `,
   header: `
-    font-normal
-    text-xs
+    font-light
+    text-sm
     uppercase
+    truncate
   `,
   close: `
     p-2
     -mr-2
   `,
   icon: `
-    w-4 h-4
-    stroke-2
+    w-5 h-5
+    stroke-1
   `,
 });

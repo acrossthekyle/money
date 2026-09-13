@@ -8,7 +8,6 @@ import {
   OptionsSection,
   OptionsSectionIcon,
   OptionsSectionButton,
-  OptionsSectionText,
   OptionsSectionSelect,
 } from '../components';
 
@@ -85,19 +84,15 @@ export default function Dates() {
         onClick={handleOnToday}
       >
         <OptionsSectionIcon canDim={isToday} icon="calendar" />
-        <OptionsSectionText canDim={isToday} className={styles.text}>
-          Today
-        </OptionsSectionText>
       </OptionsSectionButton>
       <div className={styles.group}>
         <OptionsSectionButton className={styles.left} onClick={handleOnPrevious}>
           <OptionsSectionIcon icon="left" />
         </OptionsSectionButton>
         <OptionsSectionSelect
-          className={styles.full}
+          className={styles.month}
           name="month"
           defaultValue={month}
-          display={MONTHS[Number(month)].full}
           onChange={handleOnMonth}
         >
           {MONTHS.map((item, index) => (
@@ -107,9 +102,9 @@ export default function Dates() {
           ))}
         </OptionsSectionSelect>
         <OptionsSectionSelect
+          className={styles.year}
           name="year"
           defaultValue={year}
-          display={year}
           onChange={handleOnYear}
         >
           {Array.from({ length: 11 }, (_, index) => (
@@ -136,12 +131,7 @@ const styles = tw({
     md:justify-end
   `,
   today: `
-    !pl-3 !pr-3
-  `,
-  text: `
-    hidden
-
-    xs:block
+    !px-3
   `,
   group: `
     flex gap-2
@@ -150,7 +140,7 @@ const styles = tw({
     hidden
     !pr-3
 
-    xxs:block
+    xs:block
   `,
   right: `
     hidden
@@ -158,7 +148,10 @@ const styles = tw({
 
     xxs:block
   `,
-  full: `
-    xxs:w-28
+  month: `
+    w-32
+  `,
+  year: `
+    w-22
   `,
 });

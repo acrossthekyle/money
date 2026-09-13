@@ -37,7 +37,7 @@ const styles = tw({
     px-3 py-2
     bg-(--background)
     rounded-full
-    text-tiny
+    text-xs
     font-medium dark:font-normal
     uppercase
     border border-current/22.5
@@ -49,7 +49,7 @@ const styles = tw({
     disabled:opacity-50
     disabled:pointer-events-none
 
-    md:py-1
+    md:text-tiny
   `,
   submit: `
     bg-(--foreground)

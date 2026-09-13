@@ -6,7 +6,6 @@ type Props = {
   className?: string;
   name: string;
   defaultValue: string;
-  display: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
@@ -15,7 +14,6 @@ export default function Select({
   className,
   name,
   defaultValue,
-  display,
   onChange,
 }: React.PropsWithChildren<Props>) {
   return (
@@ -28,44 +26,36 @@ export default function Select({
       >
         {children}
       </select>
-      <span className={styles.cta}>
-        <span>{display}</span>
-        <ChevronDown className={styles.icon} />
-      </span>
+      <ChevronDown className={styles.icon} />
     </div>
   );
 };
 
 const styles = tw({
   container: `
-    group
     relative
   `,
   select: `
-    absolute inset-0 z-2
-    opacity-0
-    cursor-pointer
-    text-base
-  `,
-  cta: `
-    relative z-1
-    flex items-center justify-between gap-2
+    appearance-none
+    w-full
     px-3 py-1.5 pr-2
-    border border-current/17.5
     bg-(--background)
+    border border-current/17.5
     rounded-full
-    text-xs
-    font-medium dark:font-normal
-    uppercase
+    text-base
 
     motion-safe:duration-300
-    motion-safe:group-hover:border-current/62.5
 
-    md:text-tiny
+    hover:border-current/62.5
+
     md:py-1
+    md:text-sm
   `,
   icon: `
-    w-3.5 h-3.5
+    absolute top-1/2 right-3
+    -translate-y-1/2
+    w-4 h-4
     stroke-2
+    pointer-events-none
   `,
 });

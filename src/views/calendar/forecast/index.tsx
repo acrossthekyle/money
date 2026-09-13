@@ -19,15 +19,13 @@ export default function Forecast({ holdings, view }: Props) {
     hasAccounts,
     hasAssets,
     handleOnView,
-    value,
-  } = useModel(holdings, view);
+  } = useModel(holdings);
 
   return (
     <OptionsSectionSelect
       className={styles.container}
       name="forecast"
       defaultValue={view}
-      display={value}
       onChange={handleOnView}
     >
       {hasAccounts && (
@@ -57,6 +55,6 @@ const styles = tw({
     order-0
     !w-full
 
-    md:!w-56
+    md:!w-60
   `,
 });

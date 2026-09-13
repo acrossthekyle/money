@@ -45,6 +45,7 @@ export default function View({ data }: Props) {
       </main>
       <Dialogs.Budget
         date={date}
+        holding={holding}
         holdings={data.holdings}
         onDone={handleOnReload}
         parent={parent}

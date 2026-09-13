@@ -60,7 +60,6 @@ const styles = tw({
     hover:border-(--foreground)/62.5
 
     md:py-1.25
-    md:text-xtiny
   `,
   absolute: `
     absolute top-4 right-3.5

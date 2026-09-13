@@ -34,7 +34,7 @@ const styles = tw({
   action: `
     flex items-center gap-1
     border border-(--foreground)/22.5
-    px-3 py-1
+    px-3 py-2
     rounded-full
     text-xs text-(--background)
     font-medium
@@ -47,6 +47,7 @@ const styles = tw({
     hover:text-(--foreground)
     hover:border-(--foreground)/62.5
 
+    md:py-1.5
     md:text-tiny
   `,
   icon: `

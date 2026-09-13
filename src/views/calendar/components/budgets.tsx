@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { Pen, X } from 'lucide-react';
 
 import tw from '@/styles';
@@ -28,17 +28,10 @@ export default function Budgets({
     <section className={styles.container}>
       <h2 className={styles.header} id="dialog-header">
         <span className={styles.date}>
-          {format(date, 'MMM do')}
+          {format(parseISO(date), 'do')}
         </span>
-        <span
-          className={
-            [
-              styles.balance,
-              isNegative && styles.negative,
-            ].filter(Boolean).join(' ')
-          }
-        >
-          ${formatNumber(balance)}
+        <span className={styles.balance}>
+          Balance: <span className={isNegative ? styles.negative : ''}>${formatNumber(balance)}</span>
         </span>
       </h2>
       {canClose && (
@@ -74,7 +67,7 @@ export default function Budgets({
           ))}
         </ul>
       ) : (
-        <div className={styles.empty}>No Budgets Scheduled</div>
+        <div className={styles.empty}>No Budgets</div>
       )}
     </section>
   );
@@ -87,10 +80,16 @@ const styles = tw({
     bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
     border border-current/7.5
     rounded-2xl
+
+    md:bg-transparent
+    md:border-0
+    md:p-0
+    md:mt-0
   `,
   header: `
     flex justify-between gap-4
-    pb-4
+    pb-4 mb-4
+    border-b border-current/7.5
 
     md:pb-0
     md:invisible
@@ -115,31 +114,27 @@ const styles = tw({
   `,
   items: `
     flex flex-col gap-4
-    divide-y divide-current/7.5
   `,
   item: `
     flex items-center justify-between
-    pb-4
-
-    last:pb-0
   `,
   heading: `
-    flex flex-col gap-1
-    text-sm
+    flex flex-col gap-0
+    text-base
+
+    md:text-sm
   `,
   edit: `
+    group
     flex items-center gap-1
     px-3 py-1.5
     border border-(--foreground)/22.5
     rounded-full
     bg-(--foreground)
-    text-xs text-(--background)
-    uppercase
 
     motion-safe:duration-300
 
     hover:bg-(--background)
-    hover:text-(--foreground)
     hover:border-(--foreground)
 
     md:text-tiny
@@ -149,20 +144,27 @@ const styles = tw({
   `,
   credit: `
     font-mono
-    text-xs
+    text-sm
     text-teal-400
+
+    md:text-xs
   `,
   debit: `
     font-mono
-    text-xs
+    text-sm
     text-red-400
+
+    md:text-xs
   `,
   pen: `
     w-3 h-3
-    stroke-2
+    stroke-2 stroke-(--background)
+
+    motion-safe:duration-300
+
+    group-hover:stroke-(--foreground)
   `,
   empty: `
-    font-mono
     text-sm text-current/50
   `,
 });

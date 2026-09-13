@@ -26,8 +26,8 @@ export default function Date({ isFaded, isHighlighted, value }: Props) {
 const styles = tw({
   container: `
     absolute top-1.5 right-2.5
-    text-tiny text-(--foreground)
-    font-mono font-black
+    text-xs text-(--foreground)
+    font-mono
     pointer-events-none
 
     before:absolute
@@ -38,8 +38,9 @@ const styles = tw({
     before:-translate-y-1/2
     before:rounded-sm
     before:w-5.5
-    before:h-4
+    before:h-4.5
 
+    md:text-tiny
     xl:before:w-6.75
     xl:before:h-5
     xl:text-xs

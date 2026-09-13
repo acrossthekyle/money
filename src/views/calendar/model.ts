@@ -6,11 +6,13 @@ import { useEffect, useState } from 'react';
 import { useBudget } from '@/hooks/useBudget';
 import { useDate } from '@/hooks/useDate';
 import { useHolding } from '@/hooks/useHolding';
-import type { Budget, Day, DayBudget } from '@/types';
+import type { Budget, Day, DayBudget, Holding } from '@/types';
 
-export function useModel(days: Day[]) {
+export function useModel(holdings: Holding[], days: Day[], view: string) {
   const today = days.find(day => day.isToday);
   const firstOfDays = days.find(day => !day.isPad);
+
+  const holding = holdings.find(item => item.id === view);
 
   const [balance, setBalance] = useState(today?.balance || 0);
   const [budget, setBudget] = useState<Budget | undefined>();
@@ -113,6 +115,7 @@ export function useModel(days: Day[]) {
     handleOnEditBudget,
     handleOnMore,
     handleOnReload,
+    holding,
     message,
   };
 }

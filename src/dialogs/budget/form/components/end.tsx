@@ -1,4 +1,7 @@
+'use client';
+
 import { format } from 'date-fns';
+import { useState } from 'react';
 
 import { DATE_FORMAT } from '@/constants';
 import tw from '@/styles';
@@ -9,15 +12,22 @@ type Props = {
 };
 
 export default function End({ value }: Props) {
+  const [selection, setSelection] = useState(value || '');
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelection(event.target.value.toLowerCase());
+  };
+
   return (
     <Ui.Form.Field className={styles.container}>
       <Ui.Form.Input
         id="end"
-        name="end"
-        type="date"
-        placeholder=" "
         min={format(new Date(), DATE_FORMAT)}
-        defaultValue={value || ''}
+        name="end"
+        onChange={handleOnChange}
+        placeholder=" "
+        type="date"
+        value={selection}
       />
       <Ui.Form.Label htmlFor="end">End</Ui.Form.Label>
     </Ui.Form.Field>

@@ -32,8 +32,9 @@ export default function View({ data }: Props) {
     handleOnEditBudget,
     handleOnMore,
     handleOnReload,
+    holding,
     message,
-  } = useModel(data.days);
+  } = useModel(data.holdings, data.days, data.view);
 
   if (data.holdings.length === 0) {
     return (
@@ -77,6 +78,7 @@ export default function View({ data }: Props) {
       <Dialogs.Budget
         budget={budget}
         date={date}
+        holding={holding}
         holdings={data.holdings}
         onDone={handleOnReload}
         parent={data.view}

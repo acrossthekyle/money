@@ -10,10 +10,12 @@ export default function Header({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    pr-16
+    pr-18
+    mb-0.5
     font-black
     text-xl
     truncate
+    leading-[1]
 
     md:text-lg
   `,

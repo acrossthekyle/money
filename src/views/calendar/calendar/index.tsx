@@ -31,6 +31,8 @@ export default function Calendar({ date, days, onAdd, onEdit, onMore }: Props) {
     <Container>
       {days.map((day) => (
         <ContainerCell
+          count={day.budgets.length}
+          date={day.date}
           isFaded={day.isPad}
           isHighlighted={day.date === date}
           key={day.date}
@@ -53,14 +55,12 @@ export default function Calendar({ date, days, onAdd, onEdit, onMore }: Props) {
                     isFaded={day.isPad}
                     key={`${day.date}-${index}`}
                     onClick={budget.isBudget ? () => onEdit(day.date, budget) : undefined}
+                    type={budget.type}
                   >
                     <ContainerCellBudgetName>
                       {budget.name}
                     </ContainerCellBudgetName>
-                    <ContainerCellBudgetAmount
-                      type={budget.type}
-                      value={budget.amount}
-                    />
+                    <ContainerCellBudgetAmount value={budget.amount} />
                   </ContainerCellBudget>
               ))}
             </ContainerCellBudgets>

@@ -1,17 +1,22 @@
 import tw from '@/styles';
 
 type Props = {
+  count: number;
+  date: string;
   isFaded: boolean;
   isHighlighted: boolean;
 };
 
 export default function Cell({
   children,
+  count,
+  date,
   isFaded,
   isHighlighted,
 }: React.PropsWithChildren<Props>) {
   return (
     <li
+      aria-label={`${count} budgets for ${date}`}
       className={[
         styles.container,
         !isFaded && styles.hover,

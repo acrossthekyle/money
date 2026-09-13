@@ -4,7 +4,7 @@ import { useCallback, useContext } from 'react';
 
 import { DialogContext } from '@/contexts/dialog';
 
-export function useDisclaimer() {
+export function useInfo() {
   const context = useContext(DialogContext);
 
   if (context === null) {
@@ -12,17 +12,17 @@ export function useDisclaimer() {
   }
 
   const instance = useCallback((node: HTMLDialogElement | null) => {
-    context.onRegister('disclaimer', node);
+    context.onRegister('info', node);
   }, [context]);
 
   const handleOnOpen = () => {
-    context.onDialog('disclaimer');
+    context.onDialog('info');
   };
 
   return {
     ...context,
     instance,
-    isActive: context.isOpen && context.dialog === 'disclaimer',
-    onDisclaimer: handleOnOpen,
+    isActive: context.isOpen && context.dialog === 'info',
+    onInfo: handleOnOpen,
   };
 }

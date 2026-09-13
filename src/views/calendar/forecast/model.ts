@@ -4,17 +4,7 @@ import { ACCOUNTS, ASSETS } from '@/constants';
 import { useUpdateUrl } from '@/hooks/useUpdateUrl';
 import type { Holding } from '@/types';
 
-function getDisplayValue(holdings: Holding[], view: string) {
-  const holding = holdings.find(holding => holding.id === view);
-
-  if (holding) {
-    return `${holding.name} ${!!holding.number ? `***${holding.number}` : ''}`.trim();
-  }
-
-  return '';
-};
-
-export function useModel(holdings: Holding[], view: string) {
+export function useModel(holdings: Holding[]) {
   const updateUrl = useUpdateUrl();
 
   const handleOnView = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -33,6 +23,5 @@ export function useModel(holdings: Holding[], view: string) {
     hasAccounts,
     hasAssets,
     handleOnView,
-    value: getDisplayValue(holdings, view),
   };
 };

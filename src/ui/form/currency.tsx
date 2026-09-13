@@ -32,7 +32,6 @@ const styles = tw({
     rounded-sm
     outline-none
     py-2.25 pt-2.75 pl-3
-    text-base
     bg-(--background)
 
     focus:border-orange-400

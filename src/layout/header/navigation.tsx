@@ -52,11 +52,11 @@ const styles = tw({
     border border-current/12.5
     rounded-full
 
-    md:top-3
+    md:top-2.5
   `,
   link: `
     flex items-center
-    px-3 py-1.5
+    px-3 py-2
     uppercase
     text-xs
     font-medium

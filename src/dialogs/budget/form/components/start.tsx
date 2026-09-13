@@ -1,4 +1,7 @@
+'use client';
+
 import { format, parseISO } from 'date-fns';
+import { useState } from 'react';
 
 import { DATE_FORMAT } from '@/constants';
 import tw from '@/styles';
@@ -10,14 +13,23 @@ type Props = {
 };
 
 export default function Start({ date, value }: Props) {
+  const [selection, setSelection] = useState(
+    value || format(parseISO(date), DATE_FORMAT),
+  );
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelection(event.target.value.toLowerCase());
+  };
+
   return (
     <Ui.Form.Field className={styles.container}>
       <Ui.Form.Input
         id="start"
         name="start"
+        onChange={handleOnChange}
         type="date"
         required
-        defaultValue={value || format(parseISO(date), DATE_FORMAT)}
+        value={selection}
       />
       <Ui.Form.Label htmlFor="start" isRequired>Start</Ui.Form.Label>
     </Ui.Form.Field>
