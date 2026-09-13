@@ -20,5 +20,6 @@ export function useModel() {
   return {
     handleOnClick,
     isMounted,
+    resolvedTheme,
   };
 };

@@ -1,11 +1,13 @@
 'use client';
 
+import { Moon, Sun } from 'lucide-react';
+
 import tw from '@/styles';
 
 import { useModel } from './model';
 
 export default function Theme() {
-  const { handleOnClick, isMounted } = useModel();
+  const { handleOnClick, isMounted, resolvedTheme } = useModel();
 
   if (!isMounted) {
     return null
@@ -18,13 +20,18 @@ export default function Theme() {
       title="Toggle theme"
       type="button"
     >
-      <span className={styles.circle} />
+      {resolvedTheme === 'light' ? (
+        <Moon className={styles.icon} />
+      ) : (
+        <Sun className={styles.icon} />
+      )}
     </button>
   );
 };
 
 const styles = tw({
   container: `
+    absolute left-1.75 top-0.5
     flex items-center
     text-(--foreground)
     font-thin font-mono
@@ -32,10 +39,15 @@ const styles = tw({
     uppercase
     tracking-widest
     p-2
+
+    md:left-auto
+    md:right-2
+    md:top-2.5
   `,
-  circle: `
+  icon: `
     w-4 h-4
-    rounded-full
-    bg-(--foreground)
+
+    md:w-3.5
+    md:h-3.5
   `,
 });

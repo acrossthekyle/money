@@ -1,4 +1,5 @@
-import { X } from 'lucide-react';
+import { format } from 'date-fns';
+import { Pen, X } from 'lucide-react';
 
 import tw from '@/styles';
 import type { DayBudget } from '@/types';
@@ -24,12 +25,19 @@ export default function Budgets({
   const isNegative = balance < 0;
 
   return (
-    <>
+    <section className={styles.container}>
       <h2 className={styles.header} id="dialog-header">
         <span className={styles.date}>
-          Balance:
+          {format(date, 'MMM do')}
         </span>
-        <span className={isNegative ? styles.debit : ''}>
+        <span
+          className={
+            [
+              styles.balance,
+              isNegative && styles.negative,
+            ].filter(Boolean).join(' ')
+          }
+        >
           ${formatNumber(balance)}
         </span>
       </h2>
@@ -38,48 +46,65 @@ export default function Budgets({
           <X className={styles.icon} />
         </button>
       )}
-      <ul className={styles.items}>
-        {budgets.map((budget, index) => (
-          <li className={styles.item} key={index}>
-            <h3 className={styles.heading}>
-              <span className={styles.name}>{budget.name}</span>
-              <span
-                className={
-                  budget.type === 'credit' ? styles.credit : styles.debit
-                }
-              >
-                ${formatNumber(Number(budget.amount))}
-              </span>
-            </h3>
-            {budget.isBudget && (
-              <button
-                className={styles.edit}
-                onClick={() => onEdit(date, budget)}
-                type="button"
-              >
-                Edit
-              </button>
-            )}
-          </li>
-        ))}
-      </ul>
-    </>
+      {budgets.length > 0 ? (
+        <ul className={styles.items}>
+          {budgets.map((budget, index) => (
+            <li className={styles.item} key={index}>
+              <h3 className={styles.heading}>
+                <span className={styles.name}>{budget.name}</span>
+                <span
+                  className={
+                    budget.type === 'credit' ? styles.credit : styles.debit
+                  }
+                >
+                  ${formatNumber(Number(budget.amount))}
+                </span>
+              </h3>
+              {budget.isBudget && (
+                <button
+                  className={styles.edit}
+                  onClick={() => onEdit(date, budget)}
+                  title="Edit budget"
+                  type="button"
+                >
+                  <Pen className={styles.pen} />
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className={styles.empty}>No Budgets Scheduled</div>
+      )}
+    </section>
   );
 };
 
 const styles = tw({
+  container: `
+    mt-4
+    p-4
+    bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
+    border border-current/7.5
+    rounded-2xl
+  `,
   header: `
     flex justify-between gap-4
     pb-4
-    mt-4
-    text-xs
-    font-mono font-bold
 
     md:pb-0
     md:invisible
   `,
   date: `
-    text-right
+    text-sm
+    font-mono
+  `,
+  balance: `
+    text-sm
+    font-mono
+  `,
+  negative: `
+    text-red-400
   `,
   close: `
     absolute right-4 top-4
@@ -89,14 +114,12 @@ const styles = tw({
     stroke-2
   `,
   items: `
-    flex flex-col gap-2
-    divide-y divide-current/12.5
-
-    md:mt-2
+    flex flex-col gap-4
+    divide-y divide-current/7.5
   `,
   item: `
     flex items-center justify-between
-    pb-2
+    pb-4
 
     last:pb-0
   `,
@@ -106,16 +129,18 @@ const styles = tw({
   `,
   edit: `
     flex items-center gap-1
-    px-3 py-1
+    px-3 py-1.5
     border border-(--foreground)/22.5
     rounded-full
-    bg-(--background)
-    text-xs text-(--foreground)
+    bg-(--foreground)
+    text-xs text-(--background)
     uppercase
 
     motion-safe:duration-300
 
-    hover:border-(--foreground)/62.5
+    hover:bg-(--background)
+    hover:text-(--foreground)
+    hover:border-(--foreground)
 
     md:text-tiny
   `,
@@ -131,6 +156,14 @@ const styles = tw({
     font-mono
     text-xs
     text-red-400
+  `,
+  pen: `
+    w-3 h-3
+    stroke-2
+  `,
+  empty: `
+    font-mono
+    text-sm text-current/50
   `,
 });
 

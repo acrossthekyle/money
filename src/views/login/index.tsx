@@ -98,9 +98,12 @@ const styles = tw({
   `,
   link: `
     flex items-center gap-1
-    text-tiny
-    font-light
+    text-xs
+    font-extralight
     uppercase
+
+    md:text-tiny
+    md:font-normal
   `,
   icon: `
     w-3 h-3

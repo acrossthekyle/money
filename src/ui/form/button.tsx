@@ -36,7 +36,7 @@ const styles = tw({
     flex items-center justify-between gap-2
     px-3 py-2
     bg-(--background)
-    rounded-sm
+    rounded-full
     text-tiny
     font-medium dark:font-normal
     uppercase

@@ -22,7 +22,7 @@ const styles = tw({
     w-full
     bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
     border border-current/7.5
-    rounded-lg
+    rounded-2xl
 
     md:h-full
 

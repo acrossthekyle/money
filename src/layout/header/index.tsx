@@ -1,33 +1,32 @@
 import tw from '@/styles';
 import { authentication } from '@/utils/authentication';
 
-import Links from './links';
+import Logo from './logo';
 import Logout from './logout';
+import Navigation from './navigation';
 import Theme from './theme';
 
 export default async function Header() {
   const { isAuthenticated } = await authentication();
 
   return (
-    <header className={styles.container}>
-      <Links isAuthenticated={isAuthenticated} />
-      <div className={styles.group}>
-        <Logout isAuthenticated={isAuthenticated} />
-        <Theme />
-      </div>
+    <header className={styles.container(isAuthenticated)}>
+      <Logo />
+      <Navigation isAuthenticated={isAuthenticated} />
+      <Theme />
+      <Logout isAuthenticated={isAuthenticated} />
     </header>
   );
 };
 
-const styles = tw({
-  container: `
-    flex items-center justify-between
-    px-3 py-2
-    border-b border-current/12.5
-  `,
-  group: `
-    flex items-center gap-2
+const styles = {
+  container: (isAuthenticated: boolean) => tw(`
+    flex flex-col items-center
+    ${isAuthenticated ? 'h-19' : 'h-11'}
+    border-b border-current/10
 
-    md:gap-4
-  `,
-});
+    md:flex-row
+    md:h-auto
+    md:p-2
+  `),
+};

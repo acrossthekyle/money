@@ -21,10 +21,10 @@ export default function Amount({ type, value }: Props) {
 
 const styles = tw({
   container: `
-    absolute left-0
+    absolute left-1 right-1
     font-mono
     text-xtiny
-    w-full h-2
+    h-2
     rounded-full
 
     md:left-2

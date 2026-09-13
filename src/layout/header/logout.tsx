@@ -1,3 +1,4 @@
+import { LogOut } from 'lucide-react';
 import { logout } from '@/actions/auth/logout';
 import tw from '@/styles';
 
@@ -13,7 +14,8 @@ export default function Logout({ isAuthenticated }: Props) {
   return (
     <form action={logout}>
       <button className={styles.container} type="submit">
-        Logout
+        <span className={styles.text}>Logout</span>
+        <LogOut className={styles.icon} />
       </button>
     </form>
   );
@@ -21,16 +23,24 @@ export default function Logout({ isAuthenticated }: Props) {
 
 const styles = tw({
   container: `
-    relative -top-0.5
+    absolute right-2 top-0.5
+    p-2
     uppercase
-    text-xs
+    text-tiny
     font-medium
-    border-b border-transparent
 
-    motion-safe:duration-200
+    md:right-10
+    md:top-2.5
+  `,
+  text: `
+    hidden
 
-    hover:border-current/62.5
+    md:block
+  `,
+  icon: `
+    block
+    w-4 h-4
 
-    md:text-tiny
+    md:hidden
   `,
 });

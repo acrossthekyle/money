@@ -98,7 +98,7 @@ export default function View({ data }: Props) {
 
 const styles = tw({
   container: `
-    p-4
+    p-4 pb-0
   `,
   budgets: `
     block
