@@ -34,7 +34,7 @@ export function useConfirm() {
         actions: '!bg-(--foreground)/7.5 !border-t !border-current/12.5 !p-3 !flex !gap-2 !w-full !justify-end !mt-0 !col-start-1 !col-end-3',
         cancelButton: 'inline-flex !rounded-full !bg-(--background) !border !border-current/22.5 !text-(--foreground) !px-3 !py-1 !text-tiny !font-sans !uppercase !transition-all !duration-300 hover:!border-current/62.5',
         confirmButton: 'inline-flex !rounded-full !border !border-current/22.5 !bg-(--foreground) !text-(--background) !px-3 !py-1 !text-tiny !font-sans !uppercase !transition-all !duration-300 hover:!bg-(--foreground)/75',
-        input: '!flex-col !items-start !gap-4 !text-xs !mt-0 !mb-5 !mx-1 [&_label]:!flex [&_label]:!gap-1 [&_label]:!items-center !bg-(--background)',
+        input: '!flex-col !items-start !gap-4 !text-xs !text-(--foreground) !mt-0 !mb-5 !mx-1 [&_label]:!flex [&_label]:!gap-1 [&_label]:!items-center !bg-(--background)',
         validationMessage: '!hidden',
       },
       ...config,

@@ -42,7 +42,7 @@ const styles = tw({
 
     md:left-auto
     md:right-2
-    md:top-2.5
+    md:top-3.75
   `,
   icon: `
     w-4 h-4

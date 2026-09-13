@@ -22,12 +22,12 @@ export default async function Header() {
 const styles = {
   container: (isAuthenticated: boolean) => tw(`
     flex flex-col items-center
-    ${isAuthenticated ? 'h-20' : 'h-9'}
-    border-current/10
+    ${isAuthenticated ? 'h-23.5 xs:h-22.5' : 'h-9'}
     ${isAuthenticated ? 'border-b' : 'border-0'}
+    border-current/10
 
     md:flex-row
-    md:h-auto
+    md:h-15
     md:p-2
   `),
 };

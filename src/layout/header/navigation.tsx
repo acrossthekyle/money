@@ -46,23 +46,29 @@ export default function Navigation({ isAuthenticated }: Props) {
 
 const styles = tw({
   container: `
-    absolute left-1/2 top-9
-    -translate-x-1/2
+    absolute left-4 right-4 top-10.5
     flex items-center gap-0
     border border-current/12.5
     rounded-full
 
-    md:top-2.5
+    xs:left-1/2
+    xs:-translate-x-1/2
+    xs:right-auto
+    md:top-4
   `,
   link: `
-    flex items-center
+    flex-1
     px-3 py-2
-    uppercase
-    text-xs
-    font-medium
+
+    text-base text-center
+    font-normal
     leading-[1]
 
+    xs:flex-none
+    xs:text-xs
+    xs:uppercase
     md:text-tiny
+    md:font-semibold
   `,
   active: `
     rounded-full

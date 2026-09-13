@@ -30,7 +30,7 @@ const styles = tw({
     font-medium
 
     md:right-10
-    md:top-2.5
+    md:top-3.75
   `,
   text: `
     hidden

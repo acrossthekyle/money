@@ -6,7 +6,7 @@ import tw from '@/styles';
 export default function Logo() {
   return (
     <Link className={styles.anchor} href="/">
-      <Stone className={styles.icon} /> Basalt
+      <Stone className={styles.icon} /> Project Basalt
     </Link>
   );
 };
