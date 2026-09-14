@@ -76,13 +76,8 @@ export default function Budgets({
 const styles = tw({
   container: `
     mt-4
-    p-4
-    bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
-    border border-current/7.5
-    rounded-2xl
+    px-2
 
-    md:bg-transparent
-    md:border-0
     md:p-0
     md:mt-0
   `,

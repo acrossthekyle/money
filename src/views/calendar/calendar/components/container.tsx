@@ -14,7 +14,7 @@ const styles = tw({
     w-full
     pt-4
 
-    md:h-[calc(100svh-7.5rem)]
+    md:h-[calc(100svh-8.75rem)]
   `,
   content: `
     grid grid-cols-7

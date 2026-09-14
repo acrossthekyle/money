@@ -41,17 +41,39 @@ export default function Snapshots({ metrics }: Props) {
 
 const styles = tw({
   container: `
+    relative
     order-0
     border-b border-current/7.5 dark:border-current/12.5
-    pb-4
+
+    before:absolute
+    before:left-0
+    before:top-0
+    before:bottom-0
+    before:z-10
+    before:w-4
+    before:bg-linear-to-r
+    before:from-(--background)
+    before:to-transparent
+
+    after:absolute
+    after:right-0
+    after:top-0
+    after:bottom-0
+    after:z-10
+    after:w-4
+    after:bg-linear-to-l
+    after:from-(--background)
+    after:to-transparent
 
     md:block
     md:col-span-24
   `,
   items: `
-    grid grid-cols-1 gap-4
+    flex gap-4
+    overflow-x-auto
+    px-4 pb-4
 
-    xxs:grid-cols-2
-    md:grid-cols-4
+    lg:grid
+    lg:grid-cols-4
   `,
 });

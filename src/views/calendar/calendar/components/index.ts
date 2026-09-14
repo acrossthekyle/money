@@ -1,4 +1,5 @@
 export { default as Container } from './container';
+export { default as ContainerDays } from './days';
 export { default as ContainerCell } from './cell';
 export { default as ContainerCellDate } from './date';
 export { default as ContainerCellBalance } from './balance';

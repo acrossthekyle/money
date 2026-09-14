@@ -37,6 +37,7 @@ export default function Holdings({ metrics, onAdd, onBudget, onEdit }: Props) {
 const styles = tw({
   container: `
     order-1
+    px-4
 
     md:block
     md:col-span-24

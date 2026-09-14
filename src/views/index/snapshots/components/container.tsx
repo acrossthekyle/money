@@ -16,5 +16,8 @@ const styles = tw({
     bg-(--foreground)/2.5 dark:bg-(--foreground)/5.5
     border border-current/7.5
     overflow-hidden
+    shrink-0
+
+    min-w-60
   `,
 });
