@@ -1,7 +1,6 @@
 import {
+  addDays,
   eachDayOfInterval,
-  endOfMonth,
-  endOfWeek,
   format,
   isAfter,
   isBefore,
@@ -43,10 +42,9 @@ export function createCalendarIntervals(
 ): { intervals: RawInterval[]; paddedStart: Date; } {
   const targetDate = date(zone, year, month, 1);
   const monthStart = startOfMonth(targetDate);
-  const monthEnd = endOfMonth(targetDate);
 
   const paddedStart = startOfWeek(monthStart, { weekStartsOn: 0 });
-  const paddedEnd = endOfWeek(monthEnd, { weekStartsOn: 0 });
+  const paddedEnd = addDays(paddedStart, 41);
 
   const todayStart = startOfMonth(date(zone));
   const calculationStart = isBefore(paddedStart, todayStart) ? paddedStart : todayStart;
