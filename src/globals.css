@@ -4,6 +4,9 @@
   --breakpoint-xs: 28.125rem; /* 450px */
   --breakpoint-xxs: 22.8125rem; /* 365px */
 
+  --font-geist: var(--font-geist);
+  --font-roboto: var(--font-roboto);
+
   --text-tiny: 0.625rem; /* 10px */
   --text-xtiny: 0.5rem; /* 8px */
 }
@@ -33,7 +36,7 @@ body:has(dialog[open]) {
 }
 
 body:has(dialog[open]) {
-  opacity: 20%;
+  opacity: 10%;
 }
 
 body {

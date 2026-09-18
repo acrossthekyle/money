@@ -5,7 +5,7 @@ type Return = {
   budgets: Budget[];
 };
 
-export async function all(): Promise<Return> {
+export async function get(): Promise<Return> {
   const budgets = await db.read('budgets') as Budget[];
 
   return {

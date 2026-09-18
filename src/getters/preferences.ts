@@ -13,7 +13,7 @@ export async function get(
   const records = await db.read('preferences') as Preference[];
 
   const zone = records.find(preference => preference.id === 'timezone')?.value || 'UTC';
-  const saved = records.find(preference => preference.id === 'saved_view')?.value || '';
+  const saved = records.find(preference => preference.id === 'holding')?.value || '';
 
   if (holdings.length === 0) {
     return {
@@ -29,13 +29,13 @@ export async function get(
       realizedView = saved;
     } else if (view !== saved) {
       await db.write('preferences', {
-        id: 'saved_view',
+        id: 'holding',
         value: view,
       });
     }
   } else {
     await db.write('preferences', {
-      id: 'saved_view',
+      id: 'holding',
       value: realizedView,
     });
   }

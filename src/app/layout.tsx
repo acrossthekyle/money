@@ -1,6 +1,7 @@
 import '../globals.css';
 
 import type { Metadata } from 'next';
+import { Geist, Roboto_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { PropsWithChildren, Suspense } from 'react';
 
@@ -32,12 +33,24 @@ export const metadata: Metadata = {
   },
 };
 
+const sans = Geist({
+  display: 'swap',
+  subsets: ['latin'],
+  variable: '--font-geist',
+});
+
+const mono = Roboto_Mono({
+  display: 'swap',
+  subsets: ['latin'],
+  variable: '--font-roboto',
+});
+
 export default async function RootLayout({ children }: PropsWithChildren) {
   const { zone } = await preferences();
 
   return (
     <html
-      className="h-full"
+      className={`${sans.variable} ${mono.variable} h-full`}
       lang="en-US"
       suppressHydrationWarning
     >

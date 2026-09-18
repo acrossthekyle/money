@@ -25,4 +25,8 @@ export default function tw(styles) {
   }
 
   return cloned;
-}
+};
+
+export function cs(...params) {
+  return params.filter(Boolean).join(' ');
+};

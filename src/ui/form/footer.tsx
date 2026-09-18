@@ -11,6 +11,7 @@ export default function Footer({ children }: React.PropsWithChildren) {
 const styles = tw({
   container: `
     flex gap-4 items-center justify-between
-    p-4 pt-1
+    p-4 pt-4
+    border-t border-current/7.5
   `,
 });

@@ -1,9 +1,17 @@
-import type { Budget, Holding } from '@/types';
+import type { Holding } from '@/types';
 
-import { calculate } from './calculate';
+export async function metrics(
+  holdings: Holding[],
+) {
+  const netWorth = holdings.reduce((accumulator, holding) => {
+    if (holding.type === 'credit_card') {
+      return accumulator - Number(holding.balance);
+    }
 
-export async function metrics(holdings: Holding[], budgets: Budget[], zone: string) {
-  const metrics = await calculate(holdings, budgets, zone);
+    return accumulator + Number(holding.balance);
+  }, 0);
 
-  return metrics;
+  return {
+    netWorth,
+  };
 };

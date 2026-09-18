@@ -25,7 +25,7 @@ const styles = {
     mt-auto
     bg-(--background)
     border border-current/5.5 dark:border-current/10
-    rounded-2xl
+    rounded-xl
     shadow-lg/25 dark:shadow-lg/75
 
     motion-safe:duration-300

@@ -4,7 +4,7 @@ export function pad(index: number, padding: number = 2) {
   return String(index).padStart(padding, '0');
 };
 
-export function formatNumber(value: number, isCompact?: boolean) {
+export function currency(value: number, isCompact?: boolean) {
   return new Intl.NumberFormat('en', {
     notation: isCompact ? 'compact' : 'standard',
     compactDisplay: isCompact ? 'short' : undefined,
@@ -25,4 +25,12 @@ export function date(zone: string, ...params: any[]): TZDate {
   }
 
   return Reflect.construct(TZDate, [...rest, zone]);
+};
+
+export function image(id: string, folder: string, extension: string = 'jpg') {
+  return [
+    'https://ik.imagekit.io/acrossthekyle/uploads',
+    folder,
+    `${id}.${extension}`,
+  ].filter(Boolean).join('/');
 };

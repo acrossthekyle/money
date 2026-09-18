@@ -1,51 +1,106 @@
-import tw from '@/styles';
-import type { Holding, Metric } from '@/types';
+'use client';
 
-import Add from './add';
-import Item from './item';
+import { format } from 'date-fns';
+import { EllipsisVertical, TrendingDown, TrendingUp } from 'lucide-react';
+
+import { useHoldings } from '@/hooks/useHoldings';
+import { useTimezone } from '@/hooks/useTimezone';
+import tw from '@/styles';
+import type { Day, Holding } from '@/types'
+import { currency, date } from '@/utils';
 
 type Props = {
-  metrics: Metric[];
-  onAdd: () => void;
-  onBudget: (holding: Holding) => void;
-  onEdit: (holding: Holding) => void;
+  calendar: Day[];
+  holdings: Holding[];
+  saved: string;
 };
 
-export default function Holdings({ metrics, onAdd, onBudget, onEdit }: Props) {
-  if (metrics.length === 0) {
-    return null;
-  }
+export default function Section({ calendar, holdings, saved }: Props) {
+  const current = holdings.find(holding => holding.id === saved);
+
+  const { zone } = useTimezone();
+
+  const { onHoldings } = useHoldings();
+
+  const filtered = calendar.days.filter(day => day.isInMonth);
+  const start = filtered[0];
+  const end = filtered[filtered.length - 1];
+
+  const isTrendingUp = start.balance < end.balance;
 
   return (
-    <section aria-label="accounts/assets" className={styles.container}>
-      <ul className={styles.items}>
-        {metrics.map((metric, index) => (
-          <Item
-            current={metric.months.current}
-            holding={metric.holding}
-            key={index}
-            onBudget={onBudget}
-            onEdit={onEdit}
-          />
-        ))}
-        <Add onClick={onAdd} />
-      </ul>
+    <section aria-label="accounts and assets" className={styles.container}>
+      <h1 className={styles.header}>
+        <span className={styles.title}>
+          {current?.name}{current.number && `. . . ${current?.number}`}
+        </span>
+        <span className={styles.lid}>{current?.type}</span>
+      </h1>
+      <button className={styles.toggle} onClick={onHoldings} type="button">
+        <EllipsisVertical className={styles.ellipsis} />
+      </button>
+      <p className={styles.balance}>
+        <span className={styles.disclaimer}>
+          Balance as of Today {format(date(zone), 'MM/dd/yyyy')}
+        </span>
+        <span className={styles.amount}>
+          ${currency(current?.balance || '0')}
+        </span>
+      </p>
+      {isTrendingUp ? (
+        <TrendingUp className={styles.trend} />
+      ) : (
+        <TrendingDown className={styles.trend} />
+      )}
     </section>
   );
 };
 
 const styles = tw({
   container: `
-    order-1
-    px-4
-
-    md:block
-    md:col-span-24
+    col-start-1 row-start-1 col-span-8 row-span-3
+    relative
+    p-4
+    bg-(--foreground)
+    text-(--background)
+    uppercase
+    rounded-xl
   `,
-  items: `
-    grid grid-cols-1 gap-4
-
-    md:grid-cols-2
-    lg:grid-cols-3
+  header: `
+    flex flex-col gap-1.5
+    leading-[1]
+    truncate
+  `,
+  title: `
+    font-black
+  `,
+  lid: `
+    text-tiny
+  `,
+  toggle: `
+    absolute top-2 right-1
+    p-2
+  `,
+  ellipsis: `
+    w-5 h-5
+    stroke-2
+  `,
+  balance: `
+    absolute bottom-4 right-4
+    flex flex-col items-end gap-2
+  `,
+  disclaimer: `
+    text-xtiny
+    leading-[1]
+  `,
+  amount: `
+    text-xl
+    font-roboto
+    leading-[0.8]
+  `,
+  trend: `
+    absolute left-4 bottom-2.5
+    w-5 h-5
+    stroke-2
   `,
 });

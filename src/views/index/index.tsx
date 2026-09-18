@@ -2,69 +2,59 @@
 
 import { Dialogs } from '@/dialogs';
 import tw from '@/styles';
-import type { Holding, Metric } from '@/types';
+import type { Day, Holding } from '@/types'
 import Ui from '@/ui';
 
+import Amounts from './amounts';
+import Balance from './balance';
+import Budgets from './budgets';
+import Calendar from './calendar';
 import Holdings from './holdings';
-import { useModel } from './model';
-import Snapshots from './snapshots';
+import Placeholder from './placeholder';
 
 type Props = {
   data: {
+    calendar: Day[];
+    current: {
+      calendar: string;
+      date: string;
+    };
     holdings: Holding[];
-    metrics: Metric[];
+    metrics: {
+      netWorth: number;
+    };
+    saved: string;
   };
 };
 
 export default function View({ data }: Props) {
-  const {
-    date,
-    handleOnAddBudget,
-    handleOnAddHolding,
-    handleOnEditHolding,
-    handleOnReload,
-    holding,
-    message,
-    parent,
-    today,
-  } = useModel();
+  const calendar = data.calendar
+    .find(year => year.months.find(month => month.id === data.current.calendar))
+    .months
+    .find(month => month.id === data.current.calendar);
 
   return (
     <>
       <main className={styles.container}>
-        <Holdings
-          onAdd={handleOnAddHolding}
-          onBudget={handleOnAddBudget}
-          onEdit={handleOnEditHolding}
-          metrics={data.metrics}
-        />
-        <Snapshots metrics={data.metrics} today={today} />
-        <Ui.Alerts.Message value={message} />
-        {data.holdings.length === 0 && (
-          <Ui.Alerts.Prompt onClick={handleOnAddHolding} />
-        )}
+        <Holdings calendar={calendar} holdings={data.holdings} saved={data.saved} />
+        <Calendar calendar={calendar} date={data.current.date} />
+        <Amounts />
+        <Placeholder date={data.current.date} />
+        <Balance calendar={calendar} date={data.current.date} />
+        <Budgets />
       </main>
-      <Dialogs.Budget
-        date={date}
-        holding={holding}
-        holdings={data.holdings}
-        onDone={handleOnReload}
-        parent={parent}
-      />
-      <Dialogs.Holding
-        holding={holding}
-        onDone={handleOnReload}
-      />
+      <Dialogs.Menu netWorth={data.metrics.netWorth} />
+      <Dialogs.Holding />
+      <Dialogs.Holdings holdings={data.holdings} />
     </>
   );
 };
 
 const styles = tw({
   container: `
-    flex flex-col gap-4
-    py-4
-
-    md:grid
-    md:grid-cols-24
+    grid grid-cols-24 grid-rows-12 gap-10
+    h-[calc(100svh-6rem)]
+    mt-24
+    px-10 pb-10
   `,
 });
