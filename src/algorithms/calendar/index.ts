@@ -16,12 +16,13 @@ export async function calendar(
   view: string,
   month: number,
   year: number,
+  zone: string,
 ): Promise<Return> {
   let calendar: Day[] = [];
 
   if (holdings.length === 0) {
     const intervals = trimCalendarIntervals(
-      createCalendarIntervals(month, year),
+      createCalendarIntervals(month, year, zone),
     );
 
     return {
@@ -49,7 +50,7 @@ export async function calendar(
         budget.parent === holding.id || budget.transferee === holding.id
       )
       .map((budget: Budget) => {
-        const iterations = createBudgetIterations(budget);
+        const iterations = createBudgetIterations(budget, zone);
 
         const transfereeHolding = holdings.find((item: Holding) => {
           if (budget.transferee !== '') {
@@ -84,6 +85,7 @@ export async function calendar(
       data,
       month,
       year,
+      zone,
       holding.interest,
     );
 

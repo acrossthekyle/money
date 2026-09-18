@@ -4,8 +4,10 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 
 import { DATE_FORMAT } from '@/constants';
+import { useTimezone } from '@/hooks/useTimezone';
 import tw from '@/styles';
 import Ui from '@/ui';
+import { date } from '@/utils';
 
 type Props = {
   value?: string;
@@ -13,6 +15,8 @@ type Props = {
 
 export default function End({ value }: Props) {
   const [selection, setSelection] = useState(value || '');
+
+  const { zone } = useTimezone();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelection(event.target.value.toLowerCase());
@@ -22,7 +26,7 @@ export default function End({ value }: Props) {
     <Ui.Form.Field className={styles.container}>
       <Ui.Form.Input
         id="end"
-        min={format(new Date(), DATE_FORMAT)}
+        min={format(date(zone), DATE_FORMAT)}
         name="end"
         onChange={handleOnChange}
         placeholder=" "

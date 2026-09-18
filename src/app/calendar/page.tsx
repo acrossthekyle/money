@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 import { calendar } from '@/algorithms/calendar';
-import { preferences } from '@/algorithms/preferences';
 import { all as allBudgets } from '@/getters/budgets';
 import { all as allHoldings } from '@/getters/holdings';
+import { get as preferences } from '@/getters/preferences';
 import Ui from '@/ui';
 import View from '@/views/calendar';
 
@@ -28,7 +28,7 @@ export default async function Page({
   const year = Number(params.year || getYear(new Date));
 
   const { holdings } = await allHoldings();
-  const { saved } = await preferences(params.view as string || null, holdings);
+  const { saved, zone } = await preferences(params.view as string || null, holdings);
   const { budgets } = await allBudgets();
   const { days } = await calendar(
     holdings,
@@ -36,6 +36,7 @@ export default async function Page({
     saved,
     month,
     year,
+    zone,
   );
 
   return (

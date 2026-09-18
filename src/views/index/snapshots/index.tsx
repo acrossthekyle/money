@@ -14,26 +14,27 @@ import Savings from './savings';
 
 type Props = {
   metrics: Metric[];
+  today: Date;
 };
 
-export default function Snapshots({ metrics }: Props) {
+export default function Snapshots({ metrics, today }: Props) {
   if (metrics.length === 0) {
     return null;
   }
 
-  const today = format(new Date(), 'MM/dd/yyyy');
+  const date = format(today, 'MM/dd/yyyy');
 
   return (
     <section aria-label="data overviews/snapshots" className={styles.container}>
       <ul className={styles.items}>
-        <NetWorth date={today} metrics={metrics} />
-        <Accounts date={today} metrics={metrics} />
-        <Assets date={today} metrics={metrics} />
-        <Savings date={today} metrics={metrics} />
-        <Checking date={today} metrics={metrics} />
-        <Credit date={today} metrics={metrics} />
-        <Retirement date={today} metrics={metrics} />
-        <Property date={today} metrics={metrics} />
+        <NetWorth date={date} metrics={metrics} />
+        <Accounts date={date} metrics={metrics} />
+        <Assets date={date} metrics={metrics} />
+        <Savings date={date} metrics={metrics} />
+        <Checking date={date} metrics={metrics} />
+        <Credit date={date} metrics={metrics} />
+        <Retirement date={date} metrics={metrics} />
+        <Property date={date} metrics={metrics} />
       </ul>
     </section>
   );

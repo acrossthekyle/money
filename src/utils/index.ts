@@ -1,3 +1,5 @@
+import { TZDate } from '@date-fns/tz';
+
 export function pad(index: number, padding: number = 2) {
   return String(index).padStart(padding, '0');
 };
@@ -8,4 +10,19 @@ export function formatNumber(value: number, isCompact?: boolean) {
     compactDisplay: isCompact ? 'short' : undefined,
     minimumFractionDigits: 2,
   }).format(Math.abs(value));
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function date(zone: string, ...params: any[]): TZDate {
+  const rest = Array.isArray(params[0]) ? params[0] : params;
+
+  while (rest.length > 0 && rest[rest.length - 1] === undefined) {
+    rest.pop();
+  }
+
+  if (rest.length === 0 || rest[0] === undefined) {
+    return new TZDate(Date.now(), zone);
+  }
+
+  return Reflect.construct(TZDate, [...rest, zone]);
 };

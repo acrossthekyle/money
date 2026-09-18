@@ -6,7 +6,9 @@ import { useEffect, useState } from 'react';
 import { useBudget } from '@/hooks/useBudget';
 import { useDate } from '@/hooks/useDate';
 import { useHolding } from '@/hooks/useHolding';
+import { useTimezone } from '@/hooks/useTimezone';
 import type { Budget, Day, DayBudget, Holding } from '@/types';
+import { date as zonedDate } from '@/utils';
 
 export function useModel(holdings: Holding[], days: Day[], view: string) {
   const today = days.find(day => day.isToday);
@@ -14,28 +16,29 @@ export function useModel(holdings: Holding[], days: Day[], view: string) {
 
   const holding = holdings.find(item => item.id === view);
 
-  const [balance, setBalance] = useState(today?.balance || 0);
-  const [budget, setBudget] = useState<Budget | undefined>();
-  const [budgets, setBudgets] = useState<DayBudget[]>(today?.budgets || []);
-  const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
-  const [message, setMessage] = useState('');
-
   const { onBudget } = useBudget();
   const { onClose: onCloseDate, onDate } = useDate();
   const { onHolding } = useHolding();
+  const { zone } = useTimezone();
+
+  const [balance, setBalance] = useState(today?.balance || 0);
+  const [budget, setBudget] = useState<Budget | undefined>();
+  const [budgets, setBudgets] = useState<DayBudget[]>(today?.budgets || []);
+  const [date, setDate] = useState(format(zonedDate(zone), 'yyyy-MM-dd'));
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (today !== undefined) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setBalance(today?.balance || 0);
       setBudgets(today?.budgets || []);
-      setDate(format(new Date(), 'yyyy-MM-dd'));
+      setDate(format(zonedDate(zone), 'yyyy-MM-dd'));
     } else {
       setBalance(firstOfDays?.balance || 0);
       setBudgets(firstOfDays?.budgets || []);
       setDate(firstOfDays?.date || '');
     }
-  }, [firstOfDays, today]);
+  }, [firstOfDays, today, zone]);
 
   const handleOnReload = () => {
     setMessage('Reloading');

@@ -11,6 +11,7 @@ import {
 
 import { DATE_FORMAT } from '@/constants';
 import type { Budget, Day, Holding } from '@/types';
+import { date } from '@/utils';
 
 import { calendar } from '../calendar';
 
@@ -88,8 +89,12 @@ function calculatePerHolding(
   };
 };
 
-export async function calculate(holdings: Holding[], budgets: Budget[]) {
-  const today = new Date();
+export async function calculate(
+  holdings: Holding[],
+  budgets: Budget[],
+  zone: string,
+) {
+  const today = date(zone);
 
   const promises = holdings.map(async holding => {
     const current = await calendar(
@@ -98,6 +103,7 @@ export async function calculate(holdings: Holding[], budgets: Budget[]) {
       holding.id,
       getMonth(today),
       getYear(today),
+      zone,
     );
 
     const next = await calendar(
@@ -106,6 +112,7 @@ export async function calculate(holdings: Holding[], budgets: Budget[]) {
       holding.id,
       getMonth(addMonths(today, 1)),
       getYear(getMonth(today) === 11 ? addYears(today, 1) : today),
+      zone,
     );
 
     return {

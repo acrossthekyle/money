@@ -14,6 +14,8 @@ import {
 import { DATE_FORMAT } from '@/constants';
 import type { Budget } from '@/types';
 
+import { date } from './index';
+
 export function getBudgetIterationLength(schedule: string) {
   switch (schedule) {
     case 'daily':
@@ -64,8 +66,8 @@ export function addIteration(date: Date, schedule: string) {
   }
 };
 
-export function createBudgetIterations(budget: Budget): string[] {
-  const today = startOfDay(new Date());
+export function createBudgetIterations(budget: Budget, zone: string): string[] {
+  const today = startOfDay(date(zone));
   const budgetStart = parseISO(budget.start);
   const budgetEnd = !!budget.end ? parseISO(budget.end) : null;
 

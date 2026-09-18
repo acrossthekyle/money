@@ -5,7 +5,9 @@ import { useState } from 'react';
 
 import { useBudget } from '@/hooks/useBudget';
 import { useHolding } from '@/hooks/useHolding';
+import { useTimezone } from '@/hooks/useTimezone';
 import type { Holding } from '@/types';
+import { date } from '@/utils';
 
 export function useModel() {
   const [holding, setHolding] = useState<Holding | undefined>();
@@ -13,6 +15,7 @@ export function useModel() {
 
   const { onBudget } = useBudget();
   const { onHolding } = useHolding();
+  const { zone } = useTimezone();
 
   const handleOnReload = () => {
     setMessage('Reloading');
@@ -40,8 +43,10 @@ export function useModel() {
     onHolding();
   };
 
+  const today = date(zone);
+
   return {
-    date: format(new Date(), 'yyyy-MM-dd'),
+    date: format(today, 'yyyy-MM-dd'),
     handleOnAddBudget,
     handleOnAddHolding,
     handleOnEditHolding,
@@ -49,5 +54,6 @@ export function useModel() {
     holding,
     parent: holding?.id || '',
     message,
+    today,
   };
 }

@@ -2,14 +2,12 @@
 
 import { ArrowUpRight, CircleQuestionMark } from 'lucide-react';
 import Link from 'next/link';
-import { useActionState, useState } from 'react';
 
-import { login } from '@/actions/auth/login';
 import { Dialogs } from '@/dialogs';
-import { useInfo } from '@/hooks/useInfo';
 import tw from '@/styles';
-import type { LoginFormState } from '@/types';
 import Ui from '@/ui';
+
+import { useModel } from './model';
 
 type Props = {
   data: {
@@ -18,20 +16,15 @@ type Props = {
 };
 
 export default function View({ data }: Props) {
-  const [alert] = useState(data.alert);
-
-  const [state, action, isPending] = useActionState(login, {
-    data: {
-      username: '',
-    },
-    error: null,
-  } as LoginFormState);
-
-  const { onInfo } = useInfo();
-
-  const handleOnInfo = () => {
-    onInfo();
-  };
+  const {
+    action,
+    alert,
+    error,
+    formData,
+    handleOnInfo,
+    isPending,
+    zone,
+  } = useModel(data.alert);
 
   return (
     <>
@@ -39,17 +32,17 @@ export default function View({ data }: Props) {
         <div className={styles.inner}>
           <Ui.Form.Container action={action} id="login-form">
             <Ui.Alerts.Banner isFromCookie value={alert} />
-            {state?.error !== null && (
-              <Ui.Alerts.Banner isPositive={false} value={state?.error} />
+            {error !== null && (
+              <Ui.Alerts.Banner isPositive={false} value={error} />
             )}
-            <Ui.Form.Inner className="!gap-x-0">
-              <Ui.Form.Field className="col-span-24">
+            <Ui.Form.Inner className={styles.content}>
+              <Ui.Form.Field className={styles.field}>
                 <Ui.Form.Input
                   id="username"
                   name="username"
                   type="text"
                   placeholder=" "
-                  defaultValue={state?.data?.username}
+                  defaultValue={formData?.username}
                   required
                   disabled={isPending}
                 />
@@ -57,7 +50,7 @@ export default function View({ data }: Props) {
                   Email
                 </Ui.Form.Label>
               </Ui.Form.Field>
-              <Ui.Form.Field className="col-span-24">
+              <Ui.Form.Field className={styles.field}>
                 <Ui.Form.Input
                   id="password"
                   name="password"
@@ -86,6 +79,13 @@ export default function View({ data }: Props) {
                 {isPending ? 'Verifying...' : 'Sign In'}
               </Ui.Form.Button>
             </Ui.Form.Footer>
+            <input
+              className="hidden"
+              name="timezone"
+              readOnly
+              type="text"
+              value={zone}
+            />
           </Ui.Form.Container>
         </div>
         <button className={styles.info} onClick={handleOnInfo} type="button">
@@ -107,6 +107,12 @@ const styles = tw({
     mx-4
 
     sm:max-w-xs
+  `,
+  content: `
+    !gap-x-0
+  `,
+  field: `
+    col-span-24
   `,
   link: `
     flex items-center gap-1

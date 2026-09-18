@@ -14,6 +14,7 @@ import {
 } from 'date-fns';
 
 import { DATE_FORMAT } from '@/constants';
+import { date } from '@/utils';
 
 import type { RawDay, RawBudget, RawInterval } from '../types';
 
@@ -38,15 +39,16 @@ export function trimCalendarIntervals(
 export function createCalendarIntervals(
   month: number,
   year: number,
+  zone: string,
 ): { intervals: RawInterval[]; paddedStart: Date; } {
-  const targetDate = new Date(year, month, 1);
+  const targetDate = date(zone, year, month, 1);
   const monthStart = startOfMonth(targetDate);
   const monthEnd = endOfMonth(targetDate);
 
   const paddedStart = startOfWeek(monthStart, { weekStartsOn: 0 });
   const paddedEnd = endOfWeek(monthEnd, { weekStartsOn: 0 });
 
-  const todayStart = startOfMonth(new Date());
+  const todayStart = startOfMonth(date(zone));
   const calculationStart = isBefore(paddedStart, todayStart) ? paddedStart : todayStart;
 
   return {
@@ -59,7 +61,7 @@ export function createCalendarIntervals(
         isLastDayOfMonth: isLastDayOfMonth(current),
         isPad: !isSameMonth(current, monthStart),
         isToday: isToday(current),
-        isTodayOrAfter: isToday(current) || isAfter(current, startOfDay(new Date())),
+        isTodayOrAfter: isToday(current) || isAfter(current, startOfDay(date(zone))),
       })),
     paddedStart,
   };
@@ -71,13 +73,14 @@ export function createDays(
   data: RawBudget[],
   month: number,
   year: number,
+  zone: string,
   interestRate?: string,
 ): RawDay[] {
   let balance = Number(amount);
 
   const interest = calculateMonthlyInterestRate(holdingType, interestRate);
 
-  const intervals = createCalendarIntervals(month, year);
+  const intervals = createCalendarIntervals(month, year, zone);
 
   return trimCalendarIntervals({
     ...intervals,

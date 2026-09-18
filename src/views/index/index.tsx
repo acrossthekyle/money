@@ -26,6 +26,7 @@ export default function View({ data }: Props) {
     holding,
     message,
     parent,
+    today,
   } = useModel();
 
   return (
@@ -37,7 +38,7 @@ export default function View({ data }: Props) {
           onEdit={handleOnEditHolding}
           metrics={data.metrics}
         />
-        <Snapshots metrics={data.metrics} />
+        <Snapshots metrics={data.metrics} today={today} />
         <Ui.Alerts.Message value={message} />
         {data.holdings.length === 0 && (
           <Ui.Alerts.Prompt onClick={handleOnAddHolding} />

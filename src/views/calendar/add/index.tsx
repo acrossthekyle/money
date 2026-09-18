@@ -2,7 +2,9 @@
 
 import { format } from 'date-fns';
 
+import { useTimezone } from '@/hooks/useTimezone';
 import tw from '@/styles';
+import { date } from '@/utils';
 
 import { OptionsSectionIcon, OptionsSectionButton } from '../components';
 
@@ -12,6 +14,8 @@ type Props = {
 };
 
 export default function Add({ onClick, type }: Props) {
+  const { zone } = useTimezone();
+
   const handleOnClick = () => {
     if (type === 'holding') {
       onClick('');
@@ -19,7 +23,7 @@ export default function Add({ onClick, type }: Props) {
       return;
     }
 
-    onClick(format(new Date(), 'yyyy-MM-dd'));
+    onClick(format(date(zone), 'yyyy-MM-dd'));
   };
 
   return (

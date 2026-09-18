@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { db } from '@/db';
 import type { LoginFormState } from '@/types';
 
 export async function login(
@@ -11,6 +12,7 @@ export async function login(
 ): Promise<LoginFormState> {
   const username = formData.get('username') as string;
   const password = formData.get('password') as string;
+  const timezone = formData.get('timezone') as string;
 
   if (
     username !== process.env.APP_USERNAME ||
@@ -25,6 +27,11 @@ export async function login(
       success: false,
     };
   }
+
+  await db.write('preferences', {
+    id: 'timezone',
+    value: timezone,
+  });
 
   const cookieStore = await cookies();
   cookieStore.set('app_session', process.env.AUTH_COOKIE_VALUE!, {

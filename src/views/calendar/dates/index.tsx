@@ -73,6 +73,7 @@ export default function Dates() {
     handleOnYear,
     isToday,
     month,
+    today,
     year,
   } = useModel();
 
@@ -110,9 +111,9 @@ export default function Dates() {
           {Array.from({ length: 11 }, (_, index) => (
             <option
               key={index}
-              value={String(getYear(addYears(new Date(), index)))}
+              value={String(getYear(addYears(today, index)))}
             >
-              {String(getYear(addYears(new Date(), index)))}
+              {String(getYear(addYears(today, index)))}
             </option>
           ))}
         </OptionsSectionSelect>

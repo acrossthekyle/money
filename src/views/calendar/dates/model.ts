@@ -4,18 +4,23 @@ import { getMonth, getYear } from 'date-fns';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
+import { useTimezone } from '@/hooks/useTimezone';
 import { useUpdateUrl } from '@/hooks/useUpdateUrl';
+import { date } from '@/utils';
 
 export function useModel() {
   const searchParams = useSearchParams();
 
   const updateUrl = useUpdateUrl();
+  const { zone } = useTimezone();
 
-  const [month, setMonth] = useState(searchParams.get('month') || String(getMonth(new Date())));
-  const [year, setYear] = useState(searchParams.get('year') || String(getYear(new Date())));
+  const today = date(zone);
 
-  const isToday = month === String(getMonth(new Date())) &&
-    year === String(getYear(new Date()));
+  const [month, setMonth] = useState(searchParams.get('month') || String(getMonth(today)));
+  const [year, setYear] = useState(searchParams.get('year') || String(getYear(today)));
+
+  const isToday = month === String(getMonth(today)) &&
+    year === String(getYear(today));
 
   const handleOnNext = () => {
     const monthUpdated = String(month === '11' ? '0' : Number(month) + 1);
@@ -62,8 +67,8 @@ export function useModel() {
   };
 
   const handleOnToday = () => {
-    const monthReset = String(getMonth(new Date()));
-    const yearReset = String(getYear(new Date()));
+    const monthReset = String(getMonth(today));
+    const yearReset = String(getYear(today));
 
     setMonth(monthReset);
     setYear(yearReset);
@@ -79,6 +84,7 @@ export function useModel() {
     handleOnYear,
     isToday,
     month,
+    today,
     year,
   };
 };
