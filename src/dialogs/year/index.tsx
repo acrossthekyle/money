@@ -81,6 +81,10 @@ const styles = tw({
   upper: `
     flex items-center justify-between
     p-4
+    text-xl
+    font-light
+
+    md:text-lg
   `,
   navigate: `
     flex items-center justify-center
@@ -104,7 +108,7 @@ const styles = tw({
   heading: `
     mb-2
     uppercase
-    text-xs
+    text-sm
     font-geist
   `,
   days: `

@@ -100,7 +100,7 @@ export default function View({ data }: Props) {
 const styles = tw({
   container: `
     flex items-center justify-center
-    h-[calc(100svh-4rem)]
+    h-svh
   `,
   inner: `
     w-full
@@ -128,8 +128,11 @@ const styles = tw({
     stroke-1
   `,
   info: `
-    absolute right-2 bottom-2 z-10
+    absolute right-4 bottom-4 z-10
     p-2
+
+    md:right-8
+    md:bottom-8
   `,
   icon: `
     w-4 h-4

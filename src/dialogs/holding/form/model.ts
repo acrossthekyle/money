@@ -6,7 +6,7 @@ import { put } from '@/actions/holdings/put';
 import { useConfirm } from '@/hooks/useConfirm';
 import type { FormStateError, Holding, HoldingFormState } from '@/types';
 
-export function useModel(onDone: () => void, holding?: Holding) {
+export function useModel(holding?: Holding) {
   const putable = put.bind(null, holding || null);
 
   const [state, action, isPending] = useActionState(putable, {
@@ -23,9 +23,11 @@ export function useModel(onDone: () => void, holding?: Holding) {
 
   useEffect(() => {
     if (state?.isSuccessful) {
-      onDone();
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
     }
-  }, [state?.isSuccessful, onDone]);
+  }, [state?.isSuccessful]);
 
   useEffect(() => {
     if (state?.hasFailed && state?.errors) {

@@ -40,12 +40,21 @@ export default function Section() {
 
 const styles = tw({
   container: `
-    col-start-9 row-start-2 col-span-8 row-span-9
-    mx-10 mt-4
+    hidden
+    col-start-13 row-start-1 col-span-12 row-span-2
+    mx-4
     relative
     rounded-xl
     overflow-hidden
     border border-current/7.5
+
+    lg:block
+    lg:mx-10
+    lg:col-start-9
+    lg:row-start-2
+    lg:row-span-9
+    lg:col-span-8
+    lg:mt-4
   `,
   image: `
     w-full h-full

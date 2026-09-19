@@ -9,27 +9,17 @@ import Form from './form';
 type Props = {
   budget?: Budget;
   date: string;
-  holding?: Holding;
   holdings: Holding[];
-  onDone: () => void;
   parent: string;
 };
 
 export default function Budget({
   budget,
   date,
-  holding,
   holdings,
-  onDone,
   parent,
 }: Props) {
   const { instance, isActive, onBackdrop, onCancel, onClose } = useBudget();
-
-  const handleOnDone = () => {
-    onClose();
-
-    onDone();
-  };
 
   return (
     <Ui.Dialog.Dialog
@@ -41,14 +31,13 @@ export default function Budget({
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
         <Ui.Dialog.DialogHeader onClose={onClose}>
-          {budget ? 'Edit budget' : `Add budget for ${holding?.name || ''}`}
+          {budget ? 'Edit budget' : `Add budget`}
         </Ui.Dialog.DialogHeader>
         <Form
           budget={budget}
           date={date}
           holdings={holdings}
           onClose={onClose}
-          onDone={handleOnDone}
           parent={parent}
         />
       </Ui.Dialog.DialogInner>

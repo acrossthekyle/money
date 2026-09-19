@@ -3,6 +3,7 @@
 import { format } from 'date-fns';
 import { TextAlignEnd, TrendingDown, TrendingUp } from 'lucide-react';
 
+import { useHolding } from '@/hooks/useHolding';
 import { useHoldings } from '@/hooks/useHoldings';
 import { useTimezone } from '@/hooks/useTimezone';
 import tw from '@/styles';
@@ -12,12 +13,13 @@ import { currency, date } from '@/utils';
 type Props = {
   calendar: Day[];
   holding: Holding;
-  saved: string;
+  onEdit: (holding: Holding) => void;
 };
 
-export default function Section({ calendar, holding, saved }: Props) {
+export default function Section({ calendar, holding, onEdit }: Props) {
   const { zone } = useTimezone();
 
+  const { onHolding } = useHolding();
   const { onHoldings } = useHoldings();
 
   const filtered = calendar.days.filter(day => day.isInMonth);
@@ -26,63 +28,93 @@ export default function Section({ calendar, holding, saved }: Props) {
 
   const isTrendingUp = start.balance < end.balance;
 
+  const handleOnEdit = () => {
+    onEdit(holding);
+
+    onHolding();
+  }
+
   return (
     <section aria-label="accounts and assets" className={styles.container}>
-      <h1 className={styles.header}>
-        <span className={styles.title}>
-          {holding.name}{holding.number && `. . . ${holding.number}`}
-        </span>
-        <span className={styles.lid}>{holding.type}</span>
-      </h1>
-      <button className={styles.toggle} onClick={onHoldings} type="button">
-        <TextAlignEnd className={styles.ellipsis} />
+      <button
+        className={styles.content}
+        onClick={handleOnEdit}
+        type="button"
+      >
+        <h1 className={styles.header}>
+          <span className={styles.title}>
+            {holding.name}{holding.number && `. . . ${holding.number}`}
+          </span>
+          <span className={styles.lid}>{holding.type}</span>
+        </h1>
+        <p className={styles.balance}>
+          <span className={styles.disclaimer}>
+            Balance as of Today {format(date(zone), 'MM/dd/yyyy')}
+          </span>
+          <span className={styles.amount}>
+            {holding.balance < 0 && '-'}${currency(holding.balance)}
+          </span>
+        </p>
+        {isTrendingUp ? (
+          <TrendingUp className={styles.trend} />
+        ) : (
+          <TrendingDown className={styles.trend} />
+        )}
       </button>
-      <p className={styles.balance}>
-        <span className={styles.disclaimer}>
-          Balance as of Today {format(date(zone), 'MM/dd/yyyy')}
-        </span>
-        <span className={styles.amount}>
-          {holding.balance < 0 && '-'}${currency(holding.balance)}
-        </span>
-      </p>
-      {isTrendingUp ? (
-        <TrendingUp className={styles.trend} />
-      ) : (
-        <TrendingDown className={styles.trend} />
-      )}
+      <button className={styles.toggle} onClick={onHoldings} type="button">
+        <TextAlignEnd className={styles.menu} />
+      </button>
     </section>
   );
 };
 
 const styles = tw({
   container: `
-    col-start-1 row-start-1 col-span-8 row-span-3
+    col-start-1 row-start-1 col-span-24 row-span-3
     relative
-    mx-10
+    mx-4
+
+    md:mx-10
+    md:col-span-12
+    md:row-span-3
+    lg:col-span-8
+  `,
+  content: `
+    relative z-0
+    flex flex-col
+    w-full h-full
     p-4
     bg-(--foreground)
-    text-(--background)
+    text-(--background) text-left
     uppercase
     rounded-xl
+    shadow-lg/25
+
+    md:shadow-xl/25
   `,
   header: `
     flex flex-col gap-1.5
     leading-[1]
-    truncate
   `,
   title: `
+    pr-8
     font-black
+    truncate
   `,
   lid: `
     text-tiny
   `,
   toggle: `
-    absolute top-2 right-1
+    absolute top-2 right-1 z-10
     p-2
+    text-(--background)
   `,
-  ellipsis: `
-    w-5 h-5
+  menu: `
+    w-6 h-6
     stroke-2
+
+    md:w-5
+    md:h-5
   `,
   balance: `
     absolute bottom-4 right-4
@@ -99,7 +131,10 @@ const styles = tw({
   `,
   trend: `
     absolute left-4 bottom-2.5
-    w-5 h-5
+    w-6 h-6
     stroke-2
+
+    md:w-5
+    md:h-5
   `,
 });

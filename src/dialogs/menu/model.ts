@@ -10,7 +10,7 @@ import { useTimezone } from '@/hooks/useTimezone';
 import { useUpdateUrl } from '@/hooks/useUpdateUrl';
 import { date } from '@/utils';
 
-export function useModel() {
+export function useModel(onAdd: () => void) {
   const { onHolding } = useHolding();
   const { instance, isActive, onBackdrop, onCancel, onClose } = useMenu();
   const { resolvedTheme, setTheme } = useTheme();
@@ -40,6 +40,7 @@ export function useModel() {
   };
 
   const handleOnCreate = () => {
+    onAdd();
     onClose();
 
     onHolding();

@@ -1,7 +1,9 @@
-import { calculateReturnAmount } from './utils';
+import type { Holding } from '@/types';
 
-export function returnize(calendar, rate: string) {
-  const parsed = parseFloat(rate);
+import { calculateReturnAmount, getLabel } from './utils';
+
+export function returnize(calendar, holding: Holding) {
+  const parsed = parseFloat(holding.interest);
   const hasValidRate = !isNaN(parsed) && parsed !== 0;
   const monthlyRate = hasValidRate ? Math.pow(1 + (parsed / 100), 1 / 12) - 1 : 0;
 
@@ -25,8 +27,28 @@ export function returnize(calendar, rate: string) {
 
       const lastDayOfMonth = daysInMonth[daysInMonth.length - 1];
 
-      lastDayOfMonth.return = amount;
+      const result = {
+        amount: amount === 0 ? null : amount,
+        label: getLabel(holding),
+        isPositive: amount > 0,
+      };
+
+      lastDayOfMonth.return = result;
       lastDayOfMonth.balance = Number((lastDayOfMonth.balance + amount).toFixed(2));
+
+      if (result.amount !== null) {
+        if (result.isPositive) {
+          lastDayOfMonth.credits.push({
+            budget: 'return',
+            amount: result.amount,
+          });
+        } else {
+          lastDayOfMonth.debits.push({
+            budget: 'return',
+            amount: result.amount,
+          });
+        }
+      }
 
       runningAdjustment += amount;
     });

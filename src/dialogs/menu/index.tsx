@@ -12,10 +12,12 @@ import { useModel } from './model';
 
 type Props = {
   netWorth: number;
+  onAdd: () => void;
 };
 
 export default function Dialog({
   netWorth,
+  onAdd,
 }: Props) {
   const {
     handleOnCreate,
@@ -29,7 +31,7 @@ export default function Dialog({
     onClose,
     theme,
     zone,
-  } = useModel();
+  } = useModel(onAdd);
 
   return (
     <Ui.Dialog.Dialog
@@ -109,7 +111,7 @@ export default function Dialog({
 
 const styles = tw({
   container: (isActive: boolean) => tw(`
-    absolute top-6 right-6
+    absolute top-4 right-4
     w-72
     p-4
     bg-(--background)
@@ -122,6 +124,9 @@ const styles = tw({
     ${isActive
       ? `opacity-100 translate-x-0`
       : `opacity-0 -translate-x-8`}
+
+    md:top-6
+    md:right-6
   `),
   close: `
     absolute top-2 right-2
@@ -144,8 +149,10 @@ const styles = tw({
   `,
   item: `
     w-full
-    text-sm text-left
+    text-base text-left
     leading-[1.25]
+
+    md:text-sm
   `,
   heading: `
     font-black
@@ -158,6 +165,9 @@ const styles = tw({
   `,
   currency: `
     mt-0.5
-    text-xs font-mono
+    text-sm
+    font-roboto font-medium
+
+    md:text-xs
   `,
 });

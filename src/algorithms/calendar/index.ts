@@ -54,6 +54,6 @@ export async function calendar(
 
   return returnize(
     budgetize(calendar, data, startingBalance),
-    holding.interest,
+    holding,
   );
 }

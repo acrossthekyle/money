@@ -17,9 +17,16 @@ export default async function Header() {
   );
 };
 
-const styles = {
+const styles = tw({
   container: `
-    absolute top-8 left-8 right-9
+    absolute top-2 left-2 right-3
     flex items-center justify-between
+
+    sm:top-4
+    sm:left-4
+    sm:right-5
+    md:top-8
+    md:left-8
+    md:right-9
   `,
-};
+});

@@ -23,7 +23,6 @@ type Props = {
   date: string;
   holdings: Holding[];
   onClose: () => void;
-  onDone: () => void;
   parent: string;
 };
 
@@ -32,7 +31,6 @@ export default function Form({
   date,
   holdings,
   onClose,
-  onDone,
   parent,
 }: Props) {
   const {
@@ -48,7 +46,7 @@ export default function Form({
     update,
     willDelete,
     willPurge,
-  } = useModel(date, onDone, budget);
+  } = useModel(date, budget);
 
   const accounts = holdings.filter(holding => ACCOUNTS.includes(holding.type));
   const assets = holdings.filter(holding => ASSETS.includes(holding.type));

@@ -63,7 +63,11 @@ export function create(zone: string) {
       credits: [],
       date: day,
       debits: [],
-      return: null,
+      return: {
+        amount: null,
+        isPositive: true,
+        label: 'Interest',
+      },
       iso: format(day, DATE_FORMAT),
       isBeforeToday: isToday(day) ? false : isBefore(day, today),
       isInMonth: getMonth(day) === targetMonthIndex,

@@ -15,12 +15,10 @@ const styles = tw({
   anchor: `
     flex items-center gap-2
     p-2
-    text-sm
+    text-xs
     uppercase
     font-medium
     tracking-widest
-
-    md:text-xs
   `,
   icon: `
     w-4 h-4

@@ -9,13 +9,11 @@ import { useModel } from './model';
 type Props = {
   holding?: Holding;
   onClose: () => void;
-  onDone: () => void;
 };
 
 export default function Form({
   holding,
   onClose,
-  onDone,
 }: Props) {
   const {
     action,
@@ -25,7 +23,7 @@ export default function Form({
     handleOnDelete,
     isPending,
     willDelete,
-  } = useModel(onDone, holding);
+  } = useModel(holding);
 
   return (
     <Ui.Form.Container action={action} id="holding-form">

@@ -8,17 +8,10 @@ import Form from './form';
 
 type Props = {
   holding?: Holding;
-  onDone: () => void;
 };
 
-export default function Dialog({ holding, onDone }: Props) {
+export default function Dialog({ holding }: Props) {
   const { instance, isActive, onBackdrop, onCancel, onClose } = useHolding();
-
-  const handleOnDone = () => {
-    onClose();
-
-    onDone();
-  };
 
   return (
     <Ui.Dialog.Dialog
@@ -36,7 +29,6 @@ export default function Dialog({ holding, onDone }: Props) {
           holding={holding}
           key={holding?.id || 'add'}
           onClose={onClose}
-          onDone={handleOnDone}
         />
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>

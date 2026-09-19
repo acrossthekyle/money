@@ -70,8 +70,7 @@ export default function Dialog({ holdings }: Props) {
 
 const styles = tw({
   container: (isActive: boolean) => tw(`
-    absolute top-2 left-2 bottom-2
-    w-100
+    absolute top-4 left-4 bottom-8 right-4
     p-4
     bg-(--background)
     border border-current/5.5 dark:border-current/10
@@ -80,9 +79,11 @@ const styles = tw({
 
     motion-safe:duration-300
 
-    ${isActive
-      ? `opacity-100 translate-x-0`
-      : `opacity-0 -translate-x-8`}
+    ${isActive ? `opacity-100 translate-x-0` : `opacity-0 -translate-x-8`}
+
+    md:w-100
+    md:right-auto
+    md:bottom-4
   `),
   close: `
     absolute top-2 right-2
@@ -94,29 +95,37 @@ const styles = tw({
   `,
   items: `
     flex flex-col gap-4
+    h-[calc(100%-3.5rem)]
+    overflow-y-auto
   `,
   header: `
     pb-4 mb-4
-    text-sm
+    text-base
     font-bold
     border-b border-current/7.5 dark:border-current/17.5
+
+    md:text-sm
   `,
   item: `
     flex items-center justify-between
     w-full
-    text-sm text-left
+    text-base text-left
     leading-[1.25]
+
+    md:text-sm
   `,
   heading: `
     flex flex-col gap-1
   `,
   title: `
-    text-sm
-    font-medium
+    font-bold
     leading-[1]
   `,
   currency: `
-    text-xs font-mono
+    text-sm
+    font-roboto font-medium
+
+    md:text-xs
   `,
   negative: `
     text-red-500

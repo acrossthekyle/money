@@ -1,9 +1,10 @@
 'use client';
 
 import { addMonths, getDate, getMonth, getYear, parseISO } from 'date-fns';
-import { Calendar, ChevronRight } from 'lucide-react';
+import { Calendar, ChevronRight, Menu } from 'lucide-react';
 
 import { DATE_FORMAT } from '@/constants';
+import { useBudgets } from '@/hooks/useBudgets';
 import { useUpdateUrl } from '@/hooks/useUpdateUrl';
 import { useYear } from '@/hooks/useYear';
 import tw, { cs } from '@/styles';
@@ -18,6 +19,7 @@ export default function Section({ calendar, date }: Props) {
   const updateUrl = useUpdateUrl();
 
   const { onYear } = useYear();
+  const { onBudgets } = useBudgets();
 
   const handleOnDay = (day) => {
     if (!day.isInMonth) {
@@ -56,6 +58,13 @@ export default function Section({ calendar, date }: Props) {
           aria-label="calendar supplementary navigation"
           className={styles.controls}
         >
+          <button
+            className={cs(styles.control, styles.budgets)}
+            onClick={onBudgets}
+            type="button"
+          >
+            <Menu className={styles.icon} />
+          </button>
           <button
             className={styles.control}
             onClick={onYear}
@@ -100,13 +109,20 @@ export default function Section({ calendar, date }: Props) {
               type="button"
             >
               {getDate(day.date)}
-              {day.isInMonth && day.budgets.length > 0 && (
-                <span className={styles.dots}>
-                  {day.budgets.map((_, index) => (
-                    <span className={styles.dot} key={index} />
-                  ))}
-                </span>
-              )}
+              {
+                day.isInMonth &&
+                (day.budgets.length > 0 || day.return.amount !== null) &&
+                (
+                  <span className={styles.dots}>
+                    {day.budgets.map((_, index) => (
+                      <span className={styles.dot} key={index} />
+                    ))}
+                    {day.return.amount !== null && (
+                      <span className={styles.dot} />
+                    )}
+                  </span>
+                )
+              }
             </button>
           </li>
         ))}
@@ -117,33 +133,44 @@ export default function Section({ calendar, date }: Props) {
 
 const styles = tw({
   container: `
-    col-start-1 row-start-4 col-span-8 row-span-9
+    col-start-1 row-start-7 col-span-24 row-span-9
     flex flex-col justify-end
-    mx-10
+
+    md:col-span-12
+    lg:row-start-4
+    lg:col-span-8
   `,
   upper: `
     relative
+    mx-4 mb-2
+
+    md:mx-10
+    md:mb-6
   `,
   header: `
     flex flex-col gap-1
-    mb-6
   `,
   title: `
     font-black
-    text-6xl
+    text-5xl
     leading-[0.8]
+
+    md:text-6xl
   `,
   lid: `
     text-lg text-current/50
   `,
   items: `
     grid grid-cols-7 gap-2
-    -mx-4
+
+    md:mx-8
   `,
   heading: `
-    h-4
+    h-3
     text-tiny text-center
     font-semibold
+
+    md:h-4
   `,
   faded: `
     text-current/32.5
@@ -161,7 +188,7 @@ const styles = tw({
     before:-translate-y-1/2
     before:h-10
     before:w-10
-    before:rounded-md
+    before:rounded-lg
 
     hover:before:bg-(--foreground)/5.5
   `,
@@ -178,12 +205,16 @@ const styles = tw({
     relative
     flex items-center justify-center
     w-full h-full
-    py-2
+    py-1.25
+
+    md:py-2
   `,
   dots: `
-    absolute bottom-1 left-1/2
+    absolute bottom-0.25 left-1/2
     -translate-x-1/2
     flex gap-0.5
+
+    md:bottom-1
   `,
   dot: `
     block
@@ -192,18 +223,27 @@ const styles = tw({
     bg-current
   `,
   controls: `
-    absolute bottom-8 right-0
+    absolute bottom-2 right-0
     flex gap-2
   `,
   control: `
     flex items-center justify-center
-    rounded-md
+    rounded-lg
     border border-current/22.5
-    h-8 w-8
+    h-10 w-10
+
+    md:h-8
+    md:w-8
+  `,
+  budgets: `
+    md:hidden
   `,
   icon: `
-    w-4 h-4
+    w-5 h-5
     stroke-2
+
+    md:w-4
+    md:h-4
   `,
   negative: `
     !text-red-600

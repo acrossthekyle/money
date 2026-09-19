@@ -7,11 +7,7 @@ import { useConfirm } from '@/hooks/useConfirm';
 import { put } from '@/actions/budgets/put';
 import type { Budget, FormStateError, BudgetFormState } from '@/types';
 
-export function useModel(
-  date: string,
-  onDone: () => void,
-  budget?: Budget,
-) {
+export function useModel(date: string, budget?: Budget) {
   const putable = put.bind(null, budget || null);
 
   const [state, action, isPending] = useActionState(putable, {
@@ -39,9 +35,11 @@ export function useModel(
 
   useEffect(() => {
     if (state?.isSuccessful) {
-      onDone();
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
     }
-  }, [state?.isSuccessful, onDone]);
+  }, [state?.isSuccessful]);
 
   useEffect(() => {
     if (state?.hasFailed && state?.errors) {

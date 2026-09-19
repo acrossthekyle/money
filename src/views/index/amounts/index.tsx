@@ -51,23 +51,45 @@ export default function Section({ calendar }: Props) {
 
 const styles = tw({
   container: `
-    col-start-9 row-start-1 col-span-8 row-span-1
-    flex justify-between
-    mx-10
+    col-start-13 row-start-4 col-span-12 row-span-2
+    flex flex-col items-end gap-2
+    mx-4 mt-4
+
+    md:col-span-6
+    md:col-start-7
+    md:mx-10
+    md:mt-6
+    md:gap-4
+    lg:col-start-9
+    lg:col-span-8
+    lg:row-start-1
+    lg:row-span-1
+    lg:flex-row
+    lg:justify-between
+    lg:gap-0
+    lg:items-start
+    lg:mt-0
   `,
   section: `
-    flex flex-col gap-1
+    flex flex-col
+    text-right
 
-    last-of-type:text-right
+    md:gap-1
+    lg:first-of-type:text-left
   `,
   heading: `
     font-roboto font-bold
-    text-tiny
+    text-xs
     uppercase
     tracking-wide
+
+    md:text-tiny
   `,
   amount: `
+    text-xl
     font-roboto
+
+    md:text-base
   `,
   positive: `
     text-green-600
