@@ -4,6 +4,7 @@ import Holding from './holding';
 import Holdings from './holdings';
 import Menu from './menu';
 import More from './more';
+import Year from './year';
 
 export const Dialogs = {
   Budget,
@@ -12,4 +13,5 @@ export const Dialogs = {
   Info,
   Menu,
   More,
+  Year,
 };

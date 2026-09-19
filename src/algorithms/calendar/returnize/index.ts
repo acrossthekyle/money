@@ -15,7 +15,7 @@ export function returnize(calendar, rate: string) {
         return;
       }
 
-      month.days.forEach((day) => {
+      daysInMonth.forEach((day) => {
         day.balance = Number((day.balance + runningAdjustment).toFixed(2));
       });
 

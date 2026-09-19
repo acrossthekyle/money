@@ -48,7 +48,7 @@ export default function Dialog({
           <li className={cs(styles.item, styles.header)}>
             <h3 className={styles.heading}>Time Zone</h3>
             <p className={styles.value}>
-              <span>America/Chicago</span>
+              <span>{zone}</span>
             </p>
           </li>
           <li>

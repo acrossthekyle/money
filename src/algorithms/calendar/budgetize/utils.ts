@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-import { DATE_FORMAT } from '@/constants';
+import { ASSETS, DATE_FORMAT } from '@/constants';
 
 export function createBudgetsMap(data) {
   const mapped = new Map();
@@ -24,12 +24,22 @@ export function createDaysMap(calendar) {
   calendar.forEach((year) => {
     year.months.forEach((month) => {
       month.days.forEach((day) => {
-        const key = format(day.date, DATE_FORMAT);
+        if (day.isInMonth) {
+          mapped.set(day.iso, day);
+        }
+      });
+    });
+  });
 
-        if (!mapped.has(key)) {
-          mapped.set(key, day);
-        } else {
-          day.budgets = mapped.get(key).budgets;
+  calendar.forEach((year) => {
+    year.months.forEach((month) => {
+      month.days.forEach((day) => {
+        if (!day.isInMonth && mapped.has(day.iso)) {
+          const found = mapped.get(day.iso);
+
+          day.budgets = found.budgets;
+          day.debits = found.debits;
+          day.credits = found.credits;
         }
       });
     });
@@ -38,71 +48,41 @@ export function createDaysMap(calendar) {
   return mapped;
 };
 
+type BalanceUpdateResult = {
+  amount: number;
+  expense: number | null;
+  income: number | null;
+};
+
 export function updateRunningBalance(
   budgetType: string,
   holdingType: string,
   isTransfer: boolean,
   transfereeHoldingType: string,
-  transfereeType: 'reciever' | 'sender',
+  transfereeType: 'receiver' | 'sender',
   runningBalance: number,
   amount: number,
-): number {
-  if (isTransfer) {
-    if (transfereeType === 'sender') {
-      if (holdingType === 'credit_card' && transfereeHoldingType === 'savings') {
-        return Number(runningBalance) + Number(budget.amount);
-      }
+): BalanceUpdateResult {
+  const currentBalance = Number(runningBalance);
+  const transactionAmount = Number(amount);
 
-      if (holdingType === 'savings' && transfereeHoldingType === 'savings') {
-        return Number(runningBalance) - Number(amount);
-      }
+  let isAddition = false;
 
-      if (holdingType === 'checking' && transfereeHoldingType === 'checking') {
-        return Number(runningBalance) - Number(amount);
-      }
-    }
+  if (!isTransfer) {
+    isAddition = budgetType === 'credit';
+  } else {
+    const isMoneyComingIn = holdingType === transfereeHoldingType;
 
-    if (transfereeType === 'receiver') {
-      if (holdingType === 'checking' && transfereeHoldingType === 'savings') {
-        return Number(runningBalance) - Number(amount);
-      }
-
-      if (holdingType === 'checking' && transfereeHoldingType === 'credit_card') {
-        return Number(runningBalance) - Number(amount);
-      }
-
-      if (holdingType === 'checking' && transfereeHoldingType === 'checking') {
-        return Number(runningBalance) + Number(amount);
-      }
-
-      if (holdingType === 'credit_card' && transfereeHoldingType === 'credit_card') {
-        return Number(runningBalance) + Number(amount);
-      }
-
-      if (
-        holdingType === 'savings' &&
-        ['credit_card', 'retirement', 'property'].includes(transfereeHoldingType || '')
-      ) {
-        return Number(runningBalance) - Number(amount);
-      }
-
-      if (ASSETS.includes(holdingType) && ASSETS.includes(transfereeHoldingType || '')) {
-        return Number(runningBalance) + Number(amount);
-      }
-
-      if (holdingType === 'savings' && transfereeHoldingType === 'savings') {
-        return Number(runningBalance) + Number(amount);
-      }
-    }
+    isAddition = budgetType === 'debit' ? isMoneyComingIn : !isMoneyComingIn;
   }
 
-  if (budgetType === 'credit') {
-    return Number(runningBalance) + Number(amount);
-  }
+  const sum = isAddition
+    ? currentBalance + transactionAmount
+    : currentBalance - transactionAmount;
 
-  if (budgetType === 'debit') {
-    return Number(runningBalance) - Number(amount);
-  }
-
-  return runningBalance;
+  return {
+    amount: Math.round(sum * 100) / 100,
+    expense: !isAddition ? transactionAmount : null,
+    income: isAddition ? transactionAmount : null,
+  };
 };

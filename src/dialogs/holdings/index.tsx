@@ -47,8 +47,15 @@ export default function Dialog({ holdings }: Props) {
               >
                 <h3 className={styles.heading}>
                   <span className={styles.title}>{holding.name}</span>
-                  <span className={styles.currency}>
-                    ${currency(holding.balance)}
+                  <span
+                    className={
+                      cs(
+                        styles.currency,
+                        holding.balance < 0 && styles.negative,
+                      )
+                    }
+                  >
+                    {holding.balance < 0 && '-'}${currency(holding.balance)}
                   </span>
                 </h3>
                 <ChevronRight className={styles.icon} />
@@ -110,5 +117,8 @@ const styles = tw({
   `,
   currency: `
     text-xs font-mono
+  `,
+  negative: `
+    text-red-500
   `,
 });

@@ -9,12 +9,12 @@ async function fileDirectory(output: string) {
   try {
     await fs.readdirSync(output);
   } catch {
-    await fs.mkdirSync(output);
+    await fs.mkdirSync(output, { recursive: true });
   }
 };
 
 async function fileWrite(path: string, content: string) {
-  fileDirectory(FILE_OUTPUT);
+  await fileDirectory(FILE_OUTPUT);
 
   await fs.writeFile(path, content, function (error) {
     if (error) {
@@ -29,14 +29,18 @@ export async function read(table: string, id?: string): Promise<Record[]> {
   try {
     results = await import(`@/storage/cache/${table}.js`);
   } catch {
-    // do nothing
+    results = null;
   }
 
-  results = ((results?.default || results) || []);
+  const dataArray: Record[] = Array.isArray(results?.default)
+    ? results.default
+    : Array.isArray(results)
+      ? results
+      : [];
 
   return id !== undefined
-    ? results.filter((result: Record) => result.id === id)
-    : [...results];
+    ? dataArray.filter((result: Record) => result.id === id)
+    : [...dataArray];
 };
 
 export async function write(table: string, data: Record[]) {

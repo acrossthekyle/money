@@ -1,7 +1,7 @@
 'use client';
 
 import { format } from 'date-fns';
-import { EllipsisVertical, TrendingDown, TrendingUp } from 'lucide-react';
+import { TextAlignEnd, TrendingDown, TrendingUp } from 'lucide-react';
 
 import { useHoldings } from '@/hooks/useHoldings';
 import { useTimezone } from '@/hooks/useTimezone';
@@ -11,13 +11,11 @@ import { currency, date } from '@/utils';
 
 type Props = {
   calendar: Day[];
-  holdings: Holding[];
+  holding: Holding;
   saved: string;
 };
 
-export default function Section({ calendar, holdings, saved }: Props) {
-  const current = holdings.find(holding => holding.id === saved);
-
+export default function Section({ calendar, holding, saved }: Props) {
   const { zone } = useTimezone();
 
   const { onHoldings } = useHoldings();
@@ -32,19 +30,19 @@ export default function Section({ calendar, holdings, saved }: Props) {
     <section aria-label="accounts and assets" className={styles.container}>
       <h1 className={styles.header}>
         <span className={styles.title}>
-          {current?.name}{current.number && `. . . ${current?.number}`}
+          {holding.name}{holding.number && `. . . ${holding.number}`}
         </span>
-        <span className={styles.lid}>{current?.type}</span>
+        <span className={styles.lid}>{holding.type}</span>
       </h1>
       <button className={styles.toggle} onClick={onHoldings} type="button">
-        <EllipsisVertical className={styles.ellipsis} />
+        <TextAlignEnd className={styles.ellipsis} />
       </button>
       <p className={styles.balance}>
         <span className={styles.disclaimer}>
           Balance as of Today {format(date(zone), 'MM/dd/yyyy')}
         </span>
         <span className={styles.amount}>
-          ${currency(current?.balance || '0')}
+          {holding.balance < 0 && '-'}${currency(holding.balance)}
         </span>
       </p>
       {isTrendingUp ? (
@@ -60,6 +58,7 @@ const styles = tw({
   container: `
     col-start-1 row-start-1 col-span-8 row-span-3
     relative
+    mx-10
     p-4
     bg-(--foreground)
     text-(--background)

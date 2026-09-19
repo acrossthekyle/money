@@ -3,7 +3,6 @@ import type { Holding, Preference } from '@/types';
 
 type Return = {
   saved: string;
-  zone: string;
 };
 
 export async function get(
@@ -12,13 +11,11 @@ export async function get(
 ): Promise<Return> {
   const records = await db.read('preferences') as Preference[];
 
-  const zone = records.find(preference => preference.id === 'timezone')?.value || 'UTC';
   const saved = records.find(preference => preference.id === 'holding')?.value || '';
 
   if (holdings.length === 0) {
     return {
       saved: '',
-      zone,
     };
   }
 
@@ -42,6 +39,5 @@ export async function get(
 
   return {
     saved: realizedView,
-    zone,
   };
 }

@@ -28,7 +28,7 @@ export async function login(
     };
   }
 
-  await db.write('preferences', {
+  await db.write('settings', {
     id: 'timezone',
     value: timezone,
   });

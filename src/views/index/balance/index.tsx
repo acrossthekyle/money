@@ -1,6 +1,4 @@
-'use client';
-
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import type { Day } from '@/types';
 import { currency } from '@/utils';
 
@@ -18,7 +16,11 @@ export default function Section({ calendar, date }: Props) {
         <span>Balance</span>
         <span className={styles.faded}>Projected</span>
       </h2>
-      <p className={styles.amount}>${currency(day.balance)}</p>
+      <p
+        className={cs(styles.amount, day.balance < 0 && styles.negative)}
+      >
+        {day.balance < 0 && '-'}${currency(day.balance)}
+      </p>
     </section>
   );
 };
@@ -27,6 +29,7 @@ const styles = tw({
   container: `
     col-start-9 row-start-11 col-span-8 row-span-2
     flex flex-col justify-end gap-4
+    mx-10
   `,
   header: `
     flex items-end gap-4
@@ -43,5 +46,8 @@ const styles = tw({
   amount: `
     font-roboto
     text-5xl
+  `,
+  negative: `
+    text-red-600
   `,
 });

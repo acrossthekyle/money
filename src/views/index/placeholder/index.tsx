@@ -1,12 +1,11 @@
-import { getDay, parseISO } from 'date-fns';
+'use client';
+
+import { getDay } from 'date-fns';
 import Image from 'next/image';
 
+import { useTimezone } from '@/hooks/useTimezone';
 import tw from '@/styles';
-import { image } from '@/utils';
-
-type Props = {
-  date: string;
-};
+import { date, image } from '@/utils';
 
 const IMAGES = {
   0: image('0ff819d4-929a-45f0-be80-43efd6398d92', 'projects/basalt/gallery'),
@@ -18,12 +17,15 @@ const IMAGES = {
   6: image('fe077c95-b230-41b7-a4af-70bdbe05e892', 'projects/basalt/gallery'),
 };
 
-export default function Section({ date }: Props) {
-  const key = getDay(parseISO(date));
+export default function Section() {
+  const { zone } = useTimezone();
+
+  const key = getDay(date(zone));
 
   return (
     <figure aria-label="image of the day" className={styles.container}>
       <Image
+        alt=""
         className={styles.image}
         src={IMAGES[key]}
         width={458}
@@ -38,7 +40,8 @@ export default function Section({ date }: Props) {
 
 const styles = tw({
   container: `
-    col-start-9 row-start-3 col-span-8 row-span-8
+    col-start-9 row-start-2 col-span-8 row-span-9
+    mx-10 mt-4
     relative
     rounded-xl
     overflow-hidden

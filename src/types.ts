@@ -66,7 +66,12 @@ export type Preference = {
   value: string;
 };
 
-export type Record = Holding | Budget | Preference;
+export type Setting = {
+  id: string;
+  value: string;
+};
+
+export type Record = Holding | Budget | Preference | Setting;
 
 export type MetricPeriod = {
   balance: {

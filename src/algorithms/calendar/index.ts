@@ -8,7 +8,7 @@ import { returnize } from './returnize';
 export async function calendar(
   holdings: Holding[],
   budgets: Budget[],
-  view: string,
+  id: string | null,
   zone: string,
 ) {
   const calendar = create(zone);
@@ -17,7 +17,7 @@ export async function calendar(
     return calendar;
   }
 
-  const selectedHolding = view === null ? holdings[0].id : view;
+  const selectedHolding = id === null ? holdings[0].id : id;
 
   const holding = holdings.find(holding => selectedHolding === holding.id);
 
@@ -25,9 +25,7 @@ export async function calendar(
     return calendar;
   }
 
-  const startingBalance = holding.type === 'credit_card'
-    ? -Number(holding.balance)
-    : Number(holding.balance);
+  const startingBalance = Number(holding.balance);
 
   const data = budgets
     .filter((budget: Budget) =>
@@ -46,16 +44,16 @@ export async function calendar(
 
       return {
         budget,
+        holdingType: holding.type,
         iterations,
         isTransfer: budget.transferee !== '',
-        holdingType: holding.type,
-        transfereeHoldingType: transfereeHolding?.type,
+        transfereeHoldingType: transfereeHolding?.type || '',
         transfereeType: budget.type === 'debit' ? 'receiver' : 'sender',
       };
     });
 
   return returnize(
     budgetize(calendar, data, startingBalance),
-    holding.rate,
+    holding.interest,
   );
 }

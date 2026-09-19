@@ -7,7 +7,7 @@ import { PropsWithChildren, Suspense } from 'react';
 
 import DialogProvider from '@/contexts/dialog';
 import TimezoneProvider from '@/contexts/timezone';
-import { get as preferences } from '@/getters/preferences';
+import { get as getSettings } from '@/getters/settings';
 import { LayoutBody, LayoutHeader } from '@/layout';
 
 export const metadata: Metadata = {
@@ -46,7 +46,7 @@ const mono = Roboto_Mono({
 });
 
 export default async function RootLayout({ children }: PropsWithChildren) {
-  const { zone } = await preferences();
+  const { zone } = await getSettings();
 
   return (
     <html

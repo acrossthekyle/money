@@ -1,40 +1,29 @@
 'use client';
 
-import { format, getDate } from 'date-fns';
-import { Calendar } from 'lucide-react';
+import { addMonths, getDate, getMonth, getYear, parseISO } from 'date-fns';
+import { Calendar, ChevronRight } from 'lucide-react';
 
 import { DATE_FORMAT } from '@/constants';
 import { useUpdateUrl } from '@/hooks/useUpdateUrl';
+import { useYear } from '@/hooks/useYear';
 import tw, { cs } from '@/styles';
+import { pad } from '@/utils';
 
 type Props = {
   calendar: Day[]; // todo
   date: string;
 };
 
-const MONTHS = [
-  'JAN',
-  'FEB',
-  'MAR',
-  'APR',
-  'MAY',
-  'JUNE',
-  'JULY',
-  'AUG',
-  'SEPT',
-  'OCT',
-  'NOV',
-  'DEC',
-];
-
 export default function Section({ calendar, date }: Props) {
   const updateUrl = useUpdateUrl();
+
+  const { onYear } = useYear();
 
   const handleOnDay = (day) => {
     if (!day.isInMonth) {
       updateUrl(
         ['date', 'month', 'year'],
-        [day.iso, day.month, day.year],
+        [day.iso, String(day.month), string(day.year)],
       );
 
       return;
@@ -43,30 +32,45 @@ export default function Section({ calendar, date }: Props) {
     updateUrl('date', day.iso);
   };
 
-  const handleOnCalendar = () => {
-    //
-  };
+  const handleOnNext = () => {
+    const updated = addMonths(parseISO(date), 1);
 
-  const id = calendar.id.split('-');
+    updateUrl(
+      ['date', 'month', 'year'],
+      [`${getYear(updated)}-${pad(getMonth(updated) + 1)}-01`, String(getMonth(updated)), String(getYear(updated))],
+    );
+  };
 
   return (
     <section aria-label="calendar" className={styles.container}>
       <div className={styles.upper}>
         <h2 className={styles.header}>
           <span className={styles.title}>
-            {MONTHS[Number(id[0])]}
+            {calendar.name}
           </span>
           <span className={styles.lid}>
-            {id[1]}
+            {calendar.year}
           </span>
         </h2>
-        <button
-          className={styles.calendar}
-          onClick={handleOnCalendar}
-          type="button"
+        <nav
+          aria-label="calendar supplementary navigation"
+          className={styles.controls}
         >
-          <Calendar className={styles.icon} />
-        </button>
+          <button
+            className={styles.control}
+            onClick={onYear}
+            type="button"
+          >
+            <Calendar className={styles.icon} />
+          </button>
+          <button
+            className={styles.control}
+            onClick={handleOnNext}
+            type="button"
+          >
+            <ChevronRight className={styles.icon} />
+          </button>
+        </nav>
       </div>
       <ul className={styles.items}>
         <li className={cs(styles.heading, styles.faded)} role="presentation">S</li>
@@ -84,12 +88,14 @@ export default function Section({ calendar, date }: Props) {
                 !day.isInMonth && styles.faded,
                 day.isToday && styles.boldened,
                 day.iso === date && styles.highlighted,
+                day.balance < 0 && styles.negative,
               )
             }
             key={day.date}
           >
             <button
               className={styles.day}
+              disabled={!day.isInMonth}
               onClick={() => handleOnDay(day)}
               type="button"
             >
@@ -113,6 +119,7 @@ const styles = tw({
   container: `
     col-start-1 row-start-4 col-span-8 row-span-9
     flex flex-col justify-end
+    mx-10
   `,
   upper: `
     relative
@@ -171,10 +178,10 @@ const styles = tw({
     relative
     flex items-center justify-center
     w-full h-full
-    py-3
+    py-2
   `,
   dots: `
-    absolute bottom-2 left-1/2
+    absolute bottom-1 left-1/2
     -translate-x-1/2
     flex gap-0.5
   `,
@@ -184,8 +191,11 @@ const styles = tw({
     rounded-full
     bg-current
   `,
-  calendar: `
+  controls: `
     absolute bottom-8 right-0
+    flex gap-2
+  `,
+  control: `
     flex items-center justify-center
     rounded-md
     border border-current/22.5
@@ -194,5 +204,8 @@ const styles = tw({
   icon: `
     w-4 h-4
     stroke-2
+  `,
+  negative: `
+    !text-red-600
   `,
 });

@@ -8,7 +8,8 @@ export function currency(value: number, isCompact?: boolean) {
   return new Intl.NumberFormat('en', {
     notation: isCompact ? 'compact' : 'standard',
     compactDisplay: isCompact ? 'short' : undefined,
-    minimumFractionDigits: 2,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   }).format(Math.abs(value));
 };
 

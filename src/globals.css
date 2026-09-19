@@ -46,6 +46,10 @@ body {
     cursor: pointer;
   }
 
+  button[disabled] {
+    cursor: default;
+  }
+
   input[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;
     inset: 0;
