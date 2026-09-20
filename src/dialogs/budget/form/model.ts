@@ -53,8 +53,6 @@ export function useModel(date: string, budget?: Budget) {
     setWillDelete(true);
 
     const result = await confirm({
-      cancelButtonText: 'Cancel',
-      confirmButtonText: 'Delete',
       target: '#budget-dialog',
       title: 'Are you absolutely sure?',
       text: `This will be a permanent deletion. This action cannot be undone. Choose an option:`,
@@ -104,11 +102,9 @@ export function useModel(date: string, budget?: Budget) {
       setUpdate('this');
     } else {
       const result = await confirm({
-        cancelButtonText: 'Back',
-        confirmButtonText: 'Update',
         target: '#budget-dialog',
-        title: 'How to apply these changes?',
-        text: 'Choose an option:',
+        title: 'Are you absolutely sure?',
+        text: 'Choose how to apply these changes:',
         input: 'radio',
         inputOptions: {
           'all': `Entire budget (from ${format(parseISO(budget?.start || ''), 'MM/dd/yyyy')} onwards)`,

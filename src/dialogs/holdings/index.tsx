@@ -114,7 +114,7 @@ const styles = tw({
     flex flex-col gap-4
     pb-4
     h-full
-    divide-y divide-current/7.5
+    divide-y divide-current/7.5 dark:divide-current/17.5
   `,
   header: `
     text-base

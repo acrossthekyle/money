@@ -1,7 +1,9 @@
 'use client';
 
+import { Check, ChevronRight, LoaderCircle, Trash, Undo2 } from 'lucide-react';
+
 import { ACCOUNTS, ASSETS } from '@/constants';
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import type { Budget, Holding } from '@/types';
 import Ui from '@/ui';
 
@@ -112,24 +114,32 @@ export default function Form({
           <div className={styles.actions}>
             <Ui.Form.Button
               disabled={isPending}
-              isDestructive
               onClick={handleOnDelete}
+              type="button"
             >
-              Delete
+              <Trash className={styles.icon} />
             </Ui.Form.Button>
           </div>
         ) : <div />}
         <div className={styles.actions}>
           <Ui.Form.Button onClick={onClose}>
-            Cancel
+            <Undo2 className={styles.icon} />
           </Ui.Form.Button>
           {!budget ? (
             <Ui.Form.Button disabled={isPending} id="submit" type="submit">
-              {isPending ? 'Processing...' : 'Create'}
+              {isPending ? (
+                <LoaderCircle className={cs(styles.icon, styles.spin)} />
+              ) : (
+                <Check className={styles.icon} />
+              )}
             </Ui.Form.Button>
           ) : (
-            <Ui.Form.Button isContinue onClick={handleOnContinue}>
-              {budget?.schedule === 'once' ? 'Update' : 'Submit'}
+            <Ui.Form.Button onClick={handleOnContinue}>
+              {isPending ? (
+                <LoaderCircle className={cs(styles.icon, styles.spin)} />
+              ) : (
+                <ChevronRight className={styles.icon} />
+              )}
             </Ui.Form.Button>
           )}
         </div>
@@ -141,5 +151,12 @@ export default function Form({
 const styles = tw({
   actions: `
     flex gap-4
+  `,
+  icon: `
+    w-5 h-5
+    stroke-1
+  `,
+  spin: `
+    animate-spin
   `,
 });

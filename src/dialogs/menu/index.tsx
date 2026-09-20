@@ -144,7 +144,7 @@ const styles = tw({
   `,
   footer: `
     pt-4
-    border-t border-current/7.5
+    border-t border-current/7.5 dark:border-current/17.5
   `,
   item: `
     w-full
