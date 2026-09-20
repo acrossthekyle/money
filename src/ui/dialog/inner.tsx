@@ -24,7 +24,7 @@ const styles = {
     h-auto
     mt-auto
     bg-(--background)
-    border border-current/5.5 dark:border-current/10
+    border border-current/5.5 dark:border-current/17.5
     rounded-xl
     shadow-lg/25 dark:shadow-lg/75
 
