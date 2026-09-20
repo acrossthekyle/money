@@ -1,6 +1,6 @@
 'use client';
 
-import { useHolding } from '@/hooks/useHolding';
+import { useHolding } from '@/hooks';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
 

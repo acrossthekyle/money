@@ -3,9 +3,7 @@
 import { useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
-import { useConfirm } from '@/hooks/useConfirm';
-import { useHolding } from '@/hooks/useHolding';
-import { useInvalidate } from '@/hooks/useInvalidate';
+import { useConfirm, useHolding } from '@/hooks';
 import type { FormStateError, Holding, HoldingFormState } from '@/types';
 
 export function useModel(holding?: Holding) {
@@ -23,13 +21,10 @@ export function useModel(holding?: Holding) {
 
   const confirm = useConfirm();
   const { onClose } = useHolding();
-  const invalidate = useInvalidate();
 
   useEffect(() => {
     if (state?.isSuccessful) {
       onClose();
-
-      invalidate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.isSuccessful]);

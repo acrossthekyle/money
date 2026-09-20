@@ -3,9 +3,7 @@
 import { format, parseISO } from 'date-fns';
 import { useActionState, useEffect, useState } from 'react';
 
-import { useBudget } from '@/hooks/useBudget';
-import { useConfirm } from '@/hooks/useConfirm';
-import { useInvalidate } from '@/hooks/useInvalidate';
+import { useBudget, useConfirm } from '@/hooks';
 import { put } from '@/actions/budgets/put';
 import type { Budget, FormStateError, BudgetFormState } from '@/types';
 
@@ -27,7 +25,6 @@ export function useModel(date: string, budget?: Budget) {
 
   const confirm = useConfirm();
   const { onClose } = useBudget();
-  const invalidate = useInvalidate();
 
   useEffect(() => {
     if (budget) {
@@ -40,8 +37,6 @@ export function useModel(date: string, budget?: Budget) {
   useEffect(() => {
     if (state?.isSuccessful) {
       onClose();
-
-      invalidate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.isSuccessful]);

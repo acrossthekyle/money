@@ -3,7 +3,7 @@
 import { X } from 'lucide-react';
 
 import { Budgets } from '@/components';
-import { useBudgets } from '@/hooks/useBudgets';
+import { useBudgets } from '@/hooks';
 import tw from '@/styles';
 import type { Budget, CalendarMonth, Holding } from '@/types';
 import Ui from '@/ui';

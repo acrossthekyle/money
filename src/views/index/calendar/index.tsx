@@ -3,9 +3,7 @@
 import { addMonths, getDate, getMonth, getYear, parseISO } from 'date-fns';
 import { Calendar, ChevronRight, Menu } from 'lucide-react';
 
-import { useBudgets } from '@/hooks/useBudgets';
-import { useUpdateUrl } from '@/hooks/useUpdateUrl';
-import { useYear } from '@/hooks/useYear';
+import { useBudgets, useUpdateUrl, useYear } from '@/hooks';
 import tw, { cs } from '@/styles';
 import type { CalendarDay, CalendarMonth } from '@/types';
 import { pad } from '@/utils';
@@ -69,6 +67,7 @@ export default function Section({ calendar, date }: Props) {
           <button
             className={cs(styles.control, styles.budgets)}
             onClick={onBudgets}
+            title="View budgets"
             type="button"
           >
             <Menu className={styles.icon} />
@@ -76,6 +75,7 @@ export default function Section({ calendar, date }: Props) {
           <button
             className={styles.control}
             onClick={onYear}
+            title="Choose month"
             type="button"
           >
             <Calendar className={styles.icon} />
@@ -83,6 +83,7 @@ export default function Section({ calendar, date }: Props) {
           <button
             className={styles.control}
             onClick={handleOnNext}
+            title="Next month"
             type="button"
           >
             <ChevronRight className={styles.icon} />

@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useHoldings } from '@/hooks/useHoldings';
-import { useUpdateUrl } from '@/hooks/useUpdateUrl';
+import { useHoldings, useUpdateUrl } from '@/hooks';
 import type { Holding } from '@/types';
 
 export function useModel(holding: Holding) {

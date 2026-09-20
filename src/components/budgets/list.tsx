@@ -48,6 +48,7 @@ export default function List({ day, holding, onEdit }: Props) {
                 className={styles.item}
                 disabled={budget.parent !== holding.id}
                 onClick={() => onEdit(budget)}
+                title="Edit budget"
                 type="button"
               >
                 <p className={styles.content}>

@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 
 import { DATE_FORMAT } from '@/constants';
-import { useTimezone } from '@/hooks/useTimezone';
+import { useTimezone } from '@/hooks';
 import tw from '@/styles';
 import Ui from '@/ui';
 import { date } from '@/utils';

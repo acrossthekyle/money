@@ -3,7 +3,7 @@
 import { useActionState, useState } from 'react';
 
 import { login } from '@/actions/auth/login';
-import { useInfo } from '@/hooks/useInfo';
+import { useInfo } from '@/hooks';
 import type { LoginFormState } from '@/types';
 
 export function useModel(message: string) {

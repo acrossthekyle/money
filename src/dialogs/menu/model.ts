@@ -3,10 +3,7 @@
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
 
-import { useHolding } from '@/hooks/useHolding';
-import { useMenu } from '@/hooks/useMenu';
-import { useTimezone } from '@/hooks/useTimezone';
-import { useUpdateUrl } from '@/hooks/useUpdateUrl';
+import { useHolding, useMenu, useTimezone, useUpdateUrl } from '@/hooks';
 
 export function useModel(onAdd: () => void) {
   const { onHolding } = useHolding();

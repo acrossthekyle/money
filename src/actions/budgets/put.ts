@@ -1,9 +1,9 @@
 'use server';
 
+import { updateTag } from 'next/cache';
 import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
-import { invalidate } from '@/algorithms/calendar';
 import { db } from '@/db';
 import { get as getSettings } from '@/getters/settings';
 import type { Budget, BudgetFormState } from '@/types';
@@ -124,7 +124,8 @@ export async function put(
   if (budget === null) {
     await db.write('budgets', result);
 
-    await invalidate();
+    updateTag('budgets');
+    updateTag('calendar');
 
     return {
       data: result,
@@ -150,7 +151,8 @@ export async function put(
       });
     }
 
-    await invalidate();
+    updateTag('budgets');
+    updateTag('calendar');
 
     return {
       data: result,
@@ -163,7 +165,8 @@ export async function put(
   if (formData.get('purge') === 'true') {
     await db.erase('budgets', budget.id);
 
-    await invalidate();
+    updateTag('budgets');
+    updateTag('calendar');
 
     return {
       data: result,
@@ -176,7 +179,8 @@ export async function put(
   if (formData.get('update') === 'none' || formData.get('update') === 'all') {
     await db.write('budgets', result);
 
-    await invalidate();
+    updateTag('budgets');
+    updateTag('calendar');
 
     return {
       data: result,
@@ -225,7 +229,8 @@ export async function put(
 
       await db.writeAll('budgets', updates as Budget[]);
 
-      await invalidate();
+      updateTag('budgets');
+      updateTag('calendar');
 
       return {
         data: result,
@@ -262,7 +267,8 @@ export async function put(
 
       await db.writeAll('budgets', updates as Budget[]);
 
-      await invalidate();
+      updateTag('budgets');
+      updateTag('calendar');
 
       return {
         data: result,
@@ -300,7 +306,8 @@ export async function put(
 
       await db.writeAll('budgets', updates);
 
-      await invalidate();
+      updateTag('budgets');
+      updateTag('calendar');
 
       return {
         data: result,

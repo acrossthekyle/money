@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { useInfo } from '@/hooks/useInfo';
+import { useInfo } from '@/hooks';
 import tw from '@/styles';
 import Ui from '@/ui';
 

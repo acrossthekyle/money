@@ -116,6 +116,7 @@ const styles = tw({
     lg:before:left-1/3
     lg:before:w-px
     lg:before:bg-(--foreground)/12.5
+    lg:dark:before:bg-(--foreground)/22.5
 
     after:hidden
     after:absolute
@@ -124,6 +125,7 @@ const styles = tw({
     after:right-1/2
     after:w-px
     after:bg-(--foreground)/12.5
+    dark:after:bg-(--foreground)/22.5
 
     md:after:block
     lg:after:right-1/3

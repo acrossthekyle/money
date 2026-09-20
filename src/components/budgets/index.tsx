@@ -3,8 +3,7 @@
 import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
 
-import { useBudget } from '@/hooks/useBudget';
-import { useBudgets } from '@/hooks/useBudgets';
+import { useBudget, useBudgets } from '@/hooks';
 import tw from '@/styles';
 import type { Budget, CalendarMonth, Holding } from '@/types';
 
@@ -85,7 +84,12 @@ export default function Budgets({
           holding={holding}
           onEdit={handleOnEdit}
         />
-        <button className={styles.add} onClick={handleOnAdd} type="button">
+        <button
+          className={styles.add}
+          onClick={handleOnAdd}
+          title="Add budget"
+          type="button"
+        >
           <Plus className={styles.plus} />
         </button>
       </div>

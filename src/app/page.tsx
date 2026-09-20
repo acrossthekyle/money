@@ -10,14 +10,20 @@ type Props = {
   searchParams: Promise<SearchParams>;
 };
 
-export default async function Page({ searchParams }: Props) {
+async function DataView({
+  searchParams,
+}: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
 
   const data = await get(params);
 
+  return <View data={data} />;
+};
+
+export default function Page({ searchParams }: Props) {
   return (
     <Suspense fallback={<Ui.Loaders.Spinner />}>
-      <View data={data} />
+      <DataView searchParams={searchParams} />
     </Suspense>
   );
-}
+};

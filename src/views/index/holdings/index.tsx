@@ -3,9 +3,7 @@
 import { format } from 'date-fns';
 import { TextAlignEnd, TrendingDown, TrendingUp } from 'lucide-react';
 
-import { useHolding } from '@/hooks/useHolding';
-import { useHoldings } from '@/hooks/useHoldings';
-import { useTimezone } from '@/hooks/useTimezone';
+import { useHolding, useHoldings, useTimezone } from '@/hooks';
 import tw from '@/styles';
 import type { CalendarMonth, Holding } from '@/types'
 import { currency, date } from '@/utils';
@@ -39,6 +37,7 @@ export default function Section({ calendar, holding, onEdit }: Props) {
       <button
         className={styles.content}
         onClick={handleOnEdit}
+        title="Edit account/asset"
         type="button"
       >
         <h1 className={styles.header}>
@@ -65,7 +64,12 @@ export default function Section({ calendar, holding, onEdit }: Props) {
           <TrendingDown className={styles.trend} />
         )}
       </button>
-      <button className={styles.toggle} onClick={onHoldings} type="button">
+      <button
+        className={styles.toggle}
+        onClick={onHoldings}
+        title="View all accounts/assets"
+        type="button"
+      >
         <TextAlignEnd className={styles.menu} />
       </button>
     </section>

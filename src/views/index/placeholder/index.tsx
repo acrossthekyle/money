@@ -3,7 +3,7 @@
 import { getDay } from 'date-fns';
 import Image from 'next/image';
 
-import { useTimezone } from '@/hooks/useTimezone';
+import { useTimezone } from '@/hooks';
 import tw from '@/styles';
 import { date, image } from '@/utils';
 

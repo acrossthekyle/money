@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 
-import { useUpdateUrl } from '@/hooks/useUpdateUrl';
-import { useYear } from '@/hooks/useYear';
+import { useUpdateUrl, useYear } from '@/hooks';
 import type { CalendarMonth, CalendarYear } from '@/types';
 import { pad } from '@/utils';
 

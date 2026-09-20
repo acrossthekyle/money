@@ -1,6 +1,6 @@
 'use client';
 
-import { useBudget } from '@/hooks/useBudget';
+import { useBudget } from '@/hooks';
 import type { Budget, Holding } from '@/types';
 import Ui from '@/ui';
 
