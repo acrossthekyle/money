@@ -77,7 +77,7 @@ export default function View({ data }: Props) {
         netWorth={data.metrics.netWorth}
       />
       <Dialogs.Holding holding={holding} />
-      <Dialogs.Holdings holdings={data.holdings} />
+      <Dialogs.Holdings holding={data.holding} holdings={data.holdings} />
       <Dialogs.Year date={data.date} years={data.calendar.years} />
       <Dialogs.Budget
         budget={budget}

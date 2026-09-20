@@ -114,9 +114,9 @@ export default function Section({ calendar, date }: Props) {
               cs(
                 styles.item,
                 !day.isInMonth && styles.faded,
-                day.isToday && styles.boldened,
                 day.iso === date && styles.highlighted,
-                day.balance < 0 && styles.negative,
+                day.balance < 0 && !day.isToday && styles.negative,
+                day.isToday && styles.boldened,
               )
             }
             key={day.iso}
@@ -219,6 +219,9 @@ const styles = tw({
   `,
   boldened: `
     font-black
+    text-(--foreground)
+
+    before:bg-(--foreground)/5.5
   `,
   day: `
     relative
@@ -265,6 +268,6 @@ const styles = tw({
     md:h-4
   `,
   negative: `
-    !text-red-500 dark:!text-rose-400
+    text-red-400 dark:text-rose-400
   `,
 });

@@ -142,7 +142,7 @@ const styles = tw({
     stroke-1
   `,
   negative: `
-    text-red-500 dark:text-rose-400
+    text-red-400 dark:text-rose-400
   `,
   positive: `
     text-green-500

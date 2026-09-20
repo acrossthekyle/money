@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRight, X } from 'lucide-react';
+import { ChevronRight, LoaderCircle, X } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
 import type { Holding } from '@/types';
@@ -10,14 +10,16 @@ import { currency } from '@/utils';
 import { useModel } from './model';
 
 type Props = {
+  holding?: Holding;
   holdings: Holding[];
 };
 
-export default function Dialog({ holdings }: Props) {
+export default function Dialog({ holding, holdings }: Props) {
   const {
     handleOnClick,
     instance,
     isActive,
+    loadingHash,
     onBackdrop,
     onCancel,
     onClose,
@@ -37,31 +39,44 @@ export default function Dialog({ holdings }: Props) {
           <X className={styles.icon} />
         </button>
         <ul className={styles.items}>
-          {holdings.map((holding) => (
-            <li key={holding.id}>
-              <button
-                className={styles.item}
-                onClick={() => handleOnClick(holding)}
-                type="button"
-              >
-                <h3 className={styles.heading}>
-                  <span className={styles.title}>{holding.name}</span>
-                  <span
-                    className={
-                      cs(
-                        styles.currency,
-                        Number(holding.balance) < 0 && styles.negative,
-                      )
-                    }
+          {holdings.map((item) => {
+            const isCurrent = item.id === holding?.id;
+
+            return (
+              <li key={item.id}>
+                <button
+                  className={styles.item}
+                  disabled={item.id === holding?.id}
+                  onClick={() => handleOnClick(item)}
+                  type="button"
+                >
+                  <h3
+                    className={cs(styles.heading, isCurrent && styles.faded)}
                   >
-                    {Number(holding.balance) < 0 && '-'}
-                    ${currency(holding.balance)}
-                  </span>
-                </h3>
-                <ChevronRight className={styles.icon} />
-              </button>
-            </li>
-          ))}
+                    <span className={styles.title}>{item.name}</span>
+                    <span
+                      className={
+                        cs(
+                          styles.currency,
+                          Number(item.balance) < 0 && styles.negative,
+                        )
+                      }
+                    >
+                      {Number(item.balance) < 0 && '-'}
+                      ${currency(item.balance)}
+                    </span>
+                  </h3>
+                  {loadingHash === item.id ? (
+                    <LoaderCircle className={cs(styles.icon, styles.spin)} />
+                  ) : (
+                    <ChevronRight
+                      className={cs(styles.icon, isCurrent && styles.faded)}
+                    />
+                  )}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </Ui.Dialog.Dialog>
@@ -93,6 +108,10 @@ const styles = tw({
     w-4 h-4
     stroke-2
   `,
+  spin: `
+    animate-spin
+    mr-1
+  `,
   items: `
     flex flex-col gap-4
     h-[calc(100%-3.5rem)]
@@ -107,18 +126,35 @@ const styles = tw({
     md:text-sm
   `,
   item: `
+    group
+    relative
     flex items-center justify-between
     w-full
     text-base text-left
     leading-[1.25]
 
+    motion-safe:before:duration-300
+
+    before:absolute
+    before:top-0
+    before:-left-2
+    before:bottom-0
+    before:w-2
+    before:bg-(--foreground)
+
+    enabled:hover:before:left-0
+
     md:text-sm
   `,
   heading: `
     flex flex-col gap-1
+
+    motion-safe:duration-300
+
+    group-enabled:group-hover:translate-x-4
   `,
   title: `
-    font-bold
+    font-medium
     leading-[1]
   `,
   currency: `
@@ -128,6 +164,10 @@ const styles = tw({
     md:text-xs
   `,
   negative: `
-    text-red-500 dark:text-rose-400
+    text-red-400 dark:text-rose-400
+  `,
+  faded: `
+    stroke-current/50
+    !text-current/25
   `,
 });
