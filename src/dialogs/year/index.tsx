@@ -3,13 +3,14 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
+import type { CalendarYear } from '@/types';
 import Ui from '@/ui';
 
 import { useModel } from './model';
 
 type Props = {
   date: string;
-  years: any; // todo
+  years: CalendarYear[];
 };
 
 export default function Dialog({ date, years }: Props) {
@@ -49,7 +50,7 @@ export default function Dialog({ date, years }: Props) {
               <button
                 className={styles.item}
                 disabled={month.isPastMonth}
-                onClick={() => handleOnMonth(month.isThisMonth, month.todayISO, month.month, month.year)}
+                onClick={() => handleOnMonth(month)}
                 type="button"
               >
                 <h3 className={styles.heading}>{month.name}</h3>

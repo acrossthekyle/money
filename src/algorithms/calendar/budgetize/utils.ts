@@ -1,8 +1,8 @@
-import { format } from 'date-fns';
+import type { CalendarYear } from '@/types';
 
-import { ASSETS, DATE_FORMAT } from '@/constants';
+import type { Data } from '../types';
 
-export function createBudgetsMap(data) {
+export function createBudgetsMap(data: Data[]) {
   const mapped = new Map();
 
   data.forEach((item) => {
@@ -18,7 +18,7 @@ export function createBudgetsMap(data) {
   return mapped;
 };
 
-export function createDaysMap(calendar) {
+export function createDaysMap(calendar: CalendarYear[]) {
   const mapped = new Map();
 
   calendar.forEach((year) => {
@@ -61,7 +61,7 @@ export function updateRunningBalance(
   transfereeHoldingType: string,
   transfereeType: 'receiver' | 'sender',
   runningBalance: number,
-  amount: number,
+  amount: string,
 ): BalanceUpdateResult {
   const currentBalance = Number(runningBalance);
   const transactionAmount = Number(amount);

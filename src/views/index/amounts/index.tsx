@@ -1,17 +1,18 @@
 'use client';
 
 import tw, { cs } from '@/styles';
+import type { CalendarAmount, CalendarMonth } from '@/types';
 import { currency } from '@/utils';
 
 type Props = {
-  calendar: Day[];
+  calendar: CalendarMonth;
 };
 
 export default function Section({ calendar }: Props) {
   const filtered = calendar.days.filter(day => day.isInMonth);
 
-  let credits = [];
-  let debits = [];
+  let credits: CalendarAmount[] = [];
+  let debits: CalendarAmount[] = [];
 
   filtered.forEach((day) => {
     if (day.credits.length > 0) {

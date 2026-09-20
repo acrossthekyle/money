@@ -7,11 +7,11 @@ import { useHolding } from '@/hooks/useHolding';
 import { useHoldings } from '@/hooks/useHoldings';
 import { useTimezone } from '@/hooks/useTimezone';
 import tw from '@/styles';
-import type { Day, Holding } from '@/types'
+import type { CalendarMonth, Holding } from '@/types'
 import { currency, date } from '@/utils';
 
 type Props = {
-  calendar: Day[];
+  calendar: CalendarMonth;
   holding: Holding;
   onEdit: (holding: Holding) => void;
 };
@@ -45,14 +45,16 @@ export default function Section({ calendar, holding, onEdit }: Props) {
           <span className={styles.title}>
             {holding.name}{holding.number && `. . . ${holding.number}`}
           </span>
-          <span className={styles.lid}>{holding.type}</span>
+          <span className={styles.lid}>
+            {!!holding.institution && `${holding.institution} • `}{holding.type}
+          </span>
         </h1>
         <p className={styles.balance}>
           <span className={styles.disclaimer}>
             Balance as of Today {format(date(zone), 'MM/dd/yyyy')}
           </span>
           <span className={styles.amount}>
-            {holding.balance < 0 && '-'}${currency(holding.balance)}
+            {Number(holding.balance) < 0 && '-'}${currency(holding.balance)}
           </span>
         </p>
         {isTrendingUp ? (

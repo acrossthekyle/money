@@ -1,10 +1,14 @@
+import type { CalendarAmount, CalendarYear } from '@/types';
+
+import type { Data } from '../types';
+
 import { createBudgetsMap, createDaysMap, updateRunningBalance } from './utils';
 
 export function budgetize(
-  calendar,
-  data,
-  balance,
-) {
+  calendar: CalendarYear[],
+  data: Data[],
+  balance: number,
+): CalendarYear[] {
   const budgets = createBudgetsMap(data);
   const days = createDaysMap(calendar);
 
@@ -14,10 +18,10 @@ export function budgetize(
     const dayOfMonth = days.get(key);
 
     const matches = budgets.get(key) || [];
-    const debits = [];
-    const credits = [];
+    const debits: CalendarAmount[] = [];
+    const credits: CalendarAmount[] = [];
 
-    matches.forEach((match) => {
+    matches.forEach((match: Data) => {
       dayOfMonth.budgets.push(match.budget);
 
       const { amount, income, expense } = updateRunningBalance(

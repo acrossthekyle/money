@@ -1,34 +1,30 @@
 'use client';
 
 import { format } from 'date-fns';
-import { Pen, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 
 import { useBudget } from '@/hooks/useBudget';
 import { useBudgets } from '@/hooks/useBudgets';
-import tw, { cs } from '@/styles';
-import type { Budget, Holding } from '@/types';
-import { currency } from '@/utils';
+import tw from '@/styles';
+import type { Budget, CalendarMonth, Holding } from '@/types';
 
 import List from './list';
 
 type Props = {
-  calendar: any; // todo
+  calendar: CalendarMonth;
   date: string;
   holding: Holding;
   onAdd: () => void;
   onEdit: (budget: Budget) => void;
 };
 
-function getBudgetInfo(budget: Budget, credits, debits) {
-  const existsInDebits = debits.find(debit => debit.budget === budget.id);
-
-  return {
-    isNegative: existsInDebits,
-    amount: budget.amount,
-  };
-};
-
-export default function Section({ calendar, date, onAdd, onEdit, holding }: Props) {
+export default function Budgets({
+  calendar,
+  date,
+  onAdd,
+  onEdit,
+  holding,
+}: Props) {
   const { onBudget } = useBudget();
   const { onClose, isActive } = useBudgets();
 

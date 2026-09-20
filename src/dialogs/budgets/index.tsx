@@ -4,11 +4,12 @@ import { X } from 'lucide-react';
 
 import { Budgets } from '@/components';
 import { useBudgets } from '@/hooks/useBudgets';
-import tw, { cs } from '@/styles';
+import tw from '@/styles';
+import type { Budget, CalendarMonth, Holding } from '@/types';
 import Ui from '@/ui';
 
 type Props = {
-  calendar: any; // todo
+  calendar: CalendarMonth;
   date: string;
   holding: Holding;
   onAdd: () => void;

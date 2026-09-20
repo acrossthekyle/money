@@ -1,8 +1,11 @@
-import type { Holding } from '@/types';
+import type { CalendarYear, Holding } from '@/types';
 
 import { calculateReturnAmount, getLabel } from './utils';
 
-export function returnize(calendar, holding: Holding) {
+export function returnize(
+  calendar: CalendarYear[],
+  holding: Holding,
+): CalendarYear[] {
   const parsed = parseFloat(holding.interest);
   const hasValidRate = !isNaN(parsed) && parsed !== 0;
   const monthlyRate = hasValidRate ? Math.pow(1 + (parsed / 100), 1 / 12) - 1 : 0;

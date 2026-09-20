@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
 import { db } from '@/db';
-import { get as preferences } from '@/getters/preferences';
+import { get as getSettings } from '@/getters/settings';
 import type { Budget, BudgetFormState } from '@/types';
 import { createBudgetIterations } from '@/utils/budgets';
 
@@ -103,7 +103,7 @@ export async function put(
     };
   }
 
-  const { zone } = await preferences();
+  const { zone } = await getSettings();
 
   const computed = {
     id: budget === null ? uuidv4() : budget.id,

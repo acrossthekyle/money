@@ -1,16 +1,17 @@
-import type { Budget, Holding } from '@/types';
+import type { Budget, CalendarYear, Holding } from '@/types';
 import { createBudgetIterations } from '@/utils/budgets';
 
 import { budgetize } from './budgetize';
 import { create } from './create';
 import { returnize } from './returnize';
+import type { Data } from './types';
 
 export async function calendar(
   holdings: Holding[],
   budgets: Budget[],
   id: string | null,
   zone: string,
-) {
+): Promise<CalendarYear[]> {
   const calendar = create(zone);
 
   if (holdings.length === 0) {
@@ -27,7 +28,7 @@ export async function calendar(
 
   const startingBalance = Number(holding.balance);
 
-  const data = budgets
+  const data: Data[] = budgets
     .filter((budget: Budget) =>
       budget.parent === holding.id || budget.transferee === holding.id
     )

@@ -3,15 +3,15 @@
 import { addMonths, getDate, getMonth, getYear, parseISO } from 'date-fns';
 import { Calendar, ChevronRight, Menu } from 'lucide-react';
 
-import { DATE_FORMAT } from '@/constants';
 import { useBudgets } from '@/hooks/useBudgets';
 import { useUpdateUrl } from '@/hooks/useUpdateUrl';
 import { useYear } from '@/hooks/useYear';
 import tw, { cs } from '@/styles';
+import type { CalendarDay, CalendarMonth } from '@/types';
 import { pad } from '@/utils';
 
 type Props = {
-  calendar: Day[]; // todo
+  calendar: CalendarMonth;
   date: string;
 };
 
@@ -21,11 +21,11 @@ export default function Section({ calendar, date }: Props) {
   const { onYear } = useYear();
   const { onBudgets } = useBudgets();
 
-  const handleOnDay = (day) => {
+  const handleOnDay = (day: CalendarDay) => {
     if (!day.isInMonth) {
       updateUrl(
         ['date', 'month', 'year'],
-        [day.iso, String(day.month), string(day.year)],
+        [day.iso, String(day.month), String(day.year)],
       );
 
       return;
@@ -38,8 +38,16 @@ export default function Section({ calendar, date }: Props) {
     const updated = addMonths(parseISO(date), 1);
 
     updateUrl(
-      ['date', 'month', 'year'],
-      [`${getYear(updated)}-${pad(getMonth(updated) + 1)}-01`, String(getMonth(updated)), String(getYear(updated))],
+      [
+        'date',
+        'month',
+        'year',
+      ],
+      [
+        `${getYear(updated)}-${pad(getMonth(updated) + 1)}-01`,
+        String(getMonth(updated)),
+        String(getYear(updated)),
+      ],
     );
   };
 
@@ -82,13 +90,24 @@ export default function Section({ calendar, date }: Props) {
         </nav>
       </div>
       <ul className={styles.items}>
-        <li className={cs(styles.heading, styles.faded)} role="presentation">S</li>
+        <li
+          className={cs(styles.heading, styles.faded)}
+          role="presentation"
+        >
+          S
+        </li>
         <li className={styles.heading} role="presentation">M</li>
         <li className={styles.heading} role="presentation">T</li>
         <li className={styles.heading} role="presentation">W</li>
         <li className={styles.heading} role="presentation">T</li>
         <li className={styles.heading} role="presentation">F</li>
-        <li className={cs(styles.heading, styles.faded)} role="presentation">S</li>
+        <li
+          className={cs(styles.heading, styles.faded)}
+          role="presentation"
+        >
+          S
+        </li>
+
         {calendar.days.map((day) => (
           <li
             className={
@@ -100,7 +119,7 @@ export default function Section({ calendar, date }: Props) {
                 day.balance < 0 && styles.negative,
               )
             }
-            key={day.date}
+            key={day.iso}
           >
             <button
               className={styles.day}

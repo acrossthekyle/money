@@ -1,7 +1,6 @@
 'use client';
 
 import { DoorOpen, Moon, Plus, Sun, Undo2, X } from 'lucide-react';
-import Link from 'next/link';
 
 import { logout } from '@/actions/auth/logout';
 import tw, { cs } from '@/styles';

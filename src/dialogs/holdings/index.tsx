@@ -1,7 +1,6 @@
 'use client';
 
 import { ChevronRight, X } from 'lucide-react';
-import Link from 'next/link';
 
 import tw, { cs } from '@/styles';
 import type { Holding } from '@/types';
@@ -51,11 +50,12 @@ export default function Dialog({ holdings }: Props) {
                     className={
                       cs(
                         styles.currency,
-                        holding.balance < 0 && styles.negative,
+                        Number(holding.balance) < 0 && styles.negative,
                       )
                     }
                   >
-                    {holding.balance < 0 && '-'}${currency(holding.balance)}
+                    {Number(holding.balance) < 0 && '-'}
+                    ${currency(holding.balance)}
                   </span>
                 </h3>
                 <ChevronRight className={styles.icon} />

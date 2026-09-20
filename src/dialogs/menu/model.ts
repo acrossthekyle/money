@@ -1,6 +1,5 @@
 'use client';
 
-import { getMonth, getYear } from 'date-fns';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
 
@@ -8,7 +7,6 @@ import { useHolding } from '@/hooks/useHolding';
 import { useMenu } from '@/hooks/useMenu';
 import { useTimezone } from '@/hooks/useTimezone';
 import { useUpdateUrl } from '@/hooks/useUpdateUrl';
-import { date } from '@/utils';
 
 export function useModel(onAdd: () => void) {
   const { onHolding } = useHolding();
@@ -29,8 +27,6 @@ export function useModel(onAdd: () => void) {
   };
 
   const handleOnReset = () => {
-    const today = date(zone);
-
     updateUrl(
       ['date', 'month', 'year'],
       null,

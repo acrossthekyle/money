@@ -4,9 +4,10 @@ import { useState } from 'react';
 
 import { useUpdateUrl } from '@/hooks/useUpdateUrl';
 import { useYear } from '@/hooks/useYear';
+import type { CalendarMonth, CalendarYear } from '@/types';
 import { pad } from '@/utils';
 
-export function useModel(years, date: string) {
+export function useModel(years: CalendarYear[], date: string) {
   const { instance, isActive, onBackdrop, onCancel, onClose } = useYear();
 
   const updateUrl = useUpdateUrl();
@@ -15,18 +16,13 @@ export function useModel(years, date: string) {
     years.findIndex(year => year.year === Number(date.split('-')[0])),
   );
 
-  const handleOnMonth = (
-    isThisMonth: boolean,
-    today: string,
-    month: number,
-    year: number,
-  ) => {
+  const handleOnMonth = (month: CalendarMonth) => {
     updateUrl(
       ['date', 'month', 'year'],
       [
-        isThisMonth ? String(today) : `${year}-${pad(month + 1)}-01`,
-        String(month),
-        String(year),
+        month.isThisMonth ? String(month.todayISO) : `${month.year}-${pad(month.month + 1)}-01`,
+        String(month.month),
+        String(month.year),
       ],
     );
 

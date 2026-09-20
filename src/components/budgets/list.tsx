@@ -4,24 +4,16 @@ import { format } from 'date-fns';
 import { Pen } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
-import type { Budget, Holding } from '@/types';
+import type { Budget, CalendarDay, Holding } from '@/types';
 import { currency } from '@/utils';
 
 import Empty from './empty';
+import { getBudgetInfo } from './utils';
 
 type Props = {
-  day?: any; // todo
+  day?: CalendarDay;
   holding: Holding;
   onEdit: (budget: Budget) => void;
-};
-
-function getBudgetInfo(budget: Budget, credits, debits) {
-  const existsInDebits = debits.find(debit => debit.budget === budget.id);
-
-  return {
-    isNegative: existsInDebits,
-    amount: budget.amount,
-  };
 };
 
 export default function List({ day, holding, onEdit }: Props) {
@@ -47,8 +39,8 @@ export default function List({ day, holding, onEdit }: Props) {
     <div className={styles.items}>
       <span className={styles.square}>{format(day.date, 'dd')}</span>
       <ul className={styles.list}>
-        {day.budgets.map((budget, index) => {
-          const info = getBudgetInfo(budget, day.credits, day.debits);
+        {day.budgets.map((budget) => {
+          const info = getBudgetInfo(budget, day.debits);
 
           return (
             <li key={budget.id}>

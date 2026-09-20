@@ -15,9 +15,10 @@ import {
 } from 'date-fns';
 
 import { DATE_FORMAT, MONTHS } from '@/constants';
+import type { CalendarYear } from '@/types';
 import { date } from '@/utils';
 
-export function create(zone: string) {
+export function create(zone: string): CalendarYear[] {
   const today = date(zone);
   const start = startOfYear(date(zone));
   const end = addYears(start, 11);
@@ -27,8 +28,8 @@ export function create(zone: string) {
     end: startOfMonth(addYears(end, 1)),
   });
 
-  const output = [];
-  let result = null;
+  const output: CalendarYear[] = [];
+  let result: CalendarYear | null = null;
 
   years.forEach((month) => {
     const year = getYear(month);

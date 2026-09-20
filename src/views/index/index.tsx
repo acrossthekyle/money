@@ -4,32 +4,27 @@ import { useState } from 'react';
 
 import { Dialogs } from '@/dialogs';
 import tw from '@/styles';
-import type { Budget, Day, Holding } from '@/types'
-import Ui from '@/ui';
+import type { Budget, CalendarMonth, CalendarYear, Holding } from '@/types'
 
 import Amounts from './amounts';
 import Balance from './balance';
 import Budgets from './budgets';
 import Calendar from './calendar';
-import Holding from './holding';
+import Holdings from './holdings';
 import Placeholder from './placeholder';
 
 type Props = {
   data: {
     calendar: {
-      all: Day[][];
-      current: Day[];
+      years: CalendarYear[];
+      month?: CalendarMonth;
     };
-    current: {
-      date: string;
-      key: string;
-    };
-    holding: Holding;
+    date: string;
+    holding?: Holding;
     holdings: Holding[];
     metrics: {
       netWorth: number;
     };
-    saved: string;
   };
 };
 
@@ -37,50 +32,65 @@ export default function View({ data }: Props) {
   const [budget, setBudget] = useState<Budget | undefined>();
   const [holding, setHolding] = useState<Holding | undefined>();
 
+  const handleOnSetBudget = (value?: Budget) => {
+    setBudget(value);
+  };
+
+  const handleOnSetHolding = (value?: Holding) => {
+    setHolding(value);
+  };
+
+  if (!data.calendar.month || !data.holding) {
+    return null;
+  }
+
   return (
     <>
       <main className={styles.container}>
-        <Holding
-          calendar={data.calendar.current}
+        <Holdings
+          calendar={data.calendar.month}
           holding={data.holding}
-          onEdit={setHolding}
+          onEdit={handleOnSetHolding}
         />
         <Calendar
-          calendar={data.calendar.current}
-          date={data.current.date}
+          calendar={data.calendar.month}
+          date={data.date}
         />
         <Amounts
-          calendar={data.calendar.current}
+          calendar={data.calendar.month}
         />
         <Placeholder />
         <Balance
-          calendar={data.calendar.current}
-          date={data.current.date}
+          calendar={data.calendar.month}
+          date={data.date}
         />
         <Budgets
-          calendar={data.calendar.current}
-          date={data.current.date}
+          calendar={data.calendar.month}
+          date={data.date}
           holding={data.holding}
-          onAdd={setBudget}
-          onEdit={setBudget}
+          onAdd={handleOnSetBudget}
+          onEdit={handleOnSetBudget}
         />
       </main>
-      <Dialogs.Menu onAdd={setHolding} netWorth={data.metrics.netWorth} />
+      <Dialogs.Menu
+        onAdd={handleOnSetHolding}
+        netWorth={data.metrics.netWorth}
+      />
       <Dialogs.Holding holding={holding} />
       <Dialogs.Holdings holdings={data.holdings} />
-      <Dialogs.Year date={data.current.date} years={data.calendar.all} />
+      <Dialogs.Year date={data.date} years={data.calendar.years} />
       <Dialogs.Budget
         budget={budget}
-        date={data.current.date}
+        date={data.date}
         holdings={data.holdings}
         parent={data.holding.id}
       />
       <Dialogs.Budgets
-        calendar={data.calendar.current}
-        date={data.current.date}
+        calendar={data.calendar.month}
+        date={data.date}
         holding={data.holding}
-        onAdd={setBudget}
-        onEdit={setBudget}
+        onAdd={handleOnSetBudget}
+        onEdit={handleOnSetBudget}
       />
     </>
   );

@@ -2,19 +2,28 @@
 
 import { Budgets } from '@/components';
 import tw from '@/styles';
-import type { Budget, Holding } from '@/types';
+import type { Budget, CalendarMonth, Holding } from '@/types';
 
 type Props = {
-  calendar: any; // todo
+  calendar: CalendarMonth;
   date: string;
   holding: Holding;
   onAdd: () => void;
   onEdit: (budget: Budget) => void;
 };
 
-export default function Section({ calendar, date, onAdd, onEdit, holding }: Props) {
+export default function Section({
+  calendar,
+  date,
+  onAdd,
+  onEdit,
+  holding,
+}: Props) {
   return (
-    <section aria-label="budgets for selected day" className={styles.container}>
+    <section
+      aria-label="budgets for selected day"
+      className={styles.container}
+    >
       <Budgets
         calendar={calendar}
         date={date}

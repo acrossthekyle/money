@@ -4,13 +4,13 @@ export function pad(index: number, padding: number = 2) {
   return String(index).padStart(padding, '0');
 };
 
-export function currency(value: number, isCompact?: boolean) {
+export function currency(value: number | string, isCompact?: boolean) {
   return new Intl.NumberFormat('en', {
     notation: isCompact ? 'compact' : 'standard',
     compactDisplay: isCompact ? 'short' : undefined,
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(Math.abs(value));
+  }).format(Math.abs(Number(value)));
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

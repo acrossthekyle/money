@@ -1,14 +1,16 @@
 import tw, { cs } from '@/styles';
-import type { Day } from '@/types';
+import type { CalendarMonth } from '@/types';
 import { currency } from '@/utils';
 
 type Props = {
-  calendar: Day[];
+  calendar: CalendarMonth;
   date: string;
 };
 
 export default function Section({ calendar, date }: Props) {
   const day = calendar.days.find(day => day.iso === date);
+
+  const balance = day?.balance || 0;
 
   return (
     <section aria-label="account/asset balance" className={styles.container}>
@@ -17,9 +19,14 @@ export default function Section({ calendar, date }: Props) {
         <span className={styles.faded}>Projected</span>
       </h2>
       <p
-        className={cs(styles.amount, day.balance < 0 && styles.negative)}
+        className={
+          cs(
+            styles.amount,
+            balance < 0 && styles.negative,
+          )
+        }
       >
-        {day.balance < 0 && '-'}${currency(day.balance)}
+        {balance < 0 && '-'}${currency(balance)}
       </p>
     </section>
   );

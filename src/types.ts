@@ -44,23 +44,6 @@ export type BudgetFormState = {
   message: string;
 };
 
-export type DayBudget = {
-  name: string;
-  id: string;
-  amount: string;
-  type: string;
-  isTransfer: boolean;
-  isBudget: boolean;
-};
-
-export type Day = {
-  date: string;
-  balance: number;
-  budgets: DayBudget[];
-  isPad: boolean;
-  isToday: boolean;
-};
-
 export type Preference = {
   id: string;
   value: string;
@@ -73,33 +56,6 @@ export type Setting = {
 
 export type Record = Holding | Budget | Preference | Setting;
 
-export type MetricPeriod = {
-  balance: {
-    startOfMonth: number;
-    today: number;
-    endOfMonth: number;
-  };
-  count: number;
-  expenses: number;
-  income: number;
-  budgets: {
-    next?: {
-      date: string;
-      name: string;
-      amount: string;
-      type: string;
-    };
-  };
-}
-
-export type Metric = {
-  holding: Holding;
-  months: {
-    current: MetricPeriod;
-    next: MetricPeriod;
-  };
-};
-
 export type LoginFormState = {
   data?: {
     username: string;
@@ -107,4 +63,45 @@ export type LoginFormState = {
   };
   error: string | null;
   success: boolean;
+};
+
+export type CalendarAmount = {
+  budget: string;
+  amount: number;
+};
+
+export type CalendarDay = {
+  balance: number;
+  budgets: Budget[],
+  credits: CalendarAmount[];
+  date: Date;
+  debits: CalendarAmount[];
+  return: {
+    amount: number | null;
+    isPositive: boolean;
+    label: string;
+  };
+  iso: string;
+  isBeforeToday: boolean;
+  isInMonth: boolean;
+  isThisMonth: boolean;
+  isToday: boolean;
+  month: number;
+  year: number;
+};
+
+export type CalendarMonth = {
+  id: string;
+  isPastMonth: boolean;
+  isThisMonth: boolean;
+  month: number;
+  name: string;
+  todayISO: string;
+  year: number;
+  days: CalendarDay[];
+};
+
+export type CalendarYear = {
+  year: number;
+  months: CalendarMonth[];
 };

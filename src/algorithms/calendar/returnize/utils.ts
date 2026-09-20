@@ -1,6 +1,9 @@
-import type { Holding } from '@/types';
+import type { CalendarDay, Holding } from '@/types';
 
-export function calculateReturnAmount(rate: number, daysInMonth) {
+export function calculateReturnAmount(
+  rate: number,
+  daysInMonth: CalendarDay[],
+) {
   const sum = daysInMonth.reduce(
     (accumulator, day) => accumulator + day.balance,
     0,
@@ -17,11 +20,11 @@ export function getLabel(holding: Holding) {
   }
 
   if (['retirement'].includes(holding.type)) {
-    return holding.interest > 0 ? 'Projected Growth' : 'Projected Loss';
+    return Number(holding.interest) > 0 ? 'Projected Growth' : 'Projected Loss';
   }
 
   if (['property'].includes(holding.type)) {
-    return holding.interest > 0 ? 'Est. Appreciation' : 'Est. Depreciation';
+    return Number(holding.interest) > 0 ? 'Est. Appreciation' : 'Est. Depreciation';
   }
 
   return '';
