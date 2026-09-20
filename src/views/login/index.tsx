@@ -1,10 +1,10 @@
 'use client';
 
-import { ArrowUpRight, CircleQuestionMark } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, CircleQuestionMark, LoaderCircle } from 'lucide-react';
 import Link from 'next/link';
 
 import { Dialogs } from '@/dialogs';
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import Ui from '@/ui';
 
 import { useModel } from './model';
@@ -76,7 +76,11 @@ export default function View({ data }: Props) {
                 type="submit"
                 disabled={isPending}
               >
-                {isPending ? 'Verifying...' : 'Sign In'}
+                {isPending ? (
+                  <LoaderCircle className={cs(styles.icon, styles.spin)} />
+                ) : (
+                  <ArrowRight className={styles.icon} />
+                )}
               </Ui.Form.Button>
             </Ui.Form.Footer>
             <input
@@ -135,7 +139,10 @@ const styles = tw({
     md:bottom-8
   `,
   icon: `
-    w-4 h-4
-    stroke-2
+    w-5 h-5
+    stroke-1
+  `,
+  spin: `
+    animate-spin
   `,
 });

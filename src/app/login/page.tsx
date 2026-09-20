@@ -9,13 +9,20 @@ export const metadata: Metadata = {
   title: 'Login',
 };
 
-export default async function Page() {
+async function DataView() {
   const cookieStore = await cookies();
+
   const alert = cookieStore.get('alert')?.value || '';
 
   return (
+    <View data={{ alert }} />
+  );
+};
+
+export default async function Page() {
+  return (
     <Suspense fallback={<Ui.Loaders.Spinner />}>
-      <View data={{ alert }} />
+      <DataView />
     </Suspense>
   );
 }
