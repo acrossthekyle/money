@@ -22,18 +22,8 @@ async function fileWrite(path: string, content: string) {
 export async function read(table: string, id?: string): Promise<Record[]> {
   let results = undefined;
 
-  if (!fs.existsSync(`${FILE_OUTPUT}/${table}.js`)) {
-    await fs.mkdirSync(FILE_OUTPUT, { recursive: true });
-
-    await fs.writeFile(
-      `${FILE_OUTPUT}/${table}.js`,
-      `const data = [];\n\r\n\rexport default data;`,
-      () => {},
-    );
-  }
-
   try {
-    results = await import(`@/storage/cache/${table}.js`);
+    results = await import(`../../storage/cache/${table}.js`);
   } catch {
     results = null;
   }
