@@ -1,7 +1,10 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
+import { invalidate } from '@/algorithms/calendar';
 
 export async function logout() {
   const cookieStore = await cookies();
@@ -13,6 +16,10 @@ export async function logout() {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
   });
+
+  await invalidate();
+
+  revalidatePath('/');
 
   redirect('/login');
 };

@@ -69,7 +69,7 @@ const styles = tw({
     font-roboto
     text-4xl
 
-    md:text-5xl
+    lg:text-5xl
   `,
   negative: `
     text-red-600

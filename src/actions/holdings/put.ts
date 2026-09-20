@@ -3,6 +3,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
+import { invalidate } from '@/algorithms/calendar';
 import { db } from '@/db';
 import type { Holding, HoldingFormState } from '@/types';
 
@@ -100,6 +101,8 @@ export async function put(
       id: identifier,
     });
 
+    await invalidate();
+
     return {
       data: {
         ...result,
@@ -114,6 +117,8 @@ export async function put(
   if (formData.get('purge') === 'true' && holding !== null) {
     await db.erase('holdings', holding.id);
 
+    await invalidate();
+
     return {
       data: result,
       hasFailed: false,
@@ -123,6 +128,8 @@ export async function put(
   }
 
   await db.write('holdings', result);
+
+  await invalidate();
 
   return {
     data: result,

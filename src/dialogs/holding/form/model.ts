@@ -4,6 +4,8 @@ import { useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
 import { useConfirm } from '@/hooks/useConfirm';
+import { useHolding } from '@/hooks/useHolding';
+import { useInvalidate } from '@/hooks/useInvalidate';
 import type { FormStateError, Holding, HoldingFormState } from '@/types';
 
 export function useModel(holding?: Holding) {
@@ -20,13 +22,16 @@ export function useModel(holding?: Holding) {
   const [errors, setErrors] = useState<FormStateError[]>([]);
 
   const confirm = useConfirm();
+  const { onClose } = useHolding();
+  const invalidate = useInvalidate();
 
   useEffect(() => {
     if (state?.isSuccessful) {
-      setTimeout(() => {
-        window.location.reload();
-      }, 300);
+      onClose();
+
+      invalidate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.isSuccessful]);
 
   useEffect(() => {
@@ -50,11 +55,15 @@ export function useModel(holding?: Holding) {
       return;
     }
 
-    const form = document.getElementById('holding-form');
+    setTimeout(() => {
+      const form = document.getElementById('holding-form');
 
-    if (form instanceof HTMLFormElement) {
-      form.requestSubmit();
-    }
+      if (form instanceof HTMLFormElement) {
+        form.requestSubmit();
+
+        onClose();
+      }
+    }, 100);
   };
 
   return {

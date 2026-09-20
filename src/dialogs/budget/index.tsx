@@ -37,6 +37,7 @@ export default function Budget({
           budget={budget}
           date={date}
           holdings={holdings}
+          key={budget?.id || date}
           onClose={onClose}
           parent={parent}
         />

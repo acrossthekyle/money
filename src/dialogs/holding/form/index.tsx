@@ -114,9 +114,15 @@ export default function Form({
           <Ui.Form.Button onClick={onClose}>
             Cancel
           </Ui.Form.Button>
-          <Ui.Form.Button disabled={isPending} id="submit" type="submit">
-            {holding ? 'Update' : 'Create'}
-          </Ui.Form.Button>
+          {!holding ? (
+            <Ui.Form.Button disabled={isPending} id="submit" type="submit">
+              {isPending ? 'Processing...' : 'Create'}
+            </Ui.Form.Button>
+          ) : (
+            <Ui.Form.Button disabled={isPending} id="submit" type="submit">
+              {isPending ? 'Processing...' : 'Update'}
+            </Ui.Form.Button>
+          )}
         </div>
       </Ui.Form.Footer>
     </Ui.Form.Container>

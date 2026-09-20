@@ -52,7 +52,7 @@ export default function Form({
   const assets = holdings.filter(holding => ASSETS.includes(holding.type));
 
   return (
-    <Ui.Form.Container action={action} id="budget-form" key={data?.id || date}>
+    <Ui.Form.Container action={action} id="budget-form">
       <Ui.Alerts.Errors items={errors} message="Form validation failed" />
       <Ui.Form.Inner>
         <Name value={data?.name} />
@@ -125,7 +125,7 @@ export default function Form({
           </Ui.Form.Button>
           {!budget ? (
             <Ui.Form.Button disabled={isPending} id="submit" type="submit">
-              Create
+              {isPending ? 'Processing...' : 'Create'}
             </Ui.Form.Button>
           ) : (
             <Ui.Form.Button isContinue onClick={handleOnContinue}>
