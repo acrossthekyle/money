@@ -16,22 +16,17 @@ async function fileDirectory(output: string) {
 async function fileWrite(path: string, content: string) {
   await fileDirectory(FILE_OUTPUT);
 
-  await fs.writeFile(path, content, function (error) {
-    if (error) {
-      // console.log(error);
-    }
-  });
+  await fs.writeFile(path, content, () => {});
 };
 
 export async function read(table: string, id?: string): Promise<Record[]> {
   let results = undefined;
 
   if (!fs.existsSync(`${FILE_OUTPUT}/${table}.js`)) {
-    await fs.mkdirSync(
+    await fs.writeFile(
+      `${FILE_OUTPUT}/${table}.js`,
       `const data = [];\n\r\n\rexport default data;`,
-      {
-        recursive: true,
-      },
+      () => {},
     );
   }
 
