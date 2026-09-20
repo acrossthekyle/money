@@ -27,7 +27,7 @@
 
 [data-theme="dark"] {
   --background: #000000;
-  --foreground: #ffffff;
+  --foreground: #ffffe3;
 }
 
 html:has(dialog[open]),

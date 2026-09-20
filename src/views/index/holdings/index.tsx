@@ -90,9 +90,10 @@ const styles = tw({
     text-(--background) text-left
     uppercase
     rounded-xl
-    shadow-lg/25
 
-    md:shadow-xl/25
+    light:shadow-lg/25
+
+    md:light:shadow-xl/25
   `,
   header: `
     flex flex-col gap-1.5

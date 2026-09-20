@@ -24,6 +24,8 @@ export function useModel(onAdd: () => void) {
 
   const handleOnTheme = () => {
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+
+    onClose();
   };
 
   const handleOnReset = () => {
