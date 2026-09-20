@@ -22,7 +22,7 @@ const styles = tw({
   `,
   square: `
     flex items-center justify-center
-    w-9 h-9
+    w-9.25 h-9.25
     bg-(--foreground)
     text-(--background) text-sm
     rounded-full
