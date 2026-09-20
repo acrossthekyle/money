@@ -96,6 +96,6 @@ const styles = tw({
     text-green-600
   `,
   negative: `
-    text-red-700
+    text-red-500 dark:text-rose-400
   `,
 });

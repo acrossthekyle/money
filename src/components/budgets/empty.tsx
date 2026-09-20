@@ -27,9 +27,6 @@ const styles = tw({
     text-(--background)
     rounded-md
   `,
-  spacer: `
-    w-9 h-9
-  `,
   content: `
     flex flex-col justify-center gap-2
   `,
@@ -37,33 +34,5 @@ const styles = tw({
     leading-[1]
     text-sm
     font-medium
-  `,
-  amount: `
-    leading-[1]
-    font-roboto
-    text-xs
-  `,
-  pen: `
-    absolute top-1/2 right-0
-    -translate-y-1/2
-    w-4 h-4
-    stroke-1
-  `,
-  add: `
-    flex items-center justify-center
-    w-9 h-9
-    mt-4
-    border border-current/22.5
-    rounded-md
-  `,
-  plus: `
-    h-4 w-4
-    stroke-2
-  `,
-  negative: `
-    text-red-500
-  `,
-  positive: `
-    text-green-500
   `,
 });

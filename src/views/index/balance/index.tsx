@@ -72,6 +72,6 @@ const styles = tw({
     lg:text-5xl
   `,
   negative: `
-    text-red-600
+    text-red-500 dark:text-rose-400
   `,
 });

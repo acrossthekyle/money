@@ -128,6 +128,6 @@ const styles = tw({
     md:text-xs
   `,
   negative: `
-    text-red-500
+    text-red-500 dark:text-rose-400
   `,
 });

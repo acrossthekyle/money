@@ -265,6 +265,6 @@ const styles = tw({
     md:h-4
   `,
   negative: `
-    !text-red-600
+    !text-red-500 dark:!text-rose-400
   `,
 });
