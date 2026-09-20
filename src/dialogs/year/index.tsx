@@ -91,7 +91,11 @@ const styles = tw({
     flex items-center justify-center
     w-9 h-9
     border border-current/22.5
-    rounded-md
+    rounded-full
+
+    motion-safe:duration-300
+
+    hover:border-current/62.5
   `,
   icon: `
     h-4 w-4

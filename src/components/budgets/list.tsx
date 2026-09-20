@@ -116,11 +116,13 @@ const styles = tw({
     flex items-center justify-center
     w-11 h-9
     bg-(--foreground)
-    text-(--background)
-    rounded-lg
+    text-(--background) text-sm
+    rounded-full
+
+    sm:w-10.75
   `,
   spacer: `
-    w-9 h-9
+    w-10 h-9
   `,
   content: `
     flex flex-col justify-center gap-2

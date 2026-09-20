@@ -154,7 +154,7 @@ const styles = tw({
     md:text-sm
   `,
   heading: `
-    font-black
+    font-bold
   `,
   value: `
     flex items-center justify-between
@@ -164,9 +164,9 @@ const styles = tw({
   `,
   currency: `
     mt-0.5
-    text-sm
-    font-roboto font-medium
+    text-base
+    font-roboto font-normal
 
-    md:text-xs
+    md:text-sm
   `,
 });

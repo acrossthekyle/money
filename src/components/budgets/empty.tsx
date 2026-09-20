@@ -24,8 +24,8 @@ const styles = tw({
     flex items-center justify-center
     w-9 h-9
     bg-(--foreground)
-    text-(--background)
-    rounded-md
+    text-(--background) text-sm
+    rounded-full
   `,
   content: `
     flex flex-col justify-center gap-2

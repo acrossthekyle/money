@@ -43,10 +43,12 @@ export default function Section({ calendar, holding, onEdit }: Props) {
       >
         <h1 className={styles.header}>
           <span className={styles.title}>
-            {holding.name}{holding.number && `. . . ${holding.number}`}
+            {holding.name}
           </span>
           <span className={styles.lid}>
-            {!!holding.institution && `${holding.institution} • `}{holding.type}
+            {!!holding.institution && `${holding.institution} • `}
+            {holding.type}
+            {holding.number && ` . . . ${holding.number}`}
           </span>
         </h1>
         <p className={styles.balance}>

@@ -6,7 +6,7 @@ import { useHoldings } from '@/hooks/useHoldings';
 import { useUpdateUrl } from '@/hooks/useUpdateUrl';
 import type { Holding } from '@/types';
 
-export function useModel() {
+export function useModel(holding: Holding) {
   const [loadingHash, setLoadingHash] = useState<string | null>(null);
 
   const { instance, isActive, onBackdrop, onCancel, onClose } = useHoldings();
@@ -18,15 +18,21 @@ export function useModel() {
         onClose();
 
         setLoadingHash(null);
-      }, 1500);
+      }, 2000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingHash]);
 
-  const handleOnClick = (holding: Holding) => {
-    updateUrl('view', holding.id);
+  const handleOnClick = (item: Holding) => {
+    if (item.id !== holding.id) {
+      updateUrl('view', item.id);
 
-    setLoadingHash(holding.id);
+      setLoadingHash(item.id);
+    } else {
+      setLoadingHash(null);
+
+      onClose();
+    }
   };
 
   return {
@@ -36,6 +42,5 @@ export function useModel() {
     loadingHash,
     onBackdrop,
     onCancel,
-    onClose,
   };
 }

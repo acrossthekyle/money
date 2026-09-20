@@ -181,6 +181,7 @@ const styles = tw({
   `,
   items: `
     grid grid-cols-7 gap-2
+    mx-2
 
     md:mx-8
   `,
@@ -207,7 +208,7 @@ const styles = tw({
     before:-translate-y-1/2
     before:h-10
     before:w-10
-    before:rounded-lg
+    before:rounded-full
 
     hover:before:bg-(--foreground)/5.5
   `,
@@ -250,19 +251,20 @@ const styles = tw({
   `,
   control: `
     flex items-center justify-center
-    rounded-lg
+    rounded-full
     border border-current/22.5
-    h-10 w-10
+    h-9 w-9
 
-    md:h-8
-    md:w-8
+    motion-safe:duration-300
+
+    hover:border-current/62.5
   `,
   budgets: `
     md:hidden
   `,
   icon: `
     w-5 h-5
-    stroke-2
+    stroke-1
 
     md:w-4
     md:h-4
