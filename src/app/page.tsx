@@ -6,8 +6,6 @@ import View from '@/views/index';
 import { get } from './get';
 import type { SearchParams } from './types';
 
-export const instant = false;
-
 type Props = {
   searchParams: Promise<SearchParams>;
 };
