@@ -23,7 +23,7 @@ export async function read(table: string, id?: string): Promise<Record[]> {
   let results = undefined;
 
   try {
-    results = await import(`../../storage/cache/${table}.js`);
+    results = await import(`@/storage/cache/${table}.js`);
   } catch {
     results = null;
   }
