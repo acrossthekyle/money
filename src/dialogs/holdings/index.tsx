@@ -139,8 +139,10 @@ const styles = tw({
     before:top-0
     before:-left-2
     before:bottom-0
-    before:w-2
-    before:bg-(--foreground)
+    before:w-1
+    before:rounded-md
+    before:bg-(--foreground)/22.5
+    dark:before:bg-(--foreground)/100
 
     enabled:hover:before:left-0
 
@@ -151,7 +153,7 @@ const styles = tw({
 
     motion-safe:duration-300
 
-    group-enabled:group-hover:translate-x-4
+    group-enabled:group-hover:translate-x-3
   `,
   title: `
     font-medium
