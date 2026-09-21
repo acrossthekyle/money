@@ -2,6 +2,7 @@
 
 import { ChevronRight, LoaderCircle } from 'lucide-react';
 
+import { bust } from '@/actions/calendar/bust';
 import tw, { cs } from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
@@ -37,41 +38,43 @@ export default function Dialog({ holding, holdings }: Props) {
         <ul className={styles.items}>
           {holdings.map((item) => (
             <li key={item.id}>
-              <button
-                className={styles.item}
-                onClick={() => handleOnClick(item)}
-                type="button"
-              >
-                <h3 className={styles.heading}>
-                  <span className={styles.title}>
-                    {item.name}
-                    {item.id === holding.id && (
-                      <span className={styles.badge}>Selected</span>
-                    )}
-                  </span>
-                  <span className={styles.lid}>
-                    {!!item.institution && `${item.institution} • `}
-                    {item.type.replace(/_/g, ' ')}
-                    {item.number && ` . . . ${item.number}`}
-                  </span>
-                  <span
-                    className={
-                      cs(
-                        styles.currency,
-                        Number(item.balance) < 0 && styles.negative,
-                      )
-                    }
-                  >
-                    {Number(item.balance) < 0 && '-'}
-                    ${currency(item.balance)}
-                  </span>
-                </h3>
-                {loadingHash === item.id ? (
-                  <LoaderCircle className={cs(styles.icon, styles.spin)} />
-                ) : (
-                  <ChevronRight className={styles.icon} />
-                )}
-              </button>
+              <form action={bust}>
+                <button
+                  className={styles.item}
+                  onClick={() => handleOnClick(item)}
+                  type="submit"
+                >
+                  <h3 className={styles.heading}>
+                    <span className={styles.title}>
+                      {item.name}
+                      {item.id === holding.id && (
+                        <span className={styles.badge}>Selected</span>
+                      )}
+                    </span>
+                    <span className={styles.lid}>
+                      {!!item.institution && `${item.institution} • `}
+                      {item.type.replace(/_/g, ' ')}
+                      {item.number && ` . . . ${item.number}`}
+                    </span>
+                    <span
+                      className={
+                        cs(
+                          styles.currency,
+                          Number(item.balance) < 0 && styles.negative,
+                        )
+                      }
+                    >
+                      {Number(item.balance) < 0 && '-'}
+                      ${currency(item.balance)}
+                    </span>
+                  </h3>
+                  {loadingHash === item.id ? (
+                    <LoaderCircle className={cs(styles.icon, styles.spin)} />
+                  ) : (
+                    <ChevronRight className={styles.icon} />
+                  )}
+                </button>
+              </form>
             </li>
           ))}
         </ul>

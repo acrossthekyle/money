@@ -12,12 +12,7 @@ import { create } from './create';
 import { returnize } from './returnize';
 import type { Data } from './types';
 
-export async function calendar(
-  // holdings: Holding[],
-  // budgets: Budget[],
-  // id: string | null,
-  // zone: string,
-): Promise<CalendarYear[]> {
+export async function calendar(): Promise<CalendarYear[]> {
   'use cache: remote';
 
   cacheLife('hours');
