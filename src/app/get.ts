@@ -3,7 +3,7 @@ import { format, getMonth, getYear } from 'date-fns';
 import { calendar as getCalendar } from '@/algorithms/calendar';
 import { metrics } from '@/algorithms/metrics';
 import { DATE_FORMAT } from '@/constants';
-import { get as getBudgets } from '@/getters/budgets';
+// import { get as getBudgets } from '@/getters/budgets';
 import { get as getHoldings } from '@/getters/holdings';
 import { get as getPreferences } from '@/getters/preferences';
 import { get as getSettings } from '@/getters/settings';
@@ -13,7 +13,7 @@ import type { SearchParams } from './types';
 
 export async function get(params: SearchParams) {
   const { holdings } = await getHoldings();
-  const { budgets } = await getBudgets();
+  // const { budgets } = await getBudgets();
   const { zone } = await getSettings();
   const { saved } = await getPreferences(
     params.view as string || null,
@@ -27,10 +27,10 @@ export async function get(params: SearchParams) {
   const { netWorth } = await metrics(holdings);
 
   const calendar = await getCalendar(
-    holdings,
-    budgets,
-    saved,
-    zone,
+    // holdings,
+    // budgets,
+    // saved,
+    // zone,
   );
 
   const key = `${month}-${year}`;
