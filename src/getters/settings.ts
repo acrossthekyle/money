@@ -8,7 +8,7 @@ type Return = {
 };
 
 export async function get(): Promise<Return> {
-  'use cache';
+  'use cache: remote';
 
   cacheLife('hours');
   cacheTag('settings');

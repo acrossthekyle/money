@@ -14,7 +14,7 @@ export async function calendar(
   id: string | null,
   zone: string,
 ): Promise<CalendarYear[]> {
-  'use cache';
+  'use cache: remote';
 
   cacheLife('hours');
   cacheTag('calendar');
