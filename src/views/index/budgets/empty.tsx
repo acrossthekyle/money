@@ -3,7 +3,7 @@ import tw from '@/styles';
 export default function Empty() {
   return (
     <li className={styles.item}>
-      <span className={styles.square}>
+      <span className={styles.date}>
         --
       </span>
       <p className={styles.content}>
@@ -20,9 +20,9 @@ const styles = tw({
     w-full
     text-left
   `,
-  square: `
-    flex items-center justify-center
-    w-9.25 h-9.25
+  date: `
+    flex items-center justify-center shrink-0
+    w-9 h-9
     bg-(--foreground)
     text-(--background) text-sm
     rounded-full

@@ -1,8 +1,13 @@
 'use client';
 
-import { Budgets } from '@/components';
+import { format } from 'date-fns';
+import { Plus } from 'lucide-react';
+
+import { useBudget } from '@/hooks';
 import tw from '@/styles';
 import type { Budget, CalendarMonth, Holding } from '@/types';
+
+import List from './list';
 
 type Props = {
   calendar: CalendarMonth;
@@ -19,18 +24,73 @@ export default function Section({
   onEdit,
   holding,
 }: Props) {
+  const { onBudget } = useBudget();
+
+  const found = calendar.days.findIndex(day => day.iso === date);
+
+  const current = calendar.days[found];
+
+  const upcoming = calendar.days.find((day, index) => {
+    return index > found &&
+      day.isInMonth &&
+      (day.budgets.length > 0 || day.return.amount !== null);
+  });
+
+  const handleOnAdd = () => {
+    onAdd();
+
+    onBudget();
+  };
+
+  const handleOnEdit = (budget: Budget) => {
+    onEdit(budget);
+
+    onBudget();
+  };
+
   return (
     <section
       aria-label="budgets for selected day"
       className={styles.container}
     >
-      <Budgets
-        calendar={calendar}
-        date={date}
-        onAdd={onAdd}
-        onEdit={onEdit}
-        holding={holding}
-      />
+      <div className={styles.inner}>
+        <h2 className={styles.header}>
+          <span className={styles.day}>
+            {format(current.date, 'dd')}
+          </span>
+          <span className={styles.stacked}>
+            <span className={styles.month}>
+              {format(current.date, 'MMMM')}
+            </span>
+            <span className={styles.year}>
+              {format(current.date, 'yyyy')}
+            </span>
+          </span>
+        </h2>
+        <div>
+          <h3 className={styles.heading}>Current</h3>
+          <List
+            day={current}
+            holding={holding}
+            onEdit={handleOnEdit}
+          />
+          <hr className={styles.divider} />
+          <h3 className={styles.heading}>Upcoming</h3>
+          <List
+            day={upcoming}
+            holding={holding}
+            onEdit={handleOnEdit}
+          />
+          <button
+            className={styles.add}
+            onClick={handleOnAdd}
+            title="Add budget"
+            type="button"
+          >
+            <Plus className={styles.plus} />
+          </button>
+        </div>
+      </div>
     </section>
   );
 };
@@ -45,5 +105,59 @@ const styles = tw({
     md:mx-10
     lg:row-start-1
     lg:col-start-17
+  `,
+  inner: `
+    relative
+    flex flex-col justify-between
+    h-full
+  `,
+  header: `
+    flex items-end gap-3
+    mb-16
+  `,
+  day: `
+    text-9xl
+    font-geist font-black
+    leading-[0.8]
+  `,
+  stacked: `
+    flex flex-col gap-1
+    pb-0.75
+    text-sm
+  `,
+  month: `
+    uppercase
+    font-bold
+    leading-[1]
+  `,
+  year: `
+    text-current/50
+    leading-[1]
+  `,
+  divider: `
+    bg-transparent
+    border-t border-current/12.5
+  `,
+  heading: `
+    mb-3 mt-5
+    text-xs
+    uppercase
+    font-black
+
+    md:text-tiny
+  `,
+  add: `
+    flex items-center justify-center
+    w-9 h-9
+    border border-current/22.5
+    rounded-full
+
+    motion-safe:duration-300
+
+    hover:border-current/62.5
+  `,
+  plus: `
+    h-4 w-4
+    stroke-1
   `,
 });

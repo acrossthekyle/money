@@ -3,6 +3,7 @@
 import { format } from 'date-fns';
 import { TextAlignEnd, TrendingDown, TrendingUp } from 'lucide-react';
 
+import { MONTHS } from '@/constants';
 import { useHolding, useHoldings, useTimezone } from '@/hooks';
 import tw from '@/styles';
 import type { CalendarMonth, Holding } from '@/types'
@@ -25,6 +26,13 @@ export default function Section({ calendar, holding, onEdit }: Props) {
   const end = filtered[filtered.length - 1];
 
   const isTrendingUp = start.balance < end.balance;
+
+  const budgets = calendar
+    .days
+    .filter(day => !day.isBeforeToday && day.isInMonth)
+    .reduce((accumulator, day) => {
+      return accumulator + day.budgets.length;
+    }, 0);
 
   const handleOnEdit = () => {
     onEdit(holding);
@@ -58,6 +66,14 @@ export default function Section({ calendar, holding, onEdit }: Props) {
             {Number(holding.balance) < 0 && '-'}${currency(holding.balance)}
           </span>
         </p>
+        <p className={styles.budgets}>
+          <span className={styles.disclaimer}>
+            {calendar.isThisMonth ? 'Remaining ' : ''}in {MONTHS[calendar.month]}
+          </span>
+          <span className={styles.amount}>
+            {budgets} Budgets
+          </span>
+        </p>
         {isTrendingUp ? (
           <TrendingUp className={styles.trend} />
         ) : (
@@ -78,13 +94,15 @@ export default function Section({ calendar, holding, onEdit }: Props) {
 
 const styles = tw({
   container: `
-    col-start-1 row-start-1 col-span-24 row-span-3
+    col-start-1 row-start-1 col-span-24
     relative
+    h-40
     mx-4
 
-    md:mx-10
     md:col-span-12
     md:row-span-3
+    md:h-auto
+    md:mx-10
     lg:col-span-8
   `,
   content: `
@@ -126,8 +144,17 @@ const styles = tw({
     md:h-5
   `,
   balance: `
+    hidden
+    absolute bottom-4 right-4
+    flex-col items-end gap-2
+
+    md:flex
+  `,
+  budgets: `
     absolute bottom-4 right-4
     flex flex-col items-end gap-2
+
+    md:hidden
   `,
   disclaimer: `
     text-xtiny

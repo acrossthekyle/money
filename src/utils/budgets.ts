@@ -12,7 +12,7 @@ import {
 } from 'date-fns';
 
 import { DATE_FORMAT } from '@/constants';
-import type { Budget } from '@/types';
+import type { Budget, CalendarAmount } from '@/types';
 
 import { date } from './index';
 
@@ -98,4 +98,13 @@ export function createBudgetIterations(budget: Budget, zone: string): string[] {
   }
 
   return budgetIterations;
+};
+
+export function getBudgetDisplayData(budget: Budget, debits: CalendarAmount[]) {
+  const existsInDebits = debits.find(debit => debit.budget === budget.id);
+
+  return {
+    isNegative: existsInDebits,
+    amount: budget.amount,
+  };
 };

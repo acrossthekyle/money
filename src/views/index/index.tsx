@@ -55,6 +55,9 @@ export default function View({ data }: Props) {
         <Calendar
           calendar={data.calendar.month}
           date={data.date}
+          holding={data.holding}
+          onAdd={handleOnSetBudget}
+          onEdit={handleOnSetBudget}
         />
         <Amounts
           calendar={data.calendar.month}
@@ -63,6 +66,7 @@ export default function View({ data }: Props) {
         <Balance
           calendar={data.calendar.month}
           date={data.date}
+          holding={data.holding}
         />
         <Budgets
           calendar={data.calendar.month}
@@ -85,13 +89,6 @@ export default function View({ data }: Props) {
         holdings={data.holdings}
         parent={data.holding.id}
       />
-      <Dialogs.Budgets
-        calendar={data.calendar.month}
-        date={data.date}
-        holding={data.holding}
-        onAdd={handleOnSetBudget}
-        onEdit={handleOnSetBudget}
-      />
     </>
   );
 };
@@ -99,11 +96,12 @@ export default function View({ data }: Props) {
 const styles = tw({
   container: `
     relative
-    grid grid-cols-24 grid-rows-12
-    h-[calc(100svh-4rem)]
+    grid grid-cols-24
+    h-auto
     mt-14
     pb-0
 
+    md:grid-rows-12
     md:mt-24
     md:pb-10
     md:h-[calc(100svh-6rem)]

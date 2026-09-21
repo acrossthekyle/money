@@ -6,9 +6,9 @@ import { Pen } from 'lucide-react';
 import tw, { cs } from '@/styles';
 import type { Budget, CalendarDay, Holding } from '@/types';
 import { currency } from '@/utils';
+import { getBudgetDisplayData } from '@/utils/budgets';
 
 import Empty from './empty';
-import { getBudgetInfo } from './utils';
 
 type Props = {
   day?: CalendarDay;
@@ -37,10 +37,10 @@ export default function List({ day, holding, onEdit }: Props) {
 
   return (
     <div className={styles.items}>
-      <span className={styles.square}>{format(day.date, 'dd')}</span>
+      <span className={styles.date}>{format(day.date, 'dd')}</span>
       <ul className={styles.list}>
         {day.budgets.map((budget) => {
-          const info = getBudgetInfo(budget, day.debits);
+          const data = getBudgetDisplayData(budget, day.debits);
 
           return (
             <li key={budget.id}>
@@ -57,11 +57,11 @@ export default function List({ day, holding, onEdit }: Props) {
                     className={
                       cs(
                         styles.amount,
-                        info.isNegative ? styles.negative : styles.positive,
+                        data.isNegative ? styles.negative : styles.positive,
                       )
                     }
                   >
-                    ${currency(info.amount)}
+                    ${currency(data.amount)}
                   </span>
                 </p>
                 {budget.parent === holding.id && (
@@ -113,14 +113,12 @@ const styles = tw({
     pr-8
     text-left
   `,
-  square: `
-    flex items-center justify-center
-    w-11 h-9
+  date: `
+    flex items-center justify-center shrink-0
+    w-9 h-9
     bg-(--foreground)
     text-(--background) text-sm
     rounded-full
-
-    sm:w-10.75
   `,
   spacer: `
     w-10 h-9

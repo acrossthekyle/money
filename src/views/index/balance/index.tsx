@@ -1,32 +1,48 @@
 import tw, { cs } from '@/styles';
-import type { CalendarMonth } from '@/types';
+import type { CalendarMonth, Holding } from '@/types';
 import { currency } from '@/utils';
 
 type Props = {
   calendar: CalendarMonth;
   date: string;
+  holding: Holding;
 };
 
-export default function Section({ calendar, date }: Props) {
+export default function Section({ calendar, date, holding }: Props) {
   const day = calendar.days.find(day => day.iso === date);
 
   const balance = day?.balance || 0;
+
+  const asOfToday = Number(holding.balance);
 
   return (
     <section aria-label="account/asset balance" className={styles.container}>
       <h2 className={styles.header}>
         <span>Balance</span>
-        <span className={styles.faded}>Projected</span>
+        <span className={cs(styles.faded, styles.projected)}>Projected</span>
+        <span className={cs(styles.faded, styles.today)}>As Of Today</span>
       </h2>
       <p
         className={
           cs(
             styles.amount,
+            styles.projected,
             balance < 0 && styles.negative,
           )
         }
       >
         {balance < 0 && '-'}${currency(balance)}
+      </p>
+      <p
+        className={
+          cs(
+            styles.amount,
+            styles.today,
+            asOfToday < 0 && styles.negative,
+          )
+        }
+      >
+        {asOfToday < 0 && '-'}${currency(asOfToday)}
       </p>
     </section>
   );
@@ -55,6 +71,7 @@ const styles = tw({
     font-roboto font-bold
     uppercase
     tracking-wide
+    whitespace-nowrap
 
     md:text-tiny
   `,
@@ -64,6 +81,14 @@ const styles = tw({
     tracking-wide
 
     md:text-xtiny
+  `,
+  projected: `
+    hidden
+
+    md:block
+  `,
+  today: `
+    md:hidden
   `,
   amount: `
     font-roboto

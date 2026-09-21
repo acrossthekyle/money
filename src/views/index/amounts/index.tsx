@@ -53,14 +53,13 @@ export default function Section({ calendar }: Props) {
 const styles = tw({
   container: `
     col-start-13 row-start-4 col-span-12 row-span-2
-    flex flex-col items-end gap-2
+    flex flex-col items-end gap-4
     mx-4 mt-4
 
     md:col-span-6
     md:col-start-7
     md:mx-10
     md:mt-6
-    md:gap-4
     lg:col-start-9
     lg:col-span-8
     lg:row-start-1

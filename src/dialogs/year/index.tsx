@@ -60,7 +60,7 @@ export default function Dialog({ date, years }: Props) {
                       className={
                         cs(
                           styles.day,
-                          day.isBeforeToday && styles.faded,
+                          (day.isBeforeToday || !day.isInMonth) && styles.faded,
                           day.isToday && styles.hollow,
                           !day.isBeforeToday && day.balance < 0 && styles.negative,
                         )
@@ -127,7 +127,7 @@ const styles = tw({
     bg-(--foreground)/75
   `,
   faded: `
-    !bg-(--foreground)/25
+    !bg-(--foreground)/12.5
   `,
   hollow: `
     !bg-transparent

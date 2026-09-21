@@ -1,36 +1,37 @@
 'use client';
 
-import { addMonths, getDate, getMonth, getYear, parseISO } from 'date-fns';
-import { Calendar, ChevronRight, Menu } from 'lucide-react';
+import { addMonths, getMonth, getYear, parseISO } from 'date-fns';
+import { Calendar, ChevronRight, FoldVertical, Plus, UnfoldVertical } from 'lucide-react';
+import { useState } from 'react';
 
-import { useBudgets, useUpdateUrl, useYear } from '@/hooks';
+import { useBudget, useUpdateUrl, useYear } from '@/hooks';
 import tw, { cs } from '@/styles';
-import type { CalendarDay, CalendarMonth } from '@/types';
+import type { Budget, CalendarMonth, Holding } from '@/types';
 import { pad } from '@/utils';
+
+import Grid from './grid';
+import List from './list';
 
 type Props = {
   calendar: CalendarMonth;
   date: string;
+  holding: Holding;
+  onAdd: () => void;
+  onEdit: (budget: Budget) => void;
 };
 
-export default function Section({ calendar, date }: Props) {
+export default function Section({
+  calendar,
+  date,
+  holding,
+  onAdd,
+  onEdit,
+}: Props) {
+  const [isCompact, setIsCompact] = useState(false);
+
   const updateUrl = useUpdateUrl();
-
   const { onYear } = useYear();
-  const { onBudgets } = useBudgets();
-
-  const handleOnDay = (day: CalendarDay) => {
-    if (!day.isInMonth) {
-      updateUrl(
-        ['date', 'month', 'year'],
-        [day.iso, String(day.month), String(day.year)],
-      );
-
-      return;
-    }
-
-    updateUrl('date', day.iso);
-  };
+  const { onBudget } = useBudget();
 
   const handleOnNext = () => {
     const updated = addMonths(parseISO(date), 1);
@@ -49,6 +50,16 @@ export default function Section({ calendar, date }: Props) {
     );
   };
 
+  const handleOnAdd = () => {
+    onAdd();
+
+    onBudget();
+  };
+
+  const handleOnFoldUnfold = () => {
+    setIsCompact(previous => !previous);
+  };
+
   return (
     <section aria-label="calendar" className={styles.container}>
       <div className={styles.upper}>
@@ -65,12 +76,24 @@ export default function Section({ calendar, date }: Props) {
           className={styles.controls}
         >
           <button
-            className={cs(styles.control, styles.budgets)}
-            onClick={onBudgets}
-            title="View budgets"
+            className={cs(styles.control, styles.hidden)}
+            onClick={handleOnFoldUnfold}
+            title="Toggle compact day list view"
             type="button"
           >
-            <Menu className={styles.icon} />
+            {isCompact ? (
+              <UnfoldVertical className={styles.icon} />
+            ) : (
+              <FoldVertical className={styles.icon} />
+            )}
+          </button>
+          <button
+            className={cs(styles.control, styles.hidden)}
+            onClick={handleOnAdd}
+            title="Add budget"
+            type="button"
+          >
+            <Plus className={styles.icon} />
           </button>
           <button
             className={styles.control}
@@ -90,63 +113,13 @@ export default function Section({ calendar, date }: Props) {
           </button>
         </nav>
       </div>
-      <ul className={styles.items}>
-        <li
-          className={cs(styles.heading, styles.faded)}
-          role="presentation"
-        >
-          S
-        </li>
-        <li className={styles.heading} role="presentation">M</li>
-        <li className={styles.heading} role="presentation">T</li>
-        <li className={styles.heading} role="presentation">W</li>
-        <li className={styles.heading} role="presentation">T</li>
-        <li className={styles.heading} role="presentation">F</li>
-        <li
-          className={cs(styles.heading, styles.faded)}
-          role="presentation"
-        >
-          S
-        </li>
-
-        {calendar.days.map((day) => (
-          <li
-            className={
-              cs(
-                styles.item,
-                !day.isInMonth && styles.faded,
-                day.iso === date && styles.highlighted,
-                day.balance < 0 && !day.isToday && styles.negative,
-                day.isToday && styles.boldened,
-              )
-            }
-            key={day.iso}
-          >
-            <button
-              className={styles.day}
-              disabled={!day.isInMonth}
-              onClick={() => handleOnDay(day)}
-              type="button"
-            >
-              {getDate(day.date)}
-              {
-                day.isInMonth &&
-                (day.budgets.length > 0 || day.return.amount !== null) &&
-                (
-                  <span className={styles.dots}>
-                    {day.budgets.map((_, index) => (
-                      <span className={styles.dot} key={index} />
-                    ))}
-                    {day.return.amount !== null && (
-                      <span className={styles.dot} />
-                    )}
-                  </span>
-                )
-              }
-            </button>
-          </li>
-        ))}
-      </ul>
+      <Grid calendar={calendar} date={date} />
+      <List
+        calendar={calendar}
+        holding={holding}
+        isCompact={isCompact}
+        onEdit={onEdit}
+      />
     </section>
   );
 };
@@ -154,9 +127,12 @@ export default function Section({ calendar, date }: Props) {
 const styles = tw({
   container: `
     col-start-1 row-start-7 col-span-24 row-span-9
-    flex flex-col justify-end
+    flex flex-col
+    mt-18
 
     md:col-span-12
+    md:justify-end
+    md:mt-0
     lg:row-start-4
     lg:col-span-8
   `,
@@ -172,79 +148,14 @@ const styles = tw({
   `,
   title: `
     font-black
-    text-5xl
+    text-4xl
     leading-[0.8]
 
+    xxs:text-5xl
     md:text-6xl
   `,
   lid: `
     text-lg text-current/50
-  `,
-  items: `
-    grid grid-cols-7 gap-2
-    mx-2
-
-    md:mx-8
-  `,
-  heading: `
-    h-3
-    text-tiny text-center
-    font-semibold
-
-    md:h-4
-  `,
-  faded: `
-    text-current/32.5
-  `,
-  item: `
-    relative
-    text-sm text-center
-
-    motion-safe:duration-300
-
-    before:absolute
-    before:top-1/2
-    before:left-1/2
-    before:-translate-x-1/2
-    before:-translate-y-1/2
-    before:h-10
-    before:w-10
-    before:rounded-full
-
-    hover:before:bg-(--foreground)/5.5
-  `,
-  highlighted: `
-    !text-(--background)
-    !font-bold
-
-    before:!bg-(--foreground)
-  `,
-  boldened: `
-    font-black
-    text-(--foreground)
-
-    before:bg-(--foreground)/5.5
-  `,
-  day: `
-    relative
-    flex items-center justify-center
-    w-full h-full
-    py-1.25
-
-    md:py-2
-  `,
-  dots: `
-    absolute bottom-0.25 left-1/2
-    -translate-x-1/2
-    flex gap-0.5
-
-    md:bottom-1
-  `,
-  dot: `
-    block
-    w-1 h-1
-    rounded-full
-    bg-current
   `,
   controls: `
     absolute bottom-2 right-0
@@ -260,7 +171,7 @@ const styles = tw({
 
     hover:border-current/62.5
   `,
-  budgets: `
+  hidden: `
     md:hidden
   `,
   icon: `
@@ -269,8 +180,5 @@ const styles = tw({
 
     md:w-4
     md:h-4
-  `,
-  negative: `
-    text-red-400 dark:text-rose-400
   `,
 });

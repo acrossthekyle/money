@@ -17,52 +17,54 @@ export function budgetize(
   Array.from(days.keys()).sort().forEach((key) => {
     const dayOfMonth = days.get(key);
 
-    const matches = budgets.get(key) || [];
-    const debits: CalendarAmount[] = [];
-    const credits: CalendarAmount[] = [];
+    if (!dayOfMonth.isBeforeToday) {
+      const matches = budgets.get(key) || [];
+      const debits: CalendarAmount[] = [];
+      const credits: CalendarAmount[] = [];
 
-    matches.forEach((match: Data) => {
-      dayOfMonth.budgets.push(match.budget);
+      matches.forEach((match: Data) => {
+        dayOfMonth.budgets.push(match.budget);
 
-      const { amount, income, expense } = updateRunningBalance(
-        match.budget.type,
-        match.holdingType,
-        match.isTransfer,
-        match.transfereeHoldingType,
-        match.transfereeType,
-        runningBalance,
-        match.budget.amount,
-      );
+        const { amount, income, expense } = updateRunningBalance(
+          match.budget.type,
+          match.holdingType,
+          match.isTransfer,
+          match.transfereeHoldingType,
+          match.transfereeType,
+          runningBalance,
+          match.budget.amount,
+        );
 
-      runningBalance = amount;
+        runningBalance = amount;
 
-      if (income) {
-        credits.push({
-          budget: match.budget.id,
-          amount: income,
-        });
+        if (income) {
+          credits.push({
+            budget: match.budget.id,
+            amount: income,
+          });
+        }
+
+        if (expense) {
+          debits.push({
+            budget: match.budget.id,
+            amount: expense,
+          });
+        }
+      });
+
+      dayOfMonth.balance = Number(runningBalance.toFixed(2));
+
+      if (!dayOfMonth.debits) {
+        dayOfMonth.debits = [];
       }
 
-      if (expense) {
-        debits.push({
-          budget: match.budget.id,
-          amount: expense,
-        });
+      if (!dayOfMonth.credits) {
+        dayOfMonth.credits = [];
       }
-    });
 
-    dayOfMonth.balance = Number(runningBalance.toFixed(2));
-
-    if (!dayOfMonth.debits) {
-      dayOfMonth.debits = [];
+      dayOfMonth.debits.push(...debits);
+      dayOfMonth.credits.push(...credits);
     }
-
-    if (!dayOfMonth.credits) {
-      dayOfMonth.credits = [];
-    }
-
-    dayOfMonth.debits.push(...debits);
-    dayOfMonth.credits.push(...credits);
   });
 
   return calendar;
