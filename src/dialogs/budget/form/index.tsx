@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, ChevronRight, LoaderCircle, Trash, Undo2 } from 'lucide-react';
+import { Check, LoaderCircle, Trash, Undo2 } from 'lucide-react';
 
 import { ACCOUNTS, ASSETS } from '@/constants';
 import tw, { cs } from '@/styles';
@@ -122,7 +122,7 @@ export default function Form({
           </div>
         ) : <div />}
         <div className={styles.actions}>
-          <Ui.Form.Button onClick={onClose}>
+          <Ui.Form.Button disabled={isPending} onClick={onClose}>
             <Undo2 className={styles.icon} />
           </Ui.Form.Button>
           {!budget ? (
@@ -138,7 +138,7 @@ export default function Form({
               {isPending ? (
                 <LoaderCircle className={cs(styles.icon, styles.spin)} />
               ) : (
-                <ChevronRight className={styles.icon} />
+                <Check className={styles.icon} />
               )}
             </Ui.Form.Button>
           )}

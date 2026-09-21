@@ -1,13 +1,14 @@
 'use client';
 
 import { format, getDate } from 'date-fns';
-import { Pen } from 'lucide-react';
 
 import { useBudget } from '@/hooks';
-import tw, { cs } from '@/styles';
+import tw from '@/styles';
 import type { Budget, CalendarMonth, Holding } from '@/types';
 import { currency } from '@/utils';
 import { getBudgetDisplayData } from '@/utils/budgets';
+
+import Item from './item';
 
 type Props = {
   calendar: CalendarMonth;
@@ -65,30 +66,14 @@ export default function List({
 
                     return (
                       <li key={budget.id}>
-                        <button
-                          className={styles.budget}
-                          disabled={budget.parent !== holding.id}
-                          onClick={() => handleOnEdit(budget)}
-                          title="Edit budget"
-                          type="button"
-                        >
-                          <p className={styles.content}>
-                            <span>{budget.name}</span>
-                            <span
-                              className={
-                                cs(
-                                  styles.amount,
-                                  data.isNegative ? styles.negative : styles.positive,
-                                )
-                              }
-                            >
-                              ${currency(data.amount)}
-                            </span>
-                          </p>
-                          {budget.parent === holding.id && (
-                            <Pen className={styles.pen} />
-                          )}
-                        </button>
+                        <Item
+                          amount={data.amount}
+                          budget={budget}
+                          date={day.iso}
+                          isNegative={data.isNegative}
+                          isNotAssignedToHolding={budget.parent !== holding.id}
+                          onEdit={handleOnEdit}
+                        />
                       </li>
                     );
                   })}

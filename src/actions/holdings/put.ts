@@ -1,13 +1,14 @@
 'use server';
 
-import { updateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
 import { db } from '@/db';
+import { set as setCalendar } from '@/setters/calendar';
 import type { Holding, HoldingFormState } from '@/types';
 
-import { balancize, interestize } from '../utils';
+import { balancize, interestize, wait } from '../utils';
 
 const Form = z.object({
   name: z.string(),
@@ -101,10 +102,6 @@ export async function put(
       id: identifier,
     });
 
-    updateTag('holdings');
-    updateTag('budgets');
-    updateTag('calendar');
-
     return {
       data: {
         ...result,
@@ -119,9 +116,11 @@ export async function put(
   if (formData.get('purge') === 'true' && holding !== null) {
     await db.erase('holdings', holding.id);
 
-    updateTag('holdings');
-    updateTag('budgets');
-    updateTag('calendar');
+    await wait(500);
+
+    await setCalendar(holding.id);
+
+    revalidatePath('/');
 
     return {
       data: result,
@@ -131,16 +130,27 @@ export async function put(
     };
   }
 
-  await db.write('holdings', result);
+  if (holding !== null) {
+    await db.write('holdings', result);
 
-  updateTag('holdings');
-  updateTag('budgets');
-  updateTag('calendar');
+    await wait(500);
+
+    await setCalendar(holding.id);
+
+    revalidatePath('/');
+
+    return {
+      data: result,
+      hasFailed: false,
+      isSuccessful: true,
+      message: 'Holding successfully updated',
+    };
+  }
 
   return {
     data: result,
     hasFailed: false,
     isSuccessful: true,
-    message: 'Holding successfully updated',
+    message: 'No action taken',
   };
 };

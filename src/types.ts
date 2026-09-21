@@ -54,8 +54,6 @@ export type Setting = {
   value: string;
 };
 
-export type Record = Holding | Budget | Preference | Setting;
-
 export type LoginFormState = {
   data?: {
     username: string;
@@ -91,7 +89,6 @@ export type CalendarDay = {
 };
 
 export type CalendarMonth = {
-  id: string;
   isPastMonth: boolean;
   isThisMonth: boolean;
   month: number;
@@ -105,3 +102,10 @@ export type CalendarYear = {
   year: number;
   months: CalendarMonth[];
 };
+
+export type Calendar = {
+  id: string;
+  value: CalendarYear[];
+};
+
+export type Record = Holding | Budget | Preference | Setting | Calendar;

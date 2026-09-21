@@ -3,24 +3,28 @@
 import { useActionState, useEffect } from 'react';
 
 import { bust } from '@/actions/calendar/bust';
-import { useHoldings } from '@/hooks';
+import { useUpdateUrl } from '@/hooks';
 
-export function useModel() {
+export function useModel(date: string) {
   const [state, action, isPending] = useActionState(bust, {
     isSuccessful: false,
   } as { isSuccessful?: boolean; });
 
-  const { onClose } = useHoldings();
+  const updateUrl = useUpdateUrl();
 
   useEffect(() => {
     if (state?.isSuccessful) {
-      onClose();
+      window.location.reload();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.isSuccessful]);
+
+  const handleOnClick = () => {
+    updateUrl('date', date);
+  };
 
   return {
     action,
+    handleOnClick,
     isPending,
   };
 };

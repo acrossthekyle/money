@@ -46,7 +46,7 @@ export default function Dialog({ date, years }: Props) {
         </div>
         <ul className={styles.items}>
           {years[index].months.map((month) => (
-            <li key={month.id}>
+            <li key={`${month.month}-${month.year}`}>
               <button
                 className={styles.item}
                 disabled={month.isPastMonth}

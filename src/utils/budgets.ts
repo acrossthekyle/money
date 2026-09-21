@@ -104,7 +104,7 @@ export function getBudgetDisplayData(budget: Budget, debits: CalendarAmount[]) {
   const existsInDebits = debits.find(debit => debit.budget === budget.id);
 
   return {
-    isNegative: existsInDebits,
+    isNegative: existsInDebits !== undefined,
     amount: budget.amount,
   };
 };

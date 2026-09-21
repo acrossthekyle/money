@@ -132,11 +132,11 @@ const styles = tw({
     stroke-1
   `,
   info: `
-    absolute right-4 bottom-4 z-10
+    absolute right-4 top-4 z-10
     p-2
 
     md:right-8
-    md:bottom-8
+    md:top-8
   `,
   icon: `
     w-5 h-5

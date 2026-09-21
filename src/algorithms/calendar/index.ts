@@ -1,9 +1,3 @@
-import { cacheLife, cacheTag } from 'next/cache';
-
-import { get as getBudgets } from '@/getters/budgets';
-import { get as getHoldings } from '@/getters/holdings';
-import { get as getPreferences } from '@/getters/preferences';
-import { get as getSettings } from '@/getters/settings';
 import type { Budget, CalendarYear, Holding } from '@/types';
 import { createBudgetIterations } from '@/utils/budgets';
 
@@ -12,24 +6,19 @@ import { create } from './create';
 import { returnize } from './returnize';
 import type { Data } from './types';
 
-export async function calendar(): Promise<CalendarYear[]> {
-  'use cache: remote';
-
-  cacheLife('hours');
-  cacheTag('calendar');
-
-  const { holdings } = await getHoldings();
-  const { budgets } = await getBudgets();
-  const { zone } = await getSettings();
-  const { saved } = await getPreferences(null, holdings);
-
+export async function calendar(
+  holdings: Holding[],
+  budgets: Budget[],
+  zone: string,
+  id: string | null,
+): Promise<CalendarYear[]> {
   const calendar = create(zone);
 
   if (holdings.length === 0) {
     return calendar;
   }
 
-  const selectedHolding = saved === null ? holdings[0].id : saved;
+  const selectedHolding = id === null ? holdings[0].id : id;
 
   const holding = holdings.find(holding => selectedHolding === holding.id);
 

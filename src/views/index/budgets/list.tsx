@@ -1,7 +1,6 @@
 'use client';
 
 import { format } from 'date-fns';
-import { Pen } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
 import type { Budget, CalendarDay, Holding } from '@/types';
@@ -9,6 +8,7 @@ import { currency } from '@/utils';
 import { getBudgetDisplayData } from '@/utils/budgets';
 
 import Empty from './empty';
+import Item from './item';
 
 type Props = {
   day?: CalendarDay;
@@ -44,30 +44,14 @@ export default function List({ day, holding, onEdit }: Props) {
 
           return (
             <li key={budget.id}>
-              <button
-                className={styles.item}
-                disabled={budget.parent !== holding.id}
-                onClick={() => onEdit(budget)}
-                title="Edit budget"
-                type="button"
-              >
-                <p className={styles.content}>
-                  <span className={styles.name}>{budget.name}</span>
-                  <span
-                    className={
-                      cs(
-                        styles.amount,
-                        data.isNegative ? styles.negative : styles.positive,
-                      )
-                    }
-                  >
-                    ${currency(data.amount)}
-                  </span>
-                </p>
-                {budget.parent === holding.id && (
-                  <Pen className={styles.pen} />
-                )}
-              </button>
+              <Item
+                amount={data.amount}
+                budget={budget}
+                date={day.iso}
+                isNegative={data.isNegative}
+                isNotAssignedToHolding={budget.parent !== holding.id}
+                onEdit={onEdit}
+              />
             </li>
           );
         })}
@@ -120,27 +104,18 @@ const styles = tw({
     text-(--background) text-sm
     rounded-full
   `,
-  spacer: `
-    w-10 h-9
-  `,
   content: `
     flex flex-col justify-center gap-2
   `,
   name: `
     leading-[1]
     text-sm
-    font-medium
+    font-normal
   `,
   amount: `
     leading-[1]
     font-roboto
     text-xs
-  `,
-  pen: `
-    absolute top-1/2 right-0
-    -translate-y-1/2
-    w-4 h-4
-    stroke-1
   `,
   negative: `
     text-red-400 dark:text-rose-400

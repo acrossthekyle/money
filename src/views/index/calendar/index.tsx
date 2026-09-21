@@ -27,7 +27,7 @@ export default function Section({
   onAdd,
   onEdit,
 }: Props) {
-  const [isCompact, setIsCompact] = useState(false);
+  const [isCompact, setIsCompact] = useState(true);
 
   const updateUrl = useUpdateUrl();
   const { onYear } = useYear();
@@ -76,7 +76,13 @@ export default function Section({
           className={styles.controls}
         >
           <button
-            className={cs(styles.control, styles.hidden)}
+            className={
+              cs(
+                styles.control,
+                styles.hidden,
+                !isCompact && styles.dark,
+              )
+            }
             onClick={handleOnFoldUnfold}
             title="Toggle compact day list view"
             type="button"
@@ -170,6 +176,10 @@ const styles = tw({
     motion-safe:duration-300
 
     hover:border-current/62.5
+  `,
+  dark: `
+    bg-(--foreground)
+    text-(--background)
   `,
   hidden: `
     md:hidden

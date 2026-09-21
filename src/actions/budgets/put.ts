@@ -1,15 +1,17 @@
 'use server';
 
-import { updateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
 import { db } from '@/db';
+import { get as getHolding } from '@/getters/holding';
 import { get as getSettings } from '@/getters/settings';
+import { set as setCalendar } from '@/setters/calendar';
 import type { Budget, BudgetFormState } from '@/types';
 import { createBudgetIterations } from '@/utils/budgets';
 
-import { balancize } from '../utils';
+import { balancize, wait } from '../utils';
 
 const Form = z.object({
   name: z.string(),
@@ -105,6 +107,7 @@ export async function put(
   }
 
   const { zone } = await getSettings();
+  const { id: holding } = await getHolding();
 
   const computed = {
     id: budget === null ? uuidv4() : budget.id,
@@ -124,8 +127,11 @@ export async function put(
   if (budget === null) {
     await db.write('budgets', result);
 
-    updateTag('budgets');
-    updateTag('calendar');
+    await wait(500);
+
+    await setCalendar(holding);
+
+    revalidatePath('/');
 
     return {
       data: result,
@@ -151,8 +157,11 @@ export async function put(
       });
     }
 
-    updateTag('budgets');
-    updateTag('calendar');
+    await wait(500);
+
+    await setCalendar(holding);
+
+    revalidatePath('/');
 
     return {
       data: result,
@@ -165,8 +174,11 @@ export async function put(
   if (formData.get('purge') === 'true') {
     await db.erase('budgets', budget.id);
 
-    updateTag('budgets');
-    updateTag('calendar');
+    await wait(500);
+
+    await setCalendar(holding);
+
+    revalidatePath('/');
 
     return {
       data: result,
@@ -179,8 +191,11 @@ export async function put(
   if (formData.get('update') === 'none' || formData.get('update') === 'all') {
     await db.write('budgets', result);
 
-    updateTag('budgets');
-    updateTag('calendar');
+    await wait(500);
+
+    await setCalendar(holding);
+
+    revalidatePath('/');
 
     return {
       data: result,
@@ -229,8 +244,11 @@ export async function put(
 
       await db.writeAll('budgets', updates as Budget[]);
 
-      updateTag('budgets');
-      updateTag('calendar');
+      await wait(500);
+
+      await setCalendar(holding);
+
+      revalidatePath('/');
 
       return {
         data: result,
@@ -267,8 +285,11 @@ export async function put(
 
       await db.writeAll('budgets', updates as Budget[]);
 
-      updateTag('budgets');
-      updateTag('calendar');
+      await wait(500);
+
+      await setCalendar(holding);
+
+      revalidatePath('/');
 
       return {
         data: result,
@@ -306,8 +327,11 @@ export async function put(
 
       await db.writeAll('budgets', updates);
 
-      updateTag('budgets');
-      updateTag('calendar');
+      await wait(500);
+
+      await setCalendar(holding);
+
+      revalidatePath('/');
 
       return {
         data: result,

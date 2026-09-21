@@ -85,10 +85,6 @@ export function useModel(date: string, budget?: Budget) {
 
       if (form instanceof HTMLFormElement) {
         form.requestSubmit();
-
-        setTimeout(() => {
-          onClose();
-        }, 100);
       }
     }, 100);
   };
@@ -133,10 +129,6 @@ export function useModel(date: string, budget?: Budget) {
 
       if (form instanceof HTMLFormElement) {
         form.requestSubmit();
-
-        setTimeout(() => {
-          onClose();
-        }, 100);
       }
     }, 100);
   };

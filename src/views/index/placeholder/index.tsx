@@ -9,11 +9,11 @@ import { date, image } from '@/utils';
 
 const IMAGES: string[] = [
   image('0ff819d4-929a-45f0-be80-43efd6398d92', 'projects/basalt/gallery'),
-  image('5f28281c-9629-4d01-a31f-92ab02b1623f', 'projects/basalt/gallery'),
+  image('fe077c95-b230-41b7-a4af-70bdbe05e892', 'projects/basalt/gallery'),
   image('317a4482-9b30-465d-98e9-5998ccb9b048', 'projects/basalt/gallery'),
-  image('69393bfa-f87d-4089-82bd-acd77d1c7cd9', 'projects/basalt/gallery'),
+  image('fe077c95-b230-41b7-a4af-70bdbe05e892', 'projects/basalt/gallery'),
   image('85635028-9b53-4d12-affd-75b872ce013c', 'projects/basalt/gallery'),
-  image('c75518a8-d1f1-4abd-ba0c-158213a9e017', 'projects/basalt/gallery'),
+  image('317a4482-9b30-465d-98e9-5998ccb9b048', 'projects/basalt/gallery'),
   image('fe077c95-b230-41b7-a4af-70bdbe05e892', 'projects/basalt/gallery'),
 ];
 

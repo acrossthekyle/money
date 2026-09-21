@@ -20,3 +20,5 @@ export function interestize(raw: string) {
 
   return `${isNegative ? '-' : ''}${number.toFixed(2)}`;
 };
+
+export const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

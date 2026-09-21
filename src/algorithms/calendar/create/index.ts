@@ -79,7 +79,6 @@ export function create(zone: string): CalendarYear[] {
     }));
 
     result.months.push({
-      id: `${getMonth(month)}-${year}`,
       isPastMonth: isBefore(monthStart, startOfMonth(today)),
       isThisMonth: isThisMonth(month),
       month: getMonth(month),
