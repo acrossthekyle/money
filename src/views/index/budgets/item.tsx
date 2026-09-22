@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRight, LoaderCircle, Pen } from 'lucide-react';
+import { ArrowUpRight, LoaderCircle, Pen } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
 import type { Budget } from '@/types';
@@ -71,7 +71,7 @@ export default function Item({
             <LoaderCircle className={cs(styles.icon, styles.spin)} />
           ) : (
             <span className={styles.go}>
-              View account <ChevronRight className={styles.arrow} />
+              <ArrowUpRight className={styles.arrow} />
             </span>
           )}
         </button>
@@ -137,7 +137,7 @@ const styles = tw({
     uppercase
   `,
   arrow: `
-    w-3 h-3
+    w-4.5 h-4.5
     stroke-1
   `,
 });

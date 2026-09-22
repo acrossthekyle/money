@@ -1,33 +1,15 @@
-'use client';
-
-import { getDay } from 'date-fns';
 import Image from 'next/image';
 
-import { useTimezone } from '@/hooks';
 import tw from '@/styles';
-import { date, image } from '@/utils';
-
-const IMAGES: string[] = [
-  image('0ff819d4-929a-45f0-be80-43efd6398d92', 'projects/basalt/gallery'),
-  image('fe077c95-b230-41b7-a4af-70bdbe05e892', 'projects/basalt/gallery'),
-  image('317a4482-9b30-465d-98e9-5998ccb9b048', 'projects/basalt/gallery'),
-  image('fe077c95-b230-41b7-a4af-70bdbe05e892', 'projects/basalt/gallery'),
-  image('85635028-9b53-4d12-affd-75b872ce013c', 'projects/basalt/gallery'),
-  image('317a4482-9b30-465d-98e9-5998ccb9b048', 'projects/basalt/gallery'),
-  image('fe077c95-b230-41b7-a4af-70bdbe05e892', 'projects/basalt/gallery'),
-];
+import { image } from '@/utils';
 
 export default function Section() {
-  const { zone } = useTimezone();
-
-  const key = getDay(date(zone));
-
   return (
     <figure aria-label="image of the day" className={styles.container}>
       <Image
         alt=""
         className={styles.image}
-        src={IMAGES[key]}
+        src={image('317a4482-9b30-465d-98e9-5998ccb9b048', 'projects/basalt/gallery')}
         width={458}
         height={732}
       />

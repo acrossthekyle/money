@@ -27,7 +27,7 @@ export default function Section({
   onAdd,
   onEdit,
 }: Props) {
-  const [isCompact, setIsCompact] = useState(true);
+  const [isCompact, setIsCompact] = useState(false);
 
   const updateUrl = useUpdateUrl();
   const { onYear } = useYear();
@@ -80,7 +80,7 @@ export default function Section({
               cs(
                 styles.control,
                 styles.hidden,
-                !isCompact && styles.dark,
+                isCompact && styles.dark,
               )
             }
             onClick={handleOnFoldUnfold}
