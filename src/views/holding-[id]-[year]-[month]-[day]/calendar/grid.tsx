@@ -78,15 +78,17 @@ const styles = tw({
   `,
   heading: `
     h-6
-    text-sm text-center
+    text-base text-center
     font-roboto
+
+    md:text-sm
   `,
   faded: `
-    text-current/22.5
+    text-current/62.5 dark:text-current/22.5
   `,
   item: `
     relative
-    text-sm text-center
+    text-base text-center
 
     before:absolute
     before:top-1/2
@@ -99,6 +101,8 @@ const styles = tw({
     before:bg-transparent
 
     motion-safe:before:duration-300
+
+    md:text-sm
   `,
   hoverable: `
     hover:before:bg-(--foreground)/5.5
@@ -110,14 +114,13 @@ const styles = tw({
     before:!bg-(--foreground)
   `,
   boldened: `
-    font-black
     text-(--foreground)
 
-    before:!bg-(--foreground)/5.5
+    before:!bg-(--foreground)/7.5
   `,
   disabled: `
     pointer-events-none
-    text-current/40 dark:text-current/50
+    text-current/47.5 dark:text-current/50
   `,
   negative: `
     text-red-400 dark:text-rose-400
@@ -126,14 +129,18 @@ const styles = tw({
     relative
     flex items-center justify-center
     w-full h-full
-    py-1.25
+    py-0.5
     font-roboto
+
+    md:py-1.25
   `,
   bar: `
-    absolute bottom-0.5 left-1/2
+    absolute bottom-0.25 left-1/2
     -translate-x-1/2
     w-4 h-1
     rounded-full
     bg-current
+
+    md:bottom-0.5
   `,
 });

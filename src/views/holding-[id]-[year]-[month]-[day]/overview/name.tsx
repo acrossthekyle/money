@@ -36,9 +36,11 @@ export default function Name({ holding }: Props) {
 
 const styles = tw({
   header: `
-    flex flex-col gap-1
+    flex flex-col
     uppercase
     text-base
+
+    md:gap-1
   `,
   title: `
     pr-8
@@ -46,7 +48,9 @@ const styles = tw({
     truncate
   `,
   lid: `
-    text-xs
+    text-sm
+
+    md:text-xs
   `,
   update: `
     absolute top-12 right-6 z-10

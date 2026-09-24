@@ -83,11 +83,15 @@ const styles = tw({
   `,
   title: `
     font-bold
-    text-sm
+    text-base
     leading-[0.8]
+
+    md:text-sm
   `,
   lid: `
-    text-xs
+    text-sm
+
+    md:text-xs
   `,
   controls: `
     absolute bottom-0 right-0

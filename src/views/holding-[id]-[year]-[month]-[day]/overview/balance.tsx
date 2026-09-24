@@ -36,7 +36,9 @@ const styles = tw({
     flex justify-between
     w-full
     font-roboto
-    text-sm
+    text-base
+
+    md:text-sm
   `,
   title: `
     uppercase
@@ -54,8 +56,10 @@ const styles = tw({
     stroke-1
   `,
   disclaimer: `
-    text-tiny text-current/75
+    text-xs text-current/75
     uppercase
     tracking-wide
+
+    md:text-tiny
   `,
 });

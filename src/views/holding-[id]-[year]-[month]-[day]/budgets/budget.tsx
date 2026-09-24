@@ -86,8 +86,8 @@ const styles = tw({
     w-full
     mb-2
     font-roboto font-bold
-    text-sm
     uppercase
+    text-sm
   `,
   content: `
     flex items-center justify-between

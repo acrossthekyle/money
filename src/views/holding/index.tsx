@@ -19,8 +19,10 @@ export default function View() {
 const styles = tw({
   header: `
     flex flex-col gap-1
-    text-sm
+    text-base
     uppercase
+
+    md:text-sm
   `,
   title: `
     font-bold

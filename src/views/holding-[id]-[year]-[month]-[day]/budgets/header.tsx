@@ -17,7 +17,7 @@ export default function Header({ holding }: Props) {
     <>
       <span className={styles.divider} role="presentation" />
       <h3 className={styles.container}>
-        <span>Budgets</span>
+        <span className={styles.title}>Budgets</span>
         <Ui.Components.Action
           href={`/holding/${holding.id}/budget?ref=${pathname.split('/').slice(3).join('/')}`}
         >
@@ -33,9 +33,13 @@ const styles = tw({
     relative
     flex items-center justify-between
     w-full
+  `,
+  title: `
     font-roboto font-bold
-    text-sm
+    text-base
     uppercase
+
+    md:text-sm
   `,
   divider: `
     h-px w-full

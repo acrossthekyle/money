@@ -34,13 +34,17 @@ export default function View({ data }: Props) {
 const styles = tw({
   header: `
     flex flex-col gap-1
-    text-sm
+    text-base
     uppercase
+
+    md:text-sm
   `,
   title: `
     font-bold
   `,
   lid: `
-    text-xs
+    text-sm
+
+    md:text-xs
   `,
 });

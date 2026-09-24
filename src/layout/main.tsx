@@ -17,7 +17,6 @@ export default function Main({
         {children}
       </main>
       <Dialogs.Menu netWorth={data.netWorth} />
-      <Dialogs.Info />
     </>
   );
 };

@@ -57,8 +57,8 @@ const styles = tw({
     flex items-center gap-2
     py-1 px-2
     uppercase
-    text-xs
-    font-medium
+    text-xs text-(--background)
+    bg-(--foreground)
     border border-current/62.5
     rounded-sm
     tracking-wide
@@ -68,6 +68,8 @@ const styles = tw({
     motion-safe:duration-300
 
     hover:border-current/90
+    hover:bg-(--background)
+    hover:text-(--foreground)
 
     md:text-tiny
   `,

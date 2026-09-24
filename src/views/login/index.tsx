@@ -107,6 +107,6 @@ const styles = tw({
   `,
   icon: `
     w-3 h-3
-    stroke-1
+    stroke-2
   `,
 });

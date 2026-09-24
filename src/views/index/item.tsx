@@ -76,10 +76,12 @@ const styles = tw({
     flex items-start justify-between
     w-full
     mb-4
-    text-sm text-left
+    text-base text-left
     uppercase
 
     disabled:opacity-50
+
+    md:text-sm
   `,
   heading: `
     flex flex-col gap-1
@@ -89,11 +91,15 @@ const styles = tw({
     font-bold
   `,
   lid: `
-    text-tiny text-current/75
+    text-xs text-current/75
     tracking-wide
+
+    md:text-tiny
   `,
   currency: `
-    text-xs
+    text-sm
+
+    md:text-xs
   `,
   negative: `
     text-red-400 dark:text-rose-400

@@ -1,7 +1,6 @@
 import tw from '@/styles';
 import { authentication } from '@/utils/authentication';
 
-import Info from './info';
 import Logo from './logo';
 import Menu from './menu';
 
@@ -11,10 +10,8 @@ export default async function Header() {
   return (
     <header className={styles.container}>
       <Logo />
-      {isAuthenticated ? (
+      {isAuthenticated && (
         <Menu />
-      ) : (
-        <Info />
       )}
     </header>
   );

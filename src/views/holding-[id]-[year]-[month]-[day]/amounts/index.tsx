@@ -56,15 +56,17 @@ const styles = tw({
   `,
   section: `
     flex flex-col
-    text-right text-sm first-of-type:text-left
+    text-right first-of-type:text-left
 
     md:gap-1
   `,
   heading: `
-    text-sm
+    text-base
     font-bold
     uppercase
     tracking-wide
+
+    md:text-sm
   `,
   positive: `
     text-base

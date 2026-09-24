@@ -118,7 +118,8 @@ export default function Dialog({ netWorth }: Props) {
 
 const styles = tw({
   container: (isActive: boolean) => tw(`
-    absolute top-4 right-4 left-4
+    relative
+    w-full max-w-sm
     p-4
     bg-(--background)
     border border-current/5.5 dark:border-current/10.5
@@ -129,11 +130,6 @@ const styles = tw({
     ${isActive
       ? `opacity-100 translate-y-0`
       : `opacity-0 translate-y-8`}
-
-    xs:w-72
-    xs:left-auto
-    md:top-6
-    md:right-6
   `),
   close: `
     absolute top-2 right-2
