@@ -13,10 +13,10 @@ export default function Main({
 }: React.PropsWithChildren<Props>) {
   return (
     <>
+      <Dialogs.Menu netWorth={data.netWorth} />
       <main className={styles.container}>
         {children}
       </main>
-      <Dialogs.Menu netWorth={data.netWorth} />
     </>
   );
 };

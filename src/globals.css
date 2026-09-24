@@ -34,13 +34,7 @@ body:has(dialog[open]) {
   overflow: hidden !important;
 }
 
-body:has(dialog[open]) {
-  opacity: 10%;
-}
-
 body {
-  transition: opacity 0.3s ease-in-out;
-
   button {
     cursor: pointer;
   }

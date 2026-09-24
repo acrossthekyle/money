@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, Moon, Plus, Sun, Undo2, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import Link from 'next/link';
 
 import { logout } from '@/actions/auth/logout';
@@ -38,9 +38,9 @@ export default function Dialog({ netWorth }: Props) {
       onCancel={onCancel}
     >
       <h2 className="hidden" id="dialog-header">Options</h2>
-      <div className={styles.container(isActive)}>
+      <Ui.Dialog.DialogInner isActive={isActive}>
         <button className={styles.close} onClick={onClose} type="button">
-          <X className={styles.icon} />
+          <X className={styles.x} />
         </button>
         <ul className={styles.items}>
           <li className={cs(styles.item, styles.header)}>
@@ -54,7 +54,6 @@ export default function Dialog({ netWorth }: Props) {
               <h3 className={styles.heading}>Create</h3>
               <p className={styles.value}>
                 <span>Account/asset</span>
-                <Plus className={styles.icon} />
               </p>
             </Link>
           </li>
@@ -63,7 +62,6 @@ export default function Dialog({ netWorth }: Props) {
               <h3 className={styles.heading}>Accounts/Assets</h3>
               <p className={styles.value}>
                 <span>View</span>
-                <ArrowRight className={styles.icon} />
               </p>
             </Link>
           </li>
@@ -73,7 +71,6 @@ export default function Dialog({ netWorth }: Props) {
                 <h3 className={styles.heading}>Reset</h3>
                 <p className={styles.value}>
                   <span>Back to today</span>
-                  <Undo2 className={styles.icon} />
                 </p>
               </button>
             </li>
@@ -84,11 +81,6 @@ export default function Dialog({ netWorth }: Props) {
                 <h3 className={styles.heading}>Change Theme</h3>
                 <p className={styles.value}>
                   <span>Current: {theme}</span>
-                  {theme === 'light' ? (
-                    <Moon className={styles.icon} />
-                  ) : (
-                    <Sun className={styles.icon} />
-                  )}
                 </p>
               </button>
             </li>
@@ -99,7 +91,6 @@ export default function Dialog({ netWorth }: Props) {
                 <h3 className={styles.heading}>Log Out</h3>
                 <p className={styles.value}>
                   <span>End Session</span>
-                  <ArrowRight className={styles.icon} />
                 </p>
               </button>
             </form>
@@ -111,32 +102,18 @@ export default function Dialog({ netWorth }: Props) {
             </p>
           </li>
         </ul>
-      </div>
+      </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>
   );
 };
 
 const styles = tw({
-  container: (isActive: boolean) => tw(`
-    relative
-    w-full max-w-sm
-    p-4
-    bg-(--background)
-    border border-current/5.5 dark:border-current/10.5
-    rounded-none
-
-    motion-safe:duration-300
-
-    ${isActive
-      ? `opacity-100 translate-y-0`
-      : `opacity-0 translate-y-8`}
-  `),
   close: `
-    absolute top-2 right-2
+    absolute top-2 right-2 z-10
     p-2
   `,
-  icon: `
-    w-4 h-4
+  x: `
+    w-5 h-5
     stroke-2
   `,
   items: `
@@ -152,8 +129,12 @@ const styles = tw({
     border-t border-current/7.5 dark:border-current/10.5
   `,
   item: `
+    relative
+    flex flex-col
     w-full
-    text-sm text-left
+    text-base text-left
+
+    md:text-sm
   `,
   heading: `
     font-bold
@@ -163,8 +144,10 @@ const styles = tw({
     flex items-center justify-between
     w-full
     uppercase
-    text-xs
+    text-sm/4
     tracking-wide
+
+    md:text-xs
   `,
   currency: `
     mt-0.5

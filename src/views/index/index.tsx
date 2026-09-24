@@ -68,13 +68,17 @@ const styles = tw({
   header: `
     flex flex-col
     uppercase
-    text-sm
+    text-base
+
+    md:text-sm
   `,
   title: `
     font-bold
   `,
   lid: `
-    text-xs
+    text-sm
+
+    md:text-xs
   `,
   items: `
     flex flex-col gap-4
