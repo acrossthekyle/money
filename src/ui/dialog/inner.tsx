@@ -34,6 +34,6 @@ const styles = {
       ? `scale-100 opacity-100 translate-y-0`
       : `scale-80 opacity-0 translate-y-24`}
 
-    sm:max-w-lg
+    sm:max-w-xs
   `),
 };

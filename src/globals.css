@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --breakpoint-xs: 28.125rem; /* 450px */
-  --breakpoint-xxs: 22.8125rem; /* 365px */
+  --breakpoint-xs: 25rem; /* 400px */
 
   --font-geist: var(--font-geist);
   --font-roboto: var(--font-roboto);
@@ -21,8 +20,8 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
+  --background: #ffffe3;
+  --foreground: #18181b;
 }
 
 [data-theme="dark"] {

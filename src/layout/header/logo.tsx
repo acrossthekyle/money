@@ -14,10 +14,9 @@ export default function Logo() {
 const styles = tw({
   anchor: `
     flex items-center gap-2
-    p-2
-    text-xs
+    text-sm
     uppercase
-    font-medium
+    font-medium font-roboto
     tracking-widest
   `,
   icon: `

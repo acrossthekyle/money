@@ -9,3 +9,10 @@ export const MONTHS = [
   'JULY', 'AUG', 'SEPT',
   'OCT', 'NOV', 'DEC',
 ];
+
+export const MONTHS_FULL = [
+  'JANUARY', 'FEBRUARY', 'MARCH',
+  'APRIL', 'MAY', 'JUNE',
+  'JULY', 'AUGUST', 'SEPTEMBER',
+  'OCTOBER', 'NOVEMBER', 'DECEMBER',
+];

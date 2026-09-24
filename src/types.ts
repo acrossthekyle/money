@@ -34,6 +34,10 @@ export type Budget = {
   schedule: string
   notes: string;
   omissions: string[];
+  holding?: {
+    from: string;
+    to: string;
+  };
 };
 
 export type BudgetFormState = {
@@ -81,9 +85,11 @@ export type CalendarDay = {
   };
   iso: string;
   isBeforeToday: boolean;
+  isFirstOfMonth: boolean;
   isInMonth: boolean;
   isThisMonth: boolean;
   isToday: boolean;
+  isWeekend: boolean;
   month: number;
   year: number;
 };
@@ -93,6 +99,12 @@ export type CalendarMonth = {
   isThisMonth: boolean;
   month: number;
   name: string;
+  nextMonth: {
+    iso: string;
+    isValid: boolean;
+    month: number;
+    year: number;
+  };
   todayISO: string;
   year: number;
   days: CalendarDay[];

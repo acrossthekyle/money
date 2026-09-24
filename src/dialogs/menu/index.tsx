@@ -1,6 +1,7 @@
 'use client';
 
-import { DoorOpen, Moon, Plus, Sun, Undo2, X } from 'lucide-react';
+import { ArrowRight, Moon, Plus, Sun, Undo2, X } from 'lucide-react';
+import Link from 'next/link';
 
 import { logout } from '@/actions/auth/logout';
 import tw, { cs } from '@/styles';
@@ -62,6 +63,15 @@ export default function Dialog({
             </button>
           </li>
           <li>
+            <Link className={styles.item} onClick={onClose} href="/holdings">
+              <h3 className={styles.heading}>Accounts/Assets</h3>
+              <p className={styles.value}>
+                <span>View</span>
+                <ArrowRight className={styles.icon} />
+              </p>
+            </Link>
+          </li>
+          <li>
             <button className={styles.item} onClick={handleOnReset} type="button">
               <h3 className={styles.heading}>Reset</h3>
               <p className={styles.value}>
@@ -91,7 +101,7 @@ export default function Dialog({
                 <h3 className={styles.heading}>Log Out</h3>
                 <p className={styles.value}>
                   <span>End Session</span>
-                  <DoorOpen className={styles.icon} />
+                  <ArrowRight className={styles.icon} />
                 </p>
               </button>
             </form>
@@ -110,20 +120,20 @@ export default function Dialog({
 
 const styles = tw({
   container: (isActive: boolean) => tw(`
-    absolute top-4 right-4
-    w-72
+    absolute top-4 right-4 left-4
     p-4
     bg-(--background)
-    border border-current/5.5 dark:border-current/17.5
-    rounded-xl
-    shadow-lg/12.5 dark:shadow-lg/75
+    border border-current/5.5 dark:border-current/10.5
+    rounded-none
 
     motion-safe:duration-300
 
     ${isActive
-      ? `opacity-100 translate-x-0`
-      : `opacity-0 -translate-x-8`}
+      ? `opacity-100 translate-y-0`
+      : `opacity-0 translate-y-8`}
 
+    xs:w-72
+    xs:left-auto
     md:top-6
     md:right-6
   `),
@@ -137,36 +147,32 @@ const styles = tw({
   `,
   items: `
     flex flex-col gap-4
+    font-roboto
   `,
   header: `
     pb-4
-    border-b border-current/7.5 dark:border-current/17.5
+    border-b border-current/7.5 dark:border-current/10.5
   `,
   footer: `
     pt-4
-    border-t border-current/7.5 dark:border-current/17.5
+    border-t border-current/7.5 dark:border-current/10.5
   `,
   item: `
     w-full
-    text-base text-left
-    leading-[1.25]
-
-    md:text-sm
+    text-sm text-left
   `,
   heading: `
     font-bold
+    uppercase
   `,
   value: `
     flex items-center justify-between
     w-full
-    font-light
-    capitalize
+    uppercase
+    text-xs
+    tracking-wide
   `,
   currency: `
     mt-0.5
-    text-base
-    font-roboto font-normal
-
-    md:text-sm
   `,
 });

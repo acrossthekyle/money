@@ -7,7 +7,6 @@ import tw from '@/styles';
 import type { Budget, CalendarMonth, CalendarYear, Holding } from '@/types'
 
 import Amounts from './amounts';
-import Balance from './balance';
 import Budgets from './budgets';
 import Calendar from './calendar';
 import Holdings from './holdings';
@@ -49,6 +48,7 @@ export default function View({ data }: Props) {
       <main className={styles.container}>
         <Holdings
           calendar={data.calendar.month}
+          date={data.date}
           holding={data.holding}
           onEdit={handleOnSetHolding}
         />
@@ -56,21 +56,11 @@ export default function View({ data }: Props) {
           calendar={data.calendar.month}
           date={data.date}
           holding={data.holding}
-          onAdd={handleOnSetBudget}
           onEdit={handleOnSetBudget}
         />
-        <Amounts
-          calendar={data.calendar.month}
-        />
-        <Placeholder />
-        <Balance
-          calendar={data.calendar.month}
-          date={data.date}
-          holding={data.holding}
-        />
+        <Amounts calendar={data.calendar.month} />
         <Budgets
           calendar={data.calendar.month}
-          date={data.date}
           holding={data.holding}
           onAdd={handleOnSetBudget}
           onEdit={handleOnSetBudget}
@@ -81,7 +71,6 @@ export default function View({ data }: Props) {
         netWorth={data.metrics.netWorth}
       />
       <Dialogs.Holding holding={holding} />
-      <Dialogs.Holdings holding={data.holding} holdings={data.holdings} />
       <Dialogs.Year date={data.date} years={data.calendar.years} />
       <Dialogs.Budget
         budget={budget}
@@ -96,36 +85,16 @@ export default function View({ data }: Props) {
 const styles = tw({
   container: `
     relative
-    grid grid-cols-24
-    h-auto
-    mt-14
-    pb-0
+    flex flex-col gap-4
+    w-full max-w-sm
+    mx-auto
+    px-6 pb-8
 
-    md:grid-rows-12
-    md:mt-24
-    md:pb-10
-    md:h-[calc(100svh-6rem)]
-
-    landscape-constrained:h-auto
-
-    lg:before:absolute
-    lg:before:top-0
-    lg:before:bottom-10
-    lg:before:left-1/3
-    lg:before:w-px
-    lg:before:bg-(--foreground)/12.5
-    lg:dark:before:bg-(--foreground)/22.5
-
-    after:hidden
-    after:absolute
-    after:top-0
-    after:bottom-10
-    after:right-1/2
-    after:w-px
-    after:bg-(--foreground)/12.5
-    dark:after:bg-(--foreground)/22.5
-
-    md:after:block
-    lg:after:right-1/3
+    lg:pb-6
+  `,
+  divider: `
+    h-px w-4
+    my-4
+    bg-(--foreground)/75
   `,
 });

@@ -1,22 +1,18 @@
 'use client';
 
-import { addMonths, getMonth, getYear, parseISO } from 'date-fns';
-import { Calendar, ChevronRight, FoldVertical, Plus, UnfoldVertical } from 'lucide-react';
-import { useState } from 'react';
+import { ChevronRight } from 'lucide-react';
 
-import { useBudget, useUpdateUrl, useYear } from '@/hooks';
-import tw, { cs } from '@/styles';
+import { MONTHS_FULL } from '@/constants';
+import { useUpdateUrl, useYear } from '@/hooks';
+import tw from '@/styles';
 import type { Budget, CalendarMonth, Holding } from '@/types';
-import { pad } from '@/utils';
 
 import Grid from './grid';
-import List from './list';
 
 type Props = {
   calendar: CalendarMonth;
   date: string;
   holding: Holding;
-  onAdd: () => void;
   onEdit: (budget: Budget) => void;
 };
 
@@ -24,48 +20,41 @@ export default function Section({
   calendar,
   date,
   holding,
-  onAdd,
   onEdit,
 }: Props) {
-  const [isCompact, setIsCompact] = useState(false);
-
   const updateUrl = useUpdateUrl();
   const { onYear } = useYear();
-  const { onBudget } = useBudget();
 
   const handleOnNext = () => {
-    const updated = addMonths(parseISO(date), 1);
+    if (calendar.nextMonth.isValid) {
+      updateUrl(
+        ['date', 'month', 'year'],
+        [
+          calendar.nextMonth.iso,
+          String(calendar.nextMonth.month),
+          String(calendar.nextMonth.year),
+        ],
+      );
+
+      return;
+    }
 
     updateUrl(
+      ['date', 'month', 'year'],
       [
-        'date',
-        'month',
-        'year',
-      ],
-      [
-        `${getYear(updated)}-${pad(getMonth(updated) + 1)}-01`,
-        String(getMonth(updated)),
-        String(getYear(updated)),
+        calendar.todayISO,
+        '',
+        '',
       ],
     );
   };
 
-  const handleOnAdd = () => {
-    onAdd();
-
-    onBudget();
-  };
-
-  const handleOnFoldUnfold = () => {
-    setIsCompact(previous => !previous);
-  };
-
   return (
-    <section aria-label="calendar" className={styles.container}>
+    <>
       <div className={styles.upper}>
         <h2 className={styles.header}>
           <span className={styles.title}>
-            {calendar.name}
+            {MONTHS_FULL[calendar.month]}
           </span>
           <span className={styles.lid}>
             {calendar.year}
@@ -76,106 +65,57 @@ export default function Section({
           className={styles.controls}
         >
           <button
-            className={
-              cs(
-                styles.control,
-                styles.hidden,
-                isCompact && styles.dark,
-              )
-            }
-            onClick={handleOnFoldUnfold}
-            title="Toggle compact day list view"
-            type="button"
-          >
-            {isCompact ? (
-              <UnfoldVertical className={styles.icon} />
-            ) : (
-              <FoldVertical className={styles.icon} />
-            )}
-          </button>
-          <button
-            className={cs(styles.control, styles.hidden)}
-            onClick={handleOnAdd}
-            title="Add budget"
-            type="button"
-          >
-            <Plus className={styles.icon} />
-          </button>
-          <button
             className={styles.control}
             onClick={onYear}
             title="Choose month"
             type="button"
           >
-            <Calendar className={styles.icon} />
-          </button>
-          <button
-            className={styles.control}
-            onClick={handleOnNext}
-            title="Next month"
-            type="button"
-          >
-            <ChevronRight className={styles.icon} />
+            Calendar
           </button>
         </nav>
       </div>
       <Grid calendar={calendar} date={date} />
-      <List
-        calendar={calendar}
-        holding={holding}
-        isCompact={isCompact}
-        onEdit={onEdit}
-      />
-    </section>
+    </>
   );
 };
 
 const styles = tw({
-  container: `
-    col-start-1 row-start-7 col-span-24 row-span-9
-    flex flex-col
-    mt-18
-
-    md:col-span-12
-    md:justify-end
-    md:mt-0
-    lg:row-start-4
-    lg:col-span-8
-  `,
   upper: `
     relative
-    mx-4 mb-2
-
-    md:mx-10
-    md:mb-6
+    mt-1 mb-4
   `,
   header: `
-    flex flex-col gap-1
+    flex flex-col gap-2
+    font-roboto
   `,
   title: `
-    font-black
-    text-4xl
+    font-bold
+    text-sm
     leading-[0.8]
-
-    xxs:text-5xl
-    md:text-6xl
   `,
   lid: `
-    text-lg text-current/50
+    text-xs
   `,
   controls: `
-    absolute bottom-2 right-0
-    flex gap-2
+    absolute bottom-0 right-0
+    flex gap-6
+    font-roboto
   `,
   control: `
-    flex items-center justify-center
-    rounded-full
-    border border-current/22.5
-    h-9 w-9
+    flex items-center
+    py-1 px-2
+    font-roboto
+    uppercase
+    text-xs
+    border border-current/62.5
+    rounded-sm
+    tracking-wide
 
     motion-safe:duration-300
 
-    hover:border-current/62.5
+    hover:border-current/90
+
+    md:text-tiny
   `,
   dark: `
     bg-(--foreground)
@@ -185,10 +125,7 @@ const styles = tw({
     md:hidden
   `,
   icon: `
-    w-5 h-5
-    stroke-1
-
-    md:w-4
-    md:h-4
+    w-3 h-3
+    stroke-2
   `,
 });

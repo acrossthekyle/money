@@ -1,6 +1,7 @@
 import tw from '@/styles';
 import { authentication } from '@/utils/authentication';
 
+import Info from './info';
 import Logo from './logo';
 import Menu from './menu';
 
@@ -10,8 +11,10 @@ export default async function Header() {
   return (
     <header className={styles.container}>
       <Logo />
-      {isAuthenticated && (
+      {isAuthenticated ? (
         <Menu />
+      ) : (
+        <Info />
       )}
     </header>
   );
@@ -19,11 +22,12 @@ export default async function Header() {
 
 const styles = tw({
   container: `
-    absolute top-3 left-2 right-3.75
+    relative
     flex items-center justify-between
+    w-full max-w-sm
+    mx-auto
+    pt-6 px-6 pb-4
 
-    md:top-8
-    md:left-8
-    md:right-9
+    md:pt-12
   `,
 });

@@ -1,5 +1,6 @@
 import {
   addDays,
+  addMonths,
   addYears,
   eachMonthOfInterval,
   eachDayOfInterval,
@@ -7,8 +8,11 @@ import {
   getMonth,
   getYear,
   isBefore,
+  isEqual,
+  isFirstDayOfMonth,
   isThisMonth,
   isToday,
+  isWeekend,
   startOfMonth,
   startOfWeek,
   startOfYear,
@@ -36,7 +40,7 @@ export function create(zone: string): CalendarYear[] {
     const targetMonthIndex = getMonth(month);
 
     if (
-      output.length >= 10 &&
+      output.length >= 11 &&
       (!result || result.year !== year)
     ) {
       return;
@@ -71,18 +75,28 @@ export function create(zone: string): CalendarYear[] {
       },
       iso: format(day, DATE_FORMAT),
       isBeforeToday: isToday(day) ? false : isBefore(day, today),
+      isFirstOfMonth: isFirstDayOfMonth(day),
       isInMonth: getMonth(day) === targetMonthIndex,
       isThisMonth: isThisMonth(day),
       isToday: isToday(day),
+      isWeekend: isWeekend(day),
       month: getMonth(day),
       year: getYear(day),
     }));
+
+    const nextMonth = addMonths(month, 1);
 
     result.months.push({
       isPastMonth: isBefore(monthStart, startOfMonth(today)),
       isThisMonth: isThisMonth(month),
       month: getMonth(month),
       name: MONTHS[targetMonthIndex],
+      nextMonth: {
+        iso: format(nextMonth, 'yyyy-MM-dd'),
+        isValid: !isEqual(nextMonth, end),
+        month: getMonth(nextMonth),
+        year: getYear(nextMonth),
+      },
       todayISO: format(today, DATE_FORMAT),
       year,
       days,

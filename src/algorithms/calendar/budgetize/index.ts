@@ -17,13 +17,17 @@ export function budgetize(
   Array.from(days.keys()).sort().forEach((key) => {
     const dayOfMonth = days.get(key);
 
+    const debits: CalendarAmount[] = [];
+    const credits: CalendarAmount[] = [];
+
     if (!dayOfMonth.isBeforeToday) {
       const matches = budgets.get(key) || [];
-      const debits: CalendarAmount[] = [];
-      const credits: CalendarAmount[] = [];
 
       matches.forEach((match: Data) => {
-        dayOfMonth.budgets.push(match.budget);
+        dayOfMonth.budgets.push({
+          ...match.budget,
+          holding: match.holding,
+        });
 
         const { amount, income, expense } = updateRunningBalance(
           match.budget.type,
@@ -51,20 +55,20 @@ export function budgetize(
           });
         }
       });
-
-      dayOfMonth.balance = Number(runningBalance.toFixed(2));
-
-      if (!dayOfMonth.debits) {
-        dayOfMonth.debits = [];
-      }
-
-      if (!dayOfMonth.credits) {
-        dayOfMonth.credits = [];
-      }
-
-      dayOfMonth.debits.push(...debits);
-      dayOfMonth.credits.push(...credits);
     }
+
+    dayOfMonth.balance = Number(runningBalance.toFixed(2));
+
+    if (!dayOfMonth.debits) {
+      dayOfMonth.debits = [];
+    }
+
+    if (!dayOfMonth.credits) {
+      dayOfMonth.credits = [];
+    }
+
+    dayOfMonth.debits.push(...debits);
+    dayOfMonth.credits.push(...credits);
   });
 
   return calendar;

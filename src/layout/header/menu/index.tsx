@@ -11,18 +11,25 @@ export default function Menu() {
 
   return (
     <button
+      className={styles.container}
       onClick={handleOnClick}
       title="Menu"
       type="button"
     >
-      <Ellipsis className={styles.ellipsis} />
+      <Ellipsis className={styles.icon} />
     </button>
   );
 };
 
 const styles = tw({
-  ellipsis: `
-    w-6 h-6
+  container: `
+    text-xs
+    uppercase
+    font-roboto
+    tracking-widest
+  `,
+  icon: `
+    w-5 h-5
     stroke-2
   `,
 });

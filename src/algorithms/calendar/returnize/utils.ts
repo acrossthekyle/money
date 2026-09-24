@@ -1,15 +1,11 @@
-import type { CalendarDay, Holding } from '@/types';
+import type { Holding } from '@/types';
 
 export function calculateReturnAmount(
   rate: number,
-  daysInMonth: CalendarDay[],
+  sum: number,
+  daysInMonth: number,
 ) {
-  const sum = daysInMonth.reduce(
-    (accumulator, day) => accumulator + day.balance,
-    0,
-  );
-
-  const average = sum / daysInMonth.length;
+  const average = sum / daysInMonth;
 
   return Number((average * rate).toFixed(2));
 };

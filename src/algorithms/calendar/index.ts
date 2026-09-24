@@ -3,8 +3,10 @@ import { createBudgetIterations } from '@/utils/budgets';
 
 import { budgetize } from './budgetize';
 import { create } from './create';
+import { recalculate } from './recalculate';
 import { returnize } from './returnize';
 import type { Data } from './types';
+import { getBudgetHolding } from './utils';
 
 export async function calendar(
   holdings: Holding[],
@@ -35,26 +37,30 @@ export async function calendar(
     .map((budget: Budget) => {
       const iterations = createBudgetIterations(budget, zone);
 
-      const transfereeHolding = holdings.find((item: Holding) => {
-        if (budget.transferee !== '') {
-          return budget.transferee === item.id;
-        }
-
-        return false;
-      });
+      const { from, to, transfereeType } = getBudgetHolding(
+        budget,
+        holding,
+        holdings,
+      );
 
       return {
         budget,
+        holding: {
+          from,
+          to,
+        },
         holdingType: holding.type,
         iterations,
-        isTransfer: budget.transferee !== '',
-        transfereeHoldingType: transfereeHolding?.type || '',
+        isTransfer: !!budget.transferee,
+        transfereeHoldingType: transfereeType,
         transfereeType: budget.type === 'debit' ? 'receiver' : 'sender',
       };
     });
 
-  return returnize(
-    budgetize(calendar, data, startingBalance),
-    holding,
+  return recalculate(
+    returnize(
+      budgetize(calendar, data, startingBalance),
+      holding,
+    ),
   );
 };

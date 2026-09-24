@@ -21,7 +21,6 @@ export default function View({ data }: Props) {
     alert,
     error,
     formData,
-    handleOnInfo,
     isPending,
     zone,
   } = useModel(data.alert);
@@ -29,72 +28,67 @@ export default function View({ data }: Props) {
   return (
     <>
       <main className={styles.container}>
-        <div className={styles.inner}>
-          <Ui.Form.Container action={action} id="login-form">
-            <Ui.Alerts.Banner isFromCookie value={alert} />
-            {error !== null && (
-              <Ui.Alerts.Banner isPositive={false} value={error} />
-            )}
-            <Ui.Form.Inner className={styles.content}>
-              <Ui.Form.Field className={styles.field}>
-                <Ui.Form.Input
-                  id="username"
-                  name="username"
-                  type="text"
-                  placeholder=" "
-                  defaultValue={formData?.username}
-                  required
-                  disabled={isPending}
-                />
-                <Ui.Form.Label htmlFor="username" isRequired>
-                  Email
-                </Ui.Form.Label>
-              </Ui.Form.Field>
-              <Ui.Form.Field className={styles.field}>
-                <Ui.Form.Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder=" "
-                  required
-                  disabled={isPending}
-                />
-                <Ui.Form.Label htmlFor="password" isRequired>
-                  Password
-                </Ui.Form.Label>
-              </Ui.Form.Field>
-            </Ui.Form.Inner>
-            <Ui.Form.Footer>
-              <Link
-                className={styles.link}
-                href="https://acrossthekyle.com"
-                target="_blank"
-              >
-                About the Developer <ArrowUpRight className={styles.arrow} />
-              </Link>
-              <Ui.Form.Button
-                type="submit"
+        <Ui.Form.Container action={action} id="login-form">
+          <Ui.Alerts.Banner isFromCookie value={alert} />
+          {error !== null && (
+            <Ui.Alerts.Banner isPositive={false} value={error} />
+          )}
+          <Ui.Form.Inner className={styles.content}>
+            <Ui.Form.Field className={styles.field}>
+              <Ui.Form.Input
+                id="username"
+                name="username"
+                type="text"
+                placeholder=" "
+                defaultValue={formData?.username}
+                required
                 disabled={isPending}
-              >
-                {isPending ? (
-                  <LoaderCircle className={cs(styles.icon, styles.spin)} />
-                ) : (
-                  <ArrowRight className={styles.icon} />
-                )}
-              </Ui.Form.Button>
-            </Ui.Form.Footer>
-            <input
-              className="hidden"
-              name="timezone"
-              readOnly
-              type="text"
-              value={zone}
-            />
-          </Ui.Form.Container>
-        </div>
-        <button className={styles.info} onClick={handleOnInfo} type="button">
-          <CircleQuestionMark className={styles.icon} />
-        </button>
+              />
+              <Ui.Form.Label htmlFor="username" isRequired>
+                Email
+              </Ui.Form.Label>
+            </Ui.Form.Field>
+            <Ui.Form.Field className={styles.field}>
+              <Ui.Form.Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder=" "
+                required
+                disabled={isPending}
+              />
+              <Ui.Form.Label htmlFor="password" isRequired>
+                Password
+              </Ui.Form.Label>
+            </Ui.Form.Field>
+          </Ui.Form.Inner>
+          <Ui.Form.Footer>
+            <Link
+              className={styles.link}
+              href="https://acrossthekyle.com"
+              target="_blank"
+            >
+              About the Developer <ArrowUpRight className={styles.icon} />
+            </Link>
+            <Ui.Form.Button
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending ? (
+                <LoaderCircle className={cs(styles.icon, styles.spin)} />
+              ) : (
+                <ArrowRight className={styles.icon} />
+              )}
+            </Ui.Form.Button>
+          </Ui.Form.Footer>
+          <input
+            className="hidden"
+            name="timezone"
+            readOnly
+            type="text"
+            value={zone}
+          />
+        </Ui.Form.Container>
       </main>
       <Dialogs.Info />
     </>
@@ -103,14 +97,12 @@ export default function View({ data }: Props) {
 
 const styles = tw({
   container: `
+    relative
     flex items-center justify-center
-    h-svh
-  `,
-  inner: `
-    w-full
-    mx-4
-
-    sm:max-w-xs
+    h-[calc(100svh-7.5rem)]
+    w-full max-w-sm
+    mx-auto
+    px-2 pb-8
   `,
   content: `
     !gap-x-0
@@ -127,19 +119,8 @@ const styles = tw({
     md:text-tiny
     md:font-normal
   `,
-  arrow: `
-    w-3 h-3
-    stroke-1
-  `,
-  info: `
-    absolute right-4 top-4 z-10
-    p-2
-
-    md:right-8
-    md:top-8
-  `,
   icon: `
-    w-5 h-5
+    w-3 h-3
     stroke-1
   `,
   spin: `

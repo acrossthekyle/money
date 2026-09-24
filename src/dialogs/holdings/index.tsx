@@ -43,8 +43,7 @@ const styles = tw({
     p-4
     bg-(--background)
     border border-current/5.5 dark:border-current/17.5
-    rounded-xl
-    shadow-lg/12.5 dark:shadow-lg/75
+    rounded-md
     overflow-y-auto
 
     motion-safe:duration-300

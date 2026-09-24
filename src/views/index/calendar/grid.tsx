@@ -5,6 +5,7 @@ import { getDate } from 'date-fns';
 import { useUpdateUrl } from '@/hooks';
 import tw, { cs } from '@/styles';
 import type { CalendarDay, CalendarMonth } from '@/types';
+import { pad } from '@/utils';
 
 type Props = {
   calendar: CalendarMonth;
@@ -33,18 +34,18 @@ export default function Grid({ calendar, date }: Props) {
         className={cs(styles.heading, styles.faded)}
         role="presentation"
       >
-        S
+        SU
       </li>
-      <li className={styles.heading} role="presentation">M</li>
-      <li className={styles.heading} role="presentation">T</li>
-      <li className={styles.heading} role="presentation">W</li>
-      <li className={styles.heading} role="presentation">T</li>
-      <li className={styles.heading} role="presentation">F</li>
+      <li className={styles.heading} role="presentation">MO</li>
+      <li className={styles.heading} role="presentation">TU</li>
+      <li className={styles.heading} role="presentation">WE</li>
+      <li className={styles.heading} role="presentation">TH</li>
+      <li className={styles.heading} role="presentation">FR</li>
       <li
         className={cs(styles.heading, styles.faded)}
         role="presentation"
       >
-        S
+        SA
       </li>
 
       {calendar.days.map((day) => (
@@ -53,32 +54,27 @@ export default function Grid({ calendar, date }: Props) {
             cs(
               styles.item,
               !day.isInMonth && styles.faded,
+              (day.isInMonth && day.isBeforeToday) && styles.disabled,
+              (day.isInMonth && !day.isBeforeToday) && styles.hoverable,
               day.iso === date && styles.highlighted,
-              day.balance < 0 && !day.isToday && styles.negative,
-              day.isToday && styles.boldened,
+              (day.isInMonth && !day.isBeforeToday) && day.balance < 0 && !day.isToday && styles.negative,
+              (day.isToday && day.iso !== date) && styles.boldened,
             )
           }
           key={day.iso}
         >
           <button
             className={styles.day}
-            disabled={!day.isInMonth}
+            disabled={!day.isInMonth || day.isBeforeToday}
             onClick={() => handleOnDay(day)}
             type="button"
           >
-            {getDate(day.date)}
+            {pad(getDate(day.date))}
             {
               day.isInMonth &&
               (day.budgets.length > 0 || day.return.amount !== null) &&
               (
-                <span className={styles.dots}>
-                  {day.budgets.map((_, index) => (
-                    <span className={styles.dot} key={index} />
-                  ))}
-                  {day.return.amount !== null && (
-                    <span className={styles.dot} />
-                  )}
-                </span>
+                <span className={styles.bar} />
               )
             }
           </button>
@@ -90,38 +86,34 @@ export default function Grid({ calendar, date }: Props) {
 
 const styles = tw({
   container: `
-    hidden
-
-    md:grid
-    md:grid-cols-7
-    md:gap-2
-    md:mx-8
+    grid grid-cols-7 gap-2
+    -mx-3.5
   `,
   heading: `
-    h-3
-    text-tiny text-center
-    font-semibold
-
-    md:h-4
+    h-6
+    text-sm text-center
+    font-roboto
   `,
   faded: `
-    text-current/32.5
+    text-current/22.5
   `,
   item: `
     relative
     text-sm text-center
-
-    motion-safe:duration-300
 
     before:absolute
     before:top-1/2
     before:left-1/2
     before:-translate-x-1/2
     before:-translate-y-1/2
-    before:h-10
-    before:w-10
-    before:rounded-full
+    before:h-8
+    before:w-8
+    before:rounded-md
+    before:bg-transparent
 
+    motion-safe:before:duration-300
+  `,
+  hoverable: `
     hover:before:bg-(--foreground)/5.5
   `,
   highlighted: `
@@ -134,7 +126,10 @@ const styles = tw({
     font-black
     text-(--foreground)
 
-    before:bg-(--foreground)/5.5
+    before:!bg-(--foreground)/5.5
+  `,
+  disabled: `
+    text-current/40 dark:text-current/50
   `,
   negative: `
     text-red-400 dark:text-rose-400
@@ -144,19 +139,12 @@ const styles = tw({
     flex items-center justify-center
     w-full h-full
     py-1.25
-
-    md:py-2
+    font-roboto
   `,
-  dots: `
-    absolute bottom-0.25 left-1/2
+  bar: `
+    absolute bottom-0.5 left-1/2
     -translate-x-1/2
-    flex gap-0.5
-
-    md:bottom-1
-  `,
-  dot: `
-    block
-    w-1 h-1
+    w-4 h-1
     rounded-full
     bg-current
   `,

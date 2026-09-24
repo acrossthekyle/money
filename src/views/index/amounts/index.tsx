@@ -1,6 +1,4 @@
-'use client';
-
-import tw, { cs } from '@/styles';
+import tw from '@/styles';
 import type { CalendarAmount, CalendarMonth } from '@/types';
 import { currency } from '@/utils';
 
@@ -36,13 +34,13 @@ export default function Section({ calendar }: Props) {
     <section aria-label="income and expenses this month" className={styles.container}>
       <div className={styles.section}>
         <h3 className={styles.heading}>Income</h3>
-        <p className={cs(styles.amount, styles.positive)}>
+        <p className={styles.positive}>
           ${currency(income)}
         </p>
       </div>
       <div className={styles.section}>
         <h3 className={styles.heading}>Expenses</h3>
-        <p className={cs(styles.amount, styles.negative)}>
+        <p className={styles.negative}>
           ${currency(expense)}
         </p>
       </div>
@@ -52,49 +50,32 @@ export default function Section({ calendar }: Props) {
 
 const styles = tw({
   container: `
-    col-start-13 row-start-4 col-span-12 row-span-2
-    flex flex-col items-end gap-4
-    mx-4 mt-4
-
-    md:col-span-6
-    md:col-start-7
-    md:mx-10
-    md:mt-6
-    lg:col-start-9
-    lg:col-span-8
-    lg:row-start-1
-    lg:row-span-1
-    lg:flex-row
-    lg:justify-between
-    lg:gap-0
-    lg:items-start
-    lg:mt-0
+    flex justify-between gap-4
+    mt-1
+    font-roboto
   `,
   section: `
     flex flex-col
-    text-right
+    text-right text-sm first-of-type:text-left
 
     md:gap-1
-    lg:first-of-type:text-left
   `,
   heading: `
-    font-roboto font-bold
-    text-xs
+    text-sm
+    font-bold
     uppercase
     tracking-wide
-
-    md:text-tiny
-  `,
-  amount: `
-    text-xl
-    font-roboto
-
-    md:text-base
   `,
   positive: `
-    text-green-600
+    text-base
+    text-green-600 dark:text-lime-500
+
+    md:text-sm
   `,
   negative: `
+    text-base
     text-red-400 dark:text-rose-400
+
+    md:text-sm
   `,
 });

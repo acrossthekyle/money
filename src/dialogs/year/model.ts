@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useUpdateUrl, useYear } from '@/hooks';
 import type { CalendarMonth, CalendarYear } from '@/types';
@@ -11,9 +11,15 @@ export function useModel(years: CalendarYear[], date: string) {
 
   const updateUrl = useUpdateUrl();
 
-  const [index, setIndex] = useState(
-    years.findIndex(year => year.year === Number(date.split('-')[0])),
-  );
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (isActive) {
+      setIndex(
+        years.findIndex(year => year.year === Number(date.split('-')[0])),
+      );
+    }
+  }, [isActive]);
 
   const handleOnMonth = (month: CalendarMonth) => {
     updateUrl(
