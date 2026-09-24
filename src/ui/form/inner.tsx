@@ -17,7 +17,6 @@ export default function Inner({
 
 const styles = tw({
   container: `
-    grid grid-cols-24 xs:gap-x-4 gap-y-6
-    p-4 pt-1
+    grid grid-cols-12 xs:gap-x-6 gap-y-6
   `,
 });

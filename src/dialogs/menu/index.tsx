@@ -12,15 +12,11 @@ import { useModel } from './model';
 
 type Props = {
   netWorth: number;
-  onAdd: () => void;
 };
 
-export default function Dialog({
-  netWorth,
-  onAdd,
-}: Props) {
+export default function Dialog({ netWorth }: Props) {
   const {
-    handleOnCreate,
+    canReset,
     handleOnReset,
     handleOnTheme,
     instance,
@@ -31,7 +27,7 @@ export default function Dialog({
     onClose,
     theme,
     zone,
-  } = useModel(onAdd);
+  } = useModel();
 
   return (
     <Ui.Dialog.Dialog
@@ -54,16 +50,16 @@ export default function Dialog({
             </p>
           </li>
           <li>
-            <button className={styles.item} onClick={handleOnCreate} type="button">
+            <Link className={styles.item} onClick={onClose} href="/holding">
               <h3 className={styles.heading}>Create</h3>
               <p className={styles.value}>
                 <span>Account/asset</span>
                 <Plus className={styles.icon} />
               </p>
-            </button>
+            </Link>
           </li>
           <li>
-            <Link className={styles.item} onClick={onClose} href="/holdings">
+            <Link className={styles.item} onClick={onClose} href="/">
               <h3 className={styles.heading}>Accounts/Assets</h3>
               <p className={styles.value}>
                 <span>View</span>
@@ -71,15 +67,17 @@ export default function Dialog({
               </p>
             </Link>
           </li>
-          <li>
-            <button className={styles.item} onClick={handleOnReset} type="button">
-              <h3 className={styles.heading}>Reset</h3>
-              <p className={styles.value}>
-                <span>Back to today</span>
-                <Undo2 className={styles.icon} />
-              </p>
-            </button>
-          </li>
+          {canReset && (
+            <li>
+              <button className={styles.item} onClick={handleOnReset} type="button">
+                <h3 className={styles.heading}>Reset</h3>
+                <p className={styles.value}>
+                  <span>Back to today</span>
+                  <Undo2 className={styles.icon} />
+                </p>
+              </button>
+            </li>
+          )}
           {isMounted && (
             <li>
               <button className={styles.item} onClick={handleOnTheme} type="button">

@@ -88,6 +88,7 @@ export function create(zone: string): CalendarYear[] {
 
     result.months.push({
       isPastMonth: isBefore(monthStart, startOfMonth(today)),
+      isPreviousMonthThisMonth: isThisMonth(addMonths(month, -1)),
       isThisMonth: isThisMonth(month),
       month: getMonth(month),
       name: MONTHS[targetMonthIndex],

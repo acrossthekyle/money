@@ -96,6 +96,7 @@ export type CalendarDay = {
 
 export type CalendarMonth = {
   isPastMonth: boolean;
+  isPreviousMonthThisMonth: boolean;
   isThisMonth: boolean;
   month: number;
   name: string;
@@ -121,3 +122,7 @@ export type Calendar = {
 };
 
 export type Record = Holding | Budget | Preference | Setting | Calendar;
+
+export type SearchParams = {
+  [key: string]: string | string[];
+};

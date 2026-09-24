@@ -1,10 +1,8 @@
 'use client';
 
-import { ArrowUpRight, ArrowRight, CircleQuestionMark, LoaderCircle } from 'lucide-react';
-import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 
-import { Dialogs } from '@/dialogs';
-import tw, { cs } from '@/styles';
+import tw from '@/styles';
 import Ui from '@/ui';
 
 import { useModel } from './model';
@@ -26,104 +24,89 @@ export default function View({ data }: Props) {
   } = useModel(data.alert);
 
   return (
-    <>
-      <main className={styles.container}>
-        <Ui.Form.Container action={action} id="login-form">
-          <Ui.Alerts.Banner isFromCookie value={alert} />
-          {error !== null && (
-            <Ui.Alerts.Banner isPositive={false} value={error} />
-          )}
-          <Ui.Form.Inner className={styles.content}>
-            <Ui.Form.Field className={styles.field}>
-              <Ui.Form.Input
-                id="username"
-                name="username"
-                type="text"
-                placeholder=" "
-                defaultValue={formData?.username}
-                required
-                disabled={isPending}
-              />
-              <Ui.Form.Label htmlFor="username" isRequired>
-                Email
-              </Ui.Form.Label>
-            </Ui.Form.Field>
-            <Ui.Form.Field className={styles.field}>
-              <Ui.Form.Input
-                id="password"
-                name="password"
-                type="password"
-                placeholder=" "
-                required
-                disabled={isPending}
-              />
-              <Ui.Form.Label htmlFor="password" isRequired>
-                Password
-              </Ui.Form.Label>
-            </Ui.Form.Field>
-          </Ui.Form.Inner>
-          <Ui.Form.Footer>
-            <Link
-              className={styles.link}
-              href="https://acrossthekyle.com"
-              target="_blank"
-            >
-              About the Developer <ArrowUpRight className={styles.icon} />
-            </Link>
-            <Ui.Form.Button
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending ? (
-                <LoaderCircle className={cs(styles.icon, styles.spin)} />
-              ) : (
-                <ArrowRight className={styles.icon} />
-              )}
-            </Ui.Form.Button>
-          </Ui.Form.Footer>
-          <input
-            className="hidden"
-            name="timezone"
-            readOnly
+    <Ui.Form.Container action={action} className={styles.container} id="login-form">
+      <Ui.Alerts.Banner isFromCookie value={alert} />
+      {error !== null && (
+        <Ui.Alerts.Banner isPositive={false} value={error} />
+      )}
+      <Ui.Form.Inner className={styles.content}>
+        <Ui.Form.Field className={styles.field}>
+          <Ui.Form.Input
+            id="username"
+            name="username"
             type="text"
-            value={zone}
+            placeholder=" "
+            defaultValue={formData?.username}
+            required
+            disabled={isPending}
           />
-        </Ui.Form.Container>
-      </main>
-      <Dialogs.Info />
-    </>
+          <Ui.Form.Label htmlFor="username" isRequired>
+            Email
+          </Ui.Form.Label>
+        </Ui.Form.Field>
+        <Ui.Form.Field className={styles.field}>
+          <Ui.Form.Input
+            id="password"
+            name="password"
+            type="password"
+            placeholder=" "
+            required
+            disabled={isPending}
+          />
+          <Ui.Form.Label htmlFor="password" isRequired>
+            Password
+          </Ui.Form.Label>
+        </Ui.Form.Field>
+      </Ui.Form.Inner>
+      <Ui.Form.Footer>
+        <Ui.Components.Action
+          href="https://acrossthekyle.com"
+          target="_blank"
+        >
+          About the Developer <ArrowUpRight className={styles.icon} />
+        </Ui.Components.Action>
+        <Ui.Components.Action
+          disabled={isPending}
+          type="submit"
+        >
+          {isPending ? 'Verifying...' : 'Sign In'}
+        </Ui.Components.Action>
+      </Ui.Form.Footer>
+      <input
+        className="hidden"
+        name="timezone"
+        readOnly
+        type="text"
+        value={zone}
+      />
+    </Ui.Form.Container>
   );
 };
 
 const styles = tw({
   container: `
     relative
-    flex items-center justify-center
+    flex flex-col justify-center
     h-[calc(100svh-7.5rem)]
-    w-full max-w-sm
-    mx-auto
-    px-2 pb-8
+    w-full
+    pb-8
   `,
   content: `
     !gap-x-0
   `,
   field: `
-    col-span-24
+    col-span-12
   `,
   link: `
-    flex items-center gap-1
+    flex items-center gap-1.25
     text-xs
-    font-extralight
     uppercase
+    tracking-wide
 
     md:text-tiny
-    md:font-normal
   `,
   icon: `
     w-3 h-3
     stroke-1
-  `,
-  spin: `
-    animate-spin
   `,
 });

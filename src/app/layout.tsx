@@ -5,10 +5,12 @@ import { Geist, Roboto_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { PropsWithChildren, Suspense } from 'react';
 
+import { metrics } from '@/algorithms/metrics';
 import DialogProvider from '@/contexts/dialog';
 import TimezoneProvider from '@/contexts/timezone';
+import { get as getHoldings } from '@/getters/holdings';
 import { get as getSettings } from '@/getters/settings';
-import { LayoutBody, LayoutHeader } from '@/layout';
+import { LayoutBody, LayoutHeader, LayoutMain } from '@/layout';
 
 export const metadata: Metadata = {
   title: {
@@ -46,7 +48,10 @@ const mono = Roboto_Mono({
 });
 
 export default async function RootLayout({ children }: PropsWithChildren) {
+  const { holdings } = await getHoldings();
   const { zone } = await getSettings();
+
+  const { netWorth } = await metrics(holdings);
 
   return (
     <html
@@ -70,7 +75,9 @@ export default async function RootLayout({ children }: PropsWithChildren) {
               </noscript>
               <ThemeProvider>
                 <LayoutHeader />
-                {children}
+                <LayoutMain data={{ netWorth }}>
+                  {children}
+                </LayoutMain>
               </ThemeProvider>
             </LayoutBody>
           </DialogProvider>

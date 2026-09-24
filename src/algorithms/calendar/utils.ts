@@ -23,8 +23,8 @@ export function getBudgetHolding(
     }
 
     return {
-      from: budget.type === 'credit' ? transferee?.name : holding.name,
-      to: budget.type === 'credit' ? holding.name || '' : transferee?.name,
+      from: budget.type === 'credit' ? transferee?.name || '' : holding.name,
+      to: budget.type === 'credit' ? holding.name : transferee?.name || '',
       transfereeType: transferee?.type || '',
     };
   }
@@ -32,5 +32,6 @@ export function getBudgetHolding(
   return {
     from: holding.name,
     to: holding.name,
+    transfereeType: '',
   };
 };

@@ -48,5 +48,5 @@ export async function login(
     path: '/',
   });
 
-  redirect('/holdings');
+  redirect('/');
 };

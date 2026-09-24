@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
@@ -124,6 +125,8 @@ export async function put(
     ...computed,
   };
 
+  const ref = formData.get('ref') as string;
+
   if (budget === null) {
     await db.write('budgets', result);
 
@@ -132,6 +135,8 @@ export async function put(
     await setCalendar(holding);
 
     revalidatePath('/');
+
+    redirect(`/holding/${result.parent}/${ref}`);
 
     return {
       data: result,
@@ -163,6 +168,8 @@ export async function put(
 
     revalidatePath('/');
 
+    redirect(`/holding/${result.parent}/${ref}`);
+
     return {
       data: result,
       hasFailed: false,
@@ -180,6 +187,8 @@ export async function put(
 
     revalidatePath('/');
 
+    redirect(`/holding/${result.parent}/${ref}`);
+
     return {
       data: result,
       hasFailed: false,
@@ -196,6 +205,8 @@ export async function put(
     await setCalendar(holding);
 
     revalidatePath('/');
+
+    redirect(`/holding/${result.parent}/${ref}`);
 
     return {
       data: result,
@@ -250,6 +261,8 @@ export async function put(
 
       revalidatePath('/');
 
+      redirect(`/holding/${result.parent}/${ref}`);
+
       return {
         data: result,
         hasFailed: false,
@@ -290,6 +303,8 @@ export async function put(
       await setCalendar(holding);
 
       revalidatePath('/');
+
+      redirect(`/holding/${result.parent}/${ref}`);
 
       return {
         data: result,
@@ -333,6 +348,8 @@ export async function put(
 
       revalidatePath('/');
 
+      redirect(`/holding/${result.parent}/${ref}`);
+
       return {
         data: result,
         hasFailed: false,
@@ -341,6 +358,10 @@ export async function put(
       };
     }
   }
+
+  revalidatePath('/');
+
+  redirect(`/holding/${result.parent}/${ref}`);
 
   return {
     data: result,

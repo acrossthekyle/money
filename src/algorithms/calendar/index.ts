@@ -62,5 +62,6 @@ export async function calendar(
       budgetize(calendar, data, startingBalance),
       holding,
     ),
+    startingBalance,
   );
 };
