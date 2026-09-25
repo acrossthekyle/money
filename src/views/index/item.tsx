@@ -42,7 +42,7 @@ export default function Item({ holding }: Props) {
           <span className={styles.lid}>
             {!!holding.institution && `${holding.institution} • `}
             {holding.type.replace(/_/g, ' ')}
-            {holding.number && ` . . . ${holding.number}`}
+            {holding.number && `...${holding.number}`}
           </span>
           <span
             className={
