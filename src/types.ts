@@ -48,11 +48,6 @@ export type BudgetFormState = {
   message: string;
 };
 
-export type Preference = {
-  id: string;
-  value: string;
-};
-
 export type Setting = {
   id: string;
   value: string;
@@ -121,7 +116,7 @@ export type Calendar = {
   value: CalendarYear[];
 };
 
-export type Record = Holding | Budget | Preference | Setting | Calendar;
+export type Record = Holding | Budget | Setting | Calendar;
 
 export type SearchParams = {
   [key: string]: string | string[];

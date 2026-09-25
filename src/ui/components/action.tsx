@@ -6,6 +6,7 @@ type Props = {
   className?: string;
   disabled?: boolean;
   href?: string;
+  mode?: 'primary' | 'secondary';
   onClick?: () => void;
   target?: string;
   title?: string;
@@ -17,6 +18,7 @@ export default function Action({
   className = '',
   disabled,
   href,
+  mode = 'primary',
   onClick,
   target,
   title,
@@ -25,7 +27,14 @@ export default function Action({
   if (onClick || type === 'submit') {
     return (
       <button
-        className={cs(styles.container, className)}
+        className={
+          cs(
+            styles.container,
+            className,
+            mode === 'primary' && styles.primary,
+            mode === 'secondary' && styles.secondary,
+          )
+        }
         disabled={disabled}
         onClick={onClick}
         title={title}
@@ -39,7 +48,15 @@ export default function Action({
   if (href) {
     return (
       <Link
-        className={cs(styles.container, className, disabled && styles.disabled)}
+        className={
+          cs(
+            styles.container,
+            className,
+            disabled && styles.disabled,
+            mode === 'primary' && styles.primary,
+            mode === 'secondary' && styles.secondary,
+          )
+        }
         href={href}
         target={target || '_self'}
         title={title}
@@ -54,24 +71,33 @@ export default function Action({
 
 const styles = tw({
   container: `
+    group
     flex items-center gap-2
-    py-1 px-2
+    py-1.25 pl-1.25 pr-1.25
     uppercase
-    text-xs text-(--background)
-    bg-(--foreground)
+    text-xs
     border border-current/62.5
-    rounded-sm
+    rounded-md
     tracking-wide
 
     disabled:opacity-50
+
+    md:text-tiny
+  `,
+  secondary: `
+    motion-safe:duration-300
+
+    hover:border-current/90
+  `,
+  primary: `
+    text-(--background)
+    bg-(--foreground)
 
     motion-safe:duration-300
 
     hover:border-current/90
     hover:bg-(--background)
     hover:text-(--foreground)
-
-    md:text-tiny
   `,
   disabled: `
     pointer-events-none

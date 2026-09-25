@@ -1,11 +1,12 @@
 'use client';
 
-import { ChevronRight, LoaderCircle } from 'lucide-react';
+import { ChevronRight, LoaderCircle, Pen } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
 import { currency } from '@/utils';
+import { getHoldingMetaDataAsString } from '@/utils/holding';
 
 import { useModel } from './model';
 
@@ -40,9 +41,7 @@ export default function Item({ holding }: Props) {
             )}
           </span>
           <span className={styles.lid}>
-            {!!holding.institution && `${holding.institution} • `}
-            {holding.type.replace(/_/g, ' ')}
-            {holding.number && `...${holding.number}`}
+            {getHoldingMetaDataAsString(holding)}
           </span>
           <span
             className={
@@ -58,9 +57,14 @@ export default function Item({ holding }: Props) {
       </button>
       <Ui.Components.Action
         className={styles.edit}
-        href={`/holding/${holding.id}/edit`}
+        href={`/holding/${holding.id}`}
       >
-        Edit
+        <Ui.Components.Icon>
+          <Pen className={styles.pen} />
+        </Ui.Components.Icon>
+        <Ui.Components.Text right>
+          Edit
+        </Ui.Components.Text>
       </Ui.Components.Action>
     </form>
   );
@@ -75,7 +79,7 @@ const styles = tw({
     relative z-0
     flex items-start justify-between
     w-full
-    mb-4
+    mb-0
     text-base text-left
     uppercase
 
@@ -85,14 +89,18 @@ const styles = tw({
   `,
   heading: `
     flex flex-col gap-1
+    truncate
   `,
   title: `
     flex items-center gap-2
     font-bold
   `,
   lid: `
+    block
     text-xs text-current/75
     tracking-wide
+    pr-22
+    truncate
 
     md:text-tiny
   `,
@@ -113,7 +121,10 @@ const styles = tw({
     mr-1
   `,
   edit: `
-    absolute top-1/2 right-0 z-10
-    -translate-y-1/2
+    absolute bottom-1 right-0 z-10
+  `,
+  pen: `
+    w-2.5 h-2.5
+    stroke-2
   `,
 })

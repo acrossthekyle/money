@@ -1,5 +1,7 @@
 'use client';
 
+import { Check, Trash } from 'lucide-react';
+
 import { ACCOUNTS, ASSETS } from '@/constants';
 import tw from '@/styles';
 import type { Budget, Holding } from '@/types';
@@ -120,21 +122,38 @@ export default function Form({
               disabled={isPending}
               onClick={handleOnDelete}
             >
-              Delete
+              <Ui.Components.Icon>
+                <Trash className={styles.icon} />
+              </Ui.Components.Icon>
+              <Ui.Components.Text right>
+                Delete
+              </Ui.Components.Text>
             </Ui.Components.Action>
           </div>
         ) : <div />}
         <div className={styles.actions}>
-          <Ui.Components.Action href={`/holding/${parent}/${ref}`}>
-            Cancel
+          <Ui.Components.Action href={`/holding/${parent}/${ref}`} mode="secondary">
+            <Ui.Components.Text left right>
+              Cancel
+            </Ui.Components.Text>
           </Ui.Components.Action>
           {!budget ? (
             <Ui.Components.Action disabled={isPending} type="submit">
-              {isPending ? 'Processing...' : 'Create'}
+              <Ui.Components.Icon>
+                <Check className={styles.icon} />
+              </Ui.Components.Icon>
+              <Ui.Components.Text right>
+                {isPending ? 'Processing...' : 'Create'}
+              </Ui.Components.Text>
             </Ui.Components.Action>
           ) : (
             <Ui.Components.Action onClick={handleOnContinue} type="button">
-              {isPending ? 'Processing...' : 'Update'}
+              <Ui.Components.Icon>
+                <Check className={styles.icon} />
+              </Ui.Components.Icon>
+              <Ui.Components.Text right>
+                {isPending ? 'Processing...' : 'Update'}
+              </Ui.Components.Text>
             </Ui.Components.Action>
           )}
         </div>
@@ -146,5 +165,9 @@ export default function Form({
 const styles = tw({
   actions: `
     flex gap-4
+  `,
+  icon: `
+    w-3 h-3
+    stroke-2
   `,
 });

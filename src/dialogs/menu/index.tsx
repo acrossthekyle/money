@@ -4,7 +4,7 @@ import { ClockFading, DoorOpen, Landmark, Moon, PiggyBank, Plus, Sun, X } from '
 import Link from 'next/link';
 
 import { logout } from '@/actions/auth/logout';
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import Ui from '@/ui';
 import { currency } from '@/utils';
 
@@ -44,50 +44,84 @@ export default function Dialog({ netWorth }: Props) {
         </button>
         <ul className={styles.items}>
           <li>
-            <Link className={styles.item} onClick={onClose} href="/holding">
-              <Plus className={styles.icon} />
+            <Link
+              className={cs(styles.item, styles.hoverable)}
+              onClick={onClose}
+              href="/holding"
+            >
+              <Ui.Components.Icon>
+                <Plus className={styles.icon} />
+              </Ui.Components.Icon>
               <span className={styles.value}>
                 Create Account/Asset
               </span>
             </Link>
           </li>
           <li>
-            <Link className={styles.item} onClick={onClose} href="/">
-              <Landmark className={styles.icon} />
+            <Link
+              className={cs(styles.item, styles.hoverable)}
+              onClick={onClose}
+              href="/"
+            >
+              <Ui.Components.Icon>
+                <Landmark className={styles.icon} />
+              </Ui.Components.Icon>
               <span className={styles.value}>
-                View List of Holdings
+                View Accounts/Assets
               </span>
             </Link>
           </li>
           {isMounted && (
             <li>
-              <button className={styles.item} onClick={handleOnTheme} type="button">
-                {theme === 'dark' ? <Sun className={styles.icon} /> : <Moon className={styles.icon} />}
+              <button
+                className={cs(styles.item, styles.hoverable)}
+                onClick={handleOnTheme}
+                type="button"
+              >
+                <Ui.Components.Icon>
+                  {theme === 'dark' ? (
+                    <Sun className={styles.icon} />
+                  ) : (
+                    <Moon className={styles.icon} />
+                  )}
+                </Ui.Components.Icon>
                 <span className={styles.value}>
-                  Switch to {theme === 'dark' ? 'light' : 'dark'} Mode
+                  Switch to<br />{theme === 'dark' ? 'light' : 'dark'} Mode
                 </span>
               </button>
             </li>
           )}
           <li>
             <form action={logout}>
-              <button className={styles.item} onClick={onClose} type="submit">
-                <DoorOpen className={styles.icon} />
+              <button
+                className={cs(styles.item, styles.hoverable)}
+                onClick={onClose}
+                type="submit"
+              >
+                <Ui.Components.Icon>
+                  <DoorOpen className={styles.icon} />
+                </Ui.Components.Icon>
                 <span className={styles.value}>
-                  Logout and end session
+                  Logout and<br />
+                  end session
                 </span>
               </button>
             </form>
           </li>
+          <li className={styles.divider} role="presentation" />
           <li className={styles.item}>
-            <PiggyBank className={styles.icon} />
+            <Ui.Components.Icon>
+              <PiggyBank className={styles.icon} />
+            </Ui.Components.Icon>
             <span className={styles.value}>
               ${currency(netWorth)}<br />
               Net Worth
             </span>
           </li>
           <li className={styles.item}>
-            <ClockFading className={styles.icon} />
+            <Ui.Components.Icon>
+              <ClockFading className={styles.icon} />
+            </Ui.Components.Icon>
             <span className={styles.value}>
               {zone} Timezone
             </span>
@@ -128,13 +162,14 @@ const styles = tw({
     bg-(--foreground)
     text-(--background)
 
+    md:text-sm
+    md:h-26
+  `,
+  hoverable: `
     motion-safe:duration-300
 
     hover:bg-(--background)
     hover:text-(--foreground)
-
-    md:text-sm
-    md:h-26
   `,
   value: `
     flex items-center justify-between
@@ -147,7 +182,13 @@ const styles = tw({
     md:text-xs
   `,
   icon: `
-    w-4 h-4
+    w-3 h-3
     stroke-2
+  `,
+  divider: `
+    col-span-2
+    h-px
+    w-full
+    border-t border-dashed border-current/62.5
   `,
 });

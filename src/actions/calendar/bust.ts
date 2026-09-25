@@ -3,7 +3,6 @@
 import { revalidatePath } from 'next/cache';
 import * as z from 'zod';
 
-import { db } from '@/db';
 import { set as setCalendar } from '@/setters/calendar';
 
 const Form = z.object({
@@ -23,11 +22,6 @@ export async function bust(
       isSuccessful: false,
     };
   }
-
-  await db.write('preferences', {
-    id: 'holding',
-    value: validated.data.id,
-  });
 
   await setCalendar(validated.data.id);
 

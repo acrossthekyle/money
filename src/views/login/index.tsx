@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Zap } from 'lucide-react';
 
 import tw from '@/styles';
 import Ui from '@/ui';
@@ -63,13 +63,21 @@ export default function View({ data }: Props) {
           href="https://acrossthekyle.com"
           target="_blank"
         >
-          About the Developer <ArrowUpRight className={styles.icon} />
+          <Ui.Components.Text left>About the Developer</Ui.Components.Text>
+          <Ui.Components.Icon>
+            <ArrowUpRight className={styles.icon} />
+          </Ui.Components.Icon>
         </Ui.Components.Action>
         <Ui.Components.Action
           disabled={isPending}
           type="submit"
         >
-          {isPending ? 'Verifying...' : 'Sign In'}
+          <Ui.Components.Icon>
+            <Zap className={styles.icon} />
+          </Ui.Components.Icon>
+          <Ui.Components.Text right>
+            {isPending ? 'Verifying...' : 'Sign In'}
+          </Ui.Components.Text>
         </Ui.Components.Action>
       </Ui.Form.Footer>
       <input

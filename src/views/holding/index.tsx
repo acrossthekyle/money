@@ -1,33 +1,12 @@
 import { Forms } from '@/forms';
-import tw from '@/styles';
 import Ui from '@/ui';
 
 export default function View() {
   return (
     <>
       <Ui.Components.Divider />
-      <h1 className={styles.header}>
-        <span className={styles.title}>
-          Create Account/Asset
-        </span>
-      </h1>
+      <Ui.Components.Header title="Create Account/Asset" />
       <Forms.Holding />
     </>
   );
 };
-
-const styles = tw({
-  header: `
-    flex flex-col gap-1
-    text-base
-    uppercase
-
-    md:text-sm
-  `,
-  title: `
-    font-bold
-  `,
-  lid: `
-    text-xs
-  `,
-});

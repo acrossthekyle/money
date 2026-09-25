@@ -1,5 +1,7 @@
 'use client';
 
+import { Check, Trash } from 'lucide-react';
+
 import tw from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
@@ -101,22 +103,28 @@ export default function Form({ holding }: Props) {
             disabled={isPending}
             onClick={handleOnDelete}
           >
-            Delete
+            <Ui.Components.Icon>
+              <Trash className={styles.icon} />
+            </Ui.Components.Icon>
+            <Ui.Components.Text right>
+              Delete
+            </Ui.Components.Text>
           </Ui.Components.Action>
         ) : <span />}
         <div className={styles.actions}>
-          <Ui.Components.Action href="/">
-            Cancel
+          <Ui.Components.Action href="/" mode="secondary">
+            <Ui.Components.Text left right>
+              Cancel
+            </Ui.Components.Text>
           </Ui.Components.Action>
-          {!holding ? (
-            <Ui.Components.Action disabled={isPending} type="submit">
-              {isPending ? 'Processing...' : 'Create'}
-            </Ui.Components.Action>
-          ) : (
-            <Ui.Components.Action disabled={isPending} type="submit">
-              {isPending ? 'Updating...' : 'Update'}
-            </Ui.Components.Action>
-          )}
+          <Ui.Components.Action disabled={isPending} type="submit">
+            <Ui.Components.Icon>
+              <Check className={styles.icon} />
+            </Ui.Components.Icon>
+            <Ui.Components.Text right>
+              {isPending ? 'Processing...' : (!holding ? 'Create' : 'Update')}
+            </Ui.Components.Text>
+          </Ui.Components.Action>
         </div>
       </Ui.Form.Footer>
     </Ui.Form.Container>
@@ -152,5 +160,9 @@ const styles = tw({
   `,
   actions: `
     flex gap-4
+  `,
+  icon: `
+    w-3 h-3
+    stroke-2
   `,
 });

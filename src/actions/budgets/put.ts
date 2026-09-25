@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
 import { db } from '@/db';
-import { get as getHolding } from '@/getters/holding';
 import { get as getSettings } from '@/getters/settings';
 import { set as setCalendar } from '@/setters/calendar';
 import type { Budget, BudgetFormState } from '@/types';
@@ -108,7 +107,6 @@ export async function put(
   }
 
   const { zone } = await getSettings();
-  const { id: holding } = await getHolding();
 
   const computed = {
     id: budget === null ? uuidv4() : budget.id,
@@ -133,7 +131,7 @@ export async function put(
 
     await wait(500);
 
-    await setCalendar(holding);
+    await setCalendar(result.parent);
 
     revalidatePath('/');
 
@@ -165,7 +163,7 @@ export async function put(
 
     await wait(500);
 
-    await setCalendar(holding);
+    await setCalendar(result.parent);
 
     revalidatePath('/');
 
@@ -184,7 +182,7 @@ export async function put(
 
     await wait(500);
 
-    await setCalendar(holding);
+    await setCalendar(result.parent);
 
     revalidatePath('/');
 
@@ -203,7 +201,7 @@ export async function put(
 
     await wait(500);
 
-    await setCalendar(holding);
+    await setCalendar(result.parent);
 
     revalidatePath('/');
 
@@ -258,7 +256,7 @@ export async function put(
 
       await wait(500);
 
-      await setCalendar(holding);
+      await setCalendar(result.parent);
 
       revalidatePath('/');
 
@@ -308,7 +306,7 @@ export async function put(
 
       await wait(500);
 
-      await setCalendar(holding);
+      await setCalendar(result.parent);
 
       revalidatePath('/');
 
@@ -359,7 +357,7 @@ export async function put(
 
       await wait(500);
 
-      await setCalendar(holding);
+      await setCalendar(result.parent);
 
       revalidatePath('/');
 

@@ -3,8 +3,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { get as getHolding } from '@/getters/holding';
-import { set as setCalendar } from '@/setters/calendar';
 import { db } from '@/db';
 import type { LoginFormState } from '@/types';
 
@@ -30,14 +28,10 @@ export async function login(
     };
   }
 
-  const { id } = await getHolding();
-
   await db.write('settings', {
     id: 'timezone',
     value: timezone,
   });
-
-  await setCalendar(id);
 
   const cookieStore = await cookies();
   cookieStore.set('app_session', process.env.AUTH_COOKIE_VALUE!, {
