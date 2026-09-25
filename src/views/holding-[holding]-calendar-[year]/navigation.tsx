@@ -26,19 +26,34 @@ export default function Navigation({ calendar, id, index }: Props) {
         className={styles.cancel}
         href={`/holding/${id}/${params.get('ref')}`}
       >
-        <Undo2 className={styles.icon} /> Cancel
+        <Ui.Components.Icon>
+          <Undo2 className={styles.icon} />
+        </Ui.Components.Icon>
+        <Ui.Components.Text right>
+          Cancel
+        </Ui.Components.Text>
       </Ui.Components.Action>
       <div className={styles.container}>
         <Ui.Components.Action
           href={`/holding/${id}/calendar/${previous}?ref=${params.get('ref')}`}
         >
-          <ChevronLeft className={styles.icon} /> {previous}
+          <Ui.Components.Icon>
+            <ChevronLeft className={styles.icon} />
+          </Ui.Components.Icon>
+          <Ui.Components.Text right>
+            {previous}
+          </Ui.Components.Text>
         </Ui.Components.Action>
         <span>{calendar[index].year}</span>
         <Ui.Components.Action
           href={`/holding/${id}/calendar/${next}?ref=${params.get('ref')}`}
         >
-          {next} <ChevronRight className={styles.icon} />
+          <Ui.Components.Text left>
+            {next}
+          </Ui.Components.Text>
+          <Ui.Components.Icon>
+            <ChevronRight className={styles.icon} />
+          </Ui.Components.Icon>
         </Ui.Components.Action>
       </div>
     </>
@@ -50,10 +65,7 @@ const styles = tw({
     flex items-center justify-between
     mt-8
     pb-4
-    text-xl
-    font-light
-
-    md:text-lg
+    text-base
   `,
   icon: `
     w-3 h-3
