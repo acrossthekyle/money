@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --breakpoint-xs: 25rem; /* 400px */
+  --breakpoint-xs: 23.125rem; /* 370px */
 
   --font-geist: var(--font-geist);
   --font-roboto: var(--font-roboto);

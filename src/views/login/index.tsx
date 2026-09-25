@@ -63,7 +63,7 @@ export default function View({ data }: Props) {
           href="https://acrossthekyle.com"
           target="_blank"
         >
-          <Ui.Components.Text left>About the Developer</Ui.Components.Text>
+          <Ui.Components.Text left>Creator</Ui.Components.Text>
           <Ui.Components.Icon>
             <ArrowUpRight className={styles.icon} />
           </Ui.Components.Icon>

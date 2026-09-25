@@ -30,7 +30,7 @@ export default function Navigation({ calendar, id, index }: Props) {
           <Undo2 className={styles.icon} />
         </Ui.Components.Icon>
         <Ui.Components.Text right>
-          Cancel
+          Back
         </Ui.Components.Text>
       </Ui.Components.Action>
       <div className={styles.container}>

@@ -18,6 +18,6 @@ const styles = tw({
   container: `
     col-span-12
 
-    xs:col-span-6
+    sm:col-span-6
   `,
 });

@@ -70,7 +70,7 @@ export default function Controls({ calendar, date, holding }: Props) {
 const styles = tw({
   controls: `
     absolute bottom-0 right-0
-    flex gap-2
+    flex gap-4
     font-roboto
   `,
   icon: `

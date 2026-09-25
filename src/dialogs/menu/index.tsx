@@ -158,10 +158,11 @@ const styles = tw({
     w-full h-28
     text-base text-left
     rounded-md
-    p-4
+    p-2
     bg-(--foreground)
     text-(--background)
 
+    xs:p-4
     md:text-sm
     md:h-26
   `,
@@ -175,11 +176,15 @@ const styles = tw({
     flex items-center justify-between
     w-full
     uppercase
-    text-sm
+    text-xs
     font-bold
     tracking-wide
+    scale-100
+    origin-bottom-left
 
-    md:text-xs
+    xs:scale-105
+    sm:scale-100
+    sm:text-xs
   `,
   icon: `
     w-3 h-3

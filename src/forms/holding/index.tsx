@@ -138,22 +138,22 @@ const styles = tw({
   balance: `
     col-span-12
 
-    xs:col-span-7
+    sm:col-span-7
   `,
   number: `
     col-span-12
 
-    xs:col-span-5
+    sm:col-span-5
   `,
   type: `
     col-span-12
 
-    xs:col-span-8
+    sm:col-span-8
   `,
   rate: `
     col-span-12
 
-    xs:col-span-4
+    sm:col-span-4
   `,
   institution: `
     col-span-12
