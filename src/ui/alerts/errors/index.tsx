@@ -15,11 +15,17 @@ export default function Errors({ items, message }: Props) {
     <div aria-live="polite" className={styles.container}>
       <p className={styles.heading}>{message}</p>
       <ul>
-        {items.map((item) => (
-          <li className={styles.item} key={item.field}>
+        {items.map((item, index) => (
+          <li className={styles.item} key={index}>
             <span>•</span>
-            <span className={styles.field}>{item.field}:</span>
-            <span>{item.error}</span>
+            {typeof item === 'string' ? (
+              <span>{item}</span>
+            ) : (
+              <>
+                <span className={styles.field}>{item.field}:</span>
+                <span>{item.error}</span>
+              </>
+            )}
           </li>
         ))}
       </ul>
@@ -30,7 +36,7 @@ export default function Errors({ items, message }: Props) {
 const styles = tw({
   container: `
     p-2.5
-    mx-4 mb-6
+    mb-6
     rounded-md
     border border-red-700
     bg-red-200
@@ -43,7 +49,7 @@ const styles = tw({
     uppercase
   `,
   item: `
-    flex items-center gap-1
+    flex items-start gap-1
   `,
   field: `
     capitalize

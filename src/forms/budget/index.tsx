@@ -79,7 +79,7 @@ export default function Form({
         <input
           name="date"
           type="text"
-          value={date}
+          value={data?.start || date}
           readOnly
           className="hidden"
         />

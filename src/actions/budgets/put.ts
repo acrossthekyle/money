@@ -125,6 +125,7 @@ export async function put(
     ...computed,
   };
 
+
   const ref = formData.get('ref') as string;
 
   if (budget === null) {
@@ -270,6 +271,13 @@ export async function put(
         message: `Budget instance successfully updated`,
       };
     }
+
+    return {
+      data: result,
+      hasFailed: true,
+      isSuccessful: false,
+      message: `Unable to find matching budget iteration date when updating this budget`,
+    };
   }
 
   if (formData.get('update') === 'prospective') {
@@ -313,6 +321,13 @@ export async function put(
         message: `All current and future budget instances successfully updated`,
       };
     }
+
+    return {
+      data: result,
+      hasFailed: true,
+      isSuccessful: false,
+      message: `Unable to find matching budget iteration date when updating prospective budgets`,
+    };
   }
 
   if (formData.get('update') === 'future') {
@@ -357,7 +372,15 @@ export async function put(
         message: `All future budget instances successfully updated`,
       };
     }
+
+    return {
+      data: result,
+      hasFailed: true,
+      isSuccessful: false,
+      message: `Unable to find matching budget iteration date when updating future budgets`,
+    };
   }
+
 
   revalidatePath('/');
 

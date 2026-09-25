@@ -19,12 +19,9 @@ export default function Inner({
 
 const styles = {
   container: (isActive: boolean) => tw(`
-    relative top-2
+    relative
     w-full max-w-90
-    p-4
-    bg-(--foreground)
-    text-(--background)
-    rounded-xl
+    py-4 px-3
 
     motion-safe:duration-300
 

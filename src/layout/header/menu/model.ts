@@ -3,7 +3,7 @@
 import { useMenu } from '@/hooks';
 
 export function useModel() {
-  const { onMenu } = useMenu();
+  const { isActive, onMenu } = useMenu();
 
   const handleOnClick = () => {
     onMenu();
@@ -11,5 +11,6 @@ export function useModel() {
 
   return {
     handleOnClick,
+    isActive,
   };
 }

@@ -1,7 +1,7 @@
 import { format, parseISO } from 'date-fns';
 import { TrendingDown, TrendingUp } from 'lucide-react';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import { currency } from '@/utils';
 
 type Props = {
@@ -15,7 +15,7 @@ export default function Balance({ date, isTrendingUp, value }: Props) {
     <p className={styles.balance}>
       <span className={styles.title}>Balance</span>
       <span className={styles.amount}>
-        <span className={styles.value}>
+        <span className={cs(styles.value, value < 0 && styles.negative)}>
           ${currency(value)}
           {isTrendingUp ? (
             <TrendingUp className={styles.icon} />
@@ -54,6 +54,7 @@ const styles = tw({
   icon: `
     w-5 h-5
     stroke-1
+    text-(--foreground)
   `,
   disclaimer: `
     text-xs text-current/75
@@ -61,5 +62,8 @@ const styles = tw({
     tracking-wide
 
     md:text-tiny
+  `,
+  negative: `
+    text-red-500 dark:text-rose-400
   `,
 });

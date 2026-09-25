@@ -43,6 +43,7 @@ const styles = tw({
     bg-transparent
     outline-none
     overflow-y-auto
+    font-roboto
 
     backdrop:hidden
 

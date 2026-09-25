@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import { currency } from '@/utils';
 
 type Props = {
@@ -14,7 +14,7 @@ export default function Day({ date, balance }: Props) {
       <span>
         {format(date, 'MMMM do')}
       </span>
-      <span>
+      <span className={cs(balance < 0 && styles.negative)}>
         ${currency(balance)}
       </span>
     </h3>
@@ -29,5 +29,8 @@ const styles = tw({
     font-roboto font-bold
     text-sm
     uppercase
+  `,
+  negative: `
+    text-red-500 dark:text-rose-400
   `,
 });

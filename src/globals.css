@@ -56,7 +56,7 @@ body {
   dialog {
     left: -100vw;
     width: 100vw;
-    transition: left 0s linear 450ms;
+    transition: left 0s linear 250ms;
   }
 
   dialog.is-active {

@@ -1,13 +1,13 @@
 'use client';
 
-import { Ellipsis } from 'lucide-react';
+import { TextAlignCenter } from 'lucide-react';
 
 import tw from '@/styles';
 
 import { useModel } from './model';
 
 export default function Menu() {
-  const { handleOnClick } = useModel();
+  const { handleOnClick, isActive } = useModel();
 
   return (
     <button
@@ -16,7 +16,7 @@ export default function Menu() {
       title="Menu"
       type="button"
     >
-      <Ellipsis className={styles.icon} />
+      {!isActive && <TextAlignCenter className={styles.icon} />}
     </button>
   );
 };

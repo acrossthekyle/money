@@ -37,11 +37,11 @@ export function useModel(date: string, budget?: Budget) {
   }, [budget]);
 
   useEffect(() => {
-    if (state?.hasFailed && state?.errors) {
+    if (state?.hasFailed && (state?.errors || !!state?.message)) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setErrors(state?.errors || []);
+      setErrors(state?.errors || [{ field: '', error: state?.message }]);
     }
-  }, [state?.hasFailed, state?.errors]);
+  }, [state?.hasFailed, state?.errors, state?.message]);
 
   const handleOnDelete = async () => {
     setWillPurge(true);
