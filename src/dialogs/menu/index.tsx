@@ -109,7 +109,7 @@ export default function Dialog({ netWorth }: Props) {
             </form>
           </li>
           <li className={styles.divider} role="presentation" />
-          <li className={styles.item}>
+          <li className={cs(styles.item, styles.static)}>
             <Ui.Components.Icon>
               <PiggyBank className={styles.icon} />
             </Ui.Components.Icon>
@@ -118,7 +118,7 @@ export default function Dialog({ netWorth }: Props) {
               Net Worth
             </span>
           </li>
-          <li className={styles.item}>
+          <li className={cs(styles.item, styles.static)}>
             <Ui.Components.Icon>
               <ClockFading className={styles.icon} />
             </Ui.Components.Icon>
@@ -159,14 +159,18 @@ const styles = tw({
     text-base text-left
     rounded-md
     p-2
-    bg-(--foreground)
-    text-(--background)
 
     xs:p-4
     md:text-sm
     md:h-26
   `,
+  static: `
+    border border-dashed border-current/62.5
+  `,
   hoverable: `
+    bg-(--foreground)
+    text-(--background)
+
     motion-safe:duration-300
 
     hover:bg-(--background)
@@ -192,6 +196,7 @@ const styles = tw({
   `,
   divider: `
     col-span-2
+    mt-0.25 dark:mt-0.5
     h-px
     w-full
     border-t border-dashed border-current/62.5

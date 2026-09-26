@@ -2,12 +2,12 @@ import { getDate } from 'date-fns';
 import Link from 'next/link';
 
 import tw, { cs } from '@/styles';
-import type { CalendarMonth, Holding } from '@/types';
+import type { CalendarMonth, Dateable, Holding } from '@/types';
 import { pad } from '@/utils';
 
 type Props = {
   calendar: CalendarMonth;
-  date: string;
+  date: Dateable;
   holding: Holding;
 };
 
@@ -40,9 +40,9 @@ export default function Grid({ calendar, date, holding }: Props) {
               !day.isInMonth && styles.faded,
               (day.isInMonth && day.isBeforeToday) && styles.disabled,
               (day.isInMonth && !day.isBeforeToday) && styles.hoverable,
-              day.iso === date && styles.highlighted,
+              day.iso === date.iso && styles.highlighted,
               (day.isInMonth && !day.isBeforeToday) && day.balance < 0 && !day.isToday && styles.negative,
-              (day.isToday && day.iso !== date) && styles.boldened,
+              (day.isToday && day.iso !== date.iso) && styles.boldened,
             )
           }
           key={day.iso}

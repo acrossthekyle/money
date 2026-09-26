@@ -1,4 +1,4 @@
-import type { CalendarMonth, Holding } from '@/types'
+import type { CalendarMonth, Dateable, Holding } from '@/types'
 
 import Amounts from './amounts';
 import Budgets from './budgets';
@@ -8,12 +8,13 @@ import Overview from './overview';
 type Props = {
   data: {
     calendar?: CalendarMonth;
-    date: string;
+    date: Dateable;
     holding?: Holding;
   };
 };
 
 export default function View({ data }: Props) {
+  console.log('data: ', data);
   if (!data.calendar || !data.holding) {
     return null;
   }
@@ -30,11 +31,10 @@ export default function View({ data }: Props) {
         date={data.date}
         holding={data.holding}
       />
-      <Amounts
-        calendar={data.calendar}
-      />
+      <Amounts calendar={data.calendar} />
       <Budgets
         calendar={data.calendar}
+        date={data.date}
         holding={data.holding}
       />
     </>

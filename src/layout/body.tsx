@@ -19,6 +19,7 @@ const styles = tw({
     selection:text-black
 
     motion-safe:duration-300
+    motion-safe:transition-[opacity,translate]
 
     has-[dialog[open]]:opacity-10
     has-[dialog[open]]:translate-y-120

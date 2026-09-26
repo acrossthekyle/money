@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 
 import tw from '@/styles';
-import type { CalendarMonth, Holding } from '@/types';
+import type { CalendarMonth, Dateable, Holding } from '@/types';
 import Ui from '@/ui';
 import { getBudgetDisplayData } from '@/utils/budgets';
 
@@ -12,11 +12,13 @@ import Return from './return';
 
 type Props = {
   calendar: CalendarMonth;
+  date: Dateable;
   holding: Holding;
 };
 
 export default function Budgets({
   calendar,
+  date,
   holding,
 }: Props) {
   const renderables = calendar.days.filter(day => {
@@ -32,8 +34,10 @@ export default function Budgets({
 
   return (
     <>
-      <Header holding={holding} />
-      <Ui.Components.Divider />
+      <Header date={date} holding={holding} />
+      {renderables.length > 0 && (
+        <Ui.Components.Divider />
+      )}
       {renderables.map((day, index) => (
         <Fragment key={index}>
           {index !== 0 && <Ui.Components.Divider />}
@@ -47,6 +51,8 @@ export default function Budgets({
                   <Budget
                     amount={data.amount}
                     budget={budget}
+                    date={date}
+                    day={{ date: day.date, iso: day.iso }}
                     holding={holding}
                     isNegative={data.isNegative}
                   />

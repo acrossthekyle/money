@@ -1,14 +1,18 @@
 'use client';
 
 import { format, parseISO } from 'date-fns';
-import { useSearchParams } from 'next/navigation';
 import { useActionState, useEffect, useState } from 'react';
 
 import { useConfirm } from '@/hooks';
 import { put } from '@/actions/budgets/put';
-import type { Budget, FormStateError, BudgetFormState } from '@/types';
+import type {
+  Budget,
+  Dateable,
+  FormStateError,
+  BudgetFormState,
+} from '@/types';
 
-export function useModel(date: string, budget?: Budget) {
+export function useModel(date: Dateable, budget?: Budget) {
   const putable = put.bind(null, budget || null);
 
   const [state, action, isPending] = useActionState(putable, {
@@ -18,10 +22,7 @@ export function useModel(date: string, budget?: Budget) {
     message: '',
   } as BudgetFormState);
 
-  const searchParams = useSearchParams();
-
   const [type, setType] = useState('debit');
-  const [willDelete, setWillDelete] = useState(false);
   const [willPurge, setWillPurge] = useState(false);
   const [errors, setErrors] = useState<FormStateError[]>([]);
   const [update, setUpdate] = useState('');
@@ -45,34 +46,15 @@ export function useModel(date: string, budget?: Budget) {
 
   const handleOnDelete = async () => {
     setWillPurge(true);
-    setWillDelete(true);
 
     const result = await confirm({
-      target: '#budget-dialog',
-      title: 'Are you absolutely sure?',
-      text: `This will be a permanent deletion. This action cannot be undone. Choose an option:`,
-      input: 'radio',
-      inputOptions: {
-        'all': `Entire budget series`,
-        'this': `Only this date`,
-      },
-      inputValidator: (value: string): string => {
-        if (!value) {
-          return ' ';
-        };
-
-        return '';
-      },
+      text: 'This action cannot be undone. This will permanently delete this entire budget.',
     });
 
     if (!result.isConfirmed) {
-      return;
-    }
-
-    if (result.value === 'all') {
-      setWillDelete(false);
-    } else {
       setWillPurge(false);
+
+      return;
     }
 
     setTimeout(() => {
@@ -93,15 +75,14 @@ export function useModel(date: string, budget?: Budget) {
       setUpdate('this');
     } else {
       const result = await confirm({
-        target: '#budget-dialog',
         title: 'Are you absolutely sure?',
         text: 'Choose how to apply these changes:',
         input: 'radio',
         inputOptions: {
           'all': `Entire budget (from ${format(parseISO(budget?.start || ''), 'MM/dd/yyyy')} onwards)`,
-          'this': `Only this instance (on ${format(parseISO(date), 'MM/dd/yyyy')})`,
-          'prospective': `All current and future instances (from ${format(parseISO(date), 'MM/dd/yyyy')} onwards)`,
-          'future': `Only future instances (after ${format(parseISO(date), 'MM/dd/yyyy')})`,
+          'this': `Only this instance (on ${format(date.date, 'MM/dd/yyyy')})`,
+          'prospective': `All current and future instances (from ${format(date.date, 'MM/dd/yyyy')} onwards)`,
+          'future': `Only future instances (after ${format(date.date, 'MM/dd/yyyy')})`,
         },
         inputValidator: (value: string): string => {
           if (!value) {
@@ -137,10 +118,8 @@ export function useModel(date: string, budget?: Budget) {
     handleOnDelete,
     handleOnType,
     isPending,
-    ref: searchParams.get('ref') || '',
     type,
     update,
-    willDelete,
     willPurge,
   };
 };

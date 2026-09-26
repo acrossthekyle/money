@@ -1,26 +1,18 @@
-'use client';
-
-import { format } from 'date-fns';
 import { ArrowLeftToLine, Calendar, ArrowRight } from 'lucide-react';
 
 import { MONTHS } from '@/constants';
-import { useTimezone } from '@/hooks';
 import tw from '@/styles';
-import type { CalendarMonth, Holding } from '@/types';
+import type { CalendarMonth, Dateable, Holding } from '@/types';
 import Ui from '@/ui';
-import { date as zonedDate, pad } from '@/utils';
+import { pad } from '@/utils';
 
 type Props = {
   calendar: CalendarMonth;
-  date: string;
+  date: Dateable;
   holding: Holding;
 };
 
 export default function Controls({ calendar, date, holding }: Props) {
-  const { zone } = useTimezone();
-
-  const today = format(zonedDate(zone), 'yyyy/MM/dd');
-
   return (
     <nav
       aria-label="calendar supplementary navigation"
@@ -28,7 +20,7 @@ export default function Controls({ calendar, date, holding }: Props) {
     >
       {!calendar.isThisMonth && (
         <Ui.Components.Action
-          href={['/holding', holding.id, today].join('/')}
+          href={['/holding', holding.id, date.today.uri].join('/')}
           title="View 10-year calendar"
         >
           <Ui.Components.Icon>
@@ -37,7 +29,7 @@ export default function Controls({ calendar, date, holding }: Props) {
         </Ui.Components.Action>
       )}
       <Ui.Components.Action
-        href={`/holding/${holding.id}/calendar/${calendar.year}?ref=${date.replace(/-/g, '/')}`}
+        href={`/holding/${holding.id}/calendar/${calendar.year}?ref=${date.uri}`}
         title="View 10-year calendar"
       >
         <Ui.Components.Icon>
@@ -70,7 +62,7 @@ export default function Controls({ calendar, date, holding }: Props) {
 const styles = tw({
   controls: `
     absolute bottom-0 right-0
-    flex gap-4
+    flex gap-3
     font-roboto
   `,
   icon: `

@@ -1,18 +1,19 @@
-'use client';
-
 import { Shuffle } from 'lucide-react';
-import { usePathname } from 'next/navigation';
 
 import tw from '@/styles';
+import type { Dateable } from '@/types';
 import Ui from '@/ui';
 
-export default function Switch() {
-  const pathname = usePathname();
+type Props = {
+  date: Dateable;
+};
 
-  const ref = pathname.split('/').slice(3).join('/');
-
+export default function Switch({ date }: Props) {
   return (
-    <Ui.Components.Action className={styles.container} href={`/?ref=${ref}`}>
+    <Ui.Components.Action
+      className={styles.container}
+      href={`/?ref=${date.uri}`}
+    >
       <Ui.Components.Icon>
         <Shuffle className={styles.icon} />
       </Ui.Components.Icon>

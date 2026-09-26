@@ -121,3 +121,16 @@ export type Record = Holding | Budget | Setting | Calendar;
 export type SearchParams = {
   [key: string]: string | string[];
 };
+
+export type Dateable = {
+  date: Date;
+  iso: string;
+  year: string;
+  month: string;
+  day: string;
+  uri: string;
+  today: {
+    date: Date;
+    uri: string;
+  };
+};

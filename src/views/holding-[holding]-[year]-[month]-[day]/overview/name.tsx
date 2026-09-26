@@ -1,15 +1,16 @@
 import tw from '@/styles';
-import type { Holding } from '@/types'
+import type { Dateable, Holding } from '@/types'
 import Ui from '@/ui';
 import { getHoldingMetaDataAsString } from '@/utils/holding';
 
 import Switch from './switch';
 
 type Props = {
+  date: Dateable;
   holding: Holding;
 };
 
-export default function Name({ holding }: Props) {
+export default function Name({ date, holding }: Props) {
   return (
     <div className={styles.container}>
       <Ui.Components.Header
@@ -17,7 +18,7 @@ export default function Name({ holding }: Props) {
         lid={getHoldingMetaDataAsString(holding)}
         title={holding.name}
       />
-      <Switch />
+      <Switch date={date} />
     </div>
   );
 };

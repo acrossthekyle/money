@@ -1,12 +1,15 @@
 import { Suspense } from 'react';
 
 import Ui from '@/ui';
-import View from '@/views/holding-[holding]-budget';
+import View from '@/views/holding-[holding]-[year]-[month]-[day]-budget';
 
 import { get } from './get';
 
 type Params = Promise<{
   holding: string;
+  year: string;
+  month: string;
+  day: string;
 }>;
 
 type Props = {
@@ -14,9 +17,9 @@ type Props = {
 };
 
 async function AsyncView({ params }: Props) {
-  const { holding } = await params;
+  const { day, holding, month, year } = await params;
 
-  const data = await get(holding);
+  const data = await get(holding, year, month, day);
 
   return <View data={data} />;
 };

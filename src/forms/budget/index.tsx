@@ -4,7 +4,7 @@ import { Check, Trash } from 'lucide-react';
 
 import { ACCOUNTS, ASSETS } from '@/constants';
 import tw from '@/styles';
-import type { Budget, Holding } from '@/types';
+import type { Budget, Dateable, Holding } from '@/types';
 import Ui from '@/ui';
 
 import {
@@ -22,7 +22,7 @@ import { useModel } from './model';
 
 type Props = {
   budget?: Budget;
-  date: string;
+  date: Dateable;
   holdings: Holding[];
   parent: string;
 };
@@ -42,10 +42,8 @@ export default function Form({
     handleOnDelete,
     handleOnType,
     isPending,
-    ref,
     type,
     update,
-    willDelete,
     willPurge,
   } = useModel(date, budget);
 
@@ -74,14 +72,14 @@ export default function Form({
         <input
           name="ref"
           type="text"
-          value={ref}
+          value={date.uri}
           readOnly
           className="hidden"
         />
         <input
           name="date"
           type="text"
-          value={data?.start || date}
+          value={date.iso}
           readOnly
           className="hidden"
         />
@@ -98,13 +96,6 @@ export default function Form({
           value={budget === undefined || budget?.schedule === 'once' ? 'this' : update}
           readOnly
           required={budget !== undefined}
-          className="hidden"
-        />
-        <input
-          name="erase"
-          type="text"
-          value={willDelete ? 'true' : 'false'}
-          readOnly
           className="hidden"
         />
         <input
@@ -132,7 +123,7 @@ export default function Form({
           </div>
         ) : <div />}
         <div className={styles.actions}>
-          <Ui.Components.Action href={`/holding/${parent}/${ref}`} mode="secondary">
+          <Ui.Components.Action href={`/holding/${parent}/${date.uri}`} mode="secondary">
             <Ui.Components.Text left right>
               Cancel
             </Ui.Components.Text>

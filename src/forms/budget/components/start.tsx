@@ -1,27 +1,18 @@
 'use client';
 
-import { addDays, format, parseISO } from 'date-fns';
 import { useState } from 'react';
 
-import { DATE_FORMAT } from '@/constants';
-import { useTimezone } from '@/hooks';
 import tw from '@/styles';
+import type { Dateable } from '@/types';
 import Ui from '@/ui';
-import { date as zonedDate } from '@/utils';
 
 type Props = {
-  date: string;
+  date: Dateable;
   value?: string;
 };
 
 export default function Start({ date, value }: Props) {
-  const [selection, setSelection] = useState(
-    value || format(parseISO(date), DATE_FORMAT),
-  );
-
-  const { zone } = useTimezone();
-
-  const today = format(addDays(zonedDate(zone), 1), DATE_FORMAT);
+  const [selection, setSelection] = useState(value || date.iso);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelection(event.target.value.toLowerCase());
@@ -31,7 +22,6 @@ export default function Start({ date, value }: Props) {
     <Ui.Form.Field className={styles.container}>
       <Ui.Form.Input
         id="start"
-        min={today}
         name="start"
         onChange={handleOnChange}
         type="date"

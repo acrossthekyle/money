@@ -1,11 +1,12 @@
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import { TrendingDown, TrendingUp } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
+import type { Dateable } from '@/types';
 import { currency } from '@/utils';
 
 type Props = {
-  date: string;
+  date: Dateable;
   isTrendingUp: boolean;
   value: number;
 };
@@ -24,7 +25,7 @@ export default function Balance({ date, isTrendingUp, value }: Props) {
           )}
         </span>
         <span className={styles.disclaimer}>
-          {format(parseISO(date), 'MMMM do yyyy')}
+          {format(date.date, 'MMMM do yyyy')}
         </span>
       </span>
     </p>

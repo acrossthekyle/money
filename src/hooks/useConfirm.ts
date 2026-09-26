@@ -9,7 +9,6 @@ type Config = {
   inputOptions?: object;
   inputValidator?: (value: string) => string;
   title?: string;
-  target: string;
   text?: string;
 };
 

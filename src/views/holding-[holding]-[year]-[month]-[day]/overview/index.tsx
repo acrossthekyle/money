@@ -1,4 +1,4 @@
-import type { CalendarMonth, Holding } from '@/types'
+import type { CalendarMonth, Dateable, Holding } from '@/types'
 import Ui from '@/ui';
 
 import Balance from './balance';
@@ -6,7 +6,7 @@ import Name from './name';
 
 type Props = {
   calendar: CalendarMonth;
-  date: string;
+  date: Dateable;
   holding: Holding;
 };
 
@@ -17,7 +17,7 @@ export default function Overview({ calendar, date, holding }: Props) {
 
   const balance = calendar
     .days
-    .filter(day => day.iso === date)
+    .filter(day => day.iso === date.iso)
     .reduce((accumulator, day) => {
       return accumulator + day.balance;
     }, 0);
@@ -25,7 +25,7 @@ export default function Overview({ calendar, date, holding }: Props) {
   return (
     <>
       <Ui.Components.Divider />
-      <Name holding={holding} />
+      <Name date={date} holding={holding} />
       <Balance date={date} isTrendingUp={isTrendingUp} value={balance} />
     </>
   );

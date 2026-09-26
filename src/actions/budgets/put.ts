@@ -216,10 +216,9 @@ export async function put(
   }
 
   const iterations = createBudgetIterations(budget, zone);
+  const thisDateIndex = iterations.findIndex(iteration => iteration === formData.get('date'));
 
   if (formData.get('update') === 'this') {
-    const thisDateIndex = iterations.findIndex(iteration => iteration === formData.get('date'));
-
     if (thisDateIndex >= 0) {
       const past = iterations.slice(0, thisDateIndex);
       const current = [formData.get('date')];
@@ -279,8 +278,6 @@ export async function put(
   }
 
   if (formData.get('update') === 'prospective') {
-    const thisDateIndex = iterations.findIndex(iteration => iteration === formData.get('date'));
-
     if (thisDateIndex >= 0) {
       const past = iterations.slice(0, thisDateIndex);
       const current = [formData.get('date')];
@@ -329,8 +326,6 @@ export async function put(
   }
 
   if (formData.get('update') === 'future') {
-    const thisDateIndex = iterations.findIndex(iteration => iteration === formData.get('date'));
-
     if (thisDateIndex >= 0) {
       const past = iterations.slice(0, thisDateIndex + 1);
       const future = iterations.slice(thisDateIndex + 1);

@@ -1,26 +1,22 @@
-'use client';
-
 import { Plus } from 'lucide-react';
-import { usePathname } from 'next/navigation';
 
 import tw from '@/styles';
-import type { Holding } from '@/types';
+import type { Dateable, Holding } from '@/types';
 import Ui from '@/ui';
 
 type Props = {
+  date: Dateable;
   holding: Holding;
 };
 
-export default function Header({ holding }: Props) {
-  const pathname = usePathname();
-
+export default function Header({ date, holding }: Props) {
   return (
     <>
       <span className={styles.divider} role="presentation" />
       <h3 className={styles.container}>
         <span className={styles.title}>Budgets</span>
         <Ui.Components.Action
-          href={`/holding/${holding.id}/budget?ref=${pathname.split('/').slice(3).join('/')}`}
+          href={`/holding/${holding.id}/${date.year}/${date.month}/${date.day}/budget`}
         >
           <Ui.Components.Icon>
             <Plus className={styles.icon} />

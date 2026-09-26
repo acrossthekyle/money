@@ -1,12 +1,12 @@
 import { Forms } from '@/forms';
-import type { Budget, Holding } from '@/types';
+import type { Budget, Dateable, Holding } from '@/types';
 import Ui from '@/ui';
 import { getHoldingMetaDataAsString } from '@/utils/holding';
 
 type Props = {
   data: {
     budget?: Budget;
-    date: string;
+    date: Dateable;
     holding?: Holding;
     holdings: Holding[];
     parent: string;
@@ -19,7 +19,7 @@ export default function View({ data }: Props) {
       <Ui.Components.Divider />
       <Ui.Components.Header
         lid={getHoldingMetaDataAsString(data.holding)}
-        title="Edit Budget"
+        title="Create Budget"
       />
       <Forms.Budget
         budget={data.budget}

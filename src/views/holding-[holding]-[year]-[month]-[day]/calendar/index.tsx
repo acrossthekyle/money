@@ -1,13 +1,13 @@
 import { MONTHS_FULL } from '@/constants';
 import tw from '@/styles';
-import type { CalendarMonth, Holding } from '@/types';
+import type { CalendarMonth, Dateable, Holding } from '@/types';
 
 import Controls from './controls';
 import Grid from './grid';
 
 type Props = {
   calendar: CalendarMonth;
-  date: string;
+  date: Dateable;
   holding: Holding;
 };
 
