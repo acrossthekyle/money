@@ -1,7 +1,6 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
@@ -103,8 +102,6 @@ export async function put(
       id: identifier,
     });
 
-    redirect('/');
-
     return {
       data: {
         ...result,
@@ -125,8 +122,6 @@ export async function put(
 
     revalidatePath('/');
 
-    redirect('/');
-
     return {
       data: result,
       hasFailed: false,
@@ -144,8 +139,6 @@ export async function put(
 
     revalidatePath('/');
 
-    redirect('/');
-
     return {
       data: result,
       hasFailed: false,
@@ -155,8 +148,6 @@ export async function put(
   }
 
   revalidatePath('/');
-
-  redirect('/');
 
   return {
     data: result,

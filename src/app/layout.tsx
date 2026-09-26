@@ -6,11 +6,16 @@ import { ThemeProvider } from 'next-themes';
 import { PropsWithChildren, Suspense } from 'react';
 
 import { metrics } from '@/algorithms/metrics';
-import DialogProvider from '@/contexts/dialog';
-import TimezoneProvider from '@/contexts/timezone';
+import { DialogProvider, LoadingProvider, TimezoneProvider } from '@/contexts';
 import { get as getHoldings } from '@/getters/holdings';
 import { get as getSettings } from '@/getters/settings';
-import { LayoutBody, LayoutHeader, LayoutMain } from '@/layout';
+import {
+  LayoutBody,
+  LayoutHeader,
+  LayoutLoading,
+  LayoutMain,
+  LayoutScripting,
+} from '@/layout';
 
 export const metadata: Metadata = {
   title: {
@@ -61,26 +66,20 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     >
       <Suspense fallback={null}>
         <TimezoneProvider zone={zone}>
-          <DialogProvider>
-            <LayoutBody>
-              <noscript>
-                <div
-                  aria-live="polite"
-                  className="fixed inset-0 bg-(--background) z-1000 flex items-center justify-center"
-                >
-                  <p className="w-full max-w-sm text-sm">
-                    <span className="font-black uppercase text-xs">Warning:</span> JavaScript is disabled in your browser. This site will not work properly. Please enable JavaScript and then refresh this page. Thank you.
-                  </p>
-                </div>
-              </noscript>
-              <ThemeProvider>
-                <LayoutHeader />
-                <LayoutMain data={{ netWorth }}>
-                  {children}
-                </LayoutMain>
-              </ThemeProvider>
-            </LayoutBody>
-          </DialogProvider>
+          <LoadingProvider>
+            <DialogProvider>
+              <LayoutBody>
+                <LayoutScripting />
+                <ThemeProvider>
+                  <LayoutHeader />
+                  <LayoutMain data={{ netWorth }}>
+                    {children}
+                  </LayoutMain>
+                  <LayoutLoading />
+                </ThemeProvider>
+              </LayoutBody>
+            </DialogProvider>
+          </LoadingProvider>
         </TimezoneProvider>
       </Suspense>
     </html>

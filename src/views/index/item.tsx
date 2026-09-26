@@ -9,16 +9,22 @@ import { currency } from '@/utils';
 import { getHoldingMetaDataAsString } from '@/utils/holding';
 
 import { useModel } from './model';
+import type { Dateable } from './types';
 
 type Props = {
+  date: Dateable;
   holding: Holding;
 };
 
-export default function Item({ holding }: Props) {
-  const { action, isPending } = useModel(holding);
+export default function Item({ date, holding }: Props) {
+  const { action, handleOnSubmit, isPending } = useModel(holding, date);
 
   return (
-    <form action={action} className={styles.container}>
+    <form
+      action={action}
+      className={styles.container}
+      id={`${holding.id}-switch-form`}
+    >
       <input
         className="hidden"
         name="id"
@@ -29,7 +35,8 @@ export default function Item({ holding }: Props) {
       <button
         className={styles.action}
         disabled={isPending}
-        type="submit"
+        onClick={handleOnSubmit}
+        type="button"
       >
         <h3 className={styles.heading}>
           <span className={styles.title}>

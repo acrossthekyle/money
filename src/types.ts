@@ -135,3 +135,12 @@ export type Dateable = {
     uri: string;
   };
 };
+
+export type UseConfirmConfig = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  input?: any;
+  inputOptions?: object;
+  inputValidator?: (value: string) => string;
+  title?: string;
+  text?: string;
+};

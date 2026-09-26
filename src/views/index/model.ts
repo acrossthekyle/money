@@ -1,19 +1,18 @@
 'use client';
 
-import { getDate, getMonth, getYear } from 'date-fns';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useActionState, useEffect } from 'react';
 
 import { bust } from '@/actions/calendar/bust';
-import { useTimezone } from '@/hooks';
+import { useLoading } from '@/hooks';
 import type { Holding } from '@/types';
-import { date, pad } from '@/utils';
 
-export function useModel(holding: Holding) {
+import type { Dateable } from './types';
+
+export function useModel(holding: Holding, date: Dateable) {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const { zone } = useTimezone();
+  const { onLoaded, onLoading } = useLoading();
 
   const [state, action, isPending] = useActionState(bust, {
     isSuccessful: false,
@@ -21,19 +20,30 @@ export function useModel(holding: Holding) {
 
   useEffect(() => {
     if (state?.isSuccessful) {
-      if (searchParams.has('ref')) {
-        router.push(`/holding/${holding.id}/${searchParams.get('ref')}`);
-      } else {
-        const today = date(zone);
+      onLoaded();
 
-        router.push(`/holding/${holding.id}/${getYear(today)}/${pad(getMonth(today) + 1)}/${pad(getDate(today))}`);
-      }
+      router.push(
+        `/holding/${holding.id}/${date.year}/${date.month}/${date.day}`,
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.isSuccessful]);
 
+  const handleOnSubmit = () => {
+    setTimeout(() => {
+      const form = document.getElementById(`${holding.id}-switch-form`);
+
+      if (form instanceof HTMLFormElement) {
+        onLoading();
+
+        form.requestSubmit();
+      }
+    }, 100);
+  };
+
   return {
     action,
+    handleOnSubmit,
     isPending,
   };
 };

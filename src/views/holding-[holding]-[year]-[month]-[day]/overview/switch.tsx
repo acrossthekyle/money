@@ -1,18 +1,13 @@
 import { Shuffle } from 'lucide-react';
 
 import tw from '@/styles';
-import type { Dateable } from '@/types';
 import Ui from '@/ui';
 
-type Props = {
-  date: Dateable;
-};
-
-export default function Switch({ date }: Props) {
+export default function Switch() {
   return (
     <Ui.Components.Action
       className={styles.container}
-      href={`/?ref=${date.uri}`}
+      href="/"
     >
       <Ui.Components.Icon>
         <Shuffle className={styles.icon} />

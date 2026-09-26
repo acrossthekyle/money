@@ -6,8 +6,8 @@ import { useActionState, useEffect, useState } from 'react';
 
 import { erase } from '@/actions/budgets/erase';
 import { DATE_DISPLAY } from '@/constants';
-import { useConfirm } from '@/hooks';
-import type { Budget, BudgetFormState } from '@/types';
+import { useConfirm, useLoading } from '@/hooks';
+import type { Budget, BudgetFormState, UseConfirmConfig } from '@/types';
 
 export function useModel(budget: Budget, day: Date) {
   const router = useRouter();
@@ -25,52 +25,63 @@ export function useModel(budget: Budget, day: Date) {
   const [willPurge, setWillPurge] = useState(false);
 
   const confirm = useConfirm();
+  const { onLoaded, onLoading } = useLoading();
 
   useEffect(() => {
     if (state?.isSuccessful) {
+      onLoaded();
+
       router.refresh();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.isSuccessful]);
 
   const handleOnDelete = async () => {
-    setWillPurge(true);
-    setWillDelete(true);
+    let config: UseConfirmConfig = {};
 
-    const result = await confirm({
-      title: 'Are you absolutely sure?',
-      text: `This will be a permanent deletion. This action cannot be undone. Choose an option:`,
-      input: 'radio',
-      inputOptions: {
-        'all': `Entire budget series (all dates)`,
-        'this': `Only this date (${format(day, DATE_DISPLAY)})`,
-      },
-      inputValidator: (value: string): string => {
-        if (!value) {
-          return ' ';
-        };
+    if (budget.schedule === 'once') {
+      config = {
+        text: 'This action cannot be undone. This will permanently delete this budget.',
+      };
+    } else {
+      config = {
+        title: 'Are you absolutely sure?',
+        text: `This will be a permanent deletion. This action cannot be undone. Choose an option:`,
+        input: 'radio',
+        inputOptions: {
+          'all': `Entire budget (all dates)`,
+          'this': `Only ${format(day, DATE_DISPLAY)}`,
+        },
+        inputValidator: (value: string): string => {
+          if (!value) {
+            return ' ';
+          };
 
-        return '';
-      },
-    });
+          return '';
+        },
+      };
+    }
+
+    const result = await confirm(config);
 
     if (!result.isConfirmed) {
-      setWillPurge(false);
-      setWillDelete(false);
-
       return;
     }
 
     if (result.value === 'all') {
       setWillDelete(false);
+      setWillPurge(true);
     } else {
+      setWillDelete(true);
       setWillPurge(false);
     }
 
     setTimeout(() => {
-      const form = document.getElementById('delete-form');
+      const form = document.getElementById(`${budget.id}-delete-form`);
 
       if (form instanceof HTMLFormElement) {
+        onLoading();
+
         form.requestSubmit();
       }
     }, 100);

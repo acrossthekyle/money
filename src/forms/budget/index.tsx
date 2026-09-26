@@ -45,7 +45,7 @@ export default function Form({
     type,
     update,
     willPurge,
-  } = useModel(date, budget);
+  } = useModel(date, parent, budget);
 
   const accounts = holdings.filter(holding => ACCOUNTS.includes(holding.type));
   const assets = holdings.filter(holding => ASSETS.includes(holding.type));
@@ -69,13 +69,6 @@ export default function Form({
         <End value={data?.end} />
         <Schedule value={data?.schedule} />
         <Notes value={data?.notes} />
-        <input
-          name="ref"
-          type="text"
-          value={date.uri}
-          readOnly
-          className="hidden"
-        />
         <input
           name="date"
           type="text"

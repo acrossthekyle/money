@@ -4,9 +4,11 @@ import type { Holding } from '@/types';
 import Ui from '@/ui';
 
 import Item from './item';
+import type { Dateable } from './types';
 
 type Props = {
   data: {
+    date: Dateable;
     holdings: Holding[];
   };
 };
@@ -26,7 +28,7 @@ export default function View({ data }: Props) {
       <ul className={styles.items}>
         {accounts.map((holding) => (
           <li key={holding.id}>
-            <Item holding={holding} />
+            <Item date={data.date} holding={holding} />
           </li>
         ))}
       </ul>
@@ -40,7 +42,7 @@ export default function View({ data }: Props) {
       <ul className={styles.items}>
         {assets.map((holding) => (
           <li key={holding.id}>
-            <Item holding={holding} />
+            <Item date={data.date} holding={holding} />
           </li>
         ))}
       </ul>

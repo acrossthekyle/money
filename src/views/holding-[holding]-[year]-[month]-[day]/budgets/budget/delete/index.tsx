@@ -31,7 +31,10 @@ export default function Delete({
   } = useModel(budget, day.date);
 
   return (
-    <form action={action} id="delete-form">
+    <form
+      action={action}
+      id={`${budget.id}-delete-form`}
+    >
       <input
         name="ref"
         type="text"

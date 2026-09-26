@@ -1,8 +1,5 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-
 import { db } from '@/db';
 import { set as setCalendar } from '@/setters/calendar';
 import type { Budget, BudgetFormState } from '@/types';
@@ -14,8 +11,6 @@ export async function erase(
   state: BudgetFormState,
   formData: FormData,
 ): Promise<BudgetFormState> {
-  const ref = formData.get('ref') as string;
-
   if (formData.get('erase') === 'true') {
     if (budget.schedule === 'once') {
       await db.erase('budgets', budget.id);
@@ -33,10 +28,6 @@ export async function erase(
 
     await setCalendar(budget.parent);
 
-    revalidatePath('/');
-
-    redirect(`/holding/${budget.parent}/${ref}`);
-
     return {
       data: budget,
       hasFailed: false,
@@ -51,10 +42,6 @@ export async function erase(
     await wait(500);
 
     await setCalendar(budget.parent);
-
-    revalidatePath('/');
-
-    redirect(`/holding/${budget.parent}/${ref}`);
 
     return {
       data: budget,
