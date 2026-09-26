@@ -14,7 +14,6 @@ type Props = {
 };
 
 export default function View({ data }: Props) {
-  console.log('data: ', data);
   if (!data.calendar || !data.holding) {
     return null;
   }
