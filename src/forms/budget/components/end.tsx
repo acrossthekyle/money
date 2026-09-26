@@ -3,7 +3,7 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
 
-import { DATE_FORMAT } from '@/constants';
+import { DATE_ISO } from '@/constants';
 import { useTimezone } from '@/hooks';
 import tw from '@/styles';
 import Ui from '@/ui';
@@ -26,7 +26,7 @@ export default function End({ value }: Props) {
     <Ui.Form.Field className={styles.container}>
       <Ui.Form.Input
         id="end"
-        min={format(date(zone), DATE_FORMAT)}
+        min={format(date(zone), DATE_ISO)}
         name="end"
         onChange={handleOnChange}
         placeholder=" "

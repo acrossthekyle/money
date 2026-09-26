@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useActionState, useEffect, useState } from 'react';
 
 import { erase } from '@/actions/budgets/erase';
+import { DATE_DISPLAY } from '@/constants';
 import { useConfirm } from '@/hooks';
 import type { Budget, BudgetFormState } from '@/types';
 
@@ -42,7 +43,7 @@ export function useModel(budget: Budget, day: Date) {
       input: 'radio',
       inputOptions: {
         'all': `Entire budget series (all dates)`,
-        'this': `Only this date (${format(day, 'MM/dd/yyyy')})`,
+        'this': `Only this date (${format(day, DATE_DISPLAY)})`,
       },
       inputValidator: (value: string): string => {
         if (!value) {

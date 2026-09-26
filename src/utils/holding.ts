@@ -6,8 +6,8 @@ export function getHoldingMetaDataAsString(holding?: Holding) {
   }
 
   return [
-    !!holding?.institution && `${holding?.institution} •`,
+    !!holding?.institution && `${holding?.institution}`,
     holding?.type.replace(/_/g, ' '),
-    !!holding?.number && `...${holding?.number}`,
+    !!holding?.number && `(${holding?.number})`,
   ].filter(Boolean).join(' ');
 }

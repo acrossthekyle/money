@@ -18,7 +18,7 @@ import {
   startOfYear,
 } from 'date-fns';
 
-import { DATE_FORMAT, MONTHS } from '@/constants';
+import { DATE_ISO, MONTHS } from '@/constants';
 import type { CalendarYear } from '@/types';
 import { date } from '@/utils';
 
@@ -73,7 +73,7 @@ export function create(zone: string): CalendarYear[] {
         isPositive: true,
         label: 'Interest',
       },
-      iso: format(day, DATE_FORMAT),
+      iso: format(day, DATE_ISO),
       isBeforeToday: isToday(day) ? false : isBefore(day, today),
       isFirstOfMonth: isFirstDayOfMonth(day),
       isInMonth: getMonth(day) === targetMonthIndex,
@@ -93,12 +93,12 @@ export function create(zone: string): CalendarYear[] {
       month: getMonth(month),
       name: MONTHS[targetMonthIndex],
       nextMonth: {
-        iso: format(nextMonth, 'yyyy-MM-dd'),
+        iso: format(nextMonth, DATE_ISO),
         isValid: !isEqual(nextMonth, end),
         month: getMonth(nextMonth),
         year: getYear(nextMonth),
       },
-      todayISO: format(today, DATE_FORMAT),
+      todayISO: format(today, DATE_ISO),
       year,
       days,
     });

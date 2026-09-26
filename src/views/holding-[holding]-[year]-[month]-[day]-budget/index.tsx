@@ -18,8 +18,14 @@ export default function View({ data }: Props) {
     <>
       <Ui.Components.Divider />
       <Ui.Components.Header
-        lid={getHoldingMetaDataAsString(data.holding)}
-        title="Create Budget"
+        lid={
+          [
+            `On ${data.date.display} in `,
+            getHoldingMetaDataAsString(data.holding),
+            `Account`,
+          ].join(' ')
+        }
+        title="Add Budget"
       />
       <Forms.Budget
         budget={data.budget}

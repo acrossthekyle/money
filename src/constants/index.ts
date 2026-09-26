@@ -1,4 +1,8 @@
-export const DATE_FORMAT = 'yyyy-MM-dd';
+export const DATE_ISO = 'yyyy-MM-dd';
+export const DATE_DISPLAY = 'MMMM do, yyyy';
+export const DATE_DISPLAY_ABBREVIATED = 'MMMM do';
+export const DATE_URI = 'yyyy/MM/dd';
+export const DATE_INPUT = 'MM/dd/yyyy';
 
 export const ACCOUNTS = ['credit_card', 'savings', 'checking'];
 export const ASSETS = ['retirement', 'property'];

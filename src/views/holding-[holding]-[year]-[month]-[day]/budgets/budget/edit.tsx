@@ -1,20 +1,25 @@
+import { format } from 'date-fns';
 import { Pen } from 'lucide-react';
 
+import { DATE_URI } from '@/constants';
 import tw from '@/styles';
-import type { Budget, Dateable, Holding } from '@/types';
+import type { Budget, Holding } from '@/types';
 import Ui from '@/ui';
 
 type Props = {
   budget: Budget;
-  date: Dateable;
+  day: {
+    date: Date;
+    iso: string;
+  };
   holding: Holding;
 };
 
-export default function Edit({ budget, date, holding }: Props) {
+export default function Edit({ budget, day, holding }: Props) {
   return (
     <Ui.Components.Action
       className={styles.control}
-      href={`/holding/${holding.id}/${date.uri}/budget/${budget.id}`}
+      href={`/holding/${holding.id}/${format(day.date, DATE_URI)}/budget/${budget.id}`}
       mode="secondary"
     >
       <Ui.Components.Icon mode="secondary">

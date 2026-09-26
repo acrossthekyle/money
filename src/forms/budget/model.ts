@@ -3,6 +3,7 @@
 import { format, parseISO } from 'date-fns';
 import { useActionState, useEffect, useState } from 'react';
 
+import { DATE_DISPLAY } from '@/constants';
 import { useConfirm } from '@/hooks';
 import { put } from '@/actions/budgets/put';
 import type {
@@ -79,10 +80,10 @@ export function useModel(date: Dateable, budget?: Budget) {
         text: 'Choose how to apply these changes:',
         input: 'radio',
         inputOptions: {
-          'all': `Entire budget (from ${format(parseISO(budget?.start || ''), 'MM/dd/yyyy')} onwards)`,
-          'this': `Only this instance (on ${format(date.date, 'MM/dd/yyyy')})`,
-          'prospective': `All current and future instances (from ${format(date.date, 'MM/dd/yyyy')} onwards)`,
-          'future': `Only future instances (after ${format(date.date, 'MM/dd/yyyy')})`,
+          'all': `Entire budget (from ${format(parseISO(budget?.start || ''), DATE_DISPLAY)} onwards)`,
+          'this': `Only this instance (on ${format(date.date, DATE_DISPLAY)})`,
+          'prospective': `All current and future instances (from ${format(date.date, DATE_DISPLAY)} onwards)`,
+          'future': `Only future instances (after ${format(date.date, DATE_DISPLAY)})`,
         },
         inputValidator: (value: string): string => {
           if (!value) {

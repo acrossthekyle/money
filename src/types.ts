@@ -124,6 +124,7 @@ export type SearchParams = {
 
 export type Dateable = {
   date: Date;
+  display: string;
   iso: string;
   year: string;
   month: string;

@@ -56,7 +56,7 @@ export default function Budget({
       <div className={styles.actions}>
         {!isNotAssignedToHolding ? (
           <>
-            <Edit budget={budget} date={date} holding={holding} />
+            <Edit budget={budget} day={day} holding={holding} />
             <Delete budget={budget} date={date} day={day} />
           </>
         ) : (

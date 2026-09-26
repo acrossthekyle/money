@@ -1,5 +1,6 @@
 import { format, parseISO } from 'date-fns';
 
+import { DATE_DISPLAY, DATE_URI } from '@/constants';
 import { date } from '@/utils';
 
 export function createDateable(
@@ -9,17 +10,19 @@ export function createDateable(
   day: string,
 ) {
   const today = date(zone);
+  const parsed = parseISO(`${year}-${month}-${day}`);
 
   return {
-    date: parseISO(`${year}-${month}-${day}`),
+    date: parsed,
     iso: `${year}-${month}-${day}`,
+    display: format(parsed, DATE_DISPLAY),
     year,
     month,
     day,
     uri: `${year}/${month}/${day}`,
     today: {
       date: today,
-      uri: format(today, 'yyyy/MM/dd'),
+      uri: format(today, DATE_URI),
     },
   };
 };

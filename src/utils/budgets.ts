@@ -11,7 +11,7 @@ import {
   startOfDay,
 } from 'date-fns';
 
-import { DATE_FORMAT } from '@/constants';
+import { DATE_ISO } from '@/constants';
 import type { Budget, CalendarAmount } from '@/types';
 
 import { date } from './index';
@@ -84,7 +84,7 @@ export function createBudgetIterations(budget: Budget, zone: string): string[] {
     Array.from({ length: budgetIterationLength }, () => {
       date = addIteration(date, budget.schedule);
 
-      const formatted = format(date, DATE_FORMAT);
+      const formatted = format(date, DATE_ISO);
       const isTodayOrFuture = isAfter(date, today) || isSameDay(date, today);
 
       if (

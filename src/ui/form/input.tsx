@@ -1,5 +1,6 @@
 import { format, parseISO } from 'date-fns';
 
+import { DATE_INPUT } from '@/constants';
 import tw from '@/styles';
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -28,7 +29,7 @@ export default function Input({
       />
       {type === 'date' && (
         <span aria-hidden="true" className={styles.mask} role="presentation">
-          {!!value ? format(parseISO(String(value)), 'MM/dd/yyyy') : '...'}
+          {!!value ? format(parseISO(String(value)), DATE_INPUT) : '...'}
         </span>
       )}
     </>

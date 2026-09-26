@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 
+import { DATE_DISPLAY_ABBREVIATED } from '@/constants';
 import tw, { cs } from '@/styles';
 import { currency } from '@/utils';
 
@@ -12,7 +13,7 @@ export default function Day({ date, balance }: Props) {
   return (
     <h3 className={styles.heading}>
       <span>
-        {format(date, 'MMMM do')}
+        {format(date, DATE_DISPLAY_ABBREVIATED)}
       </span>
       <span className={cs(balance < 0 && styles.negative)}>
         ${currency(balance)}
