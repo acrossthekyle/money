@@ -47,6 +47,7 @@ const styles = tw({
   `,
   lid: `
     text-sm
+    leading-[1]
 
     md:text-xs
   `,

@@ -25,7 +25,7 @@ export default function Overview({ calendar, date, holding }: Props) {
   return (
     <>
       <Ui.Components.Divider />
-      <Name holding={holding} />
+      <Name date={date} holding={holding} />
       <Balance date={date} isTrendingUp={isTrendingUp} value={balance} />
     </>
   );

@@ -55,7 +55,7 @@ export function useModel(holding?: Holding) {
     setWillDelete(true);
 
     const result = await confirm({
-      text: 'This action cannot be undone. This will permanently delete this account/asset and its budgets.',
+      text: 'This action cannot be undone. This will permanently delete this account/asset and its associated budgets.',
     });
 
     if (!result.isConfirmed) {

@@ -22,7 +22,7 @@ export default function Edit({ budget, day, holding }: Props) {
       href={`/holding/${holding.id}/${format(day.date, DATE_URI)}/budget/${budget.id}`}
       mode="secondary"
     >
-      <Ui.Components.Icon mode="secondary">
+      <Ui.Components.Icon>
         <Pen className={styles.icon} />
       </Ui.Components.Icon>
       <Ui.Components.Text right>

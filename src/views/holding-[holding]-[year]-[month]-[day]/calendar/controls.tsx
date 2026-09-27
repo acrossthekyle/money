@@ -1,6 +1,6 @@
-import { ArrowLeftToLine, Calendar, ArrowRight } from 'lucide-react';
+import { ArrowLeftToLine, CalendarFold, ArrowRight } from 'lucide-react';
 
-import { MONTHS } from '@/constants';
+import { MONTHS_FULL } from '@/constants';
 import tw from '@/styles';
 import type { CalendarMonth, Dateable, Holding } from '@/types';
 import Ui from '@/ui';
@@ -22,6 +22,7 @@ export default function Controls({ calendar, date, holding }: Props) {
         <Ui.Components.Action
           href={['/holding', holding.id, date.today.uri].join('/')}
           title="View 10-year calendar"
+          mode="secondary"
         >
           <Ui.Components.Icon>
             <ArrowLeftToLine className={styles.icon} />
@@ -32,8 +33,8 @@ export default function Controls({ calendar, date, holding }: Props) {
         href={`/holding/${holding.id}/calendar/${calendar.year}?ref=${date.uri}`}
         title="View 10-year calendar"
       >
-        <Ui.Components.Icon>
-          <Calendar className={styles.calendar} />
+        <Ui.Components.Icon mode="secondary">
+          <CalendarFold className={styles.calendar} />
         </Ui.Components.Icon>
       </Ui.Components.Action>
       <Ui.Components.Action
@@ -49,9 +50,9 @@ export default function Controls({ calendar, date, holding }: Props) {
         title="View 10-year calendar"
       >
         <Ui.Components.Text left>
-          {MONTHS[calendar.month === 11 ? 0 : calendar.month + 1]}
+          {MONTHS_FULL[calendar.month === 11 ? 0 : calendar.month + 1]}
         </Ui.Components.Text>
-        <Ui.Components.Icon>
+        <Ui.Components.Icon mode="secondary">
           <ArrowRight className={styles.icon} />
         </Ui.Components.Icon>
       </Ui.Components.Action>
@@ -70,7 +71,7 @@ const styles = tw({
     stroke-2
   `,
   calendar: `
-    w-3 h-3
+    w-3.5 h-3.5
     stroke-2
   `,
 });

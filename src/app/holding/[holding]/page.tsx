@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 
+import type { SearchParams } from '@/types';
 import Ui from '@/ui';
 import View from '@/views/holding-[holding]';
 
@@ -11,20 +12,22 @@ type Params = Promise<{
 
 type Props = {
   params: Params;
+  searchParams: SearchParams;
 };
 
-async function AsyncView({ params }: Props) {
+async function AsyncView({ params, searchParams }: Props) {
   const { holding } = await params;
+  const { ref } = await searchParams;
 
-  const data = await get(holding);
+  const data = await get(holding, ref as string);
 
   return <View data={data} />;
 };
 
-export default function Page({ params }: Props) {
+export default function Page({ params, searchParams }: Props) {
   return (
     <Suspense fallback={<Ui.Loaders.Spinner />}>
-      <AsyncView params={params} />
+      <AsyncView params={params} searchParams={searchParams} />
     </Suspense>
   );
 };

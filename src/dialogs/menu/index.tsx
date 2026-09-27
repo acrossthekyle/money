@@ -1,6 +1,6 @@
 'use client';
 
-import { ClockFading, DoorOpen, Landmark, Moon, PiggyBank, Plus, Sun, X } from 'lucide-react';
+import { ClockFading, DoorOpen, Landmark, Moon, DollarSign, Plus, Sun, X } from 'lucide-react';
 import Link from 'next/link';
 
 import { logout } from '@/actions/auth/logout';
@@ -49,9 +49,7 @@ export default function Dialog({ netWorth }: Props) {
               onClick={onClose}
               href="/holding"
             >
-              <Ui.Components.Icon>
-                <Plus className={styles.icon} />
-              </Ui.Components.Icon>
+              <Plus className={styles.icon} />
               <span className={styles.value}>
                 Create Account/Asset
               </span>
@@ -63,14 +61,13 @@ export default function Dialog({ netWorth }: Props) {
               onClick={onClose}
               href="/"
             >
-              <Ui.Components.Icon>
-                <Landmark className={styles.icon} />
-              </Ui.Components.Icon>
+              <Landmark className={styles.icon} />
               <span className={styles.value}>
                 View Accounts/Assets
               </span>
             </Link>
           </li>
+          <li className={styles.divider} role="presentation" />
           {isMounted && (
             <li>
               <button
@@ -78,13 +75,11 @@ export default function Dialog({ netWorth }: Props) {
                 onClick={handleOnTheme}
                 type="button"
               >
-                <Ui.Components.Icon>
-                  {theme === 'dark' ? (
-                    <Sun className={styles.icon} />
-                  ) : (
-                    <Moon className={styles.icon} />
-                  )}
-                </Ui.Components.Icon>
+                {theme === 'dark' ? (
+                  <Sun className={styles.icon} />
+                ) : (
+                  <Moon className={styles.icon} />
+                )}
                 <span className={styles.value}>
                   Switch to<br />{theme === 'dark' ? 'light' : 'dark'} Mode
                 </span>
@@ -98,9 +93,7 @@ export default function Dialog({ netWorth }: Props) {
                 onClick={onClose}
                 type="submit"
               >
-                <Ui.Components.Icon>
-                  <DoorOpen className={styles.icon} />
-                </Ui.Components.Icon>
+                <DoorOpen className={styles.icon} />
                 <span className={styles.value}>
                   Logout and<br />
                   end session
@@ -111,7 +104,7 @@ export default function Dialog({ netWorth }: Props) {
           <li className={styles.divider} role="presentation" />
           <li className={cs(styles.item, styles.static)}>
             <Ui.Components.Icon>
-              <PiggyBank className={styles.icon} />
+              <DollarSign className={styles.icon} />
             </Ui.Components.Icon>
             <span className={styles.value}>
               ${currency(netWorth)}<br />
@@ -191,7 +184,7 @@ const styles = tw({
     sm:text-xs
   `,
   icon: `
-    w-3 h-3
+    w-4 h-4
     stroke-2
   `,
   divider: `

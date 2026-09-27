@@ -1,13 +1,16 @@
 import type { Holding } from '@/types';
 
-export function getHoldingMetaDataAsString(holding?: Holding) {
+export function getHoldingMetaDataAsString(
+  holding?: Holding,
+  noNumber?: boolean,
+) {
   if (!holding) {
     return '';
   }
 
   return [
-    !!holding?.institution && `${holding?.institution}`,
+    !!holding?.institution && `${holding?.institution} • `,
     holding?.type.replace(/_/g, ' '),
-    !!holding?.number && `(${holding?.number})`,
+    !noNumber && !!holding?.number && `(${holding?.number})`,
   ].filter(Boolean).join(' ');
 }

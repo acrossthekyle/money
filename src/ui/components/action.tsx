@@ -85,6 +85,8 @@ const styles = tw({
     md:text-tiny
   `,
   secondary: `
+    border-dashed
+
     motion-safe:duration-300
 
     hover:border-current/90

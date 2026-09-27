@@ -65,13 +65,11 @@ export default function Item({ date, holding }: Props) {
       <Ui.Components.Action
         className={styles.edit}
         href={`/holding/${holding.id}`}
+        mode="secondary"
       >
         <Ui.Components.Icon>
           <Pen className={styles.pen} />
         </Ui.Components.Icon>
-        <Ui.Components.Text right>
-          Edit
-        </Ui.Components.Text>
       </Ui.Components.Action>
     </form>
   );
@@ -128,7 +126,8 @@ const styles = tw({
     mr-1
   `,
   edit: `
-    absolute bottom-1 right-0 z-10
+    absolute top-1/2 right-0 z-10
+    -translate-y-1/2
   `,
   pen: `
     w-2.5 h-2.5

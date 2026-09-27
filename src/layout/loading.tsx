@@ -30,7 +30,6 @@ const styles = tw({
     fixed top-0 right-0 bottom-0 z-2000
     flex items-center justify-center
     w-[100svw]
-    bg-(--background)/90
     backdrop-blur-md
   `,
   hidden: `

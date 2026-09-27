@@ -44,7 +44,6 @@ const styles = tw({
     font-roboto
   `,
   title: `
-    font-bold
     text-base
     leading-[0.8]
 

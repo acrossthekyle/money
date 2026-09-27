@@ -35,6 +35,9 @@ export default function Balance({ date, isTrendingUp, value }: Props) {
 
 const styles = tw({
   balance: `
+    border-t border-dashed border-current/62.5
+    pt-8
+    mt-0
     flex justify-between
     w-full
     font-roboto
@@ -44,7 +47,6 @@ const styles = tw({
   `,
   title: `
     uppercase
-    font-bold
   `,
   amount: `
     flex flex-col items-end

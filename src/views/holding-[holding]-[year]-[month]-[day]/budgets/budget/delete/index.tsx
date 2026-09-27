@@ -70,7 +70,7 @@ export default function Delete({
         mode="secondary"
         type="button"
       >
-        <Ui.Components.Icon mode="secondary">
+        <Ui.Components.Icon>
           {isPending ? (
             <LoaderCircle className={cs(styles.circle, styles.spin)} />
           ) : (

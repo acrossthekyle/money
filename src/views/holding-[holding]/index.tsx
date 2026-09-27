@@ -7,6 +7,7 @@ import { getHoldingMetaDataAsString } from '@/utils/holding';
 type Props = {
   data: {
     holding?: Holding;
+    returnable: string | null;
   };
 };
 
@@ -18,7 +19,7 @@ export default function View({ data }: Props) {
         lid={getHoldingMetaDataAsString(data.holding)}
         title={`Edit ${ACCOUNTS.includes(data.holding?.type || '') ? ' Account ' : ' Asset'}`}
       />
-      <Forms.Holding holding={data.holding} />
+      <Forms.Holding holding={data.holding} returnable={data.returnable}  />
     </>
   );
 };

@@ -10,9 +10,10 @@ import { useModel } from './model';
 
 type Props = {
   holding?: Holding;
+  returnable?: string | null;
 };
 
-export default function Form({ holding }: Props) {
+export default function Form({ holding, returnable }: Props) {
   const {
     action,
     canDelete,
@@ -112,7 +113,7 @@ export default function Form({ holding }: Props) {
           </Ui.Components.Action>
         ) : <span />}
         <div className={styles.actions}>
-          <Ui.Components.Action href="/" mode="secondary">
+          <Ui.Components.Action href={returnable ?? '/'} mode="secondary">
             <Ui.Components.Text left right>
               Cancel
             </Ui.Components.Text>

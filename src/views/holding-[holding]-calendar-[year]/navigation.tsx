@@ -36,6 +36,7 @@ export default function Navigation({ calendar, id, index }: Props) {
       <div className={styles.container}>
         <Ui.Components.Action
           href={`/holding/${id}/calendar/${previous}?ref=${params.get('ref')}`}
+          mode="secondary"
         >
           <Ui.Components.Icon>
             <ChevronLeft className={styles.icon} />
@@ -47,6 +48,7 @@ export default function Navigation({ calendar, id, index }: Props) {
         <span>{calendar[index].year}</span>
         <Ui.Components.Action
           href={`/holding/${id}/calendar/${next}?ref=${params.get('ref')}`}
+          mode="secondary"
         >
           <Ui.Components.Text left>
             {next}
