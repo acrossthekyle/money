@@ -8,17 +8,13 @@ import type { CalendarYear } from '@/types';
 import Ui from '@/ui';
 
 type Props = {
-  calendar: CalendarYear[];
+  calendar: CalendarYear;
   id: string;
-  index: number;
+  isThisYear: boolean;
 };
 
-export default function Navigation({ calendar, id, index }: Props) {
+export default function Navigation({ calendar, id, isThisYear }: Props) {
   const params = useSearchParams();
-
-  const next = index === calendar.length - 1 ? calendar[0].year : calendar[index + 1].year;
-
-  const previous = index === 0 ? calendar[calendar.length - 1].year : calendar[index - 1].year;
 
   return (
     <>
@@ -35,23 +31,24 @@ export default function Navigation({ calendar, id, index }: Props) {
       </Ui.Components.Action>
       <div className={styles.container}>
         <Ui.Components.Action
-          href={`/holding/${id}/calendar/${previous}?ref=${params.get('ref')}`}
+          disabled={isThisYear}
+          href={`/holding/${id}/calendar/${calendar.previous}?ref=${params.get('ref')}`}
           mode="secondary"
         >
           <Ui.Components.Icon>
             <ChevronLeft className={styles.icon} />
           </Ui.Components.Icon>
           <Ui.Components.Text right>
-            {previous}
+            {calendar.previous}
           </Ui.Components.Text>
         </Ui.Components.Action>
-        <span>{calendar[index].year}</span>
+        <span>{calendar.year}</span>
         <Ui.Components.Action
-          href={`/holding/${id}/calendar/${next}?ref=${params.get('ref')}`}
+          href={`/holding/${id}/calendar/${calendar.next}?ref=${params.get('ref')}`}
           mode="secondary"
         >
           <Ui.Components.Text left>
-            {next}
+            {calendar.next}
           </Ui.Components.Text>
           <Ui.Components.Icon>
             <ChevronRight className={styles.icon} />

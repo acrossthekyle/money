@@ -12,7 +12,7 @@ export async function calendar(
   holdings: Holding[],
   budgets: Budget[],
   zone: string,
-  id: string | null,
+  id: string,
 ): Promise<CalendarYear[]> {
   const calendar = create(zone);
 
@@ -20,9 +20,7 @@ export async function calendar(
     return calendar;
   }
 
-  const selectedHolding = id === null ? holdings[0].id : id;
-
-  const holding = holdings.find(holding => selectedHolding === holding.id);
+  const holding = holdings.find(holding => id === holding.id);
 
   if (!holding) {
     return calendar;

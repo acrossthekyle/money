@@ -12,7 +12,7 @@ export default function Day({ day }: Props) {
         cs(
           styles.day,
           (day.isBeforeToday || !day.isInMonth) && styles.faded,
-          day.isToday && styles.hollow,
+          (day.isToday && day.isInMonth) && styles.hollow,
           !day.isBeforeToday && day.isInMonth && day.balance < 0 && styles.negative,
         )
       }

@@ -49,6 +49,8 @@ export function create(zone: string): CalendarYear[] {
     if (!result || result.year !== year) {
       result = {
         year,
+        next: getYear(addYears(date(zone, year, 0, 1), 1)),
+        previous: getYear(addYears(date(zone, year, 0, 1), -1)),
         months: [],
       };
 

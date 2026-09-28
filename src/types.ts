@@ -108,6 +108,8 @@ export type CalendarMonth = {
 
 export type CalendarYear = {
   year: number;
+  next: number;
+  previous: number;
   months: CalendarMonth[];
 };
 

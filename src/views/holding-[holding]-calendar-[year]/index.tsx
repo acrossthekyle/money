@@ -8,8 +8,9 @@ import Navigation from './navigation';
 
 type Props = {
   data: {
-    calendar: CalendarYear[];
+    calendar: CalendarYear;
     holding?: Holding;
+    isThisYear: boolean;
     year: string;
   };
 };
@@ -18,8 +19,6 @@ export default function View({ data }: Props) {
   if (!data.holding) {
     return null;
   }
-
-  const index = data.calendar.findIndex(year => year.year === Number(data.year));
 
   return (
     <>
@@ -31,10 +30,10 @@ export default function View({ data }: Props) {
       <Navigation
         calendar={data.calendar}
         id={data.holding?.id || ''}
-        index={index}
+        isThisYear={data.isThisYear}
       />
       <ul className={styles.items}>
-        {data.calendar[index].months.map((month) => (
+        {data.calendar.months.map((month) => (
           <li key={`${month.month}-${month.year}`}>
             <Month
               id={data.holding?.id || ''}
