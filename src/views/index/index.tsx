@@ -1,14 +1,13 @@
 import { ACCOUNTS, ASSETS } from '@/constants';
 import tw from '@/styles';
-import type { Holding } from '@/types';
+import type { Holding, Today } from '@/types';
 import Ui from '@/ui';
 
 import Item from './item';
-import type { Dateable } from './types';
 
 type Props = {
   data: {
-    date: Dateable;
+    date: Today;
     holdings: Holding[];
   };
 };
@@ -27,7 +26,7 @@ export default function View({ data }: Props) {
       <Ui.Components.Divider />
       <ul className={styles.items}>
         {accounts.map((holding) => (
-          <li key={holding.id}>
+          <li className={styles.item} key={holding.id}>
             <Item date={data.date} holding={holding} />
           </li>
         ))}
@@ -41,7 +40,7 @@ export default function View({ data }: Props) {
       <Ui.Components.Divider />
       <ul className={styles.items}>
         {assets.map((holding) => (
-          <li key={holding.id}>
+          <li className={styles.item} key={holding.id}>
             <Item date={data.date} holding={holding} />
           </li>
         ))}
@@ -57,6 +56,9 @@ const styles = tw({
   items: `
     flex flex-col gap-8
     h-full
+  `,
+  item: `
+    relative
   `,
   disclaimer: `
     mt-8

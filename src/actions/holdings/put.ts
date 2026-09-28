@@ -5,10 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
 import { db } from '@/db';
-import { set as setCalendar } from '@/setters/calendar';
 import type { Holding, HoldingFormState } from '@/types';
 
-import { balancize, interestize, wait } from '../utils';
+import { balancize, interestize } from '../utils';
 
 const Form = z.object({
   name: z.string(),
@@ -102,10 +101,6 @@ export async function put(
       id: identifier,
     });
 
-    await wait(500);
-
-    await setCalendar(identifier);
-
     revalidatePath('/');
 
     return {
@@ -122,10 +117,6 @@ export async function put(
   if (formData.get('purge') === 'true' && holding !== null) {
     await db.erase('holdings', holding.id);
 
-    await wait(500);
-
-    await setCalendar(holding.id);
-
     revalidatePath('/');
 
     return {
@@ -138,10 +129,6 @@ export async function put(
 
   if (holding !== null) {
     await db.write('holdings', result);
-
-    await wait(500);
-
-    await setCalendar(holding.id);
 
     revalidatePath('/');
 

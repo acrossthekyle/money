@@ -1,41 +1,22 @@
-'use client';
-
-import { ChevronRight, LoaderCircle } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 import tw, { cs } from '@/styles';
-import type { Holding } from '@/types';
+import type { Holding, Today } from '@/types';
 import { currency } from '@/utils';
 import { getHoldingMetaDataAsString } from '@/utils/holding';
 
-import { useModel } from './model';
-import type { Dateable } from './types';
-
 type Props = {
-  date: Dateable;
+  date: Today;
   holding: Holding;
 };
 
 export default function Item({ date, holding }: Props) {
-  const { action, handleOnSubmit, isPending } = useModel(holding, date);
-
   return (
-    <form
-      action={action}
-      className={styles.container}
-      id={`${holding.id}-switch-form`}
-    >
-      <input
-        className="hidden"
-        name="id"
-        type="text"
-        value={holding.id}
-        readOnly
-      />
-      <button
+    <>
+      <Link
         className={styles.action}
-        disabled={isPending}
-        onClick={handleOnSubmit}
-        type="button"
+        href={`/holding/${holding.id}/${date.year}/${date.month}/${date.day}`}
       >
         <h3 className={styles.heading}>
           <span className={styles.title}>
@@ -55,13 +36,9 @@ export default function Item({ date, holding }: Props) {
             {Number(holding.balance) < 0 && '-'}${currency(holding.balance)}
           </span>
         </h3>
-      </button>
-      {isPending ? (
-        <LoaderCircle className={cs(styles.icon, styles.spin)} />
-      ) : (
-        <ChevronRight className={styles.icon} />
-      )}
-    </form>
+      </Link>
+      <ChevronRight className={styles.icon} />
+    </>
   );
 };
 
@@ -112,9 +89,5 @@ const styles = tw({
     -translate-y-1/2
     w-3.5 h-3.5
     stroke-2
-  `,
-  spin: `
-    animate-spin
-    mr-1
   `,
 })

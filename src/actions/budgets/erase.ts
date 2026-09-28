@@ -1,10 +1,7 @@
 'use server';
 
 import { db } from '@/db';
-import { set as setCalendar } from '@/setters/calendar';
 import type { Budget, BudgetFormState } from '@/types';
-
-import { wait } from '../utils';
 
 export async function erase(
   budget: Budget,
@@ -24,10 +21,6 @@ export async function erase(
       });
     }
 
-    await wait(500);
-
-    await setCalendar(budget.parent);
-
     return {
       data: budget,
       hasFailed: false,
@@ -38,10 +31,6 @@ export async function erase(
 
   if (formData.get('purge') === 'true') {
     await db.erase('budgets', budget.id);
-
-    await wait(500);
-
-    await setCalendar(budget.parent);
 
     return {
       data: budget,

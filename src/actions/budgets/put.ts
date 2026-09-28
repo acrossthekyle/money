@@ -6,11 +6,10 @@ import * as z from 'zod';
 
 import { db } from '@/db';
 import { get as getSettings } from '@/getters/settings';
-import { set as setCalendar } from '@/setters/calendar';
 import type { Budget, BudgetFormState } from '@/types';
 import { createBudgetIterations } from '@/utils/budgets';
 
-import { balancize, wait } from '../utils';
+import { balancize } from '../utils';
 
 const Form = z.object({
   name: z.string(),
@@ -125,10 +124,6 @@ export async function put(
   if (budget === null) {
     await db.write('budgets', result);
 
-    await wait(500);
-
-    await setCalendar(result.parent);
-
     revalidatePath('/');
 
     return {
@@ -155,10 +150,6 @@ export async function put(
       });
     }
 
-    await wait(500);
-
-    await setCalendar(result.parent);
-
     revalidatePath('/');
 
     return {
@@ -172,10 +163,6 @@ export async function put(
   if (formData.get('purge') === 'true') {
     await db.erase('budgets', budget.id);
 
-    await wait(500);
-
-    await setCalendar(result.parent);
-
     revalidatePath('/');
 
     return {
@@ -188,10 +175,6 @@ export async function put(
 
   if (formData.get('update') === 'none' || formData.get('update') === 'all') {
     await db.write('budgets', result);
-
-    await wait(500);
-
-    await setCalendar(result.parent);
 
     revalidatePath('/');
 
@@ -241,10 +224,6 @@ export async function put(
 
       await db.writeAll('budgets', updates as Budget[]);
 
-      await wait(500);
-
-      await setCalendar(result.parent);
-
       revalidatePath('/');
 
       return {
@@ -286,10 +265,6 @@ export async function put(
       });
 
       await db.writeAll('budgets', updates as Budget[]);
-
-      await wait(500);
-
-      await setCalendar(result.parent);
 
       revalidatePath('/');
 
@@ -334,10 +309,6 @@ export async function put(
 
       await db.writeAll('budgets', updates);
 
-      await wait(500);
-
-      await setCalendar(result.parent);
-
       revalidatePath('/');
 
       return {
@@ -355,7 +326,6 @@ export async function put(
       message: `Unable to find matching budget iteration date when updating future budgets`,
     };
   }
-
 
   revalidatePath('/');
 
