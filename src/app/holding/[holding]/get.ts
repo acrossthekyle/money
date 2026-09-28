@@ -1,12 +1,14 @@
 import { get as getHoldings } from '@/getters/holdings';
+import { get as getSettings } from '@/getters/settings';
+import type { Today } from '@/types';
+import { dateable } from '@/utils';
 
-export async function get(id: string, ref: string | null) {
+export async function get(id: string) {
   const { holdings } = await getHoldings();
-
-  const holding = holdings.find(holding => holding.id === id);
+  const { zone } = await getSettings();
 
   return {
-    holding,
-    returnable: ref,
+    date: dateable(zone) as Today,
+    holding: holdings.find(holding => holding.id === id),
   };
 };

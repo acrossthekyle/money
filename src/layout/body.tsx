@@ -22,8 +22,8 @@ const styles = tw({
     motion-safe:transition-[opacity,translate]
 
     has-[dialog[open]]:opacity-10
-    has-[dialog[open]]:translate-y-126
+    has-[dialog[open]]:translate-y-120
 
-    md:has-[dialog[open]]:translate-y-116
+    md:has-[dialog[open]]:translate-y-110
   `,
 });

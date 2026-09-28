@@ -102,6 +102,12 @@ export async function put(
       id: identifier,
     });
 
+    await wait(500);
+
+    await setCalendar(identifier);
+
+    revalidatePath('/');
+
     return {
       data: {
         ...result,

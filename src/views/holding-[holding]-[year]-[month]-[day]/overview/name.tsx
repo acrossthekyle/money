@@ -1,5 +1,5 @@
 import tw from '@/styles';
-import type { Dateable, Holding } from '@/types'
+import type { Holding } from '@/types'
 import Ui from '@/ui';
 import { getHoldingMetaDataAsString } from '@/utils/holding';
 
@@ -7,11 +7,10 @@ import Edit from './edit';
 import Icon from './icon';
 
 type Props = {
-  date: Dateable;
   holding: Holding;
 };
 
-export default function Name({ date, holding }: Props) {
+export default function Name({ holding }: Props) {
   return (
     <div className={styles.container}>
       <Icon holding={holding} />
@@ -20,7 +19,7 @@ export default function Name({ date, holding }: Props) {
         lid={getHoldingMetaDataAsString(holding, true)}
         title={holding.name}
       />
-      <Edit date={date} holding={holding} />
+      <Edit holding={holding} />
       <span className={styles.number}>
         {holding.number || '0000'}
       </span>

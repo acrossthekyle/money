@@ -122,6 +122,12 @@ export type SearchParams = {
   [key: string]: string | string[];
 };
 
+export type Today = {
+  year: number;
+  month: string;
+  day: string;
+};
+
 export type Dateable = {
   date: Date;
   display: string;

@@ -5,9 +5,9 @@ import { useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
 import { useConfirm, useLoading } from '@/hooks';
-import type { FormStateError, Holding, HoldingFormState } from '@/types';
+import type { FormStateError, Holding, HoldingFormState, Today } from '@/types';
 
-export function useModel(holding?: Holding) {
+export function useModel(date: Today, holding?: Holding) {
   const router = useRouter();
 
   const putable = put.bind(null, holding || null);
@@ -36,10 +36,16 @@ export function useModel(holding?: Holding) {
     if (state?.isSuccessful) {
       onLoaded();
 
-      router.push(`/`);
+      if (willDelete) {
+        router.push('/');
+      } else if (!!state?.data?.id) {
+        router.push(
+          `/holding/${state?.data?.id}/${date.year}/${date.month}/${date.day}`
+        );
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state?.isSuccessful]);
+  }, [state?.data, state?.isSuccessful, willDelete]);
 
   useEffect(() => {
     if (state?.hasFailed && (state?.errors || !!state?.message)) {
@@ -73,11 +79,16 @@ export function useModel(holding?: Holding) {
     }, 100);
   };
 
+  const handleOnCancel = () => {
+    router.back();
+  };
+
   return {
     action,
     canDelete: holding !== undefined,
     data: state?.data ?? holding,
     errors,
+    handleOnCancel,
     handleOnDelete,
     isPending,
     willDelete,

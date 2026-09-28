@@ -1,9 +1,8 @@
 import { get as getCalendar } from '@/getters/calendar';
 import { get as getHoldings } from '@/getters/holdings';
 import { get as getSettings } from '@/getters/settings';
-import { pad } from '@/utils';
-
-import { createDateable } from './utils';
+import type { Dateable } from '@/types';
+import { dateable, pad } from '@/utils';
 
 export async function get(
   holding: string,
@@ -24,7 +23,7 @@ export async function get(
 
   return {
     calendar: current,
-    date: createDateable(zone, year, month, day),
+    date: dateable(zone, year, month, day) as Dateable,
     holding: holdings.find(item => item.id === holding),
   };
 };

@@ -3,10 +3,18 @@ import { Suspense } from 'react';
 import Ui from '@/ui';
 import View from '@/views/holding';
 
+import { get } from './get';
+
+async function AsyncView() {
+  const data = await get();
+
+  return <View data={data} />;
+};
+
 export default function Page() {
   return (
     <Suspense fallback={<Ui.Loaders.Spinner />}>
-      <View />
+      <AsyncView />
     </Suspense>
   );
 };

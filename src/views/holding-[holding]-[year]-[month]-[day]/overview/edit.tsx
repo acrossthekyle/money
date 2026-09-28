@@ -1,19 +1,18 @@
 import { Pen } from 'lucide-react';
 
 import tw from '@/styles';
-import type { Dateable, Holding } from '@/types';
+import type { Holding } from '@/types';
 import Ui from '@/ui';
 
 type Props = {
-  date: Dateable;
   holding: Holding;
 };
 
-export default function Edit({ date, holding }: Props) {
+export default function Edit({ holding }: Props) {
   return (
     <Ui.Components.Action
       className={styles.container}
-      href={`/holding/${holding.id}?ref=/holding/${holding.id}/${date.uri}`}
+      href={`/holding/${holding.id}`}
       mode="secondary"
     >
       <Ui.Components.Icon>

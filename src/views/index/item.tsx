@@ -1,10 +1,9 @@
 'use client';
 
-import { ChevronRight, LoaderCircle, Pen } from 'lucide-react';
+import { ChevronRight, LoaderCircle } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
 import type { Holding } from '@/types';
-import Ui from '@/ui';
 import { currency } from '@/utils';
 import { getHoldingMetaDataAsString } from '@/utils/holding';
 
@@ -41,11 +40,6 @@ export default function Item({ date, holding }: Props) {
         <h3 className={styles.heading}>
           <span className={styles.title}>
             {holding.name}
-            {isPending ? (
-              <LoaderCircle className={cs(styles.icon, styles.spin)} />
-            ) : (
-              <ChevronRight className={styles.icon} />
-            )}
           </span>
           <span className={styles.lid}>
             {getHoldingMetaDataAsString(holding)}
@@ -62,15 +56,11 @@ export default function Item({ date, holding }: Props) {
           </span>
         </h3>
       </button>
-      <Ui.Components.Action
-        className={styles.edit}
-        href={`/holding/${holding.id}`}
-        mode="secondary"
-      >
-        <Ui.Components.Icon>
-          <Pen className={styles.pen} />
-        </Ui.Components.Icon>
-      </Ui.Components.Action>
+      {isPending ? (
+        <LoaderCircle className={cs(styles.icon, styles.spin)} />
+      ) : (
+        <ChevronRight className={styles.icon} />
+      )}
     </form>
   );
 };
@@ -118,19 +108,13 @@ const styles = tw({
     text-red-400 dark:text-rose-400
   `,
   icon: `
+    absolute top-1/2 right-0
+    -translate-y-1/2
     w-3.5 h-3.5
     stroke-2
   `,
   spin: `
     animate-spin
     mr-1
-  `,
-  edit: `
-    absolute top-1/2 right-0 z-10
-    -translate-y-1/2
-  `,
-  pen: `
-    w-2.5 h-2.5
-    stroke-2
   `,
 })

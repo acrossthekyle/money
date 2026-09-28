@@ -67,7 +67,6 @@ export default function Dialog({ netWorth }: Props) {
               </span>
             </Link>
           </li>
-          <li className={styles.divider} role="presentation" />
           {isMounted && (
             <li>
               <button

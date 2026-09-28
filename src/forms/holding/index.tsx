@@ -3,26 +3,27 @@
 import { Check, Trash } from 'lucide-react';
 
 import tw from '@/styles';
-import type { Holding } from '@/types';
+import type { Holding, Today } from '@/types';
 import Ui from '@/ui';
 
 import { useModel } from './model';
 
 type Props = {
+  date: Today;
   holding?: Holding;
-  returnable?: string | null;
 };
 
-export default function Form({ holding, returnable }: Props) {
+export default function Form({ date, holding }: Props) {
   const {
     action,
     canDelete,
     data,
     errors,
+    handleOnCancel,
     handleOnDelete,
     isPending,
     willDelete,
-  } = useModel(holding);
+  } = useModel(date, holding);
 
   return (
     <Ui.Form.Container action={action} id="holding-form">
@@ -113,7 +114,7 @@ export default function Form({ holding, returnable }: Props) {
           </Ui.Components.Action>
         ) : <span />}
         <div className={styles.actions}>
-          <Ui.Components.Action href={returnable ?? '/'} mode="secondary">
+          <Ui.Components.Action onClick={handleOnCancel} mode="secondary">
             <Ui.Components.Text left right>
               Cancel
             </Ui.Components.Text>

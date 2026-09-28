@@ -1,8 +1,8 @@
 import { get as getBudgets } from '@/getters/budgets';
 import { get as getHoldings } from '@/getters/holdings';
 import { get as getSettings } from '@/getters/settings';
-
-import { createDateable } from '../../utils';
+import type { Dateable } from '@/types';
+import { dateable } from '@/utils';
 
 export async function get(
   holding: string,
@@ -17,7 +17,7 @@ export async function get(
 
   return {
     budget: budgets.find(item => item.id === budget),
-    date: createDateable(zone, year, month, day),
+    date: dateable(zone, year, month, day) as Dateable,
     holding: holdings.find(item => item.id === holding),
     holdings,
     parent: holding,
