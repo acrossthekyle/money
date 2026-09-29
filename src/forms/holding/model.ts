@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
-import { useConfirm, useLoading } from '@/hooks';
+import { useConfirm } from '@/hooks';
 import type { FormStateError, Holding, HoldingFormState, Today } from '@/types';
 
 export function useModel(date: Today, holding?: Holding) {
@@ -23,19 +23,9 @@ export function useModel(date: Today, holding?: Holding) {
   const [errors, setErrors] = useState<FormStateError[]>([]);
 
   const confirm = useConfirm();
-  const { onLoaded, onLoading } = useLoading();
-
-  useEffect(() => {
-    if (isPending) {
-      onLoading();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPending]);
 
   useEffect(() => {
     if (state?.isSuccessful) {
-      onLoaded();
-
       if (willDelete) {
         router.push('/');
       } else if (!!state?.data?.id) {
@@ -49,12 +39,9 @@ export function useModel(date: Today, holding?: Holding) {
 
   useEffect(() => {
     if (state?.hasFailed && (state?.errors || !!state?.message)) {
-      onLoaded();
-
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setErrors(state?.errors || [{ field: '', error: state?.message }]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.hasFailed, state?.errors, state?.message]);
 
   const handleOnDelete = async () => {

@@ -6,13 +6,12 @@ import { ThemeProvider } from 'next-themes';
 import { PropsWithChildren, Suspense } from 'react';
 
 import { metrics } from '@/algorithms/metrics';
-import { DialogProvider, LoadingProvider, TimezoneProvider } from '@/contexts';
+import { DialogProvider, TimezoneProvider } from '@/contexts';
 import { get as getHoldings } from '@/getters/holdings';
 import { get as getSettings } from '@/getters/settings';
 import {
   LayoutBody,
   LayoutHeader,
-  LayoutLoading,
   LayoutMain,
   LayoutScripting,
 } from '@/layout';
@@ -66,20 +65,17 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     >
       <Suspense fallback={null}>
         <TimezoneProvider zone={zone}>
-          <LoadingProvider>
-            <DialogProvider>
-              <LayoutBody>
-                <LayoutScripting />
-                <ThemeProvider>
-                  <LayoutHeader />
-                  <LayoutMain data={{ netWorth }}>
-                    {children}
-                  </LayoutMain>
-                  <LayoutLoading />
-                </ThemeProvider>
-              </LayoutBody>
-            </DialogProvider>
-          </LoadingProvider>
+          <DialogProvider>
+            <LayoutBody>
+              <LayoutScripting />
+              <ThemeProvider>
+                <LayoutHeader />
+                <LayoutMain data={{ netWorth }}>
+                  {children}
+                </LayoutMain>
+              </ThemeProvider>
+            </LayoutBody>
+          </DialogProvider>
         </TimezoneProvider>
       </Suspense>
     </html>

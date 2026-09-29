@@ -1,7 +1,6 @@
 import { Forms } from '@/forms';
 import type { Budget, Dateable, Holding } from '@/types';
 import Ui from '@/ui';
-import { getHoldingMetaDataAsString } from '@/utils/holding';
 
 type Props = {
   data: {
@@ -18,13 +17,7 @@ export default function View({ data }: Props) {
     <>
       <Ui.Components.Divider />
       <Ui.Components.Header
-        lid={
-          [
-            `On ${data.date.display} in `,
-            getHoldingMetaDataAsString(data.holding),
-            `Account`,
-          ].join(' ')
-        }
+        lid={data.holding?.name}
         title="Add Budget"
       />
       <Forms.Budget

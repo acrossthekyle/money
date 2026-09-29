@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useActionState, useEffect, useState } from 'react';
 
 import { DATE_DISPLAY } from '@/constants';
-import { useConfirm, useLoading } from '@/hooks';
+import { useConfirm } from '@/hooks';
 import { put } from '@/actions/budgets/put';
 import type {
   Budget,
@@ -32,7 +32,6 @@ export function useModel(date: Dateable, parent: string, budget?: Budget) {
   const [update, setUpdate] = useState('');
 
   const confirm = useConfirm();
-  const { onLoaded, onLoading } = useLoading();
 
   useEffect(() => {
     if (budget) {
@@ -43,16 +42,7 @@ export function useModel(date: Dateable, parent: string, budget?: Budget) {
   }, [budget]);
 
   useEffect(() => {
-    if (isPending) {
-      onLoading();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPending]);
-
-  useEffect(() => {
     if (state?.isSuccessful) {
-      onLoaded();
-
       router.push(`/holding/${parent}/${date.uri}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,12 +50,9 @@ export function useModel(date: Dateable, parent: string, budget?: Budget) {
 
   useEffect(() => {
     if (state?.hasFailed && (state?.errors || !!state?.message)) {
-      onLoaded();
-
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setErrors(state?.errors || [{ field: '', error: state?.message }]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.hasFailed, state?.errors, state?.message]);
 
   const handleOnDelete = async () => {

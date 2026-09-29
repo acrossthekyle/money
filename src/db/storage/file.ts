@@ -28,15 +28,15 @@ export async function read(table: string, id?: string): Promise<Record[]> {
     results = null;
   }
 
-  const dataArray: Record[] = Array.isArray(results?.default)
+  const data: Record[] = Array.isArray(results?.default)
     ? results.default
     : Array.isArray(results)
       ? results
       : [];
 
   return id !== undefined
-    ? dataArray.filter((result: Record) => result.id === id)
-    : [...dataArray];
+    ? data.filter((result: Record) => result.id === id)
+    : [...data];
 };
 
 export async function write(table: string, data: Record[]) {

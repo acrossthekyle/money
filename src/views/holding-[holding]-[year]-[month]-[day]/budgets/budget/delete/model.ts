@@ -6,7 +6,7 @@ import { useActionState, useEffect, useState } from 'react';
 
 import { erase } from '@/actions/budgets/erase';
 import { DATE_DISPLAY } from '@/constants';
-import { useConfirm, useLoading } from '@/hooks';
+import { useConfirm } from '@/hooks';
 import type { Budget, BudgetFormState, UseConfirmConfig } from '@/types';
 
 export function useModel(budget: Budget, day: Date) {
@@ -25,12 +25,9 @@ export function useModel(budget: Budget, day: Date) {
   const [willPurge, setWillPurge] = useState(false);
 
   const confirm = useConfirm();
-  const { onLoaded, onLoading } = useLoading();
 
   useEffect(() => {
     if (state?.isSuccessful) {
-      onLoaded();
-
       router.refresh();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,8 +77,6 @@ export function useModel(budget: Budget, day: Date) {
       const form = document.getElementById(`${budget.id}-delete-form`);
 
       if (form instanceof HTMLFormElement) {
-        onLoading();
-
         form.requestSubmit();
       }
     }, 100);

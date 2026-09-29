@@ -1,8 +1,6 @@
-import { ACCOUNTS } from '@/constants';
 import { Forms } from '@/forms';
 import type { Budget, Dateable, Holding } from '@/types';
 import Ui from '@/ui';
-import { getHoldingMetaDataAsString } from '@/utils/holding';
 
 type Props = {
   data: {
@@ -19,14 +17,8 @@ export default function View({ data }: Props) {
     <>
       <Ui.Components.Divider />
       <Ui.Components.Header
-        lid={
-          [
-            `Occurring on ${data.date.display} in the `,
-            getHoldingMetaDataAsString(data.holding),
-            ACCOUNTS.includes(data.holding?.type || '') ? `Account` : 'Asset',
-          ].join(' ')
-        }
-        title={`Edit Budget "${data.budget?.name}"`}
+        lid={[data.holding?.name, data.budget?.name].join(' • ')}
+        title="Edit Budget"
       />
       <Forms.Budget
         budget={data.budget}

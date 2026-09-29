@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: 'Login',
 };
 
-async function DataView() {
+async function AsyncView() {
   const cookieStore = await cookies();
 
   const alert = cookieStore.get('alert')?.value || '';
@@ -22,7 +22,7 @@ async function DataView() {
 export default async function Page() {
   return (
     <Suspense fallback={<Ui.Loaders.Spinner />}>
-      <DataView />
+      <AsyncView />
     </Suspense>
   );
 }
