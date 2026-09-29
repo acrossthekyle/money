@@ -11,10 +11,6 @@ type Props = {
 };
 
 export default function Overview({ calendar, date, holding }: Props) {
-  const filtered = calendar.days.filter(day => day.isInMonth);
-
-  const isTrendingUp = filtered[0].balance < filtered[filtered.length - 1].balance;
-
   const balance = calendar
     .days
     .filter(day => day.iso === date.iso)
@@ -26,7 +22,7 @@ export default function Overview({ calendar, date, holding }: Props) {
     <>
       <Ui.Components.Divider />
       <Name holding={holding} />
-      <Balance date={date} isTrendingUp={isTrendingUp} value={balance} />
+      <Balance date={date} value={balance} />
     </>
   );
 };

@@ -138,6 +138,8 @@ export type Dateable = {
   month: string;
   day: string;
   uri: string;
+  weekdayFull: string;
+  weekdayShort: string;
   today: {
     date: Date;
     uri: string;

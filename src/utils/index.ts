@@ -66,6 +66,8 @@ export function dateable(
     month,
     day,
     uri: `${year}/${month}/${day}`,
+    weekdayFull: format(parsed, 'iiii'),
+    weekdayShort: format(parsed, 'iii'),
     today: {
       date: today,
       uri: format(today, DATE_URI),

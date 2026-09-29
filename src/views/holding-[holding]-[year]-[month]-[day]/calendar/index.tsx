@@ -37,7 +37,7 @@ export default function Calendar({ calendar, date, holding }: Props) {
 const styles = tw({
   upper: `
     relative
-    mt-1 mb-4
+    mb-4
   `,
   header: `
     flex flex-col gap-2
@@ -50,7 +50,7 @@ const styles = tw({
     md:text-sm
   `,
   lid: `
-    text-sm
+    text-sm text-current/75
 
     md:text-xs
   `,

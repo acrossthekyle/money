@@ -1,44 +1,36 @@
-import { format } from 'date-fns';
-import { TrendingDown, TrendingUp } from 'lucide-react';
-
-import { DATE_DISPLAY } from '@/constants';
 import tw, { cs } from '@/styles';
 import type { Dateable } from '@/types';
 import { currency } from '@/utils';
 
 type Props = {
   date: Dateable;
-  isTrendingUp: boolean;
   value: number;
 };
 
-export default function Balance({ date, isTrendingUp, value }: Props) {
+export default function Balance({ date, value }: Props) {
   return (
-    <p className={styles.balance}>
-      <span className={styles.title}>Balance</span>
-      <span className={styles.amount}>
-        <span className={cs(styles.value, value < 0 && styles.negative)}>
-          ${currency(value)}
-          {isTrendingUp ? (
-            <TrendingUp className={styles.icon} />
-          ) : (
-            <TrendingDown className={styles.icon} />
-          )}
+    <p className={styles.container}>
+      <span className={styles.title}>
+        <span className={styles.date}>
+          {date.day}
         </span>
-        <span className={styles.disclaimer}>
-          {format(date.date, DATE_DISPLAY)}
+        <span className={styles.full}>
+          {date.weekdayFull}
         </span>
+        <span className={styles.short}>
+          {date.weekdayShort}
+        </span>
+      </span>
+      <span className={cs(styles.amount, value < 0 && styles.negative)}>
+        ${currency(value)}
       </span>
     </p>
   );
 };
 
 const styles = tw({
-  balance: `
-    border-t border-dashed border-current/62.5
-    pt-8
-    mt-0
-    flex justify-between
+  container: `
+    flex items-end justify-between
     w-full
     font-roboto
     text-base
@@ -46,26 +38,29 @@ const styles = tw({
     md:text-sm
   `,
   title: `
+    flex items-end
     uppercase
+    text-8xl/20
   `,
-  amount: `
-    flex flex-col items-end
-  `,
-  value: `
-    flex items-end gap-4
+  date: `
+    pr-2
     font-bold
   `,
-  icon: `
-    w-5 h-5
-    stroke-1
-    text-(--foreground)
-  `,
-  disclaimer: `
-    text-xs text-current/75
-    uppercase
-    tracking-wide
+  full: `
+    hidden
+    text-xs/4
 
-    md:text-tiny
+    xs:inline
+  `,
+  short: `
+    text-xs/4
+
+    xs:hidden
+  `,
+  amount: `
+    flex flex-col items-end gap-4
+    font-bold
+    text-lg/5
   `,
   negative: `
     text-red-500 dark:text-rose-400
