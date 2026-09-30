@@ -14,7 +14,12 @@ import type {
   BudgetFormState,
 } from '@/types';
 
-export function useModel(date: Dateable, parent: string, budget?: Budget) {
+export function useModel(
+  date: Dateable,
+  parent: string,
+  canFullyUpdate: boolean,
+  budget?: Budget,
+) {
   const router = useRouter();
 
   const putable = put.bind(null, budget || null);
@@ -43,10 +48,14 @@ export function useModel(date: Dateable, parent: string, budget?: Budget) {
 
   useEffect(() => {
     if (state?.isSuccessful) {
-      router.push(`/holding/${parent}/${date.uri}`);
+      if (canFullyUpdate) {
+        router.push(`/holdings/${parent}/${date.uri}`);
+      } else {
+        router.back();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state?.isSuccessful]);
+  }, [canFullyUpdate, state?.isSuccessful]);
 
   useEffect(() => {
     if (state?.hasFailed && (state?.errors || !!state?.message)) {
@@ -59,7 +68,7 @@ export function useModel(date: Dateable, parent: string, budget?: Budget) {
     setWillPurge(true);
 
     const result = await confirm({
-      text: 'This action cannot be undone. This will permanently delete this entire budget.',
+      text: 'This will permanently delete this entire budget. This action cannot be undone.',
     });
 
     if (!result.isConfirmed) {
@@ -84,7 +93,7 @@ export function useModel(date: Dateable, parent: string, budget?: Budget) {
   const handleOnContinue = async () => {
     if (budget?.schedule === 'once') {
       setUpdate('this');
-    } else {
+    } else if (canFullyUpdate) {
       const result = await confirm({
         title: 'Are you absolutely sure?',
         text: 'This will be a permanent update. This action cannot be undone. Choose which dates to apply these changes to:',
@@ -109,6 +118,8 @@ export function useModel(date: Dateable, parent: string, budget?: Budget) {
       }
 
       setUpdate(result.value);
+    } else {
+      setUpdate('all');
     }
 
     setTimeout(() => {
@@ -120,11 +131,16 @@ export function useModel(date: Dateable, parent: string, budget?: Budget) {
     }, 100);
   };
 
+  const handleOnCancel = () => {
+    router.back();
+  };
+
   return {
     action,
     canDelete: budget !== undefined,
     data: state?.data ?? budget,
     errors,
+    handleOnCancel,
     handleOnContinue,
     handleOnDelete,
     handleOnType,

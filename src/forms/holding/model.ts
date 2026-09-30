@@ -30,7 +30,7 @@ export function useModel(date: Today, holding?: Holding) {
         router.push('/');
       } else if (!!state?.data?.id) {
         router.push(
-          `/holding/${state?.data?.id}/${date.year}/${date.month}/${date.day}`
+          `/holdings/${state?.data?.id}/${date.year}/${date.month}/${date.day}`
         );
       }
     }

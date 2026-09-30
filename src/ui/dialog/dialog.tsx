@@ -1,6 +1,6 @@
 'use client';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 
 type Props = {
   id: string;
@@ -21,7 +21,7 @@ export default function Dialog({
   return (
     <dialog
       aria-labelledby="dialog-header"
-      className={`${styles.container} ${isActive ? 'is-active' : ''}`.trim()}
+      className={cs(styles.container, isActive && 'is-active')}
       closedby="none"
       id={id}
       onClick={onBackdrop}
@@ -35,20 +35,15 @@ export default function Dialog({
 
 const styles = tw({
   container: `
-    fixed inset-0
+    fixed inset-0 z-1000
     w-full max-w-full
     h-full max-h-none
     flex flex-col items-center
-    p-4 pb-2
     bg-transparent
     outline-none
     overflow-y-auto
     font-roboto
 
     backdrop:hidden
-
-    motion-safe:backdrop:opacity-0
-    motion-safe:backdrop:transition-opacity
-    motion-safe:backdrop:duration-450
   `,
 });

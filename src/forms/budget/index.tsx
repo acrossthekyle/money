@@ -22,6 +22,7 @@ import { useModel } from './model';
 
 type Props = {
   budget?: Budget;
+  canFullyUpdate?: boolean;
   date: Dateable;
   holdings: Holding[];
   parent: string;
@@ -29,6 +30,7 @@ type Props = {
 
 export default function Form({
   budget,
+  canFullyUpdate = true,
   date,
   holdings,
   parent,
@@ -38,6 +40,7 @@ export default function Form({
     canDelete,
     data,
     errors,
+    handleOnCancel,
     handleOnContinue,
     handleOnDelete,
     handleOnType,
@@ -45,7 +48,7 @@ export default function Form({
     type,
     update,
     willPurge,
-  } = useModel(date, parent, budget);
+  } = useModel(date, parent, canFullyUpdate, budget);
 
   const accounts = holdings.filter(holding => ACCOUNTS.includes(holding.type));
   const assets = holdings.filter(holding => ASSETS.includes(holding.type));
@@ -116,7 +119,10 @@ export default function Form({
           </div>
         ) : <div />}
         <div className={styles.actions}>
-          <Ui.Components.Action href={`/holding/${parent}/${date.uri}`} mode="secondary">
+          <Ui.Components.Action
+            onClick={handleOnCancel}
+            mode="secondary"
+          >
             <Ui.Components.Text left right>
               Cancel
             </Ui.Components.Text>

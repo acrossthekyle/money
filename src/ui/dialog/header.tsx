@@ -23,20 +23,27 @@ const styles = tw({
   container: `
     relative
     flex items-center justify-between
-    px-4 py-2 mb-2
+    mt-3 pb-2
   `,
   header: `
-    font-light
-    text-sm
+    text-base
     uppercase
     truncate
+
+    md:text-sm
   `,
   close: `
+    absolute top-1/2 -right-3
+    -translate-y-1/2
+    -mt-1
     p-2
-    -mr-2
   `,
   icon: `
-    w-5 h-5
+    w-6 h-6
     stroke-1
+
+    md:w-5
+    md:h-5
+    md:stroke-2
   `,
 });

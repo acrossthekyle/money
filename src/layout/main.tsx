@@ -27,9 +27,9 @@ const styles = tw({
     flex flex-col gap-4
     w-full max-w-sm
     mx-auto
-    px-6 pb-8
+    p-3
     font-roboto
 
-    lg:pb-6
+    md:p-6
   `,
 });

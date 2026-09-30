@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import Ui from '@/ui';
-import View from '@/views/holdings';
+import View from '@/views/holdings-holding';
 
 import { get } from './get';
 

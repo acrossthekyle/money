@@ -29,7 +29,7 @@ export default function Icon({
 const styles = tw({
   container: `
     flex items-center justify-center
-    w-4.5 h-4.5
+    w-5 h-5
     rounded-sm
   `,
   primary: `

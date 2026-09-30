@@ -18,12 +18,13 @@ const styles = tw({
     selection:bg-yellow-300
     selection:text-black
 
+    has-[dialog[open]]:opacity-10
+
     motion-safe:duration-300
     motion-safe:transition-[opacity,translate]
 
-    has-[dialog[open]]:opacity-10
-    has-[dialog[open]]:translate-y-120
+    has-[dialog#menu-dialog[open]]:translate-y-120
 
-    md:has-[dialog[open]]:translate-y-110
+    md:has-[dialog#menu-dialog[open]]:translate-y-110
   `,
 });

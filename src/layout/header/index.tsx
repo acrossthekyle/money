@@ -23,8 +23,9 @@ const styles = tw({
     flex items-center justify-between
     w-full max-w-sm
     mx-auto
-    pt-6 px-6 pb-4
+    p-3 pb-0
 
-    md:pt-12
+    md:p-6
+    md:pb-0
   `,
 });

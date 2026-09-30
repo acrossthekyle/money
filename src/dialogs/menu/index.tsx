@@ -1,6 +1,6 @@
 'use client';
 
-import { ClockFading, DoorOpen, Landmark, Moon, DollarSign, Plus, Sun, X } from 'lucide-react';
+import { ClockFading, LayoutList, LogOut, Moon, DollarSign, Calendar, Sun } from 'lucide-react';
 import Link from 'next/link';
 
 import { logout } from '@/actions/auth/logout';
@@ -36,22 +36,19 @@ export default function Dialog({ netWorth }: Props) {
       onCancel={onCancel}
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
-        <h2 className={styles.header} id="dialog-header">
+        <Ui.Dialog.DialogHeader onClose={onClose}>
           Menu
-        </h2>
-        <button className={styles.close} onClick={onClose} type="button">
-          <X className={styles.x} />
-        </button>
+        </Ui.Dialog.DialogHeader>
         <ul className={styles.items}>
           <li>
             <Link
               className={cs(styles.item, styles.hoverable)}
               onClick={onClose}
-              href="/holding"
+              href="/"
             >
-              <Plus className={styles.icon} />
+              <LayoutList className={styles.icon} />
               <span className={styles.value}>
-                Create Account/Asset
+                Dashboard
               </span>
             </Link>
           </li>
@@ -59,11 +56,11 @@ export default function Dialog({ netWorth }: Props) {
             <Link
               className={cs(styles.item, styles.hoverable)}
               onClick={onClose}
-              href="/"
+              href="/budgets"
             >
-              <Landmark className={styles.icon} />
+              <Calendar className={styles.icon} />
               <span className={styles.value}>
-                View Accounts/Assets
+                Budgets
               </span>
             </Link>
           </li>
@@ -80,7 +77,7 @@ export default function Dialog({ netWorth }: Props) {
                   <Moon className={styles.icon} />
                 )}
                 <span className={styles.value}>
-                  Switch to<br />{theme === 'dark' ? 'light' : 'dark'} Mode
+                  {theme === 'dark' ? 'light' : 'dark'} Mode
                 </span>
               </button>
             </li>
@@ -92,10 +89,9 @@ export default function Dialog({ netWorth }: Props) {
                 onClick={onClose}
                 type="submit"
               >
-                <DoorOpen className={styles.icon} />
+                <LogOut className={styles.icon} />
                 <span className={styles.value}>
-                  Logout and<br />
-                  end session
+                  Logout
                 </span>
               </button>
             </form>
@@ -106,8 +102,7 @@ export default function Dialog({ netWorth }: Props) {
               <DollarSign className={styles.icon} />
             </Ui.Components.Icon>
             <span className={styles.value}>
-              ${currency(netWorth)}<br />
-              Net Worth
+              ${currency(netWorth)}
             </span>
           </li>
           <li className={cs(styles.item, styles.static)}>
@@ -115,7 +110,7 @@ export default function Dialog({ netWorth }: Props) {
               <ClockFading className={styles.icon} />
             </Ui.Components.Icon>
             <span className={styles.value}>
-              {zone} Timezone
+              {zone}
             </span>
           </li>
         </ul>
@@ -125,24 +120,9 @@ export default function Dialog({ netWorth }: Props) {
 };
 
 const styles = tw({
-  close: `
-    absolute top-2 right-0 z-10
-    p-2
-  `,
-  x: `
-    w-5 h-5
-    stroke-2
-  `,
-  header: `
-    flex flex-col
-    uppercase
-    text-base
-
-    md:text-sm
-  `,
   items: `
     grid grid-cols-2 gap-4
-    mt-6
+    mt-4
   `,
   item: `
     relative
@@ -150,9 +130,9 @@ const styles = tw({
     w-full h-28
     text-base text-left
     rounded-md
-    p-2
+    p-3
 
-    xs:p-4
+    md:p-4
     md:text-sm
     md:h-26
   `,
@@ -172,19 +152,19 @@ const styles = tw({
     flex items-center justify-between
     w-full
     uppercase
-    text-xs
-    font-bold
+    text-sm
     tracking-wide
     scale-100
     origin-bottom-left
 
-    xs:scale-105
-    sm:scale-100
-    sm:text-xs
+    md:text-xs
   `,
   icon: `
-    w-4 h-4
+    w-5 h-5
     stroke-2
+
+    md:w-4
+    md:h-4
   `,
   divider: `
     col-span-2

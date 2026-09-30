@@ -1,4 +1,4 @@
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 
 type Props = {
   className?: string;
@@ -11,7 +11,7 @@ export default function Inner({
   isActive,
 }: React.PropsWithChildren<Props>) {
   return (
-    <div className={`${styles.container(isActive)} ${className}`.trim()}>
+    <div className={cs(styles.container(isActive), className)}>
       {children}
     </div>
   );
@@ -20,15 +20,14 @@ export default function Inner({
 const styles = {
   container: (isActive: boolean) => tw(`
     relative
-    w-full max-w-90
-    py-4 px-3
+    w-full max-w-sm
+    px-3
 
     motion-safe:duration-300
 
-    ${isActive
-      ? `opacity-100 translate-y-0`
-      : `opacity-0 -translate-y-full`}
+    ${isActive ? `opacity-100 translate-y-0` : `opacity-0 -translate-y-full`}
 
-    md:mt-4
+    md:px-6
+    md:mt-3
   `),
 };

@@ -75,14 +75,14 @@ const styles = tw({
     flex items-center gap-2
     py-1.25 pl-1.25 pr-1.25
     uppercase
-    text-xs
+    text-sm
     border border-current/62.5
     rounded-md
     tracking-wide
 
     disabled:opacity-50
 
-    md:text-tiny
+    md:text-xs
   `,
   secondary: `
     border-dashed

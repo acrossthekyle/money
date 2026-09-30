@@ -27,7 +27,7 @@ const styles = tw({
     h-9 w-9
     bg-(--background)
     rounded-full
-    text-xs
+    text-sm
     font-medium dark:font-normal
     uppercase
     border border-current/22.5
@@ -38,7 +38,7 @@ const styles = tw({
 
     disabled:pointer-events-none
 
-    md:text-tiny
+    md:text-xs
   `,
   submit: `
     bg-(--foreground)

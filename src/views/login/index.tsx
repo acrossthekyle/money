@@ -1,8 +1,8 @@
 'use client';
 
-import { ArrowUpRight, Zap } from 'lucide-react';
+import { ArrowUpRight, LoaderCircle, Zap } from 'lucide-react';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import Ui from '@/ui';
 
 import { useModel } from './model';
@@ -73,10 +73,14 @@ export default function View({ data }: Props) {
           type="submit"
         >
           <Ui.Components.Icon>
-            <Zap className={styles.icon} />
+            {isPending ? (
+              <LoaderCircle className={cs(styles.icon, styles.spin)} />
+            ) : (
+              <Zap className={styles.icon} />
+            )}
           </Ui.Components.Icon>
           <Ui.Components.Text right>
-            {isPending ? 'Verifying...' : 'Sign In'}
+            Sign In
           </Ui.Components.Text>
         </Ui.Components.Action>
       </Ui.Form.Footer>
@@ -116,5 +120,8 @@ const styles = tw({
   icon: `
     w-3 h-3
     stroke-2
+  `,
+  spin: `
+    animate-spin
   `,
 });

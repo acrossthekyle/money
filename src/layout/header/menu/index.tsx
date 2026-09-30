@@ -1,6 +1,6 @@
 'use client';
 
-import { TextAlignCenter } from 'lucide-react';
+import { TextAlignJustify } from 'lucide-react';
 
 import tw from '@/styles';
 
@@ -16,7 +16,7 @@ export default function Menu() {
       title="Menu"
       type="button"
     >
-      {!isActive && <TextAlignCenter className={styles.icon} />}
+      {!isActive && <TextAlignJustify className={styles.icon} />}
     </button>
   );
 };
@@ -29,7 +29,11 @@ const styles = tw({
     tracking-widest
   `,
   icon: `
-    w-5 h-5
-    stroke-2
+    w-7 h-7
+    stroke-1
+
+    md:w-5.5
+    md:h-5.5
+    md:stroke-2
   `,
 });
