@@ -15,13 +15,11 @@ export default function Switch({ budget, date }: Props) {
       className={styles.control}
       mode="secondary"
       href={`/holdings/${budget.parent}/${date.uri}`}
+      title={`Switch to ${budget.type === 'credit' ? budget.holding?.to : budget.holding?.from}`}
     >
-      <Ui.Components.Icon mode="secondary">
+      <Ui.Components.Icon>
         <Shuffle className={styles.shuffle} />
       </Ui.Components.Icon>
-      <Ui.Components.Text right>
-        Switch to {budget.type === 'credit' ? budget.holding?.to : budget.holding?.from}
-      </Ui.Components.Text>
     </Ui.Components.Action>
   );
 };

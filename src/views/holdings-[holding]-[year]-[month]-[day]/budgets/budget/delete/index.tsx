@@ -77,9 +77,6 @@ export default function Delete({
             <Trash className={styles.trash} />
           )}
         </Ui.Components.Icon>
-        <Ui.Components.Text right>
-          Delete
-        </Ui.Components.Text>
       </Ui.Components.Action>
     </form>
   );

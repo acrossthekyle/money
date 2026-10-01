@@ -107,6 +107,7 @@ export default function Form({
           <div className={styles.actions}>
             <Ui.Components.Action
               disabled={isPending}
+              mode="secondary"
               onClick={handleOnDelete}
             >
               <Ui.Components.Icon>

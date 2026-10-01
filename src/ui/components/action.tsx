@@ -86,6 +86,7 @@ const styles = tw({
   `,
   secondary: `
     border-dashed
+    bg-(--background)
 
     motion-safe:duration-300
 

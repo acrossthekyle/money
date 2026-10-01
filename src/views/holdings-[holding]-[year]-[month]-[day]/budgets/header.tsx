@@ -1,39 +1,41 @@
 import { Plus } from 'lucide-react';
 
 import tw from '@/styles';
-import type { Dateable, Holding } from '@/types';
+import type { CalendarDay, Dateable, Holding } from '@/types';
 import Ui from '@/ui';
 
 type Props = {
   date: Dateable;
+  day?: CalendarDay;
   holding: Holding;
 };
 
-export default function Header({ date, holding }: Props) {
+export default function Header({ date, day, holding }: Props) {
+  const count = (day?.budgets.length || 0) + (day?.return.amount !== null ? 1 : 0);
+
   return (
-    <>
-      <span className={styles.divider} role="presentation" />
-      <h3 className={styles.container}>
-        <span className={styles.title}>Budgets</span>
-        <Ui.Components.Action
-          href={`/holdings/${holding.id}/${date.year}/${date.month}/${date.day}/budget`}
-        >
-          <Ui.Components.Icon>
-            <Plus className={styles.icon} />
-          </Ui.Components.Icon>
-          <Ui.Components.Text right>
-            Add
-          </Ui.Components.Text>
-        </Ui.Components.Action>
-      </h3>
-    </>
+    <h3 className={styles.container}>
+      <span className={styles.title}>Budgets</span>
+      <span className={styles.lid}>
+        {count} Item{count > 1 || count === 0 ? 's' : ''}
+      </span>
+      <Ui.Components.Action
+        className={styles.action}
+        href={`/holdings/${holding.id}/${date.year}/${date.month}/${date.day}/budget`}
+        mode="secondary"
+      >
+        <Ui.Components.Icon>
+          <Plus className={styles.icon} />
+        </Ui.Components.Icon>
+      </Ui.Components.Action>
+    </h3>
   );
 };
 
 const styles = tw({
   container: `
     relative
-    flex items-center justify-between
+    flex flex-col
     w-full
   `,
   title: `
@@ -43,10 +45,14 @@ const styles = tw({
 
     md:text-sm
   `,
-  divider: `
-    h-px w-full
-    my-4
-    border-b border-dashed border-current/62.5
+  lid: `
+    text-sm text-current/75
+
+    md:text-xs
+  `,
+  action: `
+    absolute top-0 right-0
+    inline-flex
   `,
   icon: `
     w-3 h-3

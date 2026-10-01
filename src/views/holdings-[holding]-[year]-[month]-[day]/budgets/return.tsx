@@ -1,4 +1,6 @@
-import tw from '@/styles';
+import { ArrowDown, ArrowUp, Repeat2 } from 'lucide-react';
+
+import tw, { cs } from '@/styles';
 import { currency } from '@/utils';
 
 type Props = {
@@ -19,7 +21,18 @@ export default function Return({ amount, isPositive, label, rate }: Props) {
       </h4>
       {!!rate && (
         <p className={styles.content}>
-          Rate: {rate}%
+          <span className={cs(styles.pill, styles.secondary)}>
+            <Repeat2 className={styles.icon} />
+            <span>Monthly</span>
+          </span>
+          <span className={cs(styles.pill, styles.secondary)}>
+            {isPositive ? (
+              <ArrowUp className={styles.icon} />
+            ) : (
+              <ArrowDown className={styles.icon} />
+            )}
+            {rate}%
+          </span>
         </p>
       )}
     </>
@@ -30,8 +43,7 @@ const styles = tw({
   heading: `
     flex items-center justify-between
     w-full
-    mb-1
-    font-roboto
+    mb-2
     text-sm
     uppercase
   `,
@@ -39,14 +51,42 @@ const styles = tw({
     font-bold
   `,
   negative: `
+    font-bold
     text-red-400 dark:text-rose-400
   `,
   positive: `
+    font-bold
     text-green-500 dark:text-lime-500
   `,
   content: `
+    relative
+    flex flex-wrap items-center gap-x-2 gap-y-2
+    w-full
+    pr-16
     text-xs
-    font-roboto
     uppercase
+
+    md:text-tiny
+  `,
+  pill: `
+    flex items-center gap-1
+    rounded-md
+    px-1.5 py-0.75
+    text-tiny
+    font-medium
+    uppercase
+    shrink-0
+    whitespace-nowrap
+  `,
+  primary: `
+    bg-(--foreground)
+    text-(--background)
+  `,
+  secondary: `
+    border border-dashed border-current/62.5
+  `,
+  icon: `
+    w-3 h-3
+    stroke-2
   `,
 });

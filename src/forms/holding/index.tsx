@@ -103,6 +103,7 @@ export default function Form({ date, holding }: Props) {
         {canDelete ? (
           <Ui.Components.Action
             disabled={isPending}
+            mode="secondary"
             onClick={handleOnDelete}
           >
             <Ui.Components.Icon>

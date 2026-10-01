@@ -25,9 +25,6 @@ export default function Edit({ budget, day, holding }: Props) {
       <Ui.Components.Icon>
         <Pen className={styles.icon} />
       </Ui.Components.Icon>
-      <Ui.Components.Text right>
-        Edit
-      </Ui.Components.Text>
     </Ui.Components.Action>
   );
 };

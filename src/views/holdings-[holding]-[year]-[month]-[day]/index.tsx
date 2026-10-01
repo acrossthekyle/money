@@ -1,6 +1,5 @@
 import type { CalendarMonth, Dateable, Holding } from '@/types'
 
-import Amounts from './amounts';
 import Budgets from './budgets';
 import Calendar from './calendar';
 import Overview from './overview';
@@ -30,7 +29,6 @@ export default function View({ data }: Props) {
         date={data.date}
         holding={data.holding}
       />
-      <Amounts calendar={data.calendar} />
       <Budgets
         calendar={data.calendar}
         date={data.date}

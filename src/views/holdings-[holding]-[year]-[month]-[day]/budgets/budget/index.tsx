@@ -1,3 +1,5 @@
+import { Bookmark, Repeat2 } from 'lucide-react';
+
 import tw from '@/styles';
 import type { Budget, Dateable, Holding } from '@/types';
 import { currency } from '@/utils';
@@ -31,27 +33,20 @@ export default function Budget({
   return (
     <>
       <h4 className={styles.heading}>
-        <span>{budget.name}</span>
+        <span className={styles.title}>{budget.name}</span>
         <span className={isNegative ? styles.negative : styles.positive}>
           {isNegative ? '-' : '+'}${currency(amount)}
         </span>
       </h4>
-      {budget.holding?.from === budget.holding?.to ? (
-        <p className={styles.content}>
-          {budget.type}
-        </p>
-      ) : (
-        <>
-          <p className={styles.content}>
-            Debiting from: {budget.holding?.from}
-          </p>
-          <p className={styles.content}>
-            As credit to: {budget.holding?.to}
-          </p>
-        </>
-      )}
       <p className={styles.content}>
-        Frequency: {budget.schedule}
+        <span className={styles.pill}>
+          <Bookmark className={styles.icon} />
+          <span>{budget.category}</span>
+        </span>
+        <span className={styles.pill}>
+          <Repeat2 className={styles.icon} />
+          <span>{budget.schedule}</span>
+        </span>
       </p>
       <div className={styles.actions}>
         {!isNotAssignedToHolding ? (
@@ -69,24 +64,17 @@ export default function Budget({
 
 const styles = tw({
   heading: `
-    flex items-center justify-between
+    flex flex-col gap-2
     w-full
-    mb-2
+    mb-3
     font-roboto font-bold
     uppercase
     text-base
 
     md:text-sm
   `,
-  content: `
-    flex items-center justify-between
-    w-full
-    mb-1
-    font-roboto
-    text-sm
-    uppercase
-
-    md:text-xs
+  title: `
+    truncate pr-22
   `,
   negative: `
     text-red-400 dark:text-rose-400
@@ -94,7 +82,33 @@ const styles = tw({
   positive: `
     text-green-500 dark:text-lime-500
   `,
+  content: `
+    relative
+    flex flex-wrap items-center gap-x-2 gap-y-2
+    w-full
+    pr-16
+    text-xs
+    uppercase
+
+    md:text-tiny
+  `,
+  pill: `
+    flex items-center gap-1
+    rounded-md
+    border border-dashed border-current/62.5
+    px-1.5 py-0.75
+    text-tiny
+    font-medium
+    uppercase
+    shrink-0
+    whitespace-nowrap
+  `,
+  icon: `
+    w-3 h-3
+    stroke-2
+  `,
   actions: `
-    flex gap-3
+    absolute top-0 right-0
+    flex items-center justify-end gap-3
   `,
 });
