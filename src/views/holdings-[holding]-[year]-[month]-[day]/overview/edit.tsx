@@ -24,10 +24,10 @@ export default function Edit({ holding }: Props) {
 
 const styles = tw({
   container: `
-    absolute top-0.75 right-0.5 z-10
+    absolute top-1.25 right-0.25 z-10
   `,
   icon: `
-    w-2.75 h-2.75
+    w-3 h-3
     stroke-2
   `,
 });

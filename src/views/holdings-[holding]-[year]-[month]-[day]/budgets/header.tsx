@@ -55,7 +55,7 @@ const styles = tw({
     inline-flex
   `,
   icon: `
-    w-3 h-3
+    w-4 h-4
     stroke-2
   `,
 });

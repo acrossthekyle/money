@@ -21,13 +21,11 @@ export default function Navigation({ calendar, id, isThisYear }: Props) {
       <Ui.Components.Action
         className={styles.cancel}
         href={`/holdings/${id}/${params.get('ref')}`}
+        mode="secondary"
       >
         <Ui.Components.Icon>
           <Undo2 className={styles.icon} />
         </Ui.Components.Icon>
-        <Ui.Components.Text right>
-          Back
-        </Ui.Components.Text>
       </Ui.Components.Action>
       <div className={styles.container}>
         <Ui.Components.Action
@@ -67,10 +65,13 @@ const styles = tw({
     text-base
   `,
   icon: `
-    w-3 h-3
+    w-3.5 h-3.5
     stroke-2
   `,
   cancel: `
-    absolute top-12 right-6 z-10
+    absolute top-16.5 right-3.25 z-10
+
+    md:top-19.5
+    md:right-6.25
   `,
 })

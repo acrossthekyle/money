@@ -67,11 +67,11 @@ const styles = tw({
     font-roboto
   `,
   icon: `
-    w-3 h-3
+    w-3.5 h-3.5
     stroke-2
   `,
   calendar: `
-    w-4 h-4
+    w-4.25 h-4.25
     stroke-2
   `,
 });

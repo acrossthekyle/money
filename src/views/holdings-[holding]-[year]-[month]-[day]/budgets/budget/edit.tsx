@@ -35,7 +35,7 @@ const styles = tw({
     mt-2
   `,
   icon: `
-    w-2.25 h-2.25
+    w-3 h-3
     stroke-2
   `,
 });

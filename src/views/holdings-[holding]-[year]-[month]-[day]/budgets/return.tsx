@@ -41,9 +41,9 @@ export default function Return({ amount, isPositive, label, rate }: Props) {
 
 const styles = tw({
   heading: `
-    flex items-center justify-between
+    flex flex-col gap-0.5
     w-full
-    mb-2
+    mb-3
     text-sm
     uppercase
   `,

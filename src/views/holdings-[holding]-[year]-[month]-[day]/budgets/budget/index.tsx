@@ -64,10 +64,10 @@ export default function Budget({
 
 const styles = tw({
   heading: `
-    flex flex-col gap-2
+    flex flex-col gap-0.5
     w-full
     mb-3
-    font-roboto font-bold
+    font-bold
     uppercase
     text-base
 
@@ -97,18 +97,20 @@ const styles = tw({
     rounded-md
     border border-dashed border-current/62.5
     px-1.5 py-0.75
-    text-tiny
+    text-xs
     font-medium
     uppercase
     shrink-0
     whitespace-nowrap
+
+    md:text-tiny
   `,
   icon: `
     w-3 h-3
     stroke-2
   `,
   actions: `
-    absolute top-0 right-0
+    absolute -top-0.5 right-0
     flex items-center justify-end gap-3
   `,
 });

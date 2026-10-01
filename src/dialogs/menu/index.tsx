@@ -1,6 +1,6 @@
 'use client';
 
-import { ClockFading, LayoutList, LogOut, Moon, DollarSign, Calendar, Sun } from 'lucide-react';
+import { ClockFading, LayoutList, LogOut, Moon, Sun } from 'lucide-react';
 import Link from 'next/link';
 
 import { logout } from '@/actions/auth/logout';
@@ -58,7 +58,7 @@ export default function Dialog({ netWorth }: Props) {
               onClick={onClose}
               href="/budgets"
             >
-              <Calendar className={styles.icon} />
+              <ClockFading className={styles.icon} />
               <span className={styles.value}>
                 Budgets
               </span>
@@ -98,18 +98,18 @@ export default function Dialog({ netWorth }: Props) {
           </li>
           <li className={styles.divider} role="presentation" />
           <li className={cs(styles.item, styles.static)}>
-            <Ui.Components.Icon>
-              <DollarSign className={styles.icon} />
-            </Ui.Components.Icon>
-            <span className={styles.value}>
+            <span className={styles.label}>
+              Net Worth
+            </span>
+            <span className={cs(styles.value, styles.info)}>
               ${currency(netWorth)}
             </span>
           </li>
           <li className={cs(styles.item, styles.static)}>
-            <Ui.Components.Icon>
-              <ClockFading className={styles.icon} />
-            </Ui.Components.Icon>
-            <span className={styles.value}>
+            <span className={styles.label}>
+              Timezone
+            </span>
+            <span className={cs(styles.value, styles.info)}>
               {zone}
             </span>
           </li>
@@ -158,6 +158,16 @@ const styles = tw({
     origin-bottom-left
 
     md:text-xs
+  `,
+  info: `
+    text-sm
+
+    md:text-xs
+  `,
+  label: `
+    uppercase
+    text-xs
+    font-medium
   `,
   icon: `
     w-5 h-5

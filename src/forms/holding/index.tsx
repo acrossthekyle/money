@@ -1,7 +1,5 @@
 'use client';
 
-import { Check, Trash } from 'lucide-react';
-
 import tw from '@/styles';
 import type { Holding, Today } from '@/types';
 import Ui from '@/ui';
@@ -101,30 +99,12 @@ export default function Form({ date, holding }: Props) {
       </Ui.Form.Inner>
       <Ui.Form.Footer>
         {canDelete ? (
-          <Ui.Components.Action
-            disabled={isPending}
-            mode="secondary"
-            onClick={handleOnDelete}
-          >
-            <Ui.Components.Icon>
-              <Trash className={styles.icon} />
-            </Ui.Components.Icon>
-            <Ui.Components.Text right>
-              Delete
-            </Ui.Components.Text>
-          </Ui.Components.Action>
+          <Ui.Form.Delete disabled={isPending} onClick={handleOnDelete} />
         ) : <span />}
         <div className={styles.actions}>
-          <Ui.Components.Action onClick={handleOnCancel} mode="secondary">
-            <Ui.Components.Text left right>
-              Cancel
-            </Ui.Components.Text>
-          </Ui.Components.Action>
+          <Ui.Form.Cancel onClick={handleOnCancel} />
           <Ui.Components.Action disabled={isPending} type="submit">
-            <Ui.Components.Icon>
-              <Check className={styles.icon} />
-            </Ui.Components.Icon>
-            <Ui.Components.Text right>
+            <Ui.Components.Text left right>
               {isPending ? 'Processing...' : (!holding ? 'Create' : 'Update')}
             </Ui.Components.Text>
           </Ui.Components.Action>
@@ -163,9 +143,5 @@ const styles = tw({
   `,
   actions: `
     flex gap-4
-  `,
-  icon: `
-    w-3 h-3
-    stroke-2
   `,
 });

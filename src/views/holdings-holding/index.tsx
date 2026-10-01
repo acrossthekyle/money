@@ -12,7 +12,7 @@ export default function View({ data }: Props) {
   return (
     <>
       <Ui.Components.Divider />
-      <Ui.Components.Header lid="Account / asset" title="Create" />
+      <Ui.Components.Header lid="Account/asset" title="Create" />
       <Forms.Holding date={data.date} />
     </>
   );

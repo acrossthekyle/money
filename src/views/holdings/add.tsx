@@ -19,8 +19,13 @@ export default function Add() {
 
 const styles = tw({
   container: `
-    absolute top-19 right-3
+    absolute top-16.5 right-3.25 z-10
 
-    md:right-6.5
+    md:top-19.5
+    md:right-6.25
+  `,
+  icon: `
+    w-4 h-4
+    stroke-2
   `,
 });

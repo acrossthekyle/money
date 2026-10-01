@@ -1,6 +1,7 @@
-export { default as Button } from './button';
+export { default as Cancel } from './cancel';
 export { default as Container } from './container';
 export { default as Currency } from './currency';
+export { default as Delete } from './delete';
 export { default as Field } from './field';
 export { default as Footer } from './footer';
 export { default as Inner } from './inner';
