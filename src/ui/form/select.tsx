@@ -22,16 +22,12 @@ const styles = tw({
   container: `
     peer
     appearance-none
-    border border-current/12.5 dark:border-current/27.5
-    rounded-sm
-    outline-none
+    border border-current/22.5
+    rounded-md
     py-2.25 pt-2.75 pl-3.25 pr-8
-    text-base
+    text-(--foreground)
     bg-(--background)
     truncate
-
-    focus:border-orange-400
-    focus:dark:border-teal-600
   `,
   icon: `
     absolute top-4 right-2

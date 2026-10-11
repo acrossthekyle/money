@@ -60,7 +60,6 @@ const styles = tw({
   container: `
     flex items-center justify-between
     p-2.5
-    mb-6
     rounded-md
     border
     text-xs

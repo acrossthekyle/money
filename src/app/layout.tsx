@@ -1,25 +1,17 @@
 import '../globals.css';
 
 import type { Metadata } from 'next';
-import { Geist, Roboto_Mono } from 'next/font/google';
+import { Geist, Lobster, Roboto_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { PropsWithChildren, Suspense } from 'react';
 
-import { metrics } from '@/algorithms/metrics';
-import { DialogProvider, TimezoneProvider } from '@/contexts';
-import { get as getHoldings } from '@/getters/holdings';
-import { get as getSettings } from '@/getters/settings';
-import {
-  LayoutBody,
-  LayoutHeader,
-  LayoutMain,
-  LayoutScripting,
-} from '@/layout';
+import { DialogProvider } from '@/contexts';
+import { Body, Header, Scripting } from '@/layout';
 
 export const metadata: Metadata = {
   title: {
-    template: `%s ⌁ Project Basalt`,
-    default: 'Dashboard ⌁ Project Basalt',
+    template: `%s ⌁ Basalt`,
+    default: 'Portfolio ⌁ Basalt',
   },
   formatDetection: {
     telephone: false,
@@ -51,32 +43,29 @@ const mono = Roboto_Mono({
   variable: '--font-roboto',
 });
 
+const serif = Lobster({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-lobster',
+});
+
 export default async function RootLayout({ children }: PropsWithChildren) {
-  const { holdings } = await getHoldings();
-  const { zone } = await getSettings();
-
-  const { netWorth } = await metrics(holdings);
-
   return (
     <html
-      className={`${sans.variable} ${mono.variable} h-full`}
+      className={`${sans.variable} ${mono.variable} ${serif.variable} h-full`}
       lang="en-US"
       suppressHydrationWarning
     >
       <Suspense fallback={null}>
-        <TimezoneProvider zone={zone}>
-          <DialogProvider>
-            <LayoutBody>
-              <LayoutScripting />
-              <ThemeProvider>
-                <LayoutHeader />
-                <LayoutMain data={{ netWorth }}>
-                  {children}
-                </LayoutMain>
-              </ThemeProvider>
-            </LayoutBody>
-          </DialogProvider>
-        </TimezoneProvider>
+        <DialogProvider>
+          <Body>
+            <Scripting />
+            <ThemeProvider>
+              <Header />
+              {children}
+            </ThemeProvider>
+          </Body>
+        </DialogProvider>
       </Suspense>
     </html>
   );

@@ -41,15 +41,11 @@ const styles = tw({
     peer
     appearance-none
     relative
-    border border-current/12.5 dark:border-current/27.5
-    rounded-sm
-    outline-none
+    border border-current/22.5
+    rounded-md
     pb-2.25 pt-2.75 px-3
-    text-base
+    text-(--foreground)
     bg-(--background)
-
-    focus:border-orange-400
-    focus:dark:border-teal-600
   `,
   date: `
     h-11.5

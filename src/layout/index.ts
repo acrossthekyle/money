@@ -1,4 +1,4 @@
-export { default as LayoutHeader } from './header';
-export { default as LayoutBody } from './body';
-export { default as LayoutMain } from './main';
-export { default as LayoutScripting } from './scripting';
+export { default as Header } from './header';
+export { default as Body } from './body';
+export { default as Main } from './main';
+export { default as Scripting } from './scripting';

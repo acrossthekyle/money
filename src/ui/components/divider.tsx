@@ -9,7 +9,7 @@ export default function Divider() {
 const styles = tw({
   container: `
     h-px w-4
-    my-4
+    mt-4 mb-3
     bg-(--foreground)/75
   `,
 });

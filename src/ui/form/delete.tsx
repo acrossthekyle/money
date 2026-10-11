@@ -1,12 +1,10 @@
 'use client';
 
-import { Trash } from 'lucide-react';
-
 import tw from '@/styles';
 
 import {
   Action,
-  Icon,
+  Text,
 } from '../components';
 
 type Props = {
@@ -16,21 +14,48 @@ type Props = {
 
 export default function Delete({ disabled, onClick }: Props) {
   return (
-    <Action
-      disabled={disabled}
-      onClick={onClick}
-      mode="secondary"
-    >
-      <Icon>
-        <Trash className={styles.icon} />
-      </Icon>
-    </Action>
+    <>
+      <span className={styles.divider}>
+        <span className={styles.label}>Or</span>
+      </span>
+      <Action
+        className={styles.container}
+        disabled={disabled}
+        onClick={onClick}
+        mode="tertiary"
+      >
+        <Text left right>
+          Delete
+        </Text>
+      </Action>
+    </>
   );
 };
 
 const styles = tw({
-  icon: `
-    w-3.5 h-3.5
-    stroke-2
+  divider: `
+    relative
+    flex items-center justify-center
+    w-full
+    my-4
+
+    before:h-px
+    before:bg-(--foreground)/62.5
+    before:absolute
+    before:left-0
+    before:right-0
+    before:-z-1
+  `,
+  label: `
+    inline-block
+    px-4
+    bg-(--background)
+    uppercase
+    text-xs text-(--foreground)
+  `,
+  container: `
+    w-full
+    justify-center
+    h-9
   `,
 });

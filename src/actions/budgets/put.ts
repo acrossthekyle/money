@@ -137,42 +137,6 @@ export async function put(
   result.id = budget.id;
   result.omissions = budget.omissions;
 
-  if (formData.get('erase') === 'true') {
-    if (budget.schedule === 'once') {
-      await db.erase('budgets', budget.id);
-    } else {
-      await db.write('budgets', {
-        ...budget,
-        omissions: [
-          ...budget.omissions,
-          formData.get('date') as string,
-        ],
-      });
-    }
-
-    revalidatePath('/');
-
-    return {
-      data: result,
-      hasFailed: false,
-      isSuccessful: true,
-      message: `Budget on ${formData.get('date')} successfully deleted`,
-    };
-  }
-
-  if (formData.get('purge') === 'true') {
-    await db.erase('budgets', budget.id);
-
-    revalidatePath('/');
-
-    return {
-      data: result,
-      hasFailed: false,
-      isSuccessful: true,
-      message: 'Budget successfully deleted',
-    };
-  }
-
   if (formData.get('update') === 'none' || formData.get('update') === 'all') {
     await db.write('budgets', result);
 

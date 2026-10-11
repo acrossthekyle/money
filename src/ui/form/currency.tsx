@@ -16,11 +16,11 @@ export default function Currency({ id, value }: Props) {
       id={id}
       name={id}
       required
-      placeholder="0.00"
+      placeholder="$ 0.00"
       defaultValue={value}
       decimalsLimit={2}
       decimalScale={2}
-      prefix="$"
+      prefix="$ "
     />
   );
 };
@@ -28,13 +28,10 @@ export default function Currency({ id, value }: Props) {
 const styles = tw({
   container: `
     peer
-    border border-current/12.5 dark:border-current/27.5
-    rounded-sm
-    outline-none
+    border border-current/22.5
+    rounded-md
     py-2.25 pt-2.75 pl-3
     bg-(--background)
-
-    focus:border-orange-400
-    focus:dark:border-teal-600
+    text-(--foreground)
   `,
 });

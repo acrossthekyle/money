@@ -62,6 +62,21 @@ export type LoginFormState = {
   success: boolean;
 };
 
+export type Record = Holding | Budget | Setting;
+
+export type CalendarTransaction = {
+  budget: Budget;
+  holding: {
+    from: string;
+    to: string;
+  };
+  holdingType: string;
+  iterations: string[];
+  isTransfer: boolean;
+  transfereeHoldingType: string;
+  transfereeType: 'receiver' | 'sender';
+};
+
 export type CalendarAmount = {
   budget: string;
   amount: number;
@@ -71,79 +86,47 @@ export type CalendarDay = {
   balance: number;
   budgets: Budget[],
   credits: CalendarAmount[];
-  date: Date;
+  dateable: Dateable;
   debits: CalendarAmount[];
   return: {
     amount: number | null;
     isPositive: boolean;
     label: string;
   };
-  iso: string;
-  isBeforeToday: boolean;
-  isFirstOfMonth: boolean;
-  isInMonth: boolean;
-  isThisMonth: boolean;
-  isToday: boolean;
-  isWeekend: boolean;
-  month: number;
-  year: number;
 };
-
-export type CalendarMonth = {
-  isPastMonth: boolean;
-  isPreviousMonthThisMonth: boolean;
-  isThisMonth: boolean;
-  month: number;
-  name: string;
-  nextMonth: {
-    iso: string;
-    isValid: boolean;
-    month: number;
-    year: number;
-  };
-  todayISO: string;
-  year: number;
-  days: CalendarDay[];
-};
-
-export type CalendarYear = {
-  year: number;
-  next: number;
-  previous: number;
-  months: CalendarMonth[];
-};
-
-export type Calendar = {
-  id: string;
-  value: CalendarYear[];
-};
-
-export type Record = Holding | Budget | Setting | Calendar;
 
 export type SearchParams = {
   [key: string]: string | string[];
 };
 
-export type Today = {
-  year: number;
-  month: string;
-  day: string;
-};
-
 export type Dateable = {
   date: Date;
-  display: string;
-  iso: string;
-  year: string;
-  month: string;
   day: string;
-  uri: string;
-  weekdayFull: string;
-  weekdayShort: string;
+  display: string;
+  isBeforeToday: boolean;
+  iso: string;
+  isFirstOfMonth: boolean;
+  isInMonth: boolean;
+  isThisMonth: boolean;
+  isToday: boolean;
+  isWeekend: boolean;
+  month: string;
   today: {
     date: Date;
+    day: string;
+    display: string;
+    month: string;
+    iso: string;
     uri: string;
+    week: number;
+    year: string;
   };
+  uri: string;
+  week: number;
+  weekdayFull: string;
+  weekdayShort: string;
+  year: string;
+  zone: string;
 };
 
 export type UseConfirmConfig = {
@@ -151,6 +134,7 @@ export type UseConfirmConfig = {
   input?: any;
   inputOptions?: object;
   inputValidator?: (value: string) => string;
+  target?: string;
   title?: string;
   text?: string;
 };

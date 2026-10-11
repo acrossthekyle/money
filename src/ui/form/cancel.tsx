@@ -1,12 +1,10 @@
 'use client';
 
-import { Undo2 } from 'lucide-react';
-
 import tw from '@/styles';
 
 import {
   Action,
-  Icon,
+  Text,
 } from '../components';
 
 type Props = {
@@ -15,17 +13,18 @@ type Props = {
 
 export default function Cancel({ onClick }: Props) {
   return (
-    <Action onClick={onClick} mode="secondary">
-      <Icon>
-        <Undo2 className={styles.icon} />
-      </Icon>
+    <Action className={styles.container} onClick={onClick} mode="secondary">
+      <Text left right>
+        Cancel
+      </Text>
     </Action>
   );
 };
 
 const styles = tw({
-  icon: `
-    w-3.5 h-3.5
-    stroke-2
+  container: `
+    w-full
+    justify-center
+    h-9
   `,
 });

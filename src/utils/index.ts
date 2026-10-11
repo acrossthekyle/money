@@ -1,8 +1,20 @@
 import { TZDate } from '@date-fns/tz';
-import { format, getYear, getMonth, getDate, parseISO } from 'date-fns';
+import {
+  format,
+  getYear,
+  getMonth,
+  getDate,
+  getWeek,
+  parseISO,
+  isBefore,
+  isFirstDayOfMonth,
+  isThisMonth,
+  isToday,
+  isWeekend,
+} from 'date-fns';
 
-import { DATE_DISPLAY, DATE_URI } from '@/constants';
-import type { Dateable, Today } from '@/types';
+import { DATE_DISPLAY_ABBREVIATED, DATE_ISO, DATE_URI } from '@/constants';
+import type { Dateable } from '@/types';
 
 export function pad(index: number, padding: number = 2) {
   return String(index).padStart(padding, '0');
@@ -42,35 +54,54 @@ export function image(id: string, folder: string, extension: string = 'jpg') {
 
 export function dateable(
   zone: string,
-  year?: string,
-  month?: string,
-  day?: string,
-): Dateable | Today {
+  options?: {
+    date?: Date;
+    iso?: {
+      year: string;
+      month: string;
+      day: string;
+    };
+  },
+): Dateable {
   const today = date(zone);
 
-  if (!year && !month && !day) {
-    return {
-      year: getYear(today),
-      month: pad(getMonth(today) + 1),
-      day: pad(getDate(today)),
-    } as Today;
-  }
+  const construct = options?.iso
+    ? parseISO(`${options?.iso?.year}-${options?.iso?.month}-${options?.iso?.day}`)
+    : options?.date || today;
 
-  const parsed = parseISO(`${year}-${month}-${day}`);
+  const year = pad(getYear(construct));
+  const month = pad(getMonth(construct) + 1);
+  const day = pad(getDate(construct));
+
+  const isNow = isToday(construct);
 
   return {
-    date: parsed,
-    iso: `${year}-${month}-${day}`,
-    display: format(parsed, DATE_DISPLAY),
-    year,
-    month,
+    date: construct,
     day,
-    uri: `${year}/${month}/${day}`,
-    weekdayFull: format(parsed, 'iiii'),
-    weekdayShort: format(parsed, 'iii'),
+    display: format(construct, DATE_DISPLAY_ABBREVIATED),
+    isBeforeToday: isNow ? false : isBefore(construct, today),
+    iso: `${year}-${month}-${day}`,
+    isFirstOfMonth: isFirstDayOfMonth(construct),
+    isInMonth: false,
+    isThisMonth: isThisMonth(construct),
+    isToday: isNow,
+    isWeekend: isWeekend(construct),
+    month,
     today: {
       date: today,
+      day: pad(getDate(today)),
+      display: format(today, DATE_DISPLAY_ABBREVIATED),
+      iso: format(today, DATE_ISO),
+      month: pad(getMonth(today) + 1),
       uri: format(today, DATE_URI),
+      week: getWeek(today),
+      year: pad(getYear(today)),
     },
-  } as Dateable;
+    uri: `${year}/${month}/${day}`,
+    week: getWeek(construct),
+    weekdayFull: format(construct, 'iiii'),
+    weekdayShort: format(construct, 'iii'),
+    year,
+    zone,
+  };
 }

@@ -1,5 +1,7 @@
-import Menu from './menu';
+import Budget from './budget';
+import Holding from './holding';
 
 export const Dialogs = {
-  Menu,
+  Budget,
+  Holding,
 };

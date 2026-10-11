@@ -2,7 +2,7 @@ import tw, { cs } from '@/styles';
 
 type Props = {
   className?: string;
-  isActive: boolean;
+  isActive?: boolean;
 };
 
 export default function Inner({
@@ -17,17 +17,23 @@ export default function Inner({
   );
 }
 
-const styles = {
+const styles = tw({
   container: (isActive: boolean) => tw(`
-    relative
-    w-full max-w-sm
-    px-3
+    relative bottom-4
+    w-full
+    h-auto
+    mt-auto
+    bg-(--background)
+    border border-current/5.5 dark:border-current/17.5
+    rounded-xl
+    shadow-lg/25 dark:shadow-lg/75
 
     motion-safe:duration-300
 
-    ${isActive ? `opacity-100 translate-y-0` : `opacity-0 -translate-y-full`}
+    ${isActive
+      ? `scale-100 opacity-100 translate-y-0`
+      : `scale-80 opacity-0 translate-y-24`}
 
-    md:px-6
-    md:mt-3
+    sm:max-w-sm
   `),
-};
+});

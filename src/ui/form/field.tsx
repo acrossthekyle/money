@@ -26,5 +26,6 @@ const styles = tw({
   container: `
     relative
     flex flex-col
+    col-span-12
   `,
 });

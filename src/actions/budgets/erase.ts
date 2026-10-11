@@ -1,5 +1,7 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+
 import { db } from '@/db';
 import type { Budget, BudgetFormState } from '@/types';
 
@@ -21,6 +23,8 @@ export async function erase(
       });
     }
 
+    revalidatePath('/');
+
     return {
       data: budget,
       hasFailed: false,
@@ -31,6 +35,8 @@ export async function erase(
 
   if (formData.get('purge') === 'true') {
     await db.erase('budgets', budget.id);
+
+    revalidatePath('/');
 
     return {
       data: budget,

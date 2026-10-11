@@ -5,6 +5,7 @@
 
   --font-geist: var(--font-geist);
   --font-roboto: var(--font-roboto);
+  --font-lobster: var(--font-lobster);
 
   --text-tiny: 0.625rem; /* 10px */
   --text-xtiny: 0.5rem; /* 8px */
@@ -20,13 +21,13 @@
 }
 
 :root {
-  --background: #ffffe3;
+  --background: #ffffff;
   --foreground: #18181b;
 }
 
 [data-theme="dark"] {
   --background: #18181b;
-  --foreground: #ffffe3;
+  --foreground: #ffffff;
 }
 
 html:has(dialog[open]),

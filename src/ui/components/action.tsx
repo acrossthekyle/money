@@ -6,7 +6,7 @@ type Props = {
   className?: string;
   disabled?: boolean;
   href?: string;
-  mode?: 'primary' | 'secondary';
+  mode?: 'primary' | 'secondary' | 'tertiary';
   onClick?: () => void;
   target?: string;
   title?: string;
@@ -33,6 +33,7 @@ export default function Action({
             className,
             mode === 'primary' && styles.primary,
             mode === 'secondary' && styles.secondary,
+            mode === 'tertiary' && styles.tertiary,
           )
         }
         disabled={disabled}
@@ -55,6 +56,7 @@ export default function Action({
             disabled && styles.disabled,
             mode === 'primary' && styles.primary,
             mode === 'secondary' && styles.secondary,
+            mode === 'tertiary' && styles.tertiary,
           )
         }
         href={href}
@@ -75,7 +77,7 @@ const styles = tw({
     flex items-center gap-2
     py-1.25 pl-1.25 pr-1.25
     uppercase
-    text-sm
+    text-sm text-(--foreground)
     border border-current/62.5
     rounded-md
     tracking-wide
@@ -84,23 +86,28 @@ const styles = tw({
 
     md:text-xs
   `,
+  primary: `
+    !text-(--background)
+    bg-(--foreground)
+
+    motion-safe:duration-300
+
+    hover:bg-(--background)
+    hover:!text-(--foreground)
+  `,
   secondary: `
-    border-dashed
     bg-(--background)
+    text-(--foreground)
 
     motion-safe:duration-300
 
     hover:border-current/90
   `,
-  primary: `
-    text-(--background)
-    bg-(--foreground)
+  tertiary: `
+    text-(--foreground)
+    border-transparent
 
     motion-safe:duration-300
-
-    hover:border-current/90
-    hover:bg-(--background)
-    hover:text-(--foreground)
   `,
   disabled: `
     pointer-events-none

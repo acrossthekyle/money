@@ -16,7 +16,7 @@ export default function Percent({ id, value }: Props) {
       className={styles.container}
       id={id}
       name={id}
-      placeholder="0.00"
+      placeholder="% 0.00"
       defaultValue={value}
       decimalsLimit={2}
       decimalScale={2}
@@ -31,14 +31,10 @@ export default function Percent({ id, value }: Props) {
 const styles = tw({
   container: `
     peer
-    border border-current/12.5 dark:border-current/27.5
-    rounded-sm
-    outline-none
+    border border-current/22.5
+    rounded-md
     py-2.25 pt-2.75 pl-3
-    text-base
+    text-(--foreground)
     bg-(--background)
-
-    focus:border-orange-400
-    focus:dark:border-teal-600
   `,
 });
