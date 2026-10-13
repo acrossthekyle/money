@@ -49,17 +49,17 @@ export default function View({ data }: Props) {
         <Header date={data.date} netWorth={data.netWorth} />
         <Filters current={filter} onClick={handleOnFilter} />
         <ul className={styles.items}>
-          {data.holdings.map((holding) => (
+          {data.holdings.map((item) => (
             <li
               className={
                 cs(
                   styles.item,
-                  holding.type === filter && styles.active,
+                  item.type === filter && styles.active,
                 )
               }
-              key={holding.id}
+              key={item.id}
             >
-              <Item holding={holding} onManage={handleOnHolding} />
+              <Item holding={item} onManage={handleOnHolding} />
             </li>
           ))}
         </ul>

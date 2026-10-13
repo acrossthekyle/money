@@ -4,34 +4,34 @@ import Input from 'react-currency-input-field';
 
 import tw from '@/styles';
 
-type Props = {
-  id: string;
-  value?: string;
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
+  id?: string;
 };
 
-export default function Currency({ id, value }: Props) {
+export default function Currency({
+  id,
+  ...rest
+}: Props) {
   return (
     <Input
       className={styles.container}
       id={id}
       name={id}
-      required
       placeholder="$ 0.00"
-      defaultValue={value}
       decimalsLimit={2}
       decimalScale={2}
       prefix="$ "
+      {...rest}
     />
   );
 };
 
 const styles = tw({
   container: `
-    peer
-    border border-current/22.5
-    rounded-md
-    py-2.25 pt-2.75 pl-3
-    bg-(--background)
-    text-(--foreground)
+    py-2.25 px-4
+    border-b border-current/22.5
+    outline-none
+    w-40
+    text-center
   `,
 });

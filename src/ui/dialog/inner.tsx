@@ -20,20 +20,19 @@ export default function Inner({
 const styles = tw({
   container: (isActive: boolean) => tw(`
     relative bottom-4
-    w-full
-    h-auto
+    flex flex-col justify-between
+    w-full max-w-xs
+    h-auto min-h-70
     mt-auto
-    bg-(--background)
-    border border-current/5.5 dark:border-current/17.5
     rounded-xl
     shadow-lg/25 dark:shadow-lg/75
+    bg-black
+    text-white
 
     motion-safe:duration-300
 
     ${isActive
       ? `scale-100 opacity-100 translate-y-0`
       : `scale-80 opacity-0 translate-y-24`}
-
-    sm:max-w-sm
   `),
 });

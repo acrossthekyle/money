@@ -38,14 +38,14 @@ export default function Input({
 
 const styles = tw({
   container: `
-    peer
     appearance-none
     relative
-    border border-current/22.5
-    rounded-md
-    pb-2.25 pt-2.75 px-3
-    text-(--foreground)
-    bg-(--background)
+    w-full
+    text-center
+    outline-none
+    border-b border-current/22.5
+    py-2.25 px-4
+    capitalize
   `,
   date: `
     h-11.5

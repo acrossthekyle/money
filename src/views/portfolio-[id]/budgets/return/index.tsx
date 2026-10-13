@@ -1,23 +1,63 @@
 'use client';
 
-import { TransactionContainer } from '../components';
+import type { CalendarDay, Holding } from '@/types';
+import { currency } from '@/utils';
+
+import {
+  TransactionAvatar,
+  TransactionContainer,
+  TransactionContent,
+  TransactionContentLower,
+  TransactionContentName,
+  TransactionContentAmount,
+  TransactionContentUpper,
+} from '../components';
+
+import { useModel } from './model';
 
 type Props = {
+  day: CalendarDay;
+  holding: Holding;
   isHighlighted: boolean;
-  onClick: () => void;
 };
 
 export default function Return({
-  children,
+  day,
+  holding,
   isHighlighted,
-  onClick,
-}: React.PropsWithChildren<Props>) {
+}: Props) {
+  const { handleOnClick } = useModel(day, holding);
+
   return (
     <TransactionContainer
       isHighlighted={isHighlighted}
-      onClick={() => onClick()}
+      onClick={handleOnClick}
     >
-      {children}
+      <TransactionAvatar type="return" />
+      <TransactionContent>
+        <TransactionContentUpper>
+          <TransactionContentName>
+            {day.return.label}
+          </TransactionContentName>
+          <TransactionContentAmount isNegative={!day.return.isPositive}>
+            ${currency(day.return.amount)}
+          </TransactionContentAmount>
+        </TransactionContentUpper>
+        <TransactionContentLower>
+          <span>{day.dateable.display}</span>
+          <span>
+            {['savings', 'checking', 'credit_card'].includes(holding.type) && (
+              <>Growth</>
+            )}
+            {['retirement'].includes(holding.type) && (
+              <>Return</>
+            )}
+            {['property'].includes(holding.type) && (
+              <>Worth</>
+            )}
+          </span>
+        </TransactionContentLower>
+      </TransactionContent>
     </TransactionContainer>
   );
 };

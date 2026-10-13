@@ -1,49 +1,45 @@
 'use client';
 
-import type { Budget, Dateable, Holding } from '@/types';
+import { ArrowLeft } from 'lucide-react';
+
+import tw from '@/styles';
+import type { Holding } from '@/types';
 import Ui from '@/ui';
 
+import { useModel } from './model';
 import {
   Amount,
-  Category,
-  End,
   Name,
-  Schedule,
-  Start,
+  Outline,
+  Submit,
   Transferee,
   Type,
-} from './components';
-import { useModel } from './model';
+} from './steps';
+import { getSubtitle } from './utils';
 
 type Props = {
-  budget?: Budget;
-  date: Dateable;
   holdings: Holding[];
   parent: string;
 };
 
-export default function Dialog({
-  budget,
-  date,
-  holdings,
-  parent,
-}: Props) {
+export default function Dialog({ holdings, parent }: Props) {
   const {
-    action,
+    budget,
     data,
-    errors,
+    handleOnBack,
     handleOnCancel,
-    handleOnContinue,
-    handleOnType,
+    handleOnEdit,
+    handleOnNext,
+    handleOnSubmit,
     instance,
     isActive,
+    isEditing,
     isPending,
     onBackdrop,
     onCancel,
-    onClose,
-    type,
-    update,
-  } = useModel(date, parent, budget);
+    step,
+    steps,
+  } = useModel();
 
   return (
     <Ui.Dialog.Dialog
@@ -54,74 +50,89 @@ export default function Dialog({
       onCancel={onCancel}
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
-        <Ui.Dialog.DialogHeader
-          icon={budget ? 'edit' : 'add'}
-          onClose={onClose}
-        >
-          Transaction
+        <Ui.Dialog.DialogHeader onClose={handleOnCancel}>
+          <button
+            className={styles.back(!budget && step > 0)}
+            onClick={handleOnBack}
+            type="button"
+          >
+            <ArrowLeft className={styles.arrow} />
+          </button>
+          <Ui.Dialog.DialogTitle
+            text={budget ? 'Edit Transaction' : 'Add Transaction'}
+          >
+            <span className={styles.lid}>
+              {getSubtitle(steps, step, budget)}
+            </span>
+          </Ui.Dialog.DialogTitle>
         </Ui.Dialog.DialogHeader>
-        <Ui.Alerts.Errors items={errors} message="Form validation failed" />
-        <form
-          action={action}
-          key={budget?.id || date.iso}
-          id="budget-form"
-        >
-          <Ui.Form.Inner>
-            <Name value={data?.name} />
-            <Amount value={data?.amount} />
-            <Type
-              onChange={handleOnType}
-              value={data?.type}
-            />
-            <Category value={data?.category} />
-            <Transferee
-              holding={parent}
-              holdings={holdings}
-              type={type}
-              value={data?.transferee}
-            />
-            <Start
-              date={date}
-              value={data?.start}
-            />
-            <End
-              date={date}
-              value={data?.end}
-            />
-            <Schedule value={data?.schedule} />
-            <input
-              name="date"
-              type="text"
-              value={date.iso}
-              readOnly
-              className="hidden"
-            />
-            <input
-              name="parent"
-              type="text"
-              value={parent}
-              readOnly
-              className="hidden"
-            />
-            <input
-              name="update"
-              type="text"
-              value={budget === undefined || budget?.schedule === 'once' ? 'this' : update}
-              readOnly
-              required={budget !== undefined}
-              className="hidden"
-            />
-          </Ui.Form.Inner>
-          <Ui.Form.Footer>
-            <Ui.Form.Cancel onClick={handleOnCancel} />
-            {!budget ? (
-              <Ui.Form.Submit disabled={isPending} isPending={isPending} />
-            ) : (
-              <Ui.Form.Continue disabled={isPending} onClick={handleOnContinue} />
-            )}
-          </Ui.Form.Footer>
-        </form>
+        <Ui.Dialog.DialogContent key={budget?.id} label="steps">
+          <Outline
+            data={data}
+            isActive={steps[step] === 'outline'}
+            onCancel={handleOnCancel}
+            onEdit={handleOnEdit}
+          />
+          <Amount
+            header="Enter an amount"
+            isActive={steps[step] === 'amount'}
+            isEditing={isEditing}
+            onNext={handleOnNext}
+            value={data.amount}
+          />
+          <Name
+            header="What is this transaction for?"
+            isActive={steps[step] === 'name'}
+            isEditing={isEditing}
+            onNext={handleOnNext}
+            value={data.name}
+          />
+          <Type
+            header="Choose a type"
+            isActive={steps[step] === 'type'}
+            isEditing={isEditing}
+            onNext={handleOnNext}
+            value={data.type}
+          />
+          <Transferee
+            header={data.type === 'debit' ? 'Transfer as income to' : 'Transfer as expense from'}
+            holdings={holdings}
+            isActive={steps[step] === 'transferee'}
+            isEditing={isEditing}
+            onNext={handleOnNext}
+            value={data.transferee}
+          />
+          <Submit
+            data={data}
+            isActive={steps[step] === 'submit'}
+            isEditing={budget !== undefined}
+            onEdit={handleOnEdit}
+            onSubmit={handleOnSubmit}
+          />
+        </Ui.Dialog.DialogContent>
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>
   );
 };
+
+const styles = tw({
+  back: (canGoBack: boolean) => tw(`
+    absolute top-4 left-4
+    select-none
+
+    motion-safe:duration-300
+
+    ${canGoBack ? 'opacity-100' : 'opacity-0'}
+  `),
+  arrow: `
+    w-4 h-4
+    stroke-2
+  `,
+  lid: `
+    mt-0.25
+    text-tiny
+    uppercase
+    tracking-wide
+    font-roboto
+  `,
+});

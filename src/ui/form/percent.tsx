@@ -4,12 +4,15 @@ import Input from 'react-currency-input-field';
 
 import tw from '@/styles';
 
-type Props = {
-  id: string;
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   value?: string;
 };
 
-export default function Percent({ id, value }: Props) {
+export default function Percent({
+  id,
+  value,
+  ...rest
+}: Props) {
   return (
     <Input
       allowNegativeValue={true}
@@ -24,17 +27,17 @@ export default function Percent({ id, value }: Props) {
       fixedDecimalLength={2}
       maxLength={5}
       prefix="% "
+      {...rest}
     />
   );
 };
 
 const styles = tw({
   container: `
-    peer
-    border border-current/22.5
-    rounded-md
-    py-2.25 pt-2.75 pl-3
-    text-(--foreground)
-    bg-(--background)
+    py-2.25
+    border-b border-current/22.5
+    outline-none
+    w-20
+    text-center
   `,
 });

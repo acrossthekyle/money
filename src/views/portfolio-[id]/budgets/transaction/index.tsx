@@ -1,29 +1,59 @@
 'use client';
 
-import type { Budget, Dateable } from '@/types';
+import type { Budget, CalendarDay, Holding } from '@/types';
+import { currency } from '@/utils';
+import { getBudgetDisplayData } from '@/utils/budgets';
 
-import { TransactionContainer } from '../components';
+import {
+  TransactionAvatar,
+  TransactionContainer,
+  TransactionContent,
+  TransactionContentLower,
+  TransactionContentName,
+  TransactionContentAmount,
+  TransactionContentUpper,
+} from '../components';
+
+import { useModel } from './model';
 
 type Props = {
   budget: Budget;
-  date: Dateable;
+  day: CalendarDay;
+  holding: Holding;
   isHighlighted: boolean;
-  onClick: (budget: Budget, date: Dateable) => void;
 };
 
 export default function Transaction({
-  children,
   budget,
-  date,
+  day,
+  holding,
   isHighlighted,
-  onClick,
-}: React.PropsWithChildren<Props>) {
+}: Props) {
+  const { handleOnClick } = useModel(budget, day, holding);
+
+  const { amount, isNegative } = getBudgetDisplayData(
+    day.debits,
+    budget,
+  );
+
   return (
     <TransactionContainer
       isHighlighted={isHighlighted}
-      onClick={() => onClick(budget, date)}
+      onClick={handleOnClick}
     >
-      {children}
+      <TransactionAvatar type={budget.category} />
+        <TransactionContent>
+          <TransactionContentUpper>
+            <TransactionContentName>{budget.name}</TransactionContentName>
+            <TransactionContentAmount isNegative={isNegative}>
+              ${currency(amount)}
+            </TransactionContentAmount>
+          </TransactionContentUpper>
+          <TransactionContentLower>
+            <span>{day.dateable.display}</span>
+            <span>{budget.category}</span>
+          </TransactionContentLower>
+        </TransactionContent>
     </TransactionContainer>
   );
 };

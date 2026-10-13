@@ -82,17 +82,19 @@ export type CalendarAmount = {
   amount: number;
 };
 
+export type CalendarReturn = {
+  amount: number | null;
+  isPositive: boolean;
+  label: string;
+};
+
 export type CalendarDay = {
   balance: number;
   budgets: Budget[],
   credits: CalendarAmount[];
   dateable: Dateable;
   debits: CalendarAmount[];
-  return: {
-    amount: number | null;
-    isPositive: boolean;
-    label: string;
-  };
+  return: CalendarReturn;
 };
 
 export type SearchParams = {
@@ -137,4 +139,30 @@ export type UseConfirmConfig = {
   target?: string;
   title?: string;
   text?: string;
+};
+
+export type DialogTransactionData = {
+  budget: Budget;
+  day: CalendarDay;
+  holding: Holding;
+};
+
+export type DialogReturnData = {
+  day: CalendarDay;
+  holding: Holding;
+};
+
+export type DialogEmptyData = {
+  range: string[];
+};
+
+export type DialogBudgetData = {
+  budget?: Budget;
+  date: Dateable;
+  holdings: Holding[];
+  parent?: string;
+};
+
+export type DialogHoldingData = {
+  holding?: Holding;
 };

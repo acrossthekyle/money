@@ -4,7 +4,7 @@ import { useCallback, useContext } from 'react';
 
 import { DialogContext } from '@/contexts/dialog';
 
-export function useBudget() {
+export function useBudget<T = unknown>() {
   const context = useContext(DialogContext);
 
   if (context === null) {
@@ -15,12 +15,13 @@ export function useBudget() {
     context.onRegister('budget', node);
   }, [context]);
 
-  const handleOnOpen = () => {
-    context.onDialog('budget');
+  const handleOnOpen = (data?: T) => {
+    context.onDialog('budget', data);
   };
 
   return {
     ...context,
+    data: context.data as T | null,
     instance,
     isActive: context.isOpen && context.dialog === 'budget',
     onBudget: handleOnOpen,

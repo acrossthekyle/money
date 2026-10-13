@@ -100,11 +100,11 @@ export function createBudgetIterations(budget: Budget, zone: string): string[] {
   return budgetIterations;
 };
 
-export function getBudgetDisplayData(budget: Budget, debits: CalendarAmount[]) {
-  const existsInDebits = debits.find(debit => debit.budget === budget.id);
+export function getBudgetDisplayData(debits: CalendarAmount[], budget?: Budget) {
+  const existsInDebits = debits.find(debit => debit.budget === budget?.id);
 
   return {
     isNegative: existsInDebits !== undefined,
-    amount: budget.amount,
+    amount: budget?.amount || 0,
   };
 };

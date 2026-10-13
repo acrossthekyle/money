@@ -39,10 +39,9 @@ const styles = tw({
     w-full max-w-full
     h-full max-h-none
     flex flex-col items-center
-    p-4 pb-2
     bg-transparent
     outline-none
-    overflow-y-auto
+    overflow-hidden
 
     backdrop:hidden
   `,

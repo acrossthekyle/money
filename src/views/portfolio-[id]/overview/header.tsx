@@ -17,11 +17,9 @@ type Props = {
 
 export default function Header({ date, holding }: Props) {
   const {
-    action,
     handleOnDelete,
     handleOnUpdate,
     isPending,
-    willDelete,
   } = useModel(date, holding);
 
   return (
@@ -47,33 +45,25 @@ export default function Header({ date, holding }: Props) {
       <nav aria-label="supplementary navigation" className={styles.options}>
         <button
           className={styles.option}
+          disabled={isPending}
           onClick={handleOnUpdate}
           type="button"
         >
           <Pen className={styles.icon} /> Edit
         </button>
-        <form action={action} id={`${holding.id}-delete-form`}>
-          <input
-            name="erase"
-            type="text"
-            value={willDelete ? 'true' : 'false'}
-            readOnly
-            className="hidden"
-          />
-          <button
-            className={styles.option}
-            disabled={isPending}
-            onClick={handleOnDelete}
-            type="button"
-          >
-            {isPending ? (
-              <LoaderCircle className={cs(styles.icon, styles.spin)} />
-            ) : (
-              <Trash className={styles.icon} />
-            )}
-            Delete
-          </button>
-        </form>
+        <button
+          className={styles.option}
+          disabled={isPending}
+          onClick={handleOnDelete}
+          type="button"
+        >
+          {isPending ? (
+            <LoaderCircle className={cs(styles.icon, styles.spin)} />
+          ) : (
+            <Trash className={styles.icon} />
+          )}
+          Delete
+        </button>
       </nav>
     </h1>
   );

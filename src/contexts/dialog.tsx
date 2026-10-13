@@ -12,12 +12,13 @@ import {
 } from 'react';
 
 type DialogContextType = {
+  data: unknown;
   dialog: string;
   isOpen: boolean;
   onBackdrop: (event: MouseEvent<HTMLDialogElement>) => void;
   onCancel: (event: KeyboardEvent<HTMLDialogElement>) => void;
   onClose: () => void;
-  onDialog: (name: string) => void;
+  onDialog: (name: string, data?: unknown) => void;
   onRegister: (name: string, node: HTMLDialogElement | null) => void;
 };
 
@@ -26,6 +27,7 @@ export const DialogContext = createContext<DialogContextType | null>(null);
 export default function DialogProvider({ children }: PropsWithChildren) {
   const [dialog, setDialog] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [data, setData] = useState<unknown>();
 
   const dialogRefs = useRef<Record<string, HTMLDialogElement | null>>({});
 
@@ -54,6 +56,8 @@ export default function DialogProvider({ children }: PropsWithChildren) {
     }
 
     const handleTransitionEnd = () => {
+      setData();
+
       activeNode.close();
     };
 
@@ -92,7 +96,7 @@ export default function DialogProvider({ children }: PropsWithChildren) {
     dialogRefs.current[name] = node;
   }, []);
 
-  const handleOnOpen = useCallback((name: string) => {
+  const handleOnOpen = useCallback((name: string, data?: T) => {
     const activeNode = dialogRefs.current[name];
 
     if (!activeNode) {
@@ -108,6 +112,7 @@ export default function DialogProvider({ children }: PropsWithChildren) {
     requestAnimationFrame(() => {
       setIsOpen(true);
       setDialog(name);
+      setData(data ?? undefined);
 
       setTimeout(() => {
         const firstButton = activeNode.querySelector('button');
@@ -135,6 +140,7 @@ export default function DialogProvider({ children }: PropsWithChildren) {
 
   return (
     <DialogContext.Provider value={{
+      data,
       dialog,
       isOpen,
       onBackdrop: handleOnBackdrop,

@@ -4,7 +4,7 @@ import { useCallback, useContext } from 'react';
 
 import { DialogContext } from '@/contexts/dialog';
 
-export function useHolding() {
+export function useHolding<T = unknown>() {
   const context = useContext(DialogContext);
 
   if (context === null) {
@@ -15,12 +15,13 @@ export function useHolding() {
     context.onRegister('holding', node);
   }, [context]);
 
-  const handleOnOpen = () => {
-    context.onDialog('holding');
+  const handleOnOpen = (data?: T) => {
+    context.onDialog('holding', data);
   };
 
   return {
     ...context,
+    data: context.data as T | null,
     instance,
     isActive: context.isOpen && context.dialog === 'holding',
     onHolding: handleOnOpen,

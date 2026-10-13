@@ -1,29 +1,32 @@
-import { Pen, Plus, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 
 type Props = {
-  icon: 'edit' | 'add';
+  className?: string;
   onClose: () => void;
 };
 
 export default function Header({
   children,
-  icon,
+  className,
   onClose,
 }: React.PropsWithChildren<Props>) {
   return (
-    <header className={styles.container}>
-      <h2 className={styles.header} id="dialog-header">
-        <span className={styles.image}>
-          {icon === 'add' && <Plus className="stroke-1" />}
-          {icon === 'edit' && <Pen className="stroke-1" />}
-        </span>
-        <span>{children}</span>
-      </h2>
-      <button className={styles.close} onClick={onClose} type="button">
-        <X className={styles.icon} />
+    <header className={cs(styles.container, className)}>
+      <button
+        className={styles.close}
+        onClick={onClose}
+        type="button"
+      >
+        <X className={styles.x} />
       </button>
+      <button
+        className={styles.bar}
+        onClick={onClose}
+        type="button"
+      />
+      {children}
     </header>
   );
 };
@@ -31,34 +34,31 @@ export default function Header({
 const styles = tw({
   container: `
     relative
-    flex items-center justify-between
-    px-3 py-4
-    border-b border-current/17.5
-    bg-(--foreground)/2.5
+    flex flex-col items-center justify-between
+    px-4 pt-4
   `,
-  header: `
-    flex items-center gap-1
-    text-base
-    truncate
-    leading-[1]
+  bar: `
+    relative
+    -mt-1
+    p-3
+    w-16
+    rounded-full
 
-    md:text-sm
-  `,
-  image: `
-    flex items-center justify-center
-    w-8 h-8
-    p-2.25
+    before:absolute
+    before:top-1/2
+    before:-translate-y-1/2
+    before:inset-2
+    before:h-1
+    before:w-12
+    before:rounded-full
+    before:bg-white
   `,
   close: `
-    absolute top-1/2 right-0.5
-    -translate-y-1/2
-    p-2
+    absolute top-4 right-4
+    select-none
   `,
-  icon: `
-    w-6 h-6
-    stroke-1
-
-    md:w-5
-    md:h-5
+  x: `
+    w-4 h-4
+    stroke-2
   `,
 });

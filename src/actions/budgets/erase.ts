@@ -3,53 +3,35 @@
 import { revalidatePath } from 'next/cache';
 
 import { db } from '@/db';
-import type { Budget, BudgetFormState } from '@/types';
+import type { Budget } from '@/types';
 
 export async function erase(
-  budget: Budget,
-  state: BudgetFormState,
-  formData: FormData,
-): Promise<BudgetFormState> {
-  if (formData.get('erase') === 'true') {
-    if (budget.schedule === 'once') {
-      await db.erase('budgets', budget.id);
+  bound: {
+    budget?: Budget,
+    dateIso?: string,
+  },
+  state: null,
+  isPurge: boolean,
+) {
+  if (!isPurge) {
+    if (bound.budget.schedule === 'once') {
+      await db.erase('budgets', bound.budget.id);
     } else {
       await db.write('budgets', {
-        ...budget,
+        ...bound.budget,
         omissions: [
-          ...budget.omissions,
-          formData.get('date') as string,
+          ...bound.budget.omissions,
+          bound.dateIso,
         ],
       });
     }
 
     revalidatePath('/');
 
-    return {
-      data: budget,
-      hasFailed: false,
-      isSuccessful: true,
-      message: `Budget on ${formData.get('date')} successfully deleted`,
-    };
+    return;
   }
 
-  if (formData.get('purge') === 'true') {
-    await db.erase('budgets', budget.id);
+  await db.erase('budgets', bound.budget.id);
 
-    revalidatePath('/');
-
-    return {
-      data: budget,
-      hasFailed: false,
-      isSuccessful: true,
-      message: 'Budget successfully deleted',
-    };
-  }
-
-  return {
-    data: budget,
-    hasFailed: false,
-    isSuccessful: true,
-    message: 'No action taken',
-  };
+  revalidatePath('/');
 };

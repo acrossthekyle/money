@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { Dialogs } from '@/dialogs';
-import { useBudget, useCalendar } from '@/hooks';
+import { useBudget, useCalendar, useTransaction } from '@/hooks';
 import { Main } from '@/layout';
 import type { Budget, Holding } from '@/types'
 
@@ -19,19 +19,9 @@ type Props = {
 };
 
 export default function View({ data }: Props) {
-  const [budget, setBudget] = useState<Budget | undefined>();
   const [view, setView] = useState('upcoming');
 
-  const { onBudget } = useBudget();
   const { calendar, date, onDate } = useCalendar();
-
-  const handleOnBudget = (item: Budget, dateable: Dateable) => {
-    setBudget(item);
-
-    onDate(dateable);
-
-    onBudget();
-  };
 
   const handleOnCalendar = (dateable: Dateable, value: string) => {
     setView(value);
@@ -49,7 +39,6 @@ export default function View({ data }: Props) {
         <Overview
           date={date}
           holding={data.holding}
-          onAdd={() => setBudget(undefined)}
           onCalendar={() => setView('calendar')}
           onToday={onDate}
           onUpcoming={() => setView('upcoming')}
@@ -66,17 +55,14 @@ export default function View({ data }: Props) {
           days={calendar}
           date={date}
           holding={data.holding}
-          onClick={handleOnBudget}
           view={view}
         />
       </Main>
       <Dialogs.Holding date={date} holding={data.holding} />
-      <Dialogs.Budget
-        budget={budget}
-        date={date}
-        holdings={data.holdings}
-        parent={data.holding.id}
-      />
+      <Dialogs.Budget holdings={data.holdings} parent={data.holding.id} />
+      <Dialogs.Transaction />
+      <Dialogs.Return />
+      <Dialogs.Empty />
     </>
   );
 };

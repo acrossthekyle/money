@@ -10,10 +10,10 @@ export default function Footer({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    flex gap-4 items-center justify-between
-    mt-4
-    p-3
-    border-t border-current/17.5
+    flex flex-col gap-4 items-center justify-between
+    w-full
+    -mt-2
+    p-4
     bg-(--foreground)/2.5
   `,
 });

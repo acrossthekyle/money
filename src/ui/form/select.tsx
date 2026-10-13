@@ -25,8 +25,6 @@ const styles = tw({
     border border-current/22.5
     rounded-md
     py-2.25 pt-2.75 pl-3.25 pr-8
-    text-(--foreground)
-    bg-(--background)
     truncate
   `,
   icon: `

@@ -4,7 +4,7 @@ import { CalendarFold, RotateCcwClock, Plus, ReceiptText } from 'lucide-react';
 
 import { useBudget, useHolding } from '@/hooks';
 import tw, { cs } from '@/styles';
-import type { Dateable, Holding } from '@/types'
+import type { Dateable, DialogBudgetData, Holding } from '@/types'
 import { dateable } from '@/utils';
 
 type Props = {
@@ -26,13 +26,13 @@ export default function Options({
   onUpcoming,
   view,
 }: Props) {
-  const { onBudget } = useBudget();
+  const { onBudget } = useBudget<DialogBudgetData>();
   const { onHolding } = useHolding();
 
   const handleOnAdd = () => {
-    onAdd();
-
-    onBudget();
+    onBudget({
+      date,
+    });
   };
 
   const handleOnEdit = () => {
