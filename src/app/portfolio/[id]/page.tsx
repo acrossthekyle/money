@@ -1,44 +1,22 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
-import { get as getHoldings } from '@/getters/holdings';
+import { ForecastProvider } from '@/contexts';
+import { get } from '@/getters/details';
 import Ui from '@/ui';
 import View from '@/views/portfolio-[id]';
-
-import { get } from './get';
 
 type Params = Promise<{
   id: string;
 }>;
 
-type GenerateMetadata = {
-  params: Params;
-};
-
 type Props = {
   params: Params;
 };
 
-export async function generateMetadata({
-  params,
-}: GenerateMetadata): Promise<Metadata> {
-  const { id } = await params;
-
-  const { holdings } = await getHoldings();
-
-  const result = holdings.find(holding => holding.id === id);
-
-  if (result === undefined) {
-    return {
-      title: '404 Not Found',
-      description: 'That does not exist',
-    };
-  }
-
-  return {
-    title: `${result.name} ⌁ Portfolio`,
-    description: ``,
-  };
+export const metadata: Metadata = {
+  title: `Details ⌁ Portfolio`,
+  description: ``,
 };
 
 async function AsyncView({ params }: Props) {
@@ -46,7 +24,15 @@ async function AsyncView({ params }: Props) {
 
   const data = await get(id);
 
-  return <View data={data} />;
+  return (
+    <ForecastProvider
+      holding={data.holding}
+      transactions={data.transactions}
+      zone={data.zone}
+    >
+      <View data={data} />
+    </ForecastProvider>
+  );
 };
 
 export default function Page({ params }: Props) {

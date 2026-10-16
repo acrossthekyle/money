@@ -3,13 +3,16 @@
 import { useState } from 'react';
 
 import { Dialogs } from '@/dialogs';
-import { useBudget, useCalendar, useTransaction } from '@/hooks';
+import { useForecast } from '@/hooks';
 import { Main } from '@/layout';
-import type { Budget, Holding } from '@/types'
+import type { Dateable, Holding } from '@/types'
 
+import Analytics from './analytics';
 import Budgets from './budgets';
-import Calendar from './calendar';
-import Overview from './overview';
+import Header from './header';
+import Month from './month';
+import Options from './options';
+import Week from './week';
 
 type Props = {
   data: {
@@ -19,13 +22,29 @@ type Props = {
 };
 
 export default function View({ data }: Props) {
-  const [view, setView] = useState('upcoming');
+  const [view, setView] = useState('week');
 
-  const { calendar, date, onDate } = useCalendar();
+  const { calendar, date, onDate } = useForecast();
 
-  const handleOnCalendar = (dateable: Dateable, value: string) => {
-    setView(value);
+  const handleOnWeek = () => {
+    setView('week');
+  };
 
+  const handleOnMonth = () => {
+    setView('month');
+  };
+
+  const handleOnAnalytics = () => {
+    setView('analytics');
+  };
+
+  const handleOnCalendar = (dateable: Dateable, display: string) => {
+    setView(display);
+
+    onDate(dateable);
+  };
+
+  const handleOnToday = (dateable: Dateable) => {
     onDate(dateable);
   };
 
@@ -36,29 +55,48 @@ export default function View({ data }: Props) {
   return (
     <>
       <Main>
-        <Overview
+        <Header
           date={date}
           holding={data.holding}
-          onCalendar={() => setView('calendar')}
-          onToday={onDate}
-          onUpcoming={() => setView('upcoming')}
-          view={view}
         />
-        <Calendar
+        <Options
           date={date}
-          days={calendar}
-          holding={data.holding}
-          onClick={handleOnCalendar}
+          onAnalytics={handleOnAnalytics}
+          onMonth={handleOnMonth}
+          onToday={handleOnToday}
+          onWeek={handleOnWeek}
           view={view}
         />
-        <Budgets
-          days={calendar}
-          date={date}
-          holding={data.holding}
-          view={view}
-        />
+        {view === 'analytics' && (
+          <Analytics
+            date={date}
+            days={calendar}
+            onClick={handleOnCalendar}
+          />
+        )}
+        {view === 'month' && (
+          <Month
+            date={date}
+            days={calendar}
+            onClick={handleOnCalendar}
+          />
+        )}
+        {view === 'week' && (
+          <>
+            <Week
+              date={date}
+              days={calendar}
+              onClick={handleOnCalendar}
+            />
+            <Budgets
+              days={calendar}
+              date={date}
+              holding={data.holding}
+            />
+          </>
+        )}
       </Main>
-      <Dialogs.Holding date={date} holding={data.holding} />
+      <Dialogs.Holding />
       <Dialogs.Budget holdings={data.holdings} parent={data.holding.id} />
       <Dialogs.Transaction />
       <Dialogs.Return />

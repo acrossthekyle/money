@@ -21,7 +21,7 @@ export function useBudget<T = unknown>() {
 
   return {
     ...context,
-    data: context.data as T | null,
+    input: context.data as T | null,
     instance,
     isActive: context.isOpen && context.dialog === 'budget',
     onBudget: handleOnOpen,

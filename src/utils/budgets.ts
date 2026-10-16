@@ -79,17 +79,17 @@ export function createBudgetIterations(budget: Budget, zone: string): string[] {
   if (!!budget.schedule) {
     const budgetIterationLength = getBudgetIterationLength(budget.schedule);
 
-    let date = budgetStart;
+    let start = budgetStart;
 
     Array.from({ length: budgetIterationLength }, () => {
-      date = addIteration(date, budget.schedule);
+      start = addIteration(start, budget.schedule);
 
-      const formatted = format(date, DATE_ISO);
-      const isTodayOrFuture = isAfter(date, today) || isSameDay(date, today);
+      const formatted = format(start, DATE_ISO);
+      const isTodayOrFuture = isAfter(start, today) || isSameDay(start, today);
 
       if (
         isTodayOrFuture &&
-        !isAfter(date, budgetEnd || '') &&
+        !isAfter(start, budgetEnd || '') &&
         !budget.omissions.includes(formatted)
       ) {
         budgetIterations.push(formatted);

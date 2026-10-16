@@ -19,12 +19,12 @@ export default function Inner({
 
 const styles = tw({
   container: (isActive: boolean) => tw(`
-    relative bottom-4
+    relative bottom-6
     flex flex-col justify-between
-    w-full max-w-xs
+    w-[calc(100%-2rem)]
     h-auto min-h-70
     mt-auto
-    rounded-xl
+    rounded-4xl
     shadow-lg/25 dark:shadow-lg/75
     bg-black
     text-white
@@ -34,5 +34,8 @@ const styles = tw({
     ${isActive
       ? `scale-100 opacity-100 translate-y-0`
       : `scale-80 opacity-0 translate-y-24`}
+
+    sm:max-w-xs
+      md:rounded-xl
   `),
 });

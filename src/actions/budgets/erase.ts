@@ -6,24 +6,30 @@ import { db } from '@/db';
 import type { Budget } from '@/types';
 
 export async function erase(
-  bound: {
+  formData: {
     budget?: Budget,
     dateIso?: string,
   },
   state: null,
   isPurge: boolean,
-) {
+): Promise<void> {
+  if (!formData.budget) {
+    return;
+  }
+
   if (!isPurge) {
-    if (bound.budget.schedule === 'once') {
-      await db.erase('budgets', bound.budget.id);
+    if (formData.budget.schedule === 'once') {
+      await db.erase('budgets', formData.budget.id);
     } else {
-      await db.write('budgets', {
-        ...bound.budget,
-        omissions: [
-          ...bound.budget.omissions,
-          bound.dateIso,
-        ],
-      });
+      if (formData.dateIso) {
+        await db.write('budgets', {
+          ...formData.budget,
+          omissions: [
+            ...(formData.budget.omissions || []),
+            formData.dateIso,
+          ],
+        });
+      }
     }
 
     revalidatePath('/');
@@ -31,7 +37,7 @@ export async function erase(
     return;
   }
 
-  await db.erase('budgets', bound.budget.id);
+  await db.erase('budgets', formData.budget.id);
 
   revalidatePath('/');
 };

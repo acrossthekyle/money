@@ -40,7 +40,7 @@ export default function Return({
             {day.return.label}
           </TransactionContentName>
           <TransactionContentAmount isNegative={!day.return.isPositive}>
-            ${currency(day.return.amount)}
+            ${currency(String(day.return.amount))}
           </TransactionContentAmount>
         </TransactionContentUpper>
         <TransactionContentLower>

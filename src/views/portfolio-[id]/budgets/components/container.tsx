@@ -3,7 +3,7 @@
 import tw, { cs } from '@/styles';
 
 type Props = {
-  isHighlighted: boolean;
+  isHighlighted?: boolean;
   onClick: () => void;
 };
 

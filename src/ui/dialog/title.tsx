@@ -24,8 +24,10 @@ const styles = tw({
     mt-3
   `,
   text: `
-    text-xs
+    text-sm
     uppercase
     font-bold
+
+    md:text-xs
   `,
 });

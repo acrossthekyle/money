@@ -1,26 +1,32 @@
 'use client';
 
-import { format } from 'date-fns';
-
-import tw, { cs } from '@/styles';
-import type { Dateable } from '@/types';
+import tw from '@/styles';
+import type { Holding } from '@/types';
 import { currency } from '@/utils';
 
 import { useModel } from './model';
 
 type Props = {
-  date: Dateable,
-  netWorth: number;
+  holdings: Holding[];
+  zone: string;
 };
 
-export default function Header({ date, netWorth }: Props) {
-  const { time } = useModel(date);
+export default function Header({ holdings, zone }: Props) {
+  const { date, time } = useModel(zone);
+
+  const netWorth = holdings.reduce((accumulator, holding) => {
+    if (holding.type === 'credit_card') {
+      return accumulator - Number(holding.balance);
+    }
+
+    return accumulator + Number(holding.balance);
+  }, 0);
 
   return (
     <h1 className={styles.container}>
       <span className={styles.upper}>
         <span>
-          {format(date.date, 'iii, MMM do')}
+          {date}
         </span>
         <span>
           {time}

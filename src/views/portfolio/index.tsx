@@ -1,13 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useHolding } from '@/hooks';
 import { Dialogs } from '@/dialogs';
 import { Main } from '@/layout';
-import tw, { cs } from '@/styles';
-import type { Dateable, Holding } from '@/types';
-import Ui from '@/ui';
+import tw from '@/styles';
+import type { DialogHoldingData, Holding } from '@/types';
 
 import Filters from './filters';
 import Header from './header';
@@ -15,82 +14,71 @@ import Item from './item';
 
 type Props = {
   data: {
-    date: Dateable;
     holdings: Holding[];
-    netWorth: number;
+    zone: string;
   };
 };
 
 export default function View({ data }: Props) {
-  const [filter, setFilter] = useState('credit_card');
-  const [holding, setHolding] = useState<Holding | undefined>();
+  const [portfolio, setPortfolio] = useState<string | null>(null);
 
-  const { onHolding } = useHolding();
+  const { onHolding } = useHolding<DialogHoldingData>();
+
+  useEffect(() => {
+    const saved = localStorage.getItem('portfolio');
+
+    if (saved) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPortfolio(saved);
+    }
+  }, []);
 
   const handleOnFilter = (value: string) => {
     if (value === 'plus') {
-      setHolding(undefined);
-
       onHolding();
     } else {
-      setFilter(value);
+      localStorage.setItem('portfolio', value);
+
+      setPortfolio(value);
     }
   };
 
-  const handleOnHolding = (item: Holding) => {
-    setHolding(item);
+  if (portfolio === null) {
+    return null;
+  }
 
-    onHolding();
-  };
+  const filtered = data.holdings.filter(item => item.type === portfolio);
 
   return (
     <>
       <Main>
-        <Header date={data.date} netWorth={data.netWorth} />
-        <Filters current={filter} onClick={handleOnFilter} />
+        <Header holdings={data.holdings} zone={data.zone} />
+        <Filters current={portfolio} onClick={handleOnFilter} />
         <ul className={styles.items}>
-          {data.holdings.map((item) => (
-            <li
-              className={
-                cs(
-                  styles.item,
-                  item.type === filter && styles.active,
-                )
-              }
-              key={item.id}
-            >
-              <Item holding={item} onManage={handleOnHolding} />
+          {filtered.map((item) => (
+            <li className={styles.item} key={item.id}>
+              <Item holding={item} zone={data.zone} />
             </li>
           ))}
         </ul>
-        <p className={styles.disclaimer}>
-          Balances do not include scheduled transactions
-        </p>
       </Main>
-      <Dialogs.Holding holding={holding} />
+      <Dialogs.Holding />
     </>
   );
 };
 
 const styles = tw({
   items: `
-    flex flex-col gap-6
+    flex flex-col gap-3
+
+    md:gap-4
   `,
   item: `
     relative
-    flex-col justify-between gap-6
-    hidden
+    flex flex-col justify-between gap-6
     rounded-xl
-    text-white
-    bg-linear-to-tl from-gray-500 to-zinc-800
+    text-black dark:text-white
+    bg-linear-to-tl from-gray-100 dark:from-gray-500 to-stone-300 dark:to-zinc-800
     p-4
-  `,
-  active: `
-    !flex
-  `,
-  disclaimer: `
-    text-current/50 text-tiny
-    uppercase
-    tracking-wide
   `,
 })

@@ -44,14 +44,6 @@ export function date(zone: string, ...params: any[]): TZDate {
   return Reflect.construct(TZDate, [...rest, zone]);
 };
 
-export function image(id: string, folder: string, extension: string = 'jpg') {
-  return [
-    'https://ik.imagekit.io/acrossthekyle/uploads',
-    folder,
-    `${id}.${extension}`,
-  ].filter(Boolean).join('/');
-};
-
 export function dateable(
   zone: string,
   options?: {

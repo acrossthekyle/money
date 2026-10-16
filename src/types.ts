@@ -6,19 +6,11 @@ export type FormStateError ={
 export type Holding = {
   id: string;
   name: string;
-  institution: string;
   balance: string;
   number: string;
   type: string;
   interest: string;
-};
-
-export type HoldingFormState = {
-  data?: Holding,
-  errors?: FormStateError[];
-  hasFailed?: boolean;
-  isSuccessful?: boolean;
-  message: string;
+  updated?: string;
 };
 
 export type Budget = {
@@ -31,8 +23,7 @@ export type Budget = {
   transferee: string;
   start: string;
   end: string;
-  schedule: string
-  notes: string;
+  schedule: string;
   omissions: string[];
   holding?: {
     from: string;
@@ -40,18 +31,12 @@ export type Budget = {
   };
 };
 
-export type BudgetFormState = {
-  data?: Budget,
-  errors?: FormStateError[];
-  hasFailed?: boolean;
-  isSuccessful?: boolean;
-  message: string;
-};
-
 export type Setting = {
   id: string;
   value: string;
 };
+
+export type Record = Holding | Budget | Setting;
 
 export type LoginFormState = {
   data?: {
@@ -61,8 +46,6 @@ export type LoginFormState = {
   error: string | null;
   success: boolean;
 };
-
-export type Record = Holding | Budget | Setting;
 
 export type CalendarTransaction = {
   budget: Budget;
@@ -95,10 +78,6 @@ export type CalendarDay = {
   dateable: Dateable;
   debits: CalendarAmount[];
   return: CalendarReturn;
-};
-
-export type SearchParams = {
-  [key: string]: string | string[];
 };
 
 export type Dateable = {
@@ -158,8 +137,7 @@ export type DialogEmptyData = {
 
 export type DialogBudgetData = {
   budget?: Budget;
-  date: Dateable;
-  holdings: Holding[];
+  date?: Dateable;
   parent?: string;
 };
 

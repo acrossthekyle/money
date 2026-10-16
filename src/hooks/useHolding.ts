@@ -21,7 +21,7 @@ export function useHolding<T = unknown>() {
 
   return {
     ...context,
-    data: context.data as T | null,
+    input: context.data as T | null,
     instance,
     isActive: context.isOpen && context.dialog === 'holding',
     onHolding: handleOnOpen,

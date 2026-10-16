@@ -1,18 +1,20 @@
 'use server';
 
+import { format } from 'date-fns';
 import { revalidatePath } from 'next/cache';
 import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
+import { DATE_ISO } from '@/constants';
 import { db } from '@/db';
-import type { Holding, HoldingFormState } from '@/types';
+import { get as getSettings } from '@/getters/settings';
+import { date } from '@/utils';
 
 import { balancize, interestize } from '../utils';
 
 const Form = z.object({
   name: z.string(),
   balance: z.string(),
-  institution: z.string().nullable().optional(),
   number: z.string().nullable().optional(),
   type: z.enum([
     'credit_card',
@@ -25,67 +27,39 @@ const Form = z.object({
 });
 
 export async function put(
-  holding: Holding | null,
-  state: HoldingFormState,
-  formData: FormData,
-): Promise<HoldingFormState> {
+  formData: {
+    id: string | null;
+    data: {
+      type: string;
+      name: string;
+      number: string;
+      balance: string;
+      interest: string;
+    };
+  },
+): Promise<void> {
   const validated = Form.safeParse({
-    name: formData.get('name'),
-    balance: formData.get('balance'),
-    institution: formData.get('institution'),
-    number: formData.get('number'),
-    type: formData.get('type'),
-    interest: formData.get('interest'),
+    name: formData.data.name,
+    balance: formData.data.balance,
+    number: formData.data.number,
+    type: formData.data.type,
+    interest: formData.data.interest,
   });
 
   if (!validated.success) {
-    const rawInput = Object.fromEntries(formData.entries());
-
-    const errors = z.flattenError(validated.error).fieldErrors;
-
-    return {
-      data: {
-        ...state?.data,
-        ...rawInput,
-      } as Holding,
-      errors: [
-        {
-          field: 'name',
-          error: errors?.name?.[0] || '',
-        },
-        {
-          field: 'balance',
-          error: errors?.balance?.[0] || '',
-        },
-        {
-          field: 'type',
-          error: errors?.type?.[0] || '',
-        },
-        {
-          field: 'institution',
-          error: errors?.institution?.[0] || '',
-        },
-        {
-          field: 'number',
-          error: errors?.number?.[0] || '',
-        },
-        {
-          field: 'interest',
-          error: errors?.interest?.[0] || '',
-        },
-      ].filter(item => !!item.error),
-      hasFailed: true,
-      isSuccessful: false,
-      message: 'Validation failed',
-    };
+    return;
   }
 
+  const { zone } = await getSettings();
+
+  const now = date(zone);
+
   const computed = {
-    id: holding === null ? '' : holding.id,
+    id: formData.id === null ? '' : formData.id,
     balance: balancize(validated.data.balance),
-    institution: validated.data.institution === null ? '' : (validated.data.institution || ''),
     number: validated.data.number === null ? '' : (validated.data?.number || '').slice(-4),
     interest: interestize(validated.data.interest === null ? '' : (validated.data.interest || '')),
+    updated: format(now, DATE_ISO),
   };
 
   const result = {
@@ -93,59 +67,16 @@ export async function put(
     ...computed,
   };
 
-  if (holding === null) {
+  if (formData.id === null) {
     const identifier = uuidv4();
 
     await db.write('holdings', {
       ...result,
       id: identifier,
     });
-
-    revalidatePath('/');
-
-    return {
-      data: {
-        ...result,
-        id: identifier,
-      },
-      hasFailed: false,
-      isSuccessful: true,
-      message: 'Holding successfully created',
-    };
-  }
-
-  if (formData.get('purge') === 'true' && holding !== null) {
-    await db.erase('holdings', holding.id);
-
-    revalidatePath('/');
-
-    return {
-      data: result,
-      hasFailed: false,
-      isSuccessful: true,
-      message: 'Holding successfully deleted',
-    };
-  }
-
-  if (holding !== null) {
+  } else {
     await db.write('holdings', result);
-
-    revalidatePath('/');
-
-    return {
-      data: result,
-      hasFailed: false,
-      isSuccessful: true,
-      message: 'Holding successfully updated',
-    };
   }
 
   revalidatePath('/');
-
-  return {
-    data: result,
-    hasFailed: false,
-    isSuccessful: true,
-    message: 'No action taken',
-  };
 };

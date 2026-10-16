@@ -21,11 +21,7 @@ const styles = tw({
 
     has-[dialog[open]]:opacity-10
 
-    motion-safe:duration-300
-    motion-safe:transition-[opacity,translate,scale]
-
-    has-[dialog#menu-dialog[open]]:translate-y-90
-
-    md:has-[dialog#menu-dialog[open]]:translate-y-80
+    motion-safe:duration-200
+    motion-safe:transition-opacity
   `,
 });

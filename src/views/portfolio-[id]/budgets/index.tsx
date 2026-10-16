@@ -1,9 +1,7 @@
-'use client';
-
 import { Fragment } from 'react';
 
 import tw from '@/styles';
-import type { Budget, CalendarDay, Dateable, Holding } from '@/types';
+import type { CalendarDay, Dateable, Holding } from '@/types';
 
 import Empty from './empty';
 import Return from './return';
@@ -13,21 +11,13 @@ type Props = {
   days: CalendarDay[];
   date: Dateable;
   holding: Holding;
-  onClick: (budget: Budget, date: Dateable) => void;
-  view: string;
 };
 
 export default function Budgets({
   days,
   date,
   holding,
-  onClick,
-  view,
 }: Props) {
-  if (view === 'calendar' || view === 'analytics') {
-    return null;
-  }
-
   const filtered = days.filter(
     ({ dateable }) => dateable.week === date.week && dateable.year === date.year
   );
@@ -69,7 +59,6 @@ export default function Budgets({
                     day={day}
                     holding={holding}
                     isHighlighted={date.iso === day.dateable.iso}
-                    onClick={() => {}}
                   />
                 </li>
               )}
@@ -78,7 +67,6 @@ export default function Budgets({
         </ul>
       ) : (
         <Empty
-          onClick={() => {}}
           range={[
             filtered[0].dateable.display,
             filtered[filtered.length - 1].dateable.display,

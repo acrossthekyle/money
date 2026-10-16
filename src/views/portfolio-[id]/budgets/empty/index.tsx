@@ -11,14 +11,10 @@ import {
 import { useModel } from './model';
 
 type Props = {
-  onClick: () => void;
   range: string[];
 };
 
-export default function Empty({
-  onClick,
-  range,
-}: Props) {
+export default function Empty({ range }: Props) {
   const { handleOnClick } = useModel(range);
 
   return (

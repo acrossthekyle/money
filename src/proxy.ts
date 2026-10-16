@@ -15,8 +15,20 @@ export default function proxy(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
-}
+  const response = NextResponse.next();
+
+  if (sessionToken) {
+    response.cookies.set('app_session', sessionToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: Number(process.env.AUTH_SESSION_TIME || 60 * 60),
+      path: '/',
+    });
+  }
+
+  return response;
+};
 
 export const config = {
   matcher: [

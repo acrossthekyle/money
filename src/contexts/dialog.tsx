@@ -56,7 +56,7 @@ export default function DialogProvider({ children }: PropsWithChildren) {
     }
 
     const handleTransitionEnd = () => {
-      setData();
+      setData(undefined);
 
       activeNode.close();
     };
@@ -96,7 +96,7 @@ export default function DialogProvider({ children }: PropsWithChildren) {
     dialogRefs.current[name] = node;
   }, []);
 
-  const handleOnOpen = useCallback((name: string, data?: T) => {
+  const handleOnOpen = useCallback(<T = unknown>(name: string, data?: T) => {
     const activeNode = dialogRefs.current[name];
 
     if (!activeNode) {

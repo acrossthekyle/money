@@ -20,3 +20,5 @@ export const MONTHS_FULL = [
   'July', 'August', 'September',
   'October', 'November', 'December',
 ];
+
+export const DIALOG_DELAY = 450; // ms

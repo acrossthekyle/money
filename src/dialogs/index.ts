@@ -1,8 +1,5 @@
-import Budget from './budget';
-import Empty from './empty';
-import Holding from './holding';
-import Return from './return';
-import Transaction from './transaction';
+import { Empty, Return, Transaction } from './budgets';
+import { Budget, Holding } from './forms';
 
 export const Dialogs = {
   Budget,

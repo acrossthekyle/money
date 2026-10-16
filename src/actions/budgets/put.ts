@@ -6,7 +6,7 @@ import * as z from 'zod';
 
 import { db } from '@/db';
 import { get as getSettings } from '@/getters/settings';
-import type { Budget, BudgetFormState } from '@/types';
+import type { Budget, Dateable } from '@/types';
 import { createBudgetIterations } from '@/utils/budgets';
 
 import { balancize } from '../utils';
@@ -42,78 +42,50 @@ const Form = z.object({
     'bi-annually',
     'yearly',
   ]),
-  notes: z.string().nullable().optional(),
 });
 
 export async function put(
-  budget: Budget | null,
-  state: BudgetFormState,
-  formData: FormData,
-): Promise<BudgetFormState> {
+  formData: {
+    budget: Budget | null;
+    data: {
+      amount: string;
+      category: string;
+      date?: Dateable;
+      end: string;
+      name: string;
+      parent: string;
+      schedule: string;
+      start: string;
+      transferee: string;
+      type: string;
+      update: string;
+    };
+  },
+): Promise<void> {
   const validated = Form.safeParse({
-    name: formData.get('name'),
-    amount: formData.get('amount'),
-    category: formData.get('category'),
-    type: formData.get('type'),
-    transferee: formData.get('transferee'),
-    start: formData.get('start'),
-    end: formData.get('end'),
-    schedule: formData.get('schedule'),
-    notes: formData.get('notes'),
+    name: formData.data.name,
+    amount: formData.data.amount,
+    category: formData.data.category,
+    type: formData.data.type,
+    transferee: formData.data.transferee,
+    start: formData.data.start,
+    end: formData.data.end,
+    schedule: formData.data.schedule,
   });
 
   if (!validated.success) {
-    const rawInput = Object.fromEntries(formData.entries());
-
-    const errors = z.flattenError(validated.error).fieldErrors;
-
-    return {
-      data: {
-        ...state?.data,
-        ...rawInput,
-      } as Budget,
-      errors: [
-        {
-          field: 'name',
-          error: errors?.name?.[0] || '',
-        },
-        {
-          field: 'amount',
-          error: errors?.amount?.[0] || '',
-        },
-        {
-          field: 'category',
-          error: errors?.category?.[0] || '',
-        },
-        {
-          field: 'type',
-          error: errors?.type?.[0] || '',
-        },
-        {
-          field: 'start',
-          error: errors?.start?.[0] || '',
-        },
-        {
-          field: 'schedule',
-          error: errors?.schedule?.[0] || '',
-        },
-      ].filter(item => !!item.error),
-      hasFailed: true,
-      isSuccessful: false,
-      message: 'Validation failed',
-    };
+    return;
   }
 
   const { zone } = await getSettings();
 
   const computed = {
-    id: budget === null ? uuidv4() : budget.id,
+    id: formData.budget === null ? uuidv4() : formData.budget.id,
     amount: balancize(validated.data.amount),
     transferee: validated.data.transferee === null ? '' : validated.data.transferee || '',
     end: validated.data.end === null ? '' : validated.data.end || '',
-    notes: validated.data.notes === null ? '' : validated.data.notes || '',
-    parent: formData.get('parent') as string,
-    omissions: budget === null ? [] : budget.omissions,
+    parent: formData.data.parent,
+    omissions: formData.budget === null ? [] : formData.budget.omissions,
   };
 
   const result: Budget = {
@@ -121,49 +93,36 @@ export async function put(
     ...computed,
   };
 
-  if (budget === null) {
+  if (formData.budget === null) {
     await db.write('budgets', result);
 
     revalidatePath('/');
 
-    return {
-      data: result,
-      hasFailed: false,
-      isSuccessful: true,
-      message: 'Budget successfully created',
-    };
+    return;
   }
 
-  result.id = budget.id;
-  result.omissions = budget.omissions;
-
-  if (formData.get('update') === 'none' || formData.get('update') === 'all') {
+  if (formData.data.update === 'none' || formData.data.update === 'all') {
     await db.write('budgets', result);
 
     revalidatePath('/');
 
-    return {
-      data: result,
-      hasFailed: false,
-      isSuccessful: true,
-      message: `Entire budget successfully updated`,
-    };
+    return;
   }
 
-  const iterations = createBudgetIterations(budget, zone);
-  const thisDateIndex = iterations.findIndex(iteration => iteration === formData.get('date'));
+  const iterations = createBudgetIterations(formData.budget, zone);
+  const thisDateIndex = iterations.findIndex(iteration => iteration === formData.data.date?.iso || '');
 
-  if (formData.get('update') === 'this') {
-    if (thisDateIndex >= 0) {
+  if (formData.data.update === 'this') {
+    if (thisDateIndex >= 0 && formData.data.date?.iso) {
       const past = iterations.slice(0, thisDateIndex);
-      const current = [formData.get('date')];
+      const current = [formData.data.date.iso];
       const future = iterations.slice(thisDateIndex + 1);
 
       const updates = [];
 
       if (past.length > 0) {
         updates.push({
-          ...budget,
+          ...formData.budget,
           id: uuidv4(),
           start: past[0],
           end: past[past.length - 1],
@@ -176,12 +135,11 @@ export async function put(
         start: current[0],
         end: current[0],
         schedule: 'once',
-        omissions: budget.omissions,
       });
 
       if (future.length > 0) {
         updates.push({
-          ...budget,
+          ...formData.budget,
           start: future[0],
         });
       }
@@ -189,33 +147,21 @@ export async function put(
       await db.writeAll('budgets', updates as Budget[]);
 
       revalidatePath('/');
-
-      return {
-        data: result,
-        hasFailed: false,
-        isSuccessful: true,
-        message: `Budget instance successfully updated`,
-      };
     }
 
-    return {
-      data: result,
-      hasFailed: true,
-      isSuccessful: false,
-      message: `Unable to find matching budget iteration date when updating this budget`,
-    };
+    return;
   }
 
-  if (formData.get('update') === 'prospective') {
-    if (thisDateIndex >= 0) {
+  if (formData.data.update === 'prospective') {
+    if (thisDateIndex >= 0 && formData.data.date?.iso) {
       const past = iterations.slice(0, thisDateIndex);
-      const current = [formData.get('date')];
+      const current = [formData.data.date.iso];
 
       const updates = [];
 
       if (past.length > 0) {
         updates.push({
-          ...budget,
+          ...formData.budget,
           id: uuidv4(),
           start: past[0],
           end: past[past.length - 1],
@@ -225,30 +171,17 @@ export async function put(
       updates.push({
         ...result,
         start: current[0],
-        omissions: budget.omissions,
       });
 
       await db.writeAll('budgets', updates as Budget[]);
 
       revalidatePath('/');
-
-      return {
-        data: result,
-        hasFailed: false,
-        isSuccessful: true,
-        message: `All current and future budget instances successfully updated`,
-      };
     }
 
-    return {
-      data: result,
-      hasFailed: true,
-      isSuccessful: false,
-      message: `Unable to find matching budget iteration date when updating prospective budgets`,
-    };
+    return;
   }
 
-  if (formData.get('update') === 'future') {
+  if (formData.data.update === 'future') {
     if (thisDateIndex >= 0) {
       const past = iterations.slice(0, thisDateIndex + 1);
       const future = iterations.slice(thisDateIndex + 1);
@@ -257,7 +190,7 @@ export async function put(
 
       if (past.length > 0) {
         updates.push({
-          ...budget,
+          ...formData.budget,
           id: uuidv4(),
           start: past[0],
           end: past[past.length - 1],
@@ -274,29 +207,12 @@ export async function put(
       await db.writeAll('budgets', updates);
 
       revalidatePath('/');
-
-      return {
-        data: result,
-        hasFailed: false,
-        isSuccessful: true,
-        message: `All future budget instances successfully updated`,
-      };
     }
 
-    return {
-      data: result,
-      hasFailed: true,
-      isSuccessful: false,
-      message: `Unable to find matching budget iteration date when updating future budgets`,
-    };
+    return;
   }
 
   revalidatePath('/');
 
-  return {
-    data: result,
-    hasFailed: false,
-    isSuccessful: true,
-    message: 'No action taken',
-  };
+  return;
 };

@@ -38,23 +38,24 @@ const styles = tw({
     relative left-1/2
     -translate-x-1/2
     flex items-center justify-between
-    w-full max-w-sm
-    mt-4 mb-3
-    p-3 px-6
+    w-full
+    mt-4
+    py-4 px-6
     text-(--foreground)
 
     before:absolute
     before:inset-y-0
-    before:inset-x-3
+    before:inset-x-4
     before:-z-1
     before:bg-(--foreground)/2
     before:border
     before:border-current/6
     before:rounded-xl
 
+    sm:max-w-sm
     md:before:inset-x-6
     md:mt-6
-    md:mb-6
+    md:py-3
     md:px-9
   `,
   options: `

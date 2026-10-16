@@ -1,9 +1,8 @@
 import { Suspense } from 'react';
 
+import { get } from '@/getters/root';
 import Ui from '@/ui';
 import View from '@/views/portfolio';
-
-import { get } from './get';
 
 async function AsyncView() {
   const data = await get();

@@ -64,4 +64,15 @@ body {
     left: 0;
     transition-delay: 0s;
   }
+
+  .apexcharts-tooltip {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .apexcharts-tooltip.apexcharts-theme-light {
+    background: transparent !important;
+    border-color: transparent !important;
+  }
 }

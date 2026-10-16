@@ -15,12 +15,14 @@ export default function Main({ children, className }: React.PropsWithChildren<Pr
 const styles = tw({
   container: `
     relative
-    flex flex-col gap-6
-    w-full max-w-sm
+    flex flex-col gap-4
+    w-full
     mx-auto
-    p-3 pb-6
+    p-4
 
+    sm:max-w-sm
     md:p-6
-    md:pt-0
+    md:pt-4
+    md:gap-4
   `,
 });

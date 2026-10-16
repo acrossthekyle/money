@@ -1,16 +1,27 @@
-import { Eye, Pen, TriangleAlert } from 'lucide-react';
+'use client';
+
+import { differenceInDays, parseISO } from 'date-fns';
+import { Eye, Pen, Flag } from 'lucide-react';
 import Link from 'next/link';
 
-import tw, { cs } from '@/styles';
-import type { Dateable, Holding } from '@/types';
-import { currency } from '@/utils';
+import tw from '@/styles';
+import type { Holding } from '@/types';
+import { currency, date } from '@/utils';
+
+import { useModel } from './model';
 
 type Props = {
   holding: Holding;
-  onManage: (holding: Holding) => void;
+  zone: string;
 };
 
-export default function Item({ holding, onManage }: Props) {
+export default function Item({ holding, zone }: Props) {
+  const { handleOnEdit } = useModel(holding);
+
+  const days = holding.updated
+    ? differenceInDays(date(zone), parseISO(holding.updated))
+    : null;
+
   return (
     <>
       <span className={styles.upper}>
@@ -23,12 +34,21 @@ export default function Item({ holding, onManage }: Props) {
       </span>
       <span className={styles.lower}>
         <span className={styles.label}>
-          <span>Baseline Balance &mdash; Last Updated</span>
-          <span className={styles.strong}>7 days ago</span>
-          <TriangleAlert className={styles.warning} />
+          <span>
+            Baseline Balance &mdash; Last Updated
+          </span>
+          {days === null && (
+            <span className={styles.strong}>too long ago</span>
+          )}
+          {days !== null && (
+            <span className={styles.strong}>{days} days ago</span>
+          )}
+          {(days === null || (days !== null && days > 4)) && (
+            <Flag className={styles.warning} />
+          )}
         </span>
         <span className={styles.balance}>
-          {holding.balance < 0 ? '-' : ''}${currency(holding.balance)}
+          {Number(holding.balance) < 0 ? '-' : ''}${currency(holding.balance)}
         </span>
       </span>
       <nav aria-label="supplementary navigation" className={styles.options}>
@@ -37,7 +57,7 @@ export default function Item({ holding, onManage }: Props) {
         </Link>
         <button
           className={styles.option}
-          onClick={() => onManage(holding)}
+          onClick={handleOnEdit}
           type="button"
         >
           <Pen className={styles.icon} /> Edit
@@ -63,7 +83,11 @@ const styles = tw({
     font-mono
   `,
   middle: `
-    text-xl
+    py-4
+  `,
+  title: `
+    text-2xl
+    font-thin
     truncate
   `,
   lower: `
@@ -84,7 +108,8 @@ const styles = tw({
   warning: `
     inline-block ml-1
     w-2.5 h-2.5
-    stroke-2 stroke-red-300
+    stroke-2 stroke-red-400
+    fill-red-400
   `,
   balance: `
     flex flex-col
@@ -99,7 +124,7 @@ const styles = tw({
   option: `
     border border-current/12
     bg-(--foreground)/6
-    text-white
+    text-black dark:text-white
     rounded-md
     flex items-center justify-center gap-4
     uppercase

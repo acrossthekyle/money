@@ -1,10 +1,9 @@
 'use client';
 
+import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 
-import type { Dateable } from '@/types';
-
-export function useModel(dateable: Dateable) {
+export function useModel(zone: string) {
   const [date, setDate] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -20,6 +19,7 @@ export function useModel(dateable: Dateable) {
 
   if (date === null) {
     return {
+      date: format(new Date(), 'iii, MMM do'),
       time: '--:--:--',
     };
   }
@@ -27,11 +27,12 @@ export function useModel(dateable: Dateable) {
   const time = date.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
-    timeZone: dateable.zone,
+    timeZone: zone,
     timeZoneName: 'short',
   });
 
   return {
+    date: format(date.toLocaleDateString('en-US', { timeZone: zone }), 'iii, MMM do'),
     time,
   };
 }

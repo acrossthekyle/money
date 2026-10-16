@@ -3,7 +3,7 @@ import '../globals.css';
 import type { Metadata } from 'next';
 import { Geist, Lobster, Roboto_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
-import { PropsWithChildren, Suspense } from 'react';
+import { ReactNode, Suspense } from 'react';
 
 import { DialogProvider } from '@/contexts';
 import { Body, Header, Scripting } from '@/layout';
@@ -49,24 +49,28 @@ const serif = Lobster({
   variable: '--font-lobster',
 });
 
-export default async function RootLayout({ children }: PropsWithChildren) {
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <html
       className={`${sans.variable} ${mono.variable} ${serif.variable} h-full`}
       lang="en-US"
       suppressHydrationWarning
     >
-      <Suspense fallback={null}>
-        <DialogProvider>
-          <Body>
-            <Scripting />
-            <ThemeProvider>
-              <Header />
+      <DialogProvider>
+        <Body>
+          <Scripting />
+          <ThemeProvider>
+            <Header />
+            <Suspense fallback={null}>
               {children}
-            </ThemeProvider>
-          </Body>
-        </DialogProvider>
-      </Suspense>
+            </Suspense>
+          </ThemeProvider>
+        </Body>
+      </DialogProvider>
     </html>
   );
 }

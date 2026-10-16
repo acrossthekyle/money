@@ -9,7 +9,11 @@ type Props = {
   onClick: (key: string) => void;
 };
 
-function Icon({ icon }) {
+type IconProps = {
+  icon: string;
+};
+
+function Icon({ icon }: IconProps) {
   if (icon === 'credit_card') {
     return <CreditCard className={styles.icon} />
   }
@@ -109,6 +113,13 @@ const styles = tw({
     p-2
     border
     rounded-md
+
+    motion-safe:duration-300
+
+    hover:bg-black
+    hover:text-white
+    hover:dark:bg-white
+    hover:dark:text-black
   `,
   highlighted: `
     w-full

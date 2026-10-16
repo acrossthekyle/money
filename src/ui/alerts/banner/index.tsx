@@ -1,6 +1,6 @@
 'use client';
 
-import { CircleCheck, CircleX } from 'lucide-react';
+import { CircleCheck, TriangleAlert } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { clear } from '@/actions/alerts/clear';
@@ -35,22 +35,13 @@ export default function Banner({
   const isSuccess = isFromCookie ? parsed.type === 'success' : isPositive;
 
   return (
-    <div
-      aria-live="polite"
-      className={
-        [
-          styles.container,
-          isSuccess && styles.positive,
-          !isSuccess && styles.negative,
-        ].filter(Boolean).join(' ')
-      }
-    >
+    <div aria-live="polite" className={styles.container}>
       <p>{text}</p>
       {isSuccess && (
         <CircleCheck className={styles.icon} />
       )}
       {!isSuccess && (
-        <CircleX className={styles.icon} />
+        <TriangleAlert className={styles.icon} />
       )}
     </div>
   );
@@ -61,19 +52,9 @@ const styles = tw({
     flex items-center justify-between
     p-2.5
     rounded-md
-    border
-    text-xs
+    border border-current/12
+    text-xs text-(--foreground)
     font-normal
-  `,
-  positive: `
-    border-green-700
-    bg-green-200
-    text-green-700
-  `,
-  negative: `
-    border-red-700
-    bg-red-200
-    text-red-700
   `,
   icon: `
     w-4 h-4
