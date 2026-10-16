@@ -47,53 +47,46 @@ export default function Header({ holdings, zone }: Props) {
 const styles = tw({
   container: `
     relative
-    flex flex-col items-center justify-between
-
+    flex flex-col items-center justify-between gap-6
     border border-current/6
     rounded-xl
     bg-(--foreground)/2
+
+    md:gap-2
   `,
   upper: `
     relative
     flex items-center justify-between gap-3
     p-4
     uppercase
-    font-geist font-light
+    font-light
     leading-[1]
-    text-xs
+    text-sm
     tracking-wide
     rounded-t-xl
-  `,
-  time: `
-    absolute top-4 right-4
-    font-mono
+
+    md:text-xs
   `,
   lower: `
     relative
-    flex flex-col gap-2 items-center justify-center
+    flex flex-col items-center justify-center gap-2
     w-full
     p-4
   `,
   label: `
-    font-geist font-light
-    text-tiny
+    font-light
+    text-sm
     tracking-wider
     uppercase
+
+    md:text-tiny
   `,
   balance: `
     flex flex-col
-    text-3xl
-    font-geist font-extralight
+    text-5xl
+    font-extralight
     tracking-wide
-  `,
-  date: `
-    font-geist font-light
-    text-tiny
-    uppercase
-    tracking-wide
-  `,
-  arrow: `
-    absolute bottom-4 right-4
-    stroke-1
+
+    md:text-3xl
   `,
 })

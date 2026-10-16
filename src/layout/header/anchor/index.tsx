@@ -13,17 +13,13 @@ export default function Anchor() {
 
 const styles = tw({
   anchor: `
-    flex items-center gap-2
-    text-base
-    uppercase
-    font-medium
-    tracking-widest
     p-2
-
-    md:text-sm
   `,
   icon: `
-    w-4 h-4
+    w-5 h-5
     stroke-2
+
+    md:w-4
+    md:h-4
   `,
 });

@@ -11,7 +11,7 @@ export default function Exit() {
   };
 
   return (
-    <form action={logout} className="flex">
+    <form action={logout}>
       <button
         className={styles.container}
         onClick={handleOnClick}
@@ -26,11 +26,10 @@ export default function Exit() {
 
 const styles = tw({
   container: `
-    flex
     p-2
   `,
   icon: `
-    w-4 h-4
+    w-4.5 h-4.5
     stroke-2
 
     md:w-3.5

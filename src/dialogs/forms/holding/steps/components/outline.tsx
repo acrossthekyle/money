@@ -23,36 +23,41 @@ export default function Block({
   return (
     <Outline>
       <OutlineItem>
-        <OutlineItemHeading>Type</OutlineItemHeading>
-        <OutlineItemText capitalize>
-          {data.type.replace(/_/g, ' ')}
-        </OutlineItemText>
-        <OutlineItemAction onClick={() => onEdit('type')} />
+        <OutlineItemAction onClick={() => onEdit('type')}>
+          <OutlineItemHeading>Type</OutlineItemHeading>
+          <OutlineItemText capitalize>
+            {data.type.replace(/_/g, ' ')}
+          </OutlineItemText>
+        </OutlineItemAction>
       </OutlineItem>
       <OutlineItem>
-        <OutlineItemHeading>Name</OutlineItemHeading>
-        <OutlineItemText>{data.name}</OutlineItemText>
-        <OutlineItemAction onClick={() => onEdit('name')} />
+        <OutlineItemAction onClick={() => onEdit('name')}>
+          <OutlineItemHeading>Name</OutlineItemHeading>
+          <OutlineItemText>{data.name}</OutlineItemText>
+        </OutlineItemAction>
       </OutlineItem>
       {!!data.number && (
         <OutlineItem>
-          <OutlineItemHeading>Number</OutlineItemHeading>
-          <OutlineItemText>**** {data.number}</OutlineItemText>
-          <OutlineItemAction onClick={() => onEdit('number')} />
+          <OutlineItemAction onClick={() => onEdit('number')}>
+            <OutlineItemHeading>Number</OutlineItemHeading>
+            <OutlineItemText>**** {data.number}</OutlineItemText>
+          </OutlineItemAction>
         </OutlineItem>
       )}
       <OutlineItem>
-        <OutlineItemHeading>Balance</OutlineItemHeading>
-        <OutlineItemText>
-          {Number(data.balance) < 0 ? '-' : ''}${currency(data.balance)}
-        </OutlineItemText>
-        <OutlineItemAction onClick={() => onEdit('balance')} />
+        <OutlineItemAction onClick={() => onEdit('balance')}>
+          <OutlineItemHeading>Balance</OutlineItemHeading>
+          <OutlineItemText>
+            {Number(data.balance) < 0 ? '-' : ''}${currency(data.balance)}
+          </OutlineItemText>
+        </OutlineItemAction>
       </OutlineItem>
       {!!data.interest && (
         <OutlineItem>
-          <OutlineItemHeading>Rate</OutlineItemHeading>
-          <OutlineItemText>{data.interest}</OutlineItemText>
-          <OutlineItemAction onClick={() => onEdit('rate')} />
+          <OutlineItemAction onClick={() => onEdit('rate')}>
+            <OutlineItemHeading>Rate</OutlineItemHeading>
+            <OutlineItemText>{data.interest}</OutlineItemText>
+          </OutlineItemAction>
         </OutlineItem>
       )}
     </Outline>

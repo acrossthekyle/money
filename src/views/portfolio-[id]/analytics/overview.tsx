@@ -77,12 +77,16 @@ const styles = tw({
     bg-(--foreground)/2
   `,
   number: `
-    text-sm text-center
+    text-base text-center
+
+    md:text-sm
   `,
   label: `
-    text-xtiny text-center
+    text-tiny text-center
     font-medium
     uppercase
+
+    md:text-xtiny
   `,
   negative: `
     text-red-400 dark:text-rose-400

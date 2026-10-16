@@ -34,7 +34,7 @@ const styles = tw({
     p-2
   `,
   icon: `
-    w-4.5 h-4.5
+    w-5 h-5
     stroke-2
 
     md:w-4

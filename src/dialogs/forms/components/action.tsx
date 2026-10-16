@@ -43,7 +43,7 @@ const styles = tw({
     border border-current/12
     rounded-full
     py-2
-    text-sm text-black
+    text-sm text-white dark:text-black
     uppercase
     font-normal
     tracking-wide
@@ -58,9 +58,10 @@ const styles = tw({
     md:rounded-lg
   `,
   basic: `
-    bg-white
+    bg-black dark:bg-white
   `,
   submit: `
-    bg-lime-300
+    bg-yellow-300
+    !text-black
   `,
 });

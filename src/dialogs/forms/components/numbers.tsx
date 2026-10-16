@@ -59,7 +59,7 @@ const styles = tw({
     h-12 w-18
     bg-black
     border border-current/12
-    text-base
+    text-base text-white
     select-none
     leading-[0]
 

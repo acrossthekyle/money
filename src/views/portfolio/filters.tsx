@@ -124,7 +124,7 @@ const styles = tw({
   highlighted: `
     w-full
     border-transparent
-    bg-lime-300
+    bg-yellow-300
     text-black
   `,
   muted: `
@@ -133,22 +133,27 @@ const styles = tw({
   `,
   cta: `
     border-transparent
-    bg-lime-300
+    bg-yellow-300
     text-black
   `,
   icon: `
     shrink-0
-    w-4 h-4
+    w-5 h-5
     stroke-2
+
+    md:w-4
+    md:h-4
   `,
   label: `
     inline-block
     w-0
     overflow-hidden
-    text-tiny
+    text-sm
     whitespace-nowrap
     uppercase
     tracking-wide
+
+    md:text-tiny
   `,
   full: `
     pl-2

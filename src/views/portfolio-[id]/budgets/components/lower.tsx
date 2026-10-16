@@ -12,7 +12,9 @@ const styles = tw({
   container: `
     flex justify-between
     font-light
-    text-xs text-current/50
+    text-base text-current/50
     capitalize
+
+    md:text-xs
   `,
 });

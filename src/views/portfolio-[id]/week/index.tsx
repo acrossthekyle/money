@@ -106,11 +106,10 @@ const styles = tw({
     relative
     flex flex-col items-center gap-1
     w-full
-    font-geist
     rounded-md
     border border-transparent
     p-2
-    text-sm
+    text-base
 
     motion-safe:duration-300
 
@@ -120,12 +119,15 @@ const styles = tw({
     disabled:!cursor-not-allowed
 
     after:absolute
-    after:top-7
+    after:top-7.5
     after:left-2
     after:right-2
     after:border-b
     after:border-current/48
     after:border-dashed
+
+    md:text-sm
+    md:after:top-7
   `,
   today: `
     bg-(--foreground)/6 dark:bg-(--foreground)/12
@@ -146,9 +148,11 @@ const styles = tw({
   weekday: `
     pb-2
     uppercase
-    text-xtiny
+    text-tiny
     tracking-widest
     font-bold
+
+    md:text-xtiny
   `,
   loud: `
     font-black

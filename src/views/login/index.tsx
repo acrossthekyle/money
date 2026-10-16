@@ -102,7 +102,7 @@ const styles = tw({
   container: `
     !absolute top-1/2 left-1/2
     -translate-y-1/2 -translate-x-1/2
-    !pb-4
+    px-6 !pb-4
 
     before:absolute
     before:inset-y-0
@@ -124,14 +124,14 @@ const styles = tw({
   `,
   paragraph: `
     text-center
-    text-sm
+    text-base
+
+    md:text-sm
   `,
   form: `
     relative
     flex flex-col justify-center gap-5
-    px-3
-
-    md:px-0
+    px-0
   `,
   field: `
     relative
@@ -145,12 +145,12 @@ const styles = tw({
     rounded-md
     outline-none
     pb-2.25 pt-2.75 px-3
-    text-(--foreground)
+    text-base text-(--foreground)
     bg-(--background)
   `,
   label: `
-    absolute -top-2 left-2.25 right-auto z-2
-    text-xs text-(--foreground)
+    absolute -top-2.5 left-2.25 right-auto z-2
+    text-sm text-(--foreground)
     font-normal
     px-1.25
     truncate
@@ -167,23 +167,32 @@ const styles = tw({
     motion-safe:duration-100
 
     peer-focus:absolute
-    peer-focus:-top-2
+    peer-focus:-top-2.5
     peer-focus:right-auto
     peer-focus:translate-y-0
-    peer-focus:text-xs
+    peer-focus:text-sm
 
     peer-placeholder-shown:top-1/2
     peer-placeholder-shown:right-2.25
     peer-placeholder-shown:-translate-y-1/2
-    peer-placeholder-shown:text-sm
+    peer-placeholder-shown:text-base
+
+    md:-top-2
+    md:text-xs
+    md:peer-focus:-top-2
+    md:peer-focus:text-xs
+    md:peer-placeholder-shown:text-sm
   `,
   action: `
     flex items-center justify-center
     w-full
-    h-10
-    bg-lime-300
-    text-black text-sm
-    rounded-md
+    h-12
+    bg-yellow-300
+    text-black text-base
+    rounded-lg
+
+    md:text-sm
+    md:h-10
   `,
   footer: `
     absolute bottom-3 left-1/2

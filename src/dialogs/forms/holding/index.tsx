@@ -53,7 +53,7 @@ export default function Dialog() {
       <Ui.Dialog.DialogInner isActive={isActive}>
         <Ui.Dialog.DialogHeader onClose={handleOnCancel}>
           <button
-            className={styles.back(!holding && step > 0)}
+            className={styles.back(step > 0)}
             onClick={handleOnBack}
             type="button"
           >

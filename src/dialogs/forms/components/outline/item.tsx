@@ -11,6 +11,5 @@ export default function Item({ children }: React.PropsWithChildren) {
 const styles = tw({
   container: `
     relative
-    flex flex-col gap-1
   `,
 });

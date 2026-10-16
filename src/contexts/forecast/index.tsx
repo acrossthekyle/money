@@ -1,5 +1,6 @@
 'use client';
 
+import { parseISO } from 'date-fns';
 import { createContext, useEffect, useState } from 'react';
 
 import type { CalendarTransaction, CalendarDay, Dateable, Holding } from '@/types';
@@ -9,7 +10,7 @@ import { calendar } from './calendar';
 
 type ForecastContextType = {
   calendar: CalendarDay[];
-  date: Dateable;
+  date?: Dateable;
   onDate: (date: Dateable) => void;
 };
 
@@ -28,19 +29,32 @@ export default function ForecastProvider({
   zone,
 }: React.PropsWithChildren<Props>) {
   const [item] = useState(holding);
-  const [data] = useState(transactions);
-  const [current, setCurrent] = useState(dateable(zone));
+  const [current, setCurrent] = useState<Dateable | undefined>();
   const [computed, setComputed] = useState<CalendarDay[]>([]);
 
   useEffect(() => {
-    if (item && data) {
+    const saved = localStorage.getItem(`${holding?.id}-dateable`);
+
+    if (saved) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setComputed(calendar(current, item, data));
+      setCurrent(dateable(zone, { date: parseISO(saved) }));
+    } else {
+      setCurrent(dateable(zone));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current.iso, item, data]);
+  }, []);
+
+  useEffect(() => {
+    if (current && item) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setComputed(calendar(current, item, transactions));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current?.iso, item, transactions]);
 
   const handleOnDate = (date: Dateable) => {
+    localStorage.setItem(`${holding?.id}-dateable`, date.iso);
+
     setCurrent(date);
   };
 

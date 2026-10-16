@@ -24,10 +24,10 @@ const styles = tw({
     w-[calc(100%-2rem)]
     h-auto min-h-70
     mt-auto
-    rounded-4xl
+    rounded-xl
     shadow-lg/25 dark:shadow-lg/75
-    bg-black
-    text-white
+    bg-white dark:bg-black
+    text-black dark:text-white
 
     motion-safe:duration-300
 
@@ -36,6 +36,5 @@ const styles = tw({
       : `scale-80 opacity-0 translate-y-24`}
 
     sm:max-w-xs
-      md:rounded-xl
   `),
 });

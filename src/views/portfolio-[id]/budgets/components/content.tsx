@@ -13,7 +13,8 @@ const styles = tw({
     flex-1
     flex flex-col gap-1
     min-w-0
-    font-geist
-    text-sm text-left
+    text-base text-left
+
+    md:text-sm
   `,
 });

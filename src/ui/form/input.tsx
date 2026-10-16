@@ -56,7 +56,7 @@ const styles = tw({
   mask: `
     absolute top-3 bottom-2 left-3.25 right-2 z-1
     pt-0.25
-    bg-black
+    bg-white dark:bg-black
     text-center
     pointer-events-none
   `,

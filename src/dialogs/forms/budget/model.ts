@@ -83,7 +83,11 @@ export function useModel(parent: string) {
     });
 
     if (isEditing) {
-      setStep(input?.budget?.schedule !== 'once' ? steps.length - 2 : steps.length - 1);
+      if (input?.budget) {
+        setStep(input?.budget?.schedule !== 'once' ? steps.length - 2 : steps.length - 1);
+      } else {
+        setStep(steps.length - 1);
+      }
     } else {
       setStep(previous => previous + 1);
     }
@@ -100,6 +104,8 @@ export function useModel(parent: string) {
       await action();
 
       router.refresh();
+
+      onClose();
     });
   };
 

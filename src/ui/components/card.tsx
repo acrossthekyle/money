@@ -1,29 +1,49 @@
 'use client';
 
 import { differenceInDays, parseISO } from 'date-fns';
-import { Eye, Pen, Flag } from 'lucide-react';
-import Link from 'next/link';
+import { Flag } from 'lucide-react';
 
 import tw from '@/styles';
 import type { Holding } from '@/types';
 import { currency, date } from '@/utils';
 
-import { useModel } from './model';
-
 type Props = {
   holding: Holding;
+  isHeading?: boolean;
   zone: string;
 };
 
-export default function Item({ holding, zone }: Props) {
-  const { handleOnEdit } = useModel(holding);
+type WrapperProps = {
+  isHeading?: boolean;
+};
 
+function Wrapper({
+  children,
+  isHeading,
+}: React.PropsWithChildren<WrapperProps>) {
+  if (isHeading) {
+    return (
+      <h1 className={styles.container}>{children}</h1>
+    );
+  }
+
+  return (
+    <li className={styles.container}>{children}</li>
+  );
+}
+
+export default function Card({
+  children,
+  holding,
+  isHeading,
+  zone,
+}: React.PropsWithChildren<Props>) {
   const days = holding.updated
     ? differenceInDays(date(zone), parseISO(holding.updated))
     : null;
 
   return (
-    <>
+    <Wrapper isHeading={isHeading}>
       <span className={styles.upper}>
         <span className={styles.type}>{holding.type.replace(/_/g, ' ')}</span>
         <span className={styles.currency}>USD</span>
@@ -35,13 +55,15 @@ export default function Item({ holding, zone }: Props) {
       <span className={styles.lower}>
         <span className={styles.label}>
           <span>
-            Baseline Balance &mdash; Last Updated
+            Baseline Balance &ndash; Updated
           </span>
           {days === null && (
             <span className={styles.strong}>too long ago</span>
           )}
           {days !== null && (
-            <span className={styles.strong}>{days} days ago</span>
+            <span className={styles.strong}>
+              {days === 0 ? 'Today' : `${days} days ago`}
+            </span>
           )}
           {(days === null || (days !== null && days > 4)) && (
             <Flag className={styles.warning} />
@@ -51,32 +73,30 @@ export default function Item({ holding, zone }: Props) {
           {Number(holding.balance) < 0 ? '-' : ''}${currency(holding.balance)}
         </span>
       </span>
-      <nav aria-label="supplementary navigation" className={styles.options}>
-        <Link className={styles.option} href={`/portfolio/${holding.id}`}>
-          <Eye className={styles.icon} /> Manage
-        </Link>
-        <button
-          className={styles.option}
-          onClick={handleOnEdit}
-          type="button"
-        >
-          <Pen className={styles.icon} /> Edit
-        </button>
-      </nav>
-    </>
+      {children}
+    </Wrapper>
   );
 };
 
 const styles = tw({
+  container: `
+    relative
+    flex flex-col justify-between gap-6
+    rounded-xl
+    text-black dark:text-white
+    bg-linear-to-tl from-gray-100 dark:from-gray-500 to-stone-200 dark:to-zinc-800
+    p-4
+  `,
   upper: `
     relative
     flex items-center gap-3
     uppercase
-    font-geist font-light
+    font-light
     leading-[1]
-    text-xs
+    text-sm
     tracking-wide
-    rounded-t-xl
+
+    md:text-xs
   `,
   number: `
     absolute top-0 right-0
@@ -86,59 +106,46 @@ const styles = tw({
     py-4
   `,
   title: `
-    text-2xl
+    text-3xl
     font-thin
-    truncate
+    whitespace-wrap
+
+    md:text-2xl
   `,
   lower: `
     relative
-    flex flex-col gap-0 items-start justify-center
+    flex flex-col items-start justify-center gap-1
     w-full
+
+    md:gap-0
   `,
   label: `
     flex items-center gap-1
-    font-geist font-light
-    text-tiny
+    font-light
+    text-xs
     tracking-wider
     uppercase
+
+    md:text-tiny
   `,
   strong: `
     font-bold
   `,
   warning: `
     inline-block ml-1
-    w-2.5 h-2.5
+    w-3 h-3
     stroke-2 stroke-red-400
     fill-red-400
+
+    md:w-2.5
+    md:h-2.5
   `,
   balance: `
     flex flex-col
-    text-3xl
+    text-4xl
     font-extralight
     tracking-wide
-  `,
-  options: `
-    flex gap-4
-    w-full
-  `,
-  option: `
-    border border-current/12
-    bg-(--foreground)/6
-    text-black dark:text-white
-    rounded-md
-    flex items-center justify-center gap-4
-    uppercase
-    text-tiny
-    p-2 px-4
-    w-full
 
-    motion-safe:duration-300
-
-    hover:bg-(--foreground)/100
-    hover:text-(--background)
+    md:text-3xl
   `,
-  icon: `
-    w-3 h-3
-    stroke-2
-  `,
-})
+});

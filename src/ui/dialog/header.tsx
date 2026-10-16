@@ -51,7 +51,8 @@ const styles = tw({
     before:h-1
     before:w-12
     before:rounded-full
-    before:bg-white/75
+    before:bg-black/75
+    dark:before:bg-white/75
   `,
   close: `
     absolute top-4 right-4

@@ -36,80 +36,89 @@ export default function Block({
   return (
     <Outline>
       <OutlineItem>
-        <OutlineItemHeading>Amount</OutlineItemHeading>
-        <OutlineItemText>
-          {Number(data.amount) < 0 ? '-' : ''}${currency(data.amount)}
-        </OutlineItemText>
-        <OutlineItemAction onClick={() => onEdit('amount')} />
+        <OutlineItemAction onClick={() => onEdit('amount')}>
+          <OutlineItemHeading>Amount</OutlineItemHeading>
+          <OutlineItemText>
+            {Number(data.amount) < 0 ? '-' : ''}${currency(data.amount)}
+          </OutlineItemText>
+        </OutlineItemAction>
       </OutlineItem>
       <OutlineItem>
-        <OutlineItemHeading>Name</OutlineItemHeading>
-        <OutlineItemText>
-          {data.name}
-        </OutlineItemText>
-        <OutlineItemAction onClick={() => onEdit('name')} />
+        <OutlineItemAction onClick={() => onEdit('name')}>
+          <OutlineItemHeading>Name</OutlineItemHeading>
+          <OutlineItemText>
+            {data.name}
+          </OutlineItemText>
+        </OutlineItemAction>
       </OutlineItem>
       <OutlineItem>
-        <OutlineItemHeading>Type</OutlineItemHeading>
-        <OutlineItemText>
-          {data.type === 'debit' && 'Expense'}
-          {data.type === 'credit' && 'Income'}
-        </OutlineItemText>
-        <OutlineItemAction onClick={() => onEdit('type')} />
+        <OutlineItemAction onClick={() => onEdit('type')}>
+          <OutlineItemHeading>Type</OutlineItemHeading>
+          <OutlineItemText>
+            {data.type === 'debit' && 'Expense'}
+            {data.type === 'credit' && 'Income'}
+          </OutlineItemText>
+        </OutlineItemAction>
       </OutlineItem>
       {!!data.transferee && (
         <OutlineItem>
-          <OutlineItemHeading>Transfers as</OutlineItemHeading>
-          <OutlineItemText>
-            {data.type === 'debit' && 'Income to '}
-            {data.type === 'credit' && 'Expense from '}
-            {holdings.find(item => item.id === data.transferee)?.name}
-          </OutlineItemText>
-          <OutlineItemAction onClick={() => onEdit('transferee')} />
+          <OutlineItemAction onClick={() => onEdit('transferee')}>
+            <OutlineItemHeading>Transfers as</OutlineItemHeading>
+            <OutlineItemText>
+              {data.type === 'debit' && 'Income to '}
+              {data.type === 'credit' && 'Expense from '}
+              {holdings.find(item => item.id === data.transferee)?.name}
+            </OutlineItemText>
+          </OutlineItemAction>
         </OutlineItem>
       )}
       {!!data.start && (
         <OutlineItem>
-          <OutlineItemHeading>Starts On</OutlineItemHeading>
-          <OutlineItemText>
-            {format(parseISO(String(data.start)), DATE_DISPLAY)}
-          </OutlineItemText>
-          <OutlineItemAction onClick={() => onEdit('start')} />
+          <OutlineItemAction onClick={() => onEdit('start')}>
+            <OutlineItemHeading>Starts On</OutlineItemHeading>
+            <OutlineItemText>
+              {format(parseISO(String(data.start)), DATE_DISPLAY)}
+            </OutlineItemText>
+          </OutlineItemAction>
         </OutlineItem>
       )}
       <OutlineItem>
-        <OutlineItemHeading>Repeats</OutlineItemHeading>
-        <OutlineItemText>
-          {SCHEDULES.find(item => item.value === data.schedule)?.name}
-        </OutlineItemText>
-        <OutlineItemAction onClick={() => onEdit('schedule')} />
+        <OutlineItemAction onClick={() => onEdit('schedule')}>
+          <OutlineItemHeading>Repeats</OutlineItemHeading>
+          <OutlineItemText>
+            {SCHEDULES.find(item => item.value === data.schedule)?.name}
+          </OutlineItemText>
+        </OutlineItemAction>
       </OutlineItem>
       {!!data.end && (
         <OutlineItem>
-          <OutlineItemHeading>Ends On</OutlineItemHeading>
-          <OutlineItemText>
-            {format(parseISO(data.end), DATE_DISPLAY)}
-          </OutlineItemText>
-          <OutlineItemAction onClick={() => onEdit('end')} />
+          <OutlineItemAction onClick={() => onEdit('end')}>
+            <OutlineItemHeading>Ends On</OutlineItemHeading>
+            <OutlineItemText>
+              {format(parseISO(data.end), DATE_DISPLAY)}
+            </OutlineItemText>
+          </OutlineItemAction>
         </OutlineItem>
       )}
       <OutlineItem>
-        <OutlineItemHeading>Categorized As</OutlineItemHeading>
-        <OutlineItemText>
-          {CATEGORIES.find(item => item.value === data.category)?.name}
-        </OutlineItemText>
-        <OutlineItemAction onClick={() => onEdit('category')} />
+        <OutlineItemAction onClick={() => onEdit('category')}>
+          <OutlineItemHeading>Categorized As</OutlineItemHeading>
+          <OutlineItemText>
+            {CATEGORIES.find(item => item.value === data.category)?.name}
+          </OutlineItemText>
+        </OutlineItemAction>
       </OutlineItem>
       {isEditing && date && (
         <OutlineItem>
-          <OutlineItemHeading>Changes apply to</OutlineItemHeading>
-          <OutlineItemText>
-            {update === 'all' && <>All past, present, and future dates</>}
-            {update === 'this' && <>Only {format(date?.date, DATE_DISPLAY)}</>}
-            {update === 'prospective' && <>From {format(date?.date, DATE_DISPLAY)} onwards</>}
-            {update === 'future' && <>After {format(date?.date, DATE_DISPLAY)}</>}
-          </OutlineItemText>
-          <OutlineItemAction onClick={() => onEdit('update')} />
+          <OutlineItemAction onClick={() => onEdit('update')}>
+            <OutlineItemHeading>Changes apply to</OutlineItemHeading>
+            <OutlineItemText>
+              {update === 'all' && <>All past, present, and future dates</>}
+              {update === 'this' && <>Only {format(date?.date, DATE_DISPLAY)}</>}
+              {update === 'prospective' && <>From {format(date?.date, DATE_DISPLAY)} onwards</>}
+              {update === 'future' && <>After {format(date?.date, DATE_DISPLAY)}</>}
+            </OutlineItemText>
+          </OutlineItemAction>
         </OutlineItem>
       )}
     </Outline>

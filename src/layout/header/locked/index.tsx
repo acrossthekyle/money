@@ -10,7 +10,8 @@ export default function Locked() {
 
 const styles = tw({
   icon: `
-    w-4 h-4
+    w-4.5 h-4.5
+    ml-2
     stroke-2
 
     md:w-3.5

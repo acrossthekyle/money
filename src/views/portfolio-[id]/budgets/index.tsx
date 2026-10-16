@@ -87,7 +87,9 @@ const styles = tw({
   header: `
     mb-4
     font-medium
-    text-sm
+    text-base
+
+    md:text-sm
   `,
   items: `
     flex flex-col gap-5

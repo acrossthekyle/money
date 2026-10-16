@@ -87,7 +87,7 @@ const styles = tw({
   container: `
     relative
     flex items-center justify-between gap-2
-    px-2 pt-4
+    px-2 pt-3
     mb-4
   `,
   navigate: `
@@ -97,8 +97,12 @@ const styles = tw({
     disabled:!cursor-not-allowed
   `,
   arrow: `
-    w-4 h-4
-    stroke-1
+    w-5 h-5
+    stroke-2
+
+    md:w-4
+    md:h-4
+    md:stroke-1
   `,
   field: `
     relative
@@ -110,18 +114,27 @@ const styles = tw({
     font-light
     text-center text-current/0
     cursor-pointer
-    px-2
+    px-6 py-2
+
+    md:px-4
+    md:py-1
   `,
   mask: `
     absolute inset-0
-    flex items-center justify-center gap-2
-    text-xs
+    flex items-center justify-center gap-3
+    text-base
     uppercase
     pointer-events-none
+
+    md:text-xs
   `,
   chevron: `
     shrink-0
-    w-4 h-4
-    stroke-1
+    w-5 h-5
+    stroke-2
+
+    md:w-4
+    md:h-4
+    md:stroke-1
   `,
 });

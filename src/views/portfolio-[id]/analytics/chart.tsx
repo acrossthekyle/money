@@ -84,6 +84,7 @@ export default function Chart({ days }: Props) {
           },
           yaxis: {
             labels: {
+              offsetY: -4,
               style: {
                 colors: ['var(--foreground)'],
               },
@@ -136,6 +137,7 @@ const styles = tw({
     relative
     h-54 w-full
     select-none
+    touch-none
 
     before:absolute
     before:inset-0
@@ -152,16 +154,24 @@ const styles = tw({
     border border-current/12
   `,
   date: `
-    text-xs
+    text-sm
+
+    md:text-xs
   `,
   balance: `
     flex flex-col
   `,
   title: `
     font-bold
+    text-base
+
+    md:text-sm
   `,
   amount: `
     !font-roboto
+    text-base
+
+    md:text-sm
   `,
   negative: `
     text-red-400 dark:text-rose-400

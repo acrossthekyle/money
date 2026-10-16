@@ -77,7 +77,6 @@ export default function Month({ date, days, onClick }: Props) {
 
 const styles = tw({
   container: `
-    font-geist
     border border-current/6
     rounded-xl
     bg-(--foreground)/2
@@ -105,14 +104,16 @@ const styles = tw({
     before:left-1/2
     before:-translate-x-1/2
     before:-translate-y-1/2
-    before:h-8
-    before:w-8
+    before:h-9
+    before:w-9
     before:rounded-md
     before:bg-transparent
 
     motion-safe:before:duration-300
 
     md:text-sm
+    md:before:h-8
+    md:before:w-8
   `,
   hoverable: `
     hover:before:bg-(--foreground)/5.5

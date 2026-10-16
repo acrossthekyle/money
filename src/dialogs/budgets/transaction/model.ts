@@ -80,6 +80,8 @@ export function useModel() {
         await action(true);
 
         router.refresh();
+
+        onClose();
       });
     } else {
       startTransition(async () => {
@@ -87,6 +89,8 @@ export function useModel() {
         await action(false);
 
         router.refresh();
+
+        onClose();
       });
     }
   };

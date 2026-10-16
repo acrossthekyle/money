@@ -1,16 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Eye, Pen } from 'lucide-react';
+import Link from 'next/link';
 
-import { useHolding } from '@/hooks';
 import { Dialogs } from '@/dialogs';
 import { Main } from '@/layout';
 import tw from '@/styles';
-import type { DialogHoldingData, Holding } from '@/types';
+import type { Holding } from '@/types';
+import { Ui } from '@/ui';
 
 import Filters from './filters';
 import Header from './header';
-import Item from './item';
+
+import { useModel } from './model';
 
 type Props = {
   data: {
@@ -20,28 +22,11 @@ type Props = {
 };
 
 export default function View({ data }: Props) {
-  const [portfolio, setPortfolio] = useState<string | null>(null);
-
-  const { onHolding } = useHolding<DialogHoldingData>();
-
-  useEffect(() => {
-    const saved = localStorage.getItem('portfolio');
-
-    if (saved) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setPortfolio(saved);
-    }
-  }, []);
-
-  const handleOnFilter = (value: string) => {
-    if (value === 'plus') {
-      onHolding();
-    } else {
-      localStorage.setItem('portfolio', value);
-
-      setPortfolio(value);
-    }
-  };
+  const {
+    handleOnEdit,
+    handleOnFilter,
+    portfolio,
+  } = useModel();
 
   if (portfolio === null) {
     return null;
@@ -56,9 +41,23 @@ export default function View({ data }: Props) {
         <Filters current={portfolio} onClick={handleOnFilter} />
         <ul className={styles.items}>
           {filtered.map((item) => (
-            <li className={styles.item} key={item.id}>
-              <Item holding={item} zone={data.zone} />
-            </li>
+            <Ui.Components.Card holding={item} key={item.id} zone={data.zone}>
+              <nav
+                aria-label="supplementary navigation"
+                className={styles.options}
+              >
+                <Link className={styles.option} href={`/portfolio/${item.id}`}>
+                  <Eye className={styles.icon} /> Manage
+                </Link>
+                <button
+                  className={styles.option}
+                  onClick={() => handleOnEdit(item)}
+                  type="button"
+                >
+                  <Pen className={styles.icon} /> Update
+                </button>
+              </nav>
+            </Ui.Components.Card>
           ))}
         </ul>
       </Main>
@@ -73,12 +72,33 @@ const styles = tw({
 
     md:gap-4
   `,
-  item: `
-    relative
-    flex flex-col justify-between gap-6
-    rounded-xl
+  options: `
+    flex gap-4
+    w-full
+  `,
+  option: `
+    border border-current/12
+    bg-white dark:bg-(--foreground)/6
     text-black dark:text-white
-    bg-linear-to-tl from-gray-100 dark:from-gray-500 to-stone-300 dark:to-zinc-800
-    p-4
+    rounded-md
+    flex items-center justify-center gap-4
+    uppercase
+    text-sm
+    p-2 px-4
+    w-full
+
+    motion-safe:duration-300
+
+    hover:bg-(--foreground)/100
+    hover:text-(--background)
+
+    md:text-tiny
+  `,
+  icon: `
+    w-4 h-4
+    stroke-2
+
+    md:w-3
+    md:h-3
   `,
 })

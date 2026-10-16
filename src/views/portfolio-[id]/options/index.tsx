@@ -111,7 +111,7 @@ const styles = tw({
     not-disabled:hover:text-(--background)
   `,
   cta: `
-    bg-lime-300
+    bg-yellow-300
     text-black
   `,
   transparent: `
@@ -123,26 +123,43 @@ const styles = tw({
     !border-0
   `,
   plus: `
-    stroke-1
+    w-7 h-7
+    stroke-2
+
+    md:w-6
+    md:h-6
+    md:stroke-1
   `,
   calendar: `
-    w-5 h-5
-    stroke-1
+    w-6 h-6
+    stroke-2
+
+    md:w-5
+    md:h-5
+    md:stroke-1
   `,
   transactions: `
-    w-5 h-5
-    stroke-1
-  `,
-  pen: `
-    w-4.5 h-4.5
-    stroke-1
+    w-6 h-6
+    stroke-2
+
+    md:w-5
+    md:h-5
+    md:stroke-1
   `,
   clock: `
-    w-5.5 h-5.5
-    stroke-1
+    w-6.5 h-6.5
+    stroke-2
+
+    md:w-5.5
+    md:h-5.5
+    md:stroke-1
   `,
   chart: `
-    w-5.5 h-5.5
-    stroke-1
+    w-6.5 h-6.5
+    stroke-2
+
+    md:w-5.5
+    md:h-5.5
+    md:stroke-1
   `,
 });

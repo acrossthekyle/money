@@ -12,7 +12,7 @@ const styles = tw({
   container: `
     absolute left-1/2
     -translate-x-1/2
-    text-xl
+    text-2xl
     font-lobster
     tracking-wide
 

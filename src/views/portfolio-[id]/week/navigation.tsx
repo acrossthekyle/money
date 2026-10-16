@@ -67,15 +67,21 @@ const styles = tw({
     disabled:!cursor-not-allowed
   `,
   arrow: `
-    stroke-1
-    w-4 h-4
+    w-5 h-5
+    stroke-2
+
+    md:w-4
+    md:h-4
+    md:stroke-1
   `,
   current: `
     whitespace-nowrap
     flex items-center gap-2
-    text-tiny
+    text-xs
     font-medium
     uppercase
     tracking-wide
+
+    md:text-tiny
   `,
 });

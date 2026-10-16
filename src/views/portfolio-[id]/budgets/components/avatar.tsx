@@ -82,15 +82,22 @@ export default function Avatar({ type }: Props) {
 const styles = tw({
   container: `
     relative
-    w-10 h-10
+    w-14 h-14
     border border-current/12
     bg-(--background)
     rounded-md
+
+    md:w-10
+    md:h-10
   `,
   icon: `
     absolute top-1/2 left-1/2
     -translate-y-1/2 -translate-x-1/2
-    stroke-1
-    w-5 h-5
+    w-6 h-6
+    stroke-2
+
+    md:w-5
+    md:h-5
+    md:stroke-1
   `,
 });

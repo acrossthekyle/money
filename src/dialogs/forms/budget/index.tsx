@@ -59,7 +59,7 @@ export default function Dialog({ holdings, parent }: Props) {
       <Ui.Dialog.DialogInner isActive={isActive}>
         <Ui.Dialog.DialogHeader onClose={handleOnCancel}>
           <button
-            className={styles.back(!budget && step > 0)}
+            className={styles.back(step > 0)}
             onClick={handleOnBack}
             type="button"
           >

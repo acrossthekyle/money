@@ -47,11 +47,11 @@ const styles = tw({
     border border-current/12
     rounded-full
     px-4 py-2
-    text-xs text-black
+    text-xs text-white dark:text-black
     uppercase
     font-medium
     tracking-wide
-    bg-white
+    bg-black dark:bg-white
 
     motion-safe:duration-300
 

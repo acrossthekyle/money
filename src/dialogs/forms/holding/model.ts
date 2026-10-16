@@ -88,6 +88,8 @@ export function useModel() {
       await action();
 
       router.refresh();
+
+      onClose();
     });
   };
 
