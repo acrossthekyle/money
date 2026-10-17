@@ -19,7 +19,7 @@ const styles = tw({
   container: `
     block
     mb-1
-    text-center text-base
+    text-center text-lg
     w-full
 
     md:text-sm

@@ -52,7 +52,7 @@ export default function Inner() {
           <Footer>Projected {data?.day.return.label}</Footer>
         </Content>
         <Navigation>
-          <Navigate onClick={onClose}>
+          <Navigate isOutline onClick={onClose}>
             Close
           </Navigate>
         </Navigation>

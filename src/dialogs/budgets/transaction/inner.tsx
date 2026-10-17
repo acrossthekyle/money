@@ -1,7 +1,5 @@
 'use client';
 
-import { Pen, Trash } from 'lucide-react';
-
 import tw from '@/styles';
 import Ui from '@/ui';
 import { getBudgetDisplayData } from '@/utils/budgets';
@@ -82,14 +80,20 @@ export default function Inner() {
                 isDisabled={isPending}
                 onClick={handleOnDelete}
               >
-                <Trash className={styles.icon} />
                 Delete
               </Navigate>
               <Navigate
                 isDisabled={isPending}
+                isOutline
+                onClick={onClose}
+              >
+                Cancel
+              </Navigate>
+              <Navigate
+                isDisabled={isPending}
+                isPrimary
                 onClick={handleOnEdit}
               >
-                <Pen className={styles.icon} />
                 Edit
               </Navigate>
             </>

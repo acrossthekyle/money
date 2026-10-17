@@ -1,10 +1,9 @@
 'use client';
 
-import { ArrowLeft } from 'lucide-react';
-
-import tw from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
+
+import { Action } from '../components';
 
 import { useModel } from './model';
 import {
@@ -58,20 +57,10 @@ export default function Dialog({ holdings, parent }: Props) {
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
         <Ui.Dialog.DialogHeader onClose={handleOnCancel}>
-          <button
-            className={styles.back(step > 0)}
-            onClick={handleOnBack}
-            type="button"
-          >
-            <ArrowLeft className={styles.arrow} />
-          </button>
-          <span className={styles.eyebrow}>
-            {getSubtitle(steps, step, budget)}
-          </span>
           <Ui.Dialog.DialogTitle text={`${budget ? 'Edit' : 'Add'} Transaction`}>
-            <span className={styles.lid}>
-              {date?.display}
-            </span>
+            <Ui.Dialog.DialogTitleLid>
+              {date?.display} / {getSubtitle(steps, step, budget)}
+            </Ui.Dialog.DialogTitleLid>
           </Ui.Dialog.DialogTitle>
         </Ui.Dialog.DialogHeader>
         <Ui.Dialog.DialogContent key={budget?.id} label="steps">
@@ -80,14 +69,21 @@ export default function Dialog({ holdings, parent }: Props) {
             date={date}
             holdings={holdings}
             isActive={steps[step] === 'outline'}
-            onCancel={handleOnCancel}
             onEdit={handleOnEdit}
             update={update}
           />
+          <Type
+            header="What kind of transaction is this?"
+            isActive={steps[step] === 'type'}
+            isEditing={isEditing}
+            onNext={handleOnNext}
+            value={data.type}
+          />
           <Amount
-            header="Enter an amount"
+            header={data.type === 'credit' ? 'How much income is expected?' : 'How much of an expense is it?'}
             isActive={steps[step] === 'amount'}
             isEditing={isEditing}
+            isNegative={data.type === 'debit'}
             onNext={handleOnNext}
             value={data.amount}
           />
@@ -98,15 +94,8 @@ export default function Dialog({ holdings, parent }: Props) {
             onNext={handleOnNext}
             value={data.name}
           />
-          <Type
-            header="Choose a type"
-            isActive={steps[step] === 'type'}
-            isEditing={isEditing}
-            onNext={handleOnNext}
-            value={data.type}
-          />
           <Transferee
-            header={data.type === 'debit' ? 'Should this transaction be a transfer as income to one of the below portfolio items' : 'Should this transaction be a transfer as an expense from one of the below portfolio items'}
+            header={data.type === 'debit' ? 'Should this be transfered as income to one of the following?' : 'Should this be transfered as an expense from one of the following?'}
             holdings={holdings}
             isActive={steps[step] === 'transferee'}
             isEditing={isEditing}
@@ -135,7 +124,7 @@ export default function Dialog({ holdings, parent }: Props) {
             value={data.end}
           />
           <Category
-            header="Which category does this transaction belong in?"
+            header="Which category does this belong in?"
             isActive={steps[step] === 'category'}
             isEditing={isEditing}
             onNext={handleOnNext}
@@ -159,44 +148,14 @@ export default function Dialog({ holdings, parent }: Props) {
             onSubmit={handleOnSubmit}
             update={update}
           />
+          {(!budget && step > 0 && !isEditing && (step !== steps.length - 1)) && (
+            <Action isOutline onClick={handleOnBack}>Back</Action>
+          )}
+          {(step === 0 && !isEditing) && (
+            <Action isOutline onClick={handleOnCancel}>Cancel</Action>
+          )}
         </Ui.Dialog.DialogContent>
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>
   );
 };
-
-const styles = tw({
-  back: (canGoBack: boolean) => tw(`
-    absolute top-4 left-4
-    select-none
-
-    motion-safe:duration-300
-
-    ${canGoBack ? 'opacity-100' : 'opacity-0'}
-  `),
-  arrow: `
-    w-5 h-5
-    stroke-2
-
-    md:w-4
-    md:h-4
-  `,
-  eyebrow: `
-    mt-2
-    text-tiny text-center
-    uppercase
-    tracking-wide
-    font-roboto
-
-    md:text-xtiny
-  `,
-  lid: `
-    mt-0.25
-    text-xs text-center
-    uppercase
-    tracking-wide
-    font-roboto
-
-    md:text-tiny
-  `,
-});

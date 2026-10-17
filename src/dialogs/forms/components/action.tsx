@@ -6,6 +6,7 @@ type Props = {
   className?: string;
   isBlocked?: boolean;
   isEditing?: boolean;
+  isOutline?: boolean;
   isSubmit?: boolean;
   onClick: () => void;
 };
@@ -15,6 +16,7 @@ export default function Action({
   className,
   isBlocked,
   isEditing,
+  isOutline,
   isSubmit,
   onClick,
 }: React.PropsWithChildren<Props>) {
@@ -25,6 +27,7 @@ export default function Action({
           styles.container,
           className,
           isSubmit ? styles.submit : styles.basic,
+          isOutline && styles.outline,
         )
       }
       disabled={isBlocked}
@@ -42,10 +45,10 @@ const styles = tw({
     w-full
     border border-current/12
     rounded-full
-    py-2
+    py-2.5
     text-sm text-white dark:text-black
     uppercase
-    font-normal
+    font-medium
     tracking-wide
 
     motion-safe:duration-300
@@ -54,8 +57,8 @@ const styles = tw({
     disabled:!cursor-not-allowed
 
     md:text-tiny
-    md:font-medium
     md:rounded-lg
+    md:py-2
   `,
   basic: `
     bg-black dark:bg-white
@@ -63,5 +66,9 @@ const styles = tw({
   submit: `
     bg-yellow-300
     !text-black
+  `,
+  outline: `
+    !bg-transparent
+    !text-white
   `,
 });

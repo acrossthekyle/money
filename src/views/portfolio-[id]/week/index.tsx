@@ -96,8 +96,10 @@ const styles = tw({
   container: `
     p-4
     border border-current/6
-    rounded-xl
+    rounded-4xl
     bg-(--foreground)/2
+
+    md:rounded-2xl
   `,
   items: `
     grid grid-cols-7 gap-x-2

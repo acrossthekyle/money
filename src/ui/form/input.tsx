@@ -45,10 +45,12 @@ const styles = tw({
     appearance-none
     relative
     w-full
-    text-center
+    text-center text-xl
     outline-none
     border-b border-current/22.5
     py-2.25 px-4
+
+    md:text-base
   `,
   date: `
     cursor-pointer
@@ -56,9 +58,11 @@ const styles = tw({
   mask: `
     absolute top-3 bottom-2 left-3.25 right-2 z-1
     pt-0.25
-    bg-white dark:bg-black
-    text-center
+    bg-(--background)
+    text-center text-xl
     pointer-events-none
+
+    md:text-base
   `,
   placeholder: `
     text-current/50

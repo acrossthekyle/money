@@ -49,10 +49,12 @@ const styles = tw({
     relative
     flex flex-col items-center justify-between gap-6
     border border-current/6
-    rounded-xl
+    rounded-4xl
     bg-(--foreground)/2
+    py-2
 
     md:gap-2
+    md:rounded-2xl
   `,
   upper: `
     relative

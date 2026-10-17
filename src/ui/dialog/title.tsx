@@ -24,7 +24,7 @@ const styles = tw({
     mt-3
   `,
   text: `
-    text-sm
+    text-base
     uppercase
     font-bold
 

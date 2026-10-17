@@ -33,8 +33,10 @@ export default function Analytics({
 const styles = tw({
   container: `
     relative
-    rounded-xl
+    rounded-4xl
     border border-current/12
     bg-(--foreground)/2
+
+    md:rounded-2xl
   `,
 });

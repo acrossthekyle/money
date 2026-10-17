@@ -78,8 +78,10 @@ export default function Month({ date, days, onClick }: Props) {
 const styles = tw({
   container: `
     border border-current/6
-    rounded-xl
+    rounded-4xl
     bg-(--foreground)/2
+
+    md:rounded-2xl
   `,
   grid: `
     grid grid-cols-7 gap-x-2 gap-y-3

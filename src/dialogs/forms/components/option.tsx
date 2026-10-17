@@ -37,7 +37,7 @@ const styles = tw({
     w-fit
     text-white dark:text-black
     rounded-full
-    text-xs
+    text-sm
     uppercase
     py-2 px-4
     whitespace-nowrap

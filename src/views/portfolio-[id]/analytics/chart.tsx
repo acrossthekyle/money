@@ -46,11 +46,11 @@ export default function Chart({ days }: Props) {
           },
           fill: {
             type: 'solid',
-            colors: ['#bef264'],
+            colors: ['#fde047'],
           },
           stroke: {
             curve: 'smooth',
-            colors: ['#bef264'],
+            colors: ['#fde047'],
           },
           grid: {
             show: false,
@@ -147,10 +147,10 @@ const styles = tw({
   tooltip: `
     flex flex-col gap-2
     mx-4
-    p-3 py-2
-    bg-white dark:bg-black
-    text-black dark:text-white
-    rounded-md
+    p-3 pt-2.5 pb-2
+    bg-(--background)
+    text-(--foreground)
+    rounded-lg
     border border-current/12
   `,
   date: `

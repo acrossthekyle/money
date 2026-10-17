@@ -36,13 +36,11 @@ function getBudgetHolding(
   };
 };
 
-export async function prepare(
+export async function createTransactions(
+  holding: Holding | undefined,
   holdings: Holding[],
   budgets: Budget[],
-  id: string,
-): Promise<{ holding?: Holding; transactions: CalendarTransaction[]; }> {
-  const holding = holdings.find(holding => holding.id === id);
-
+): Promise<CalendarTransaction[]> {
   const transactions = budgets.filter(budget =>
     budget.parent === holding?.id || budget.transferee === holding?.id
   )
@@ -67,8 +65,5 @@ export async function prepare(
     };
   });
 
-  return {
-    holding,
-    transactions: transactions as CalendarTransaction[],
-  };
+  return transactions as CalendarTransaction[];
 };

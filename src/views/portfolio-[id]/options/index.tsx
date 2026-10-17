@@ -100,7 +100,7 @@ const styles = tw({
     flex flex-col items-center justify-center
     bg-(--foreground)/2
     border border-current/6
-    rounded-xl
+    rounded-4xl
 
     motion-safe:duration-300
 
@@ -109,6 +109,8 @@ const styles = tw({
 
     not-disabled:hover:bg-(--foreground)
     not-disabled:hover:text-(--background)
+
+    md:rounded-xl
   `,
   cta: `
     bg-yellow-300

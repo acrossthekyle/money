@@ -40,7 +40,7 @@ const styles = tw({
     flex items-center justify-between
     w-full
     mt-4
-    py-4 px-6
+    py-4 px-7
     text-(--foreground)
 
     before:absolute
@@ -50,9 +50,10 @@ const styles = tw({
     before:bg-(--foreground)/2
     before:border
     before:border-current/6
-    before:rounded-xl
+    before:rounded-4xl
 
     sm:max-w-sm
+    md:before:rounded-2xl
     md:before:inset-x-6
     md:mt-6
     md:py-3

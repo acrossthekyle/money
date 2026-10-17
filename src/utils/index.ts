@@ -22,10 +22,9 @@ export function pad(index: number, padding: number = 2) {
 
 export function currency(value: number | string, isCompact?: boolean) {
   return new Intl.NumberFormat('en', {
-    notation: isCompact ? 'compact' : 'standard',
-    compactDisplay: isCompact ? 'short' : undefined,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    notation: 'standard',
+    minimumFractionDigits: isCompact ? 0 : 2,
+    maximumFractionDigits: isCompact ? 0 : 2,
   }).format(Math.abs(Number(value)));
 };
 

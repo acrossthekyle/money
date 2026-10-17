@@ -18,7 +18,7 @@ const styles = tw({
     flex flex-col gap-4
     w-full
     mx-auto
-    p-4
+    p-4 pt-5
 
     sm:max-w-sm
     md:p-6

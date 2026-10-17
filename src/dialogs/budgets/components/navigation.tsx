@@ -10,8 +10,8 @@ export default function Navigation({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    flex justify-between gap-4
+    flex flex-row justify-between gap-4
     w-full
-    mt-2
+    mt-4
   `,
 });

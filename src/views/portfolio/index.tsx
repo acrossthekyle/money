@@ -68,7 +68,7 @@ export default function View({ data }: Props) {
 
 const styles = tw({
   items: `
-    flex flex-col gap-3
+    flex flex-col gap-4
 
     md:gap-4
   `,
@@ -80,7 +80,7 @@ const styles = tw({
     border border-current/12
     bg-white dark:bg-(--foreground)/6
     text-black dark:text-white
-    rounded-md
+    rounded-4xl
     flex items-center justify-center gap-4
     uppercase
     text-sm
@@ -93,6 +93,7 @@ const styles = tw({
     hover:text-(--background)
 
     md:text-tiny
+    md:rounded-2xl
   `,
   icon: `
     w-4 h-4

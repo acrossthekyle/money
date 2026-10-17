@@ -4,7 +4,7 @@ import { get as getBudgets } from '../budgets';
 import { get as getHoldings } from '../holdings';
 import { get as getSettings } from '../settings';
 
-import { prepare } from './prepare';
+import { createTransactions } from './transactions';
 
 type Return = {
   holding?: Holding;
@@ -18,7 +18,9 @@ export async function get(id: string): Promise<Return> {
   const { holdings } = await getHoldings();
   const { zone } = await getSettings();
 
-  const { holding, transactions } = await prepare(holdings, budgets, id);
+  const holding = holdings.find(holding => holding.id === id);
+
+  const transactions = await createTransactions(holding, holdings, budgets);
 
   return {
     holding,

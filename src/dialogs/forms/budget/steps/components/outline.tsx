@@ -36,6 +36,15 @@ export default function Block({
   return (
     <Outline>
       <OutlineItem>
+        <OutlineItemAction onClick={() => onEdit('type')}>
+          <OutlineItemHeading>Type</OutlineItemHeading>
+          <OutlineItemText>
+            {data.type === 'debit' && 'Expense'}
+            {data.type === 'credit' && 'Income'}
+          </OutlineItemText>
+        </OutlineItemAction>
+      </OutlineItem>
+      <OutlineItem>
         <OutlineItemAction onClick={() => onEdit('amount')}>
           <OutlineItemHeading>Amount</OutlineItemHeading>
           <OutlineItemText>
@@ -48,15 +57,6 @@ export default function Block({
           <OutlineItemHeading>Name</OutlineItemHeading>
           <OutlineItemText>
             {data.name}
-          </OutlineItemText>
-        </OutlineItemAction>
-      </OutlineItem>
-      <OutlineItem>
-        <OutlineItemAction onClick={() => onEdit('type')}>
-          <OutlineItemHeading>Type</OutlineItemHeading>
-          <OutlineItemText>
-            {data.type === 'debit' && 'Expense'}
-            {data.type === 'credit' && 'Income'}
           </OutlineItemText>
         </OutlineItemAction>
       </OutlineItem>

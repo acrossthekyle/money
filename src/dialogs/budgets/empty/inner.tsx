@@ -37,7 +37,7 @@ export default function Inner() {
           </Title>
         </Content>
         <Navigation>
-          <Navigate onClick={onClose}>
+          <Navigate isOutline onClick={onClose}>
             Close
           </Navigate>
         </Navigation>

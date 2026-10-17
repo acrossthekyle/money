@@ -40,7 +40,7 @@ export default function Section({
           onClick={() => handleOnChange('credit_card')}
         >
           <CreditCard className={styles.icon} />
-          <span>Card</span>
+          <span>Credit Card</span>
         </Option>
         <Option
           isActive={type === 'savings'}
@@ -85,7 +85,10 @@ export default function Section({
 const styles = tw({
   icon: `
     shrink-0
-    w-4 h-4
+    w-4.5 h-4.5
     stroke-2
+
+    md:w-4
+    md:h-4
   `,
 });

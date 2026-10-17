@@ -102,17 +102,18 @@ const styles = tw({
   container: `
     !absolute top-1/2 left-1/2
     -translate-y-1/2 -translate-x-1/2
-    px-6 !pb-4
+    px-7 !pb-4
 
     before:absolute
     before:inset-y-0
-    before:inset-x-3
+    before:inset-x-4
     before:-z-1
     before:bg-(--foreground)/2
     before:border
     before:border-current/6
-    before:rounded-xl
+    before:rounded-4xl
 
+    md:before:rounded-2xl
     md:before:inset-x-6
     md:px-9
   `,
@@ -142,14 +143,20 @@ const styles = tw({
     appearance-none
     relative
     border border-current/22.5
-    rounded-md
+    rounded-4xl
     outline-none
-    pb-2.25 pt-2.75 px-3
-    text-base text-(--foreground)
+    pb-3 pt-3.25 pl-6.5
+    text-lg text-(--foreground)
     bg-(--background)
+
+    md:rounded-xl
+    md:pb-2.25
+    md:pt-2.75
+    md:pl-3
+    md:text-base
   `,
   label: `
-    absolute -top-2.5 left-2.25 right-auto z-2
+    absolute -top-2.5 left-5.5 right-auto z-2
     text-sm text-(--foreground)
     font-normal
     px-1.25
@@ -178,6 +185,7 @@ const styles = tw({
     peer-placeholder-shown:text-base
 
     md:-top-2
+    md:left-2.25
     md:text-xs
     md:peer-focus:-top-2
     md:peer-focus:text-xs
@@ -189,10 +197,11 @@ const styles = tw({
     h-12
     bg-yellow-300
     text-black text-base
-    rounded-lg
+    rounded-4xl
 
     md:text-sm
     md:h-10
+    md:rounded-xl
   `,
   footer: `
     absolute bottom-3 left-1/2

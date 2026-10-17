@@ -28,12 +28,11 @@ export default function ForecastProvider({
   transactions,
   zone,
 }: React.PropsWithChildren<Props>) {
-  const [item] = useState(holding);
   const [current, setCurrent] = useState<Dateable | undefined>();
   const [computed, setComputed] = useState<CalendarDay[]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem(`${holding?.id}-dateable`);
+    const saved = localStorage.getItem(`dateable`);
 
     if (saved) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -45,15 +44,15 @@ export default function ForecastProvider({
   }, []);
 
   useEffect(() => {
-    if (current && item) {
+    if (current && holding) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setComputed(calendar(current, item, transactions));
+      setComputed(calendar(current, holding, transactions));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current?.iso, item, transactions]);
+  }, [current?.iso, holding?.balance, transactions]);
 
   const handleOnDate = (date: Dateable) => {
-    localStorage.setItem(`${holding?.id}-dateable`, date.iso);
+    localStorage.setItem(`dateable`, date.iso);
 
     setCurrent(date);
   };

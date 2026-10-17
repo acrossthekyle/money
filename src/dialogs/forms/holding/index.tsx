@@ -1,9 +1,8 @@
 'use client';
 
-import { ArrowLeft } from 'lucide-react';
-
-import tw from '@/styles';
 import Ui from '@/ui';
+
+import { Action } from '../components';
 
 import { useModel } from './model';
 import {
@@ -52,24 +51,16 @@ export default function Dialog() {
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
         <Ui.Dialog.DialogHeader onClose={handleOnCancel}>
-          <button
-            className={styles.back(step > 0)}
-            onClick={handleOnBack}
-            type="button"
-          >
-            <ArrowLeft className={styles.arrow} />
-          </button>
-          <span className={styles.eyebrow}>
-            {getSubtitle(steps, step, holding)}
-          </span>
           <Ui.Dialog.DialogTitle text={`${holding ? 'Edit' : 'Add'} Portfolio Item`}>
+            <Ui.Dialog.DialogTitleLid>
+              {getSubtitle(steps, step, holding)}
+            </Ui.Dialog.DialogTitleLid>
           </Ui.Dialog.DialogTitle>
         </Ui.Dialog.DialogHeader>
         <Ui.Dialog.DialogContent key={holding?.id} label="steps">
           <Outline
             data={data}
             isActive={steps[step] === 'outline'}
-            onCancel={handleOnCancel}
             onEdit={handleOnEdit}
           />
           <Type
@@ -115,35 +106,14 @@ export default function Dialog() {
             onEdit={handleOnEdit}
             onSubmit={handleOnSubmit}
           />
+          {(!holding && step > 0 && !isEditing && (step !== steps.length - 1)) && (
+            <Action isOutline onClick={handleOnBack}>Back</Action>
+          )}
+          {(step === 0 && !isEditing) && (
+            <Action isOutline onClick={handleOnCancel}>Cancel</Action>
+          )}
         </Ui.Dialog.DialogContent>
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>
   );
 };
-
-const styles = tw({
-  back: (canGoBack: boolean) => tw(`
-    absolute top-4 left-4
-    select-none
-
-    motion-safe:duration-300
-
-    ${canGoBack ? 'opacity-100' : 'opacity-0'}
-  `),
-  arrow: `
-    w-5 h-5
-    stroke-2
-
-    md:w-4
-    md:h-4
-  `,
-  eyebrow: `
-    mt-2
-    text-tiny
-    uppercase
-    tracking-wide
-    font-roboto
-
-    md:text-xtiny
-  `,
-});

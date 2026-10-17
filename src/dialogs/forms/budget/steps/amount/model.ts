@@ -11,35 +11,12 @@ export function useModel(value: string) {
   }, [value]);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(event.target.value.replace('$ ', '').replace(/,/g, ''));
-  };
-
-  const handleOnNumber = (choice: string) => {
-    setAmount(previous => {
-      if (choice === 'x') {
-        return previous.slice(0, -1);
-      }
-
-      if (choice === '-') {
-        if (previous.includes('-')) {
-          return previous.replace('-', '');
-        }
-
-        return choice + previous;
-      }
-
-      if (choice === '.' && previous.includes('.')) {
-        return previous;
-      }
-
-      return previous + choice;
-    });
+    setAmount(event.target.value.replace('- $ ', '').replace('$ ', '').replace(/,/g, ''));
   };
 
   return {
     amount,
     handleOnChange,
-    handleOnNumber,
     isBlocked: !amount,
   };
 };

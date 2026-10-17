@@ -1,6 +1,6 @@
 import '../globals.css';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Lobster, Roboto_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { ReactNode, Suspense } from 'react';
@@ -29,6 +29,13 @@ export const metadata: Metadata = {
       noimageindex: true,
     },
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#18181b' },
+  ],
 };
 
 const sans = Geist({

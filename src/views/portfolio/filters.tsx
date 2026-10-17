@@ -71,14 +71,14 @@ const FILTERS = [
 export default function Filters({ current, onClick }: Props) {
   return (
     <nav className={styles.container}>
-      {FILTERS.map(({ key, label }) => (
+      {FILTERS.map(({ key }) => (
         <button
           className={
             cs(
               styles.filter,
               current === key && styles.highlighted,
               current !== key && styles.muted,
-              key === 'plus' && styles.cta,
+              key === 'plus' && styles.add,
             )
           }
           key={key}
@@ -86,16 +86,6 @@ export default function Filters({ current, onClick }: Props) {
           type="button"
         >
           <Icon icon={key} />
-          <span
-            className={
-              cs(
-                styles.label,
-                current === key && styles.full,
-              )
-            }
-          >
-            {label}
-          </span>
         </button>
       ))}
     </nav>
@@ -104,15 +94,14 @@ export default function Filters({ current, onClick }: Props) {
 
 const styles = tw({
   container: `
-    flex items-center justify-center gap-2
+    grid grid-cols-6 gap-2
     w-full
   `,
   filter: `
     flex items-center justify-center
-    min-w-10 w-auto h-10
-    p-2
+    aspect-square
     border
-    rounded-md
+    rounded-4xl
 
     motion-safe:duration-300
 
@@ -120,6 +109,8 @@ const styles = tw({
     hover:text-white
     hover:dark:bg-white
     hover:dark:text-black
+
+    md:rounded-2xl
   `,
   highlighted: `
     w-full
@@ -131,7 +122,7 @@ const styles = tw({
     border-current/6
     bg-(--foreground)/2
   `,
-  cta: `
+  add: `
     border-transparent
     bg-yellow-300
     text-black
@@ -143,20 +134,5 @@ const styles = tw({
 
     md:w-4
     md:h-4
-  `,
-  label: `
-    inline-block
-    w-0
-    overflow-hidden
-    text-sm
-    whitespace-nowrap
-    uppercase
-    tracking-wide
-
-    md:text-tiny
-  `,
-  full: `
-    pl-2
-    w-full
   `,
 })

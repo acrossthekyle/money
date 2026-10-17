@@ -18,10 +18,5 @@ const styles = tw({
 
     selection:bg-yellow-300
     selection:text-black
-
-    has-[dialog[open]]:opacity-10
-
-    motion-safe:duration-200
-    motion-safe:transition-opacity
   `,
 });

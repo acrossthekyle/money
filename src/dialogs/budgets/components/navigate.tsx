@@ -2,11 +2,13 @@
 
 import Link from 'next/link';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 
 type Props = {
   href?: string;
   isDisabled?: boolean;
+  isOutline?: boolean;
+  isPrimary?: boolean;
   onClick?: () => void;
 };
 
@@ -14,12 +16,20 @@ export default function Navigate({
   children,
   href,
   isDisabled,
+  isOutline,
+  isPrimary,
   onClick,
 }: React.PropsWithChildren<Props>) {
   if (href) {
     return (
       <Link
-        className={styles.container}
+        className={
+          cs(
+            styles.container,
+            isPrimary && styles.primary,
+            isOutline && styles.outline,
+          )
+        }
         href={href}
         onClick={onClick}
       >
@@ -30,7 +40,13 @@ export default function Navigate({
 
   return (
     <button
-      className={styles.container}
+      className={
+        cs(
+          styles.container,
+          isPrimary && styles.primary,
+          isOutline && styles.outline,
+        )
+      }
       disabled={isDisabled}
       onClick={onClick}
       type="button"
@@ -46,19 +62,25 @@ const styles = tw({
     w-full
     border border-current/12
     rounded-full
-    px-4 py-2
-    text-xs text-white dark:text-black
+    py-2.5
+    text-sm text-(--background)
+    bg-(--foreground)
     uppercase
     font-medium
     tracking-wide
-    bg-black dark:bg-white
 
     motion-safe:duration-300
 
-    hover:bg-black
-    hover:text-white
-
     md:text-tiny
     md:rounded-lg
+    md:py-2
+  `,
+  primary: `
+    !bg-yellow-300
+    !text-black
+  `,
+  outline: `
+    !bg-transparent
+    !text-(--foreground)
   `,
 });

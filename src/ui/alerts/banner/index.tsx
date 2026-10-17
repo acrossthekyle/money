@@ -50,11 +50,15 @@ export default function Banner({
 const styles = tw({
   container: `
     flex items-center justify-between
-    p-2.5
-    rounded-md
-    border border-current/12
-    text-xs text-(--foreground)
-    font-normal
+    px-6 py-3
+    rounded-4xl
+    border border-current/22.5
+    text-base text-(--foreground)
+
+    md:rounded-2xl
+    md:px-4
+    md:py-3
+    md:text-sm
   `,
   icon: `
     w-4 h-4

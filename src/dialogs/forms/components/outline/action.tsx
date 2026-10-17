@@ -35,13 +35,19 @@ const styles = tw({
     hover:before:bg-(--foreground)/6
   `,
   text: `
-    absolute -right-2 -top-2
-    p-2
+    absolute right-0 top-1/2
+    -translate-y-1/2
+    py-2.5 px-4
     text-xs
     uppercase
-    font-roboto
     tracking-wide
+    font-roboto
+    border border-current/16
+    rounded-full
 
     md:text-tiny
+    md:rounded-xl
+    md:py-1.5
+    md:px-2.5
   `,
 });

@@ -82,14 +82,19 @@ const styles = tw({
   container: `
     relative
     flex flex-col justify-between gap-6
-    rounded-xl
+    rounded-4xl
     text-black dark:text-white
     bg-linear-to-tl from-gray-100 dark:from-gray-500 to-stone-200 dark:to-zinc-800
-    p-4
+    px-4 pt-5 pb-4
+
+    md:rounded-2xl
+    md:px-4
+    md:pt-4
   `,
   upper: `
     relative
     flex items-center gap-3
+    px-0.25
     uppercase
     font-light
     leading-[1]

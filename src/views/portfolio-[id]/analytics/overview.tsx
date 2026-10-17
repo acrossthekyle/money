@@ -51,13 +51,13 @@ export default function Overview({ days }: Props) {
       </p>
       <p className={styles.tile}>
         <span className={cs(styles.number, styles.positive)}>
-          ${currency(credits)}
+          ${currency(credits, true)}
         </span>
         <span className={styles.label}>Income</span>
       </p>
       <p className={styles.tile}>
         <span className={cs(styles.number, styles.negative)}>
-          ${currency(debits)}
+          ${currency(debits, true)}
         </span>
         <span className={styles.label}>Expenses</span>
       </p>
@@ -68,25 +68,27 @@ export default function Overview({ days }: Props) {
 const styles = tw({
   container: `
     grid grid-cols-3 gap-4
+    p-4
+    rounded-4xl
+    border border-current/12
+    bg-(--foreground)/2
+
+    md:rounded-2xl
   `,
   tile: `
     flex flex-col gap-2
-    p-4
-    rounded-xl
-    border border-current/12
-    bg-(--foreground)/2
   `,
   number: `
-    text-base text-center
+    text-2xl text-center
 
-    md:text-sm
+    md:text-lg
   `,
   label: `
     text-tiny text-center
     font-medium
     uppercase
 
-    md:text-xtiny
+    md:text-tiny
   `,
   negative: `
     text-red-400 dark:text-rose-400

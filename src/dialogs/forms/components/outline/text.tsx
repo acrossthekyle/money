@@ -17,8 +17,9 @@ export default function Text({
 
 const styles = tw({
   container: `
-    text-base
+    text-lg
     font-medium
+    truncate pr-22
 
     md:text-sm
   `,

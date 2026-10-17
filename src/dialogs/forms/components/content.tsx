@@ -19,6 +19,6 @@ const styles = tw({
   container: `
     relative
     flex flex-col items-center
-    px-4
+    px-4 pb-4
   `,
 });

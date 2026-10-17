@@ -1,6 +1,5 @@
 'use client';
 
-import tw from '@/styles';
 import Ui from '@/ui';
 
 import {
@@ -8,7 +7,6 @@ import {
   Container,
   Content,
   Header,
-  Numbers,
 } from '../../../components';
 
 import { useModel } from './model';
@@ -28,20 +26,15 @@ export default function Section({
   onNext,
   value,
 }: Props) {
-  const { balance, handleOnChange, handleOnNumber, isBlocked } = useModel(value);
+  const { balance, handleOnChange, isBlocked } = useModel(value);
 
   return (
     <Container isActive={isActive}>
-      <Header className={styles.header}>{header}</Header>
-      <Content className={styles.content}>
+      <Header>{header}</Header>
+      <Content>
         <Ui.Form.Currency onChange={handleOnChange} value={balance} />
       </Content>
-      <Numbers
-        className={styles.numbers}
-        onClick={handleOnNumber}
-      />
       <Action
-        className={styles.action}
         isBlocked={isBlocked}
         isEditing={isEditing}
         onClick={() => onNext('balance', balance)}
@@ -51,18 +44,3 @@ export default function Section({
     </Container>
   );
 };
-
-const styles = tw({
-  header: `
-    order-1
-  `,
-  numbers: `
-    order-2
-  `,
-  content: `
-    order-0
-  `,
-  action: `
-    order-3
-  `,
-});

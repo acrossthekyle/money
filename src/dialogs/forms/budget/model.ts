@@ -12,6 +12,8 @@ import type { Data } from './types';
 export function useModel(parent: string) {
   const router = useRouter();
 
+  const { input, instance, isActive, onBackdrop, onCancel, onClose } = useBudget<DialogBudgetData>();
+
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
   const [data, setData] = useState<Data>({
@@ -25,8 +27,6 @@ export function useModel(parent: string) {
     type: '',
   });
   const [update, setUpdate] = useState('this');
-
-  const { input, instance, isActive, onBackdrop, onCancel, onClose } = useBudget<DialogBudgetData>();
 
   const putable = put.bind(null, {
     budget: input?.budget || null,
@@ -42,9 +42,9 @@ export function useModel(parent: string) {
 
   const steps = [
     input?.budget && 'outline',
+    'type',
     'amount',
     'name',
-    'type',
     'transferee',
     'start',
     'schedule',
@@ -70,11 +70,11 @@ export function useModel(parent: string) {
       end: input?.budget?.end || '',
       name: input?.budget?.name || '',
       schedule: input?.budget?.schedule || '',
-      start: input?.budget?.start || '',
+      start: input?.budget?.start || (input?.date?.iso || ''),
       transferee: input?.budget?.transferee || '',
       type: input?.budget?.type || '',
     });
-  }, [input?.budget]);
+  }, [input?.budget, input?.date]);
 
   const handleOnNext = (key: string, value: string) => {
     setData({

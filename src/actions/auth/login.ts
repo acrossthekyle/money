@@ -15,7 +15,7 @@ export async function login(
   const timezone = formData.get('timezone') as string;
 
   if (
-    username !== process.env.APP_USERNAME ||
+    username.toLowerCase() !== process.env.APP_USERNAME ||
     password !== process.env.APP_PASSWORD
   ) {
     return {
@@ -34,6 +34,7 @@ export async function login(
   });
 
   const cookieStore = await cookies();
+
   cookieStore.set('app_session', process.env.AUTH_COOKIE_VALUE!, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',

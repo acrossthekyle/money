@@ -33,7 +33,7 @@ export default function Section({
       <Header>{header}</Header>
       <Content>
         <Ui.Form.Input
-          className="!w-50"
+          className="!w-66"
           value={end}
           name="end"
           onChange={handleOnChange}

@@ -31,12 +31,14 @@ const styles = tw({
 
     before:absolute
     before:-inset-2
-    before:rounded-lg
+    before:rounded-4xl
     before:bg-transparent
 
     motion-safe:before:duration-300
 
     hover:before:!bg-(--foreground)/12
+
+    md:before:rounded-2xl
   `,
   highlighted: `
     before:!bg-(--foreground)/4

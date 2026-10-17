@@ -35,13 +35,15 @@ export default function Dialog({
 
 const styles = tw({
   container: `
-    fixed inset-0
+    fixed inset-0 z-1060
     w-full max-w-full
     h-full max-h-none
     flex flex-col items-center
-    bg-transparent
+    bg-(--background)/62.5
     outline-none
     overflow-hidden
+    pt-10
+    backdrop-blur-sm
 
     backdrop:hidden
   `,

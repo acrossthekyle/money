@@ -1,4 +1,6 @@
-import { X } from 'lucide-react';
+'use client';
+
+import { useSwipeable } from 'react-swipeable';
 
 import tw, { cs } from '@/styles';
 
@@ -12,15 +14,15 @@ export default function Header({
   className,
   onClose,
 }: React.PropsWithChildren<Props>) {
+  const handlers = useSwipeable({
+    onSwipedDown: onClose,
+  });
+
   return (
-    <header className={cs(styles.container, className)}>
-      <button
-        className={styles.close}
-        onClick={onClose}
-        type="button"
-      >
-        <X className={styles.x} />
-      </button>
+    <header
+      className={cs(styles.container, className)}
+      {...handlers}
+    >
       <button
         className={styles.bar}
         onClick={onClose}
@@ -36,6 +38,7 @@ const styles = tw({
     relative
     flex flex-col items-center justify-between
     px-4 pt-4
+    touch-none
   `,
   bar: `
     relative
@@ -53,16 +56,5 @@ const styles = tw({
     before:rounded-full
     before:bg-black/75
     dark:before:bg-white/75
-  `,
-  close: `
-    absolute top-4 right-4
-    select-none
-  `,
-  x: `
-    w-5 h-5
-    stroke-2
-
-    md:w-4
-    md:h-4
   `,
 });

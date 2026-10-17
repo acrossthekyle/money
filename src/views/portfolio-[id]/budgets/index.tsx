@@ -79,13 +79,15 @@ export default function Budgets({
 
 const styles = tw({
   container: `
-    p-4
+    p-4 pl-3
     border border-current/6
-    rounded-xl
+    rounded-4xl
     bg-(--foreground)/2
+
+    md:rounded-2xl
   `,
   header: `
-    mb-4
+    mb-4 pl-1
     font-medium
     text-base
 

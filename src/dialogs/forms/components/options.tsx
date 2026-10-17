@@ -18,7 +18,7 @@ export default function Options({
 const styles = tw({
   container: `
     relative
-    flex justify-center gap-3
+    flex justify-center gap-1
     flex-wrap
     px-4 mb-2
 
