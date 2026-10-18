@@ -34,6 +34,12 @@ export default function Budgets({
     return accumulator + day.budgets.length;
   }, 0) > 0;
 
+  const hasDateMatches = filtered.some(day => {
+    if (day.budgets.length > 0 || day.return.amount !== null) {
+      return day.dateable.iso === date.iso;
+    }
+  });
+
   return (
     <section className={styles.container}>
       <h2 className={styles.header}>
@@ -49,7 +55,7 @@ export default function Budgets({
                     budget={budget}
                     day={day}
                     holding={holding}
-                    isHighlighted={date.iso === day.dateable.iso}
+                    isHighlighted={hasDateMatches ? date.iso !== day.dateable.iso : false}
                   />
                 </li>
               ))}
@@ -58,7 +64,7 @@ export default function Budgets({
                   <Return
                     day={day}
                     holding={holding}
-                    isHighlighted={date.iso === day.dateable.iso}
+                    isHighlighted={hasDateMatches ? date.iso !== day.dateable.iso : false}
                   />
                 </li>
               )}
@@ -94,6 +100,7 @@ const styles = tw({
     md:text-sm
   `,
   items: `
+    group
     flex flex-col gap-5
   `,
 });

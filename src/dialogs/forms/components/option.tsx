@@ -35,7 +35,7 @@ const styles = tw({
   container: `
     inline-flex items-center gap-3
     w-fit
-    text-white dark:text-black
+    text-(--background)
     rounded-full
     text-sm
     uppercase
@@ -50,7 +50,7 @@ const styles = tw({
     md:gap-2
   `,
   inactive: `
-    bg-black dark:bg-white
+    bg-(--foreground)
   `,
   active: `
     bg-yellow-300

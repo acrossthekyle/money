@@ -55,7 +55,7 @@ export function useModel() {
         text: `This will be a permanent deletion. This action cannot be undone. Choose an option:`,
         input: 'radio',
         inputOptions: {
-          'all': `Entire budget (all dates)`,
+          'all': `Entire series (all dates)`,
           'this': `Only ${data?.day?.dateable.display || ''}`,
         },
         inputValidator: (value: string): string => {

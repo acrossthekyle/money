@@ -30,7 +30,7 @@ export default function View({ data }: Props) {
     handleOnToday,
     handleOnWeek,
     view,
-  } = useModel();
+  } = useModel(data.holding);
 
   if (!data.holding || !date || !days) {
     return null;

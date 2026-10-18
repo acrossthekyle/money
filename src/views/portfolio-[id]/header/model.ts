@@ -22,7 +22,7 @@ export function useModel(
 
   const handleOnDelete = async () => {
     const result = await confirm({
-      text: 'This action cannot be undone. This is a permanent deletion and all transactions will be erased.',
+      text: 'This action cannot be undone. This is a permanent deletion, and all transactions will also be erased.',
     });
 
     if (!result.isConfirmed) {

@@ -3,15 +3,15 @@
 import { useEffect, useState } from 'react';
 
 import { useForecast } from '@/hooks';
-import type { Dateable } from '@/types'
+import type { Dateable, Holding } from '@/types'
 
-export function useModel() {
+export function useModel(holding?: Holding) {
   const [view, setView] = useState('');
 
   const { calendar, date, onDate } = useForecast();
 
   useEffect(() => {
-    const saved = localStorage.getItem('view');
+    const saved = localStorage.getItem(`${holding?.id}-view`);
 
     if (saved) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -19,30 +19,31 @@ export function useModel() {
     } else {
       setView('week');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOnWeek = () => {
     setView('week');
 
-    localStorage.setItem('view', 'week');
+    localStorage.setItem(`${holding?.id}-view`, 'week');
   };
 
   const handleOnMonth = () => {
     setView('month');
 
-    localStorage.setItem('view', 'month');
+    localStorage.setItem(`${holding?.id}-view`, 'month');
   };
 
   const handleOnAnalytics = () => {
     setView('analytics');
 
-    localStorage.setItem('view', 'analytics');
+    localStorage.setItem(`${holding?.id}-view`, 'analytics');
   };
 
   const handleOnCalendar = (dateable: Dateable, display: string) => {
     setView(display);
 
-    localStorage.setItem('view', display);
+    localStorage.setItem(`${holding?.id}-view`, display);
 
     onDate(dateable);
   };

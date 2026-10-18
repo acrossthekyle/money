@@ -46,7 +46,7 @@ const styles = tw({
     border border-current/12
     rounded-full
     py-2.5
-    text-sm text-white dark:text-black
+    text-sm text-(--background)
     uppercase
     font-medium
     tracking-wide
@@ -61,7 +61,7 @@ const styles = tw({
     md:py-2
   `,
   basic: `
-    bg-black dark:bg-white
+    bg-(--foreground)
   `,
   submit: `
     bg-yellow-300
@@ -69,6 +69,6 @@ const styles = tw({
   `,
   outline: `
     !bg-transparent
-    !text-white
+    !text-(--foreground)
   `,
 });

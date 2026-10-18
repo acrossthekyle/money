@@ -105,18 +105,16 @@ const styles = tw({
 
     motion-safe:duration-300
 
-    hover:bg-black
-    hover:text-white
-    hover:dark:bg-white
-    hover:dark:text-black
+    hover:bg-(--foreground)
+    hover:text-(--background)
 
     md:rounded-2xl
   `,
   highlighted: `
     w-full
     border-transparent
-    bg-yellow-300
-    text-black
+    bg-(--foreground)
+    text-(--background)
   `,
   muted: `
     border-current/6
