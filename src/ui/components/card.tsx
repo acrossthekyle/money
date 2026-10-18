@@ -62,7 +62,7 @@ export default function Card({
           )}
           {days !== null && (
             <span className={styles.strong}>
-              {days === 0 ? 'Today' : `${days} days ago`}
+              {days === 0 ? 'Today' : `${days} day${days > 1 ? 's' : ''} ago`}
             </span>
           )}
           {(days === null || (days !== null && days > 4)) && (
