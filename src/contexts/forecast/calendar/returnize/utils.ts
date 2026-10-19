@@ -14,16 +14,28 @@ export function calculateReturnAmount(
 
 export function getLabel(holding: Holding) {
   if (['savings', 'checking', 'credit_card'].includes(holding.type)) {
-    return 'Interest';
+    return {
+      label: 'Interest',
+      type: 'Growth',
+    };
   }
 
   if (['retirement'].includes(holding.type)) {
-    return Number(holding.interest) > 0 ? 'Growth' : 'Loss';
+    return {
+      label: Number(holding.interest) > 0 ? 'Growth' : 'Loss',
+      type: 'Return',
+    };
   }
 
   if (['property'].includes(holding.type)) {
-    return Number(holding.interest) > 0 ? 'Appreciation' : 'Depreciation';
+    return {
+      label: Number(holding.interest) > 0 ? 'Appreciation' : 'Depreciation',
+      type: 'Worth',
+    };
   }
 
-  return '';
+  return {
+    label: '',
+    type: '',
+  };
 };

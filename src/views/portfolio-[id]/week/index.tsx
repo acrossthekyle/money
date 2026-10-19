@@ -1,11 +1,11 @@
 'use client';
 
-import { addDays, isWithinInterval, startOfWeek } from 'date-fns';
-
+import { CARD_RADIUS } from '@/constants';
 import tw, { cs } from '@/styles';
 import type { CalendarDay, Dateable } from '@/types';
 
-import Balance from './balance';
+import { filterDays } from '../utils';
+
 import Navigation from './navigation';
 
 type Props = {
@@ -15,15 +15,7 @@ type Props = {
 };
 
 export default function Week({ date, days, onClick }: Props) {
-  const start = startOfWeek(date.date);
-  const end = addDays(start, 6);
-
-  const filtered = days.filter(
-    (day) => isWithinInterval(day.dateable.date, {
-      start,
-      end,
-    }),
-  );
+  const filtered = filterDays('week', date, days);
 
   if (filtered.length === 0) {
     return null;
@@ -87,22 +79,20 @@ export default function Week({ date, days, onClick }: Props) {
           </li>
         ))}
       </ul>
-      <Balance date={date} days={days} />
     </section>
   );
 };
 
 const styles = tw({
   container: `
-    p-4
     border border-current/6
-    rounded-4xl
     bg-(--foreground)/2
 
-    md:rounded-2xl
+    ${CARD_RADIUS}
   `,
   items: `
     grid grid-cols-7 gap-x-2
+    pt-4 px-3.75 pb-5
   `,
   item: `
     relative

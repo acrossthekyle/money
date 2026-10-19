@@ -87,10 +87,13 @@ export default function Balance({ date, days }: Props) {
 
 const styles = tw({
   container: `
+    relative
     flex flex-col items-start justify-center gap-2
-    mt-7
     uppercase
     leading-[1]
+    p-4
+    bg-(--foreground)/4
+    border-t border-current/6
   `,
   title: `
     flex items-center justify-between

@@ -69,6 +69,7 @@ export type CalendarReturn = {
   amount: number | null;
   isPositive: boolean;
   label: string;
+  type: string;
 };
 
 export type CalendarDay = {
@@ -123,12 +124,10 @@ export type UseConfirmConfig = {
 export type DialogTransactionData = {
   budget: Budget;
   day: CalendarDay;
-  holding: Holding;
 };
 
 export type DialogReturnData = {
   day: CalendarDay;
-  holding: Holding;
 };
 
 export type DialogEmptyData = {

@@ -12,6 +12,5 @@ const styles = tw({
   container: `
     flex flex-row justify-between gap-4
     w-full
-    mt-4
   `,
 });

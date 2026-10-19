@@ -10,17 +10,17 @@ import { useModel } from './model';
 
 type Props = {
   date: Dateable;
-  onClick: (dateable: Dateable, view: string) => void;
+  onClick: (dateable: Dateable) => void;
   view: string;
 };
 
-export default function Component({ date, onClick, view }: Props) {
+export default function Navigation({ date, onClick }: Props) {
   const {
     handleOnMonth,
     handleOnNext,
     handleOnPrevious,
     handleOnYear,
-  } = useModel(date, onClick, view);
+  } = useModel(date, onClick);
 
   return (
     <nav aria-label="supplementary navigation" className={styles.container}>
@@ -87,8 +87,7 @@ const styles = tw({
   container: `
     relative
     flex items-center justify-between gap-2
-    px-2 pt-3
-    mb-4
+    px-1 pt-4
   `,
   navigate: `
     p-2

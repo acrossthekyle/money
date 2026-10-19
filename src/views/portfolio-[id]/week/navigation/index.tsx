@@ -54,7 +54,7 @@ export default function Navigation({ date, end, onClick, start }: Props) {
 const styles = tw({
   controls: `
     flex justify-between
-    mb-4
+    px-3 pt-4 pb-0
   `,
   control: `
     relative

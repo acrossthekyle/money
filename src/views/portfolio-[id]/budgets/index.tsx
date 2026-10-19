@@ -1,7 +1,10 @@
 import { Fragment } from 'react';
 
+import { CARD_RADIUS } from '@/constants';
 import tw from '@/styles';
-import type { CalendarDay, Dateable, Holding } from '@/types';
+import type { CalendarDay, Dateable } from '@/types';
+
+import { filterDays } from '../utils';
 
 import Empty from './empty';
 import Return from './return';
@@ -10,17 +13,15 @@ import Transaction from './transaction';
 type Props = {
   days: CalendarDay[];
   date: Dateable;
-  holding: Holding;
+  view: string;
 };
 
 export default function Budgets({
   days,
   date,
-  holding,
+  view,
 }: Props) {
-  const filtered = days.filter(
-    ({ dateable }) => dateable.week === date.week && dateable.year === date.year
-  );
+  const filtered = filterDays(view, date, days);
 
   if (filtered.length === 0) {
     return null;
@@ -54,7 +55,6 @@ export default function Budgets({
                   <Transaction
                     budget={budget}
                     day={day}
-                    holding={holding}
                     isHighlighted={hasDateMatches ? date.iso !== day.dateable.iso : false}
                   />
                 </li>
@@ -63,7 +63,6 @@ export default function Budgets({
                 <li>
                   <Return
                     day={day}
-                    holding={holding}
                     isHighlighted={hasDateMatches ? date.iso !== day.dateable.iso : false}
                   />
                 </li>
@@ -87,10 +86,9 @@ const styles = tw({
   container: `
     p-4 pl-3
     border border-current/6
-    rounded-4xl
     bg-(--foreground)/2
 
-    md:rounded-2xl
+    ${CARD_RADIUS}
   `,
   header: `
     mb-4 pl-1

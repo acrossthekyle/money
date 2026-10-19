@@ -1,6 +1,6 @@
 'use client';
 
-import type { CalendarDay, Holding } from '@/types';
+import type { CalendarDay } from '@/types';
 import { currency } from '@/utils';
 
 import {
@@ -17,16 +17,14 @@ import { useModel } from './model';
 
 type Props = {
   day: CalendarDay;
-  holding: Holding;
   isHighlighted: boolean;
 };
 
 export default function Return({
   day,
-  holding,
   isHighlighted,
 }: Props) {
-  const { handleOnClick } = useModel(day, holding);
+  const { handleOnClick } = useModel(day);
 
   return (
     <TransactionContainer
@@ -45,17 +43,7 @@ export default function Return({
         </TransactionContentUpper>
         <TransactionContentLower>
           <span>{day.dateable.display}</span>
-          <span>
-            {['savings', 'checking', 'credit_card'].includes(holding.type) && (
-              <>Growth</>
-            )}
-            {['retirement'].includes(holding.type) && (
-              <>Return</>
-            )}
-            {['property'].includes(holding.type) && (
-              <>Worth</>
-            )}
-          </span>
+          <span>{day.return.type}</span>
         </TransactionContentLower>
       </TransactionContent>
     </TransactionContainer>

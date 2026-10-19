@@ -3,7 +3,7 @@
 import type { Holding } from '@/types';
 import Ui from '@/ui';
 
-import { Action } from '../components';
+import { Action, Actions } from '../components';
 
 import { useModel } from './model';
 import {
@@ -34,6 +34,7 @@ export default function Dialog({ holdings, parent }: Props) {
     handleOnBack,
     handleOnCancel,
     handleOnContinue,
+    handleOnDelete,
     handleOnEdit,
     handleOnNext,
     handleOnSubmit,
@@ -59,7 +60,7 @@ export default function Dialog({ holdings, parent }: Props) {
         <Ui.Dialog.DialogHeader onClose={handleOnCancel}>
           <Ui.Dialog.DialogTitle text={`${budget ? 'Edit' : 'Add'} Transaction`}>
             <Ui.Dialog.DialogTitleLid>
-              {date?.display} / {getSubtitle(steps, step, budget)}
+              {budget ? date?.display : getSubtitle(steps, step, budget)}
             </Ui.Dialog.DialogTitleLid>
           </Ui.Dialog.DialogTitle>
         </Ui.Dialog.DialogHeader>
@@ -148,12 +149,17 @@ export default function Dialog({ holdings, parent }: Props) {
             onSubmit={handleOnSubmit}
             update={update}
           />
-          {(!budget && step > 0 && !isEditing && (step !== steps.length - 1)) && (
-            <Action isOutline onClick={handleOnBack}>Back</Action>
-          )}
-          {(step === 0 && !isEditing) && (
-            <Action isOutline onClick={handleOnCancel}>Cancel</Action>
-          )}
+          <Actions>
+            {(!budget && step > 0 && !isEditing && (step !== steps.length - 1)) && (
+              <Action isOutline onClick={handleOnBack}>Back</Action>
+            )}
+            {budget && step === 0 && !isEditing && (
+              <Action onClick={handleOnDelete}>Delete</Action>
+            )}
+            {(step === 0 && !isEditing) && (
+              <Action isOutline onClick={handleOnCancel}>Cancel</Action>
+            )}
+          </Actions>
         </Ui.Dialog.DialogContent>
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>

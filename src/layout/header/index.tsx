@@ -1,3 +1,4 @@
+import { CARD_BEFORE_RADIUS } from '@/constants';
 import tw from '@/styles';
 import { Ui } from '@/ui';
 import { authentication } from '@/utils/authentication';
@@ -50,14 +51,14 @@ const styles = tw({
     before:bg-(--foreground)/2
     before:border
     before:border-current/6
-    before:rounded-4xl
 
     sm:max-w-sm
-    md:before:rounded-2xl
     md:before:inset-x-6
     md:mt-6
     md:py-3
     md:px-9
+
+    ${CARD_BEFORE_RADIUS}
   `,
   options: `
     flex items-center gap-2

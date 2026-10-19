@@ -30,7 +30,12 @@ async function AsyncView({ params }: Props) {
       transactions={data.transactions}
       zone={data.zone}
     >
-      <View data={data} />
+      <View
+        data={{
+          holding: data.holding,
+          holdings: data.holdings,
+        }}
+    />
     </ForecastProvider>
   );
 };

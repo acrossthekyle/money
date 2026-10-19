@@ -34,8 +34,8 @@ export function returnize(
 
   const result = {
     amount,
-    label: getLabel(holding),
     isPositive,
+    ...getLabel(holding),
   };
 
   lastDayOfMonth.return = result;

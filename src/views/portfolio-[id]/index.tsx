@@ -24,13 +24,12 @@ export default function View({ data }: Props) {
   const {
     date,
     days,
-    handleOnAnalytics,
     handleOnCalendar,
     handleOnMonth,
     handleOnToday,
     handleOnWeek,
     view,
-  } = useModel(data.holding);
+  } = useModel();
 
   if (!data.holding || !date || !days) {
     return null;
@@ -45,19 +44,11 @@ export default function View({ data }: Props) {
         />
         <Options
           date={date}
-          onAnalytics={handleOnAnalytics}
           onMonth={handleOnMonth}
           onToday={handleOnToday}
           onWeek={handleOnWeek}
           view={view}
         />
-        {view === 'analytics' && (
-          <Analytics
-            date={date}
-            days={days}
-            onClick={handleOnCalendar}
-          />
-        )}
         {view === 'month' && (
           <Month
             date={date}
@@ -66,24 +57,27 @@ export default function View({ data }: Props) {
           />
         )}
         {view === 'week' && (
-          <>
-            <Budgets
-              date={date}
-              days={days}
-              holding={data.holding}
-            />
-            <Week
-              date={date}
-              days={days}
-              onClick={handleOnCalendar}
-            />
-          </>
+          <Week
+            date={date}
+            days={days}
+            onClick={handleOnCalendar}
+          />
         )}
+        <Budgets
+          date={date}
+          days={days}
+          view={view}
+        />
+        <Analytics
+          date={date}
+          days={days}
+          view={view}
+        />
       </Main>
       <Dialogs.Holding />
       <Dialogs.Budget holdings={data.holdings} parent={data.holding.id} />
-      <Dialogs.Transaction />
-      <Dialogs.Return />
+      <Dialogs.Transaction holding={data.holding} />
+      <Dialogs.Return holding={data.holding} />
       <Dialogs.Empty />
     </>
   );

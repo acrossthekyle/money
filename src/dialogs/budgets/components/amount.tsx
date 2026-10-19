@@ -37,9 +37,8 @@ const styles = tw({
     relative
     flex justify-center
     w-full
-    my-4
     text-center text-6xl
-    font-thin
+    font-extralight dark:font-thin
 
     md:text-5xl
   `,

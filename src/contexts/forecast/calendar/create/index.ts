@@ -35,6 +35,7 @@ export function create(date: Dateable): CalendarDay[] {
         amount: null,
         isPositive: true,
         label: 'Interest',
+        type: '',
       },
     };
   });

@@ -11,11 +11,10 @@ export default function Title({ children }: React.PropsWithChildren) {
 const styles = tw({
   container: `
     relative
-    text-xl text-center
+    text-xs text-center
     uppercase
-    font-light
+    font-roboto
 
-    md:text-sm
-    md:font-normal
+    md:text-tiny
   `,
 });

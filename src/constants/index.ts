@@ -22,3 +22,9 @@ export const MONTHS_FULL = [
 ];
 
 export const DIALOG_DELAY = 450; // ms
+
+const CARD_RADIUS_MOBILE = 'rounded-4xl';
+const CARD_RADIUS_DESKTOP = 'rounded-2xl';
+
+export const CARD_RADIUS = `${CARD_RADIUS_MOBILE} md:${CARD_RADIUS_DESKTOP}`;
+export const CARD_BEFORE_RADIUS = `before:${CARD_RADIUS_MOBILE} md:before:${CARD_RADIUS_DESKTOP}`;

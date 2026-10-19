@@ -1,42 +1,29 @@
 'use client';
 
-import tw from '@/styles';
 import type { CalendarDay, Dateable } from '@/types';
 
+import { filterDays } from '../utils';
+
 import Chart from './chart';
-import Navigation from './navigation';
 import Overview from './overview';
-import { filterDays } from './utils';
 
 type Props = {
   date: Dateable;
   days: CalendarDay[];
-  onClick: (dateable: Dateable, view: string) => void;
+  view: string;
 };
 
 export default function Analytics({
   date,
   days,
-  onClick,
+  view,
 }: Props) {
+  const filtered = filterDays(view, date, days);
+
   return (
     <>
-      <div className={styles.container}>
-        <Navigation date={date} onClick={onClick} />
-        <Chart days={filterDays(date, days)} />
-      </div>
-      <Overview days={days} />
+      <Chart days={filtered} />
+      <Overview days={filtered} />
     </>
   );
 };
-
-const styles = tw({
-  container: `
-    relative
-    rounded-4xl
-    border border-current/12
-    bg-(--foreground)/2
-
-    md:rounded-2xl
-  `,
-});

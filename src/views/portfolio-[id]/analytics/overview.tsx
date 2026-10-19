@@ -1,3 +1,4 @@
+import { CARD_RADIUS } from '@/constants';
 import tw, { cs } from '@/styles';
 import type { CalendarDay } from '@/types';
 import { currency } from '@/utils';
@@ -69,11 +70,10 @@ const styles = tw({
   container: `
     grid grid-cols-3 gap-4
     p-4
-    rounded-4xl
     border border-current/12
     bg-(--foreground)/2
 
-    md:rounded-2xl
+    ${CARD_RADIUS}
   `,
   tile: `
     flex flex-col gap-2

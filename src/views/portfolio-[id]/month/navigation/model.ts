@@ -12,8 +12,7 @@ import { dateable, pad } from '@/utils';
 
 export function useModel(
   date: Dateable,
-  onClick: (dateable: Dateable, view: string) => void,
-  view: string,
+  onClick: (dateable: Dateable) => void,
 ) {
   const handleOnMonth = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const month = pad(Number(event.target.value) + 1);
@@ -29,7 +28,6 @@ export function useModel(
           },
         },
       ),
-      view,
     );
   };
 
@@ -45,7 +43,6 @@ export function useModel(
           },
         },
       ),
-      view,
     );
   };
 
@@ -57,7 +54,6 @@ export function useModel(
           date: startOfMonth(addMonths(date.date, 1)),
         },
       ),
-      view,
     );
   };
 
@@ -72,7 +68,6 @@ export function useModel(
           date: isThisMonth(updated) ? startOfToday(updated) : updated,
         },
       ),
-      view,
     );
   };
 

@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
+import { CARD_RADIUS } from '@/constants';
 import tw from '@/styles';
 import type { CalendarDay } from '@/types';
 import { currency } from '@/utils';
@@ -138,11 +139,15 @@ const styles = tw({
     h-54 w-full
     select-none
     touch-none
+    border border-current/12
+    bg-(--foreground)/2
 
     before:absolute
     before:inset-0
     before:bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)]
     before:bg-[size:24px_24px]
+
+    ${CARD_RADIUS}
   `,
   tooltip: `
     flex flex-col gap-2

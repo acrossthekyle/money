@@ -1,8 +1,8 @@
 'use client';
 
-import { LoaderCircle, Pen, Trash } from 'lucide-react';
+import { Pen, Trash } from 'lucide-react';
 
-import tw, { cs } from '@/styles';
+import tw from '@/styles';
 import type { Dateable, Holding } from '@/types'
 import { Ui } from '@/ui';
 
@@ -29,7 +29,8 @@ export default function Header({ date, holding }: Props) {
           onClick={handleOnUpdate}
           type="button"
         >
-          <Pen className={styles.icon} /> Update
+          <Pen className={styles.icon} />
+          Update
         </button>
         <button
           className={styles.option}
@@ -37,11 +38,7 @@ export default function Header({ date, holding }: Props) {
           onClick={handleOnDelete}
           type="button"
         >
-          {isPending ? (
-            <LoaderCircle className={cs(styles.icon, styles.spin)} />
-          ) : (
-            <Trash className={styles.icon} />
-          )}
+          <Trash className={styles.icon} />
           Delete
         </button>
       </nav>

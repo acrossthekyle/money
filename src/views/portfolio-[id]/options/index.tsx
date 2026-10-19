@@ -1,7 +1,8 @@
 'use client';
 
-import { CalendarFold, ChartNoAxesColumn, Plus, ReceiptText, RotateCcwClock } from 'lucide-react';
+import { Calendars, CalendarDays, Plus, RotateCcwClock } from 'lucide-react';
 
+import { CARD_RADIUS } from '@/constants';
 import tw, { cs } from '@/styles';
 import type { Dateable } from '@/types'
 import { dateable } from '@/utils';
@@ -10,7 +11,6 @@ import { useModel } from './model';
 
 type Props = {
   date: Dateable;
-  onAnalytics: () => void;
   onMonth: () => void;
   onToday: (dateable: Dateable) => void;
   onWeek: () => void;
@@ -19,7 +19,6 @@ type Props = {
 
 export default function Options({
   date,
-  onAnalytics,
   onMonth,
   onToday,
   onWeek,
@@ -30,60 +29,73 @@ export default function Options({
   return (
     <nav aria-label="supplementary options" className={styles.container}>
       <button
-        className={cs(styles.option, styles.cta)}
-        onClick={handleOnAdd}
-        title="Add transaction"
-        type="button"
-      >
-        <Plus className={styles.plus} />
-      </button>
-      <button
-        className={
-          cs(
-            styles.option,
-            styles.transparent,
-          )
-        }
+        className={cs(styles.option, styles.static)}
         disabled={date.isToday}
         onClick={() => onToday(dateable(date.zone, { date: date.today.date }))}
         title="Back to today"
-        type="button"
       >
-        <RotateCcwClock className={styles.clock} />
+        <RotateCcwClock className={styles.icon} />
       </button>
       <button
-        className={
-          cs(
-            styles.option,
-            view === 'week' && styles.active,
-          )
-        }
         onClick={onWeek}
-        title="View transactions"
-        type="button"
-      >
-        <ReceiptText className={styles.transactions} />
-      </button>
-      <button
         className={
           cs(
             styles.option,
-            view === 'month' && styles.active,
+            styles.dynamic,
+            view === 'week' ? styles.active : styles.inactive,
           )
         }
-        onClick={onMonth}
-        title="View calendar"
-        type="button"
+        title="Week by week"
       >
-        <CalendarFold className={styles.calendar} />
+        <span className={styles.content}>
+          <CalendarDays className={styles.icon} />
+          <span
+            className={
+              cs(
+                styles.label,
+                view === 'week' ? styles.expanded : styles.collapsed,
+              )
+            }
+          >
+            <span className={styles.text}>
+              Weekly
+            </span>
+          </span>
+        </span>
       </button>
       <button
-        className={cs(styles.option, view === 'analytics' && styles.active)}
-        onClick={onAnalytics}
-        title="View analytics"
-        type="button"
+        onClick={onMonth}
+        className={
+          cs(
+            styles.option,
+            styles.dynamic,
+            view === 'month' ? styles.active : styles.inactive,
+          )
+        }
+        title="Month by month"
       >
-        <ChartNoAxesColumn className={styles.chart} />
+        <span className={styles.content}>
+          <Calendars className={styles.icon} />
+          <span
+            className={
+              cs(
+                styles.label,
+                view === 'month' ? styles.expanded : styles.collapsed,
+              )
+            }
+          >
+            <span className={styles.text}>
+              Monthly
+            </span>
+          </span>
+        </span>
+      </button>
+      <button
+        className={cs(styles.option, styles.action)}
+        onClick={handleOnAdd}
+        title="Add transaction"
+      >
+        <Plus className={styles.icon} />
       </button>
     </nav>
   );
@@ -91,77 +103,76 @@ export default function Options({
 
 const styles = tw({
   container: `
-    relative
-    grid grid-cols-5 gap-4
+    flex items-center justify-between gap-4
+    w-full
   `,
   option: `
-    relative
+    flex items-center justify-center
+    h-11
     aspect-square
-    flex flex-col items-center justify-center
     bg-(--foreground)/2
     border border-current/6
-    rounded-4xl
 
     motion-safe:duration-300
 
-    disabled:!cursor-not-allowed
     disabled:opacity-50
+    disabled:!cursor-not-allowed
 
-    not-disabled:hover:bg-(--foreground)
-    not-disabled:hover:text-(--background)
-
-    md:rounded-xl
+    ${CARD_RADIUS}
   `,
-  cta: `
-    bg-yellow-300
-    text-black
+  dynamic: `
+    px-4
+    transition-all
+    overflow-hidden
+    text-(--foreground)
   `,
-  transparent: `
-    bg-transparent
+  static: `
+    shrink-0
+    transition-colors
+  `,
+  action: `
+    !bg-yellow-300
+    !text-black
   `,
   active: `
+    grow
     !bg-(--foreground)
-    text-(--background)
-    !border-0
+    !text-(--background)
   `,
-  plus: `
-    w-7 h-7
-    stroke-2
-
-    md:w-6
-    md:h-6
-    md:stroke-1
+  inactive: `
+    grow-0
   `,
-  calendar: `
-    w-6 h-6
-    stroke-2
-
-    md:w-5
-    md:h-5
-    md:stroke-1
+  content: `
+    flex items-center
+    mx-auto
   `,
-  transactions: `
-    w-6 h-6
-    stroke-2
-
-    md:w-5
-    md:h-5
-    md:stroke-1
+  icon: `
+    size-4
+    shrink-0
   `,
-  clock: `
-    w-6.5 h-6.5
-    stroke-2
+  label: `
+    grid
+    transition-all
 
-    md:w-5.5
-    md:h-5.5
-    md:stroke-1
+    motion-safe:duration-300
+    motion-safe:ease-out
   `,
-  chart: `
-    w-6.5 h-6.5
-    stroke-2
+  expanded: `
+    grid-rows-[1fr] grid-cols-[1fr]
+    ml-3
+    opacity-100
+  `,
+  collapsed: `
+    grid-rows-[0fr] grid-cols-[0fr]
+    ml-0
+    opacity-0
+  `,
+  text: `
+    overflow-hidden
+    whitespace-nowrap
+    text-xs
+    uppercase
 
-    md:w-5.5
-    md:h-5.5
-    md:stroke-1
+    md:text-tiny
   `,
 });

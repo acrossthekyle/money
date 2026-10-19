@@ -3,6 +3,7 @@
 import { differenceInDays, parseISO } from 'date-fns';
 import { Flag } from 'lucide-react';
 
+import { CARD_RADIUS } from '@/constants';
 import tw from '@/styles';
 import type { Holding } from '@/types';
 import { currency, date } from '@/utils';
@@ -82,14 +83,14 @@ const styles = tw({
   container: `
     relative
     flex flex-col justify-between gap-6
-    rounded-4xl
     text-black dark:text-white
     bg-linear-to-tl from-gray-100 dark:from-gray-500 to-stone-200 dark:to-zinc-800
     px-4 pt-5 pb-4
 
-    md:rounded-2xl
     md:px-4
     md:pt-4
+
+    ${CARD_RADIUS}
   `,
   upper: `
     relative

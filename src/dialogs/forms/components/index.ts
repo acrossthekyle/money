@@ -1,4 +1,5 @@
 export { default as Action } from './action';
+export { default as Actions } from './actions';
 export { default as Container } from './container';
 export { default as Content } from './content';
 export { default as Header } from './header';

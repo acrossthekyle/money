@@ -1,6 +1,6 @@
 'use client';
 
-import type { Budget, CalendarDay, Holding } from '@/types';
+import type { Budget, CalendarDay } from '@/types';
 import { currency } from '@/utils';
 import { getBudgetDisplayData } from '@/utils/budgets';
 
@@ -19,17 +19,15 @@ import { useModel } from './model';
 type Props = {
   budget: Budget;
   day: CalendarDay;
-  holding: Holding;
   isHighlighted: boolean;
 };
 
 export default function Transaction({
   budget,
   day,
-  holding,
   isHighlighted,
 }: Props) {
-  const { handleOnClick } = useModel(budget, day, holding);
+  const { handleOnClick } = useModel(budget, day);
 
   const { amount, isNegative } = getBudgetDisplayData(
     day.debits,

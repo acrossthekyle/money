@@ -3,6 +3,7 @@
 import { Eye, Pen } from 'lucide-react';
 import Link from 'next/link';
 
+import { CARD_RADIUS } from '@/constants';
 import { Dialogs } from '@/dialogs';
 import { Main } from '@/layout';
 import tw from '@/styles';
@@ -80,7 +81,6 @@ const styles = tw({
     border border-current/12
     bg-white dark:bg-(--foreground)/6
     text-black dark:text-white
-    rounded-4xl
     flex items-center justify-center gap-4
     uppercase
     text-sm
@@ -93,13 +93,12 @@ const styles = tw({
     hover:text-(--background)
 
     md:text-tiny
-    md:rounded-2xl
+
+    ${CARD_RADIUS}
   `,
   icon: `
-    w-4 h-4
-    stroke-2
+    size-4
 
-    md:w-3
-    md:h-3
+    md:size-3
   `,
 })

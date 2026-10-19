@@ -1,11 +1,16 @@
 'use client';
 
+import type { Holding } from '@/types';
 import Ui from '@/ui';
 
 import Inner from './inner';
 import { useModel } from './model';
 
-export default function Dialog() {
+type Props = {
+  holding?: Holding;
+};
+
+export default function Dialog({ holding }: Props) {
   const {
     instance,
     isActive,
@@ -22,7 +27,7 @@ export default function Dialog() {
       onCancel={onCancel}
     >
       <Ui.Dialog.DialogInner isActive={isActive}>
-        <Inner />
+        <Inner holding={holding} />
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>
   );

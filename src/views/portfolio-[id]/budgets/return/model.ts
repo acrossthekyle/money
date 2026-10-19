@@ -1,15 +1,14 @@
 'use client';
 
 import { useReturn } from '@/hooks';
-import type { CalendarDay, DialogReturnData, Holding } from '@/types';
+import type { CalendarDay, DialogReturnData } from '@/types';
 
-export function useModel(day: CalendarDay, holding: Holding) {
+export function useModel(day: CalendarDay) {
   const { onReturn } = useReturn<DialogReturnData>();
 
   const handleOnClick = () => {
     onReturn({
       day,
-      holding,
     });
   };
 

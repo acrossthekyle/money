@@ -3,9 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { startTransition, useActionState, useEffect, useState } from 'react';
 
-import { useBudget } from '@/hooks';
+import { useBudget, useConfirm } from '@/hooks';
+import { erase } from '@/actions/budgets/erase';
 import { put } from '@/actions/budgets/put';
-import type { DialogBudgetData } from '@/types';
+import type { DialogBudgetData, UseConfirmConfig } from '@/types';
 
 import type { Data } from './types';
 
@@ -13,6 +14,7 @@ export function useModel(parent: string) {
   const router = useRouter();
 
   const { input, instance, isActive, onBackdrop, onCancel, onClose } = useBudget<DialogBudgetData>();
+  const confirm = useConfirm();
 
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
@@ -38,7 +40,14 @@ export function useModel(parent: string) {
     },
   });
 
-  const [, action, isPending] = useActionState(putable, null);
+  const eraseable = erase.bind(null, {
+    budget: input?.budget,
+    dateIso: input?.date?.iso,
+  });
+
+  const [, putableAction] = useActionState(putable, null);
+  // @ts-expect-error - is ok
+  const [, eraseableAction] = useActionState(eraseable, null);
 
   const steps = [
     input?.budget && 'outline',
@@ -101,7 +110,7 @@ export function useModel(parent: string) {
 
   const handleOnSubmit = () => {
     startTransition(async () => {
-      await action();
+      await putableAction();
 
       router.refresh();
 
@@ -125,6 +134,63 @@ export function useModel(parent: string) {
     onClose();
   };
 
+  const handleOnDelete = async () => {
+    let config: UseConfirmConfig = {
+      target: '#budget-dialog',
+    };
+
+    if (input?.budget?.schedule === 'once') {
+      config = {
+        ...config,
+        text: 'This action cannot be undone. This will permanently delete this budget.',
+      };
+    } else {
+      config = {
+        ...config,
+        title: 'Are you absolutely sure?',
+        text: `This will be a permanent deletion. This action cannot be undone. Choose an option:`,
+        input: 'radio',
+        inputOptions: {
+          'all': `Entire series (all dates)`,
+          'this': `Only ${input?.date?.display || ''}`,
+        },
+        inputValidator: (value: string): string => {
+          if (!value) {
+            return ' ';
+          };
+
+          return '';
+        },
+      };
+    }
+
+    const result = await confirm(config);
+
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    if (result.value === 'all') {
+      startTransition(async () => {
+        // @ts-expect-error - is ok
+        await eraseableAction(true);
+
+        router.refresh();
+
+        onClose();
+      });
+    } else {
+      startTransition(async () => {
+        // @ts-expect-error - is ok
+        await eraseableAction(false);
+
+        router.refresh();
+
+        onClose();
+      });
+    }
+  };
+
   return {
     budget: input?.budget,
     data,
@@ -132,13 +198,13 @@ export function useModel(parent: string) {
     handleOnBack,
     handleOnCancel,
     handleOnContinue,
+    handleOnDelete,
     handleOnEdit,
     handleOnNext,
     handleOnSubmit,
     instance,
     isActive,
     isEditing,
-    isPending,
     onBackdrop,
     onCancel,
     step,

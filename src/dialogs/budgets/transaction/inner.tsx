@@ -1,13 +1,14 @@
 'use client';
 
 import tw from '@/styles';
+import type { Holding } from '@/types';
 import Ui from '@/ui';
 import { getBudgetDisplayData } from '@/utils/budgets';
 
 import {
   Amount,
+  Balance,
   Content,
-  Footer,
   Navigate,
   Navigation,
   Subheader,
@@ -15,14 +16,18 @@ import {
 } from '../components';
 
 import { useModel } from './model';
+import { getAlert } from './utils';
 
-export default function Inner() {
+type Props = {
+  holding?: Holding;
+};
+
+export default function Inner({ holding }: Props) {
   const {
     data,
-    handleOnDelete,
     handleOnEdit,
+    handleOnSwitch,
     isActive,
-    isPending,
     onClose,
   } = useModel();
 
@@ -35,66 +40,53 @@ export default function Inner() {
     data?.budget,
   );
 
-  const isNotAssignedToHolding = data?.budget.parent !== data?.holding.id;
+  const alert = getAlert(data?.budget, holding);
 
   return (
     <>
       <Ui.Dialog.DialogHeader onClose={onClose}>
-        <Ui.Dialog.DialogTitle text={data?.day?.dateable.display || ''}>
+        <Ui.Dialog.DialogTitle text={data?.budget.name || ''}>
           <Subheader>
-            USD • {data?.budget.category} • {data?.budget.schedule}
+            {data?.day?.dateable.display || ''}
           </Subheader>
         </Ui.Dialog.DialogTitle>
       </Ui.Dialog.DialogHeader>
       <Ui.Dialog.DialogContent label="transaction details">
-        <Amount isNegative={isNegative} value={amount} />
         <Content>
-          <Title>{data?.budget.name}</Title>
-          {data?.budget.holding?.from !== data?.budget.holding?.to && (
-            <Footer>
-              Debit from {data?.budget.holding?.from} as credit to {data?.budget.holding?.to}
-            </Footer>
-          )}
-          {data?.budget.holding?.from === data?.budget.holding?.to && (
-            <Footer>
-              {data?.budget.type}
-            </Footer>
-          )}
+          <Title>
+            USD • {data?.budget.category} • {data?.budget.schedule}
+          </Title>
         </Content>
-        {isNotAssignedToHolding && (
+        <Amount isNegative={isNegative} value={amount} />
+        <Balance
+          amount={String(amount)}
+          isNegative={isNegative}
+          title={holding?.name || ''}
+          value={data?.day?.balance || 0}
+        />
+        {!!alert && (
           <p className={styles.alert}>
-            This transaction is managed under a different portfolio item.
+            {alert}
           </p>
         )}
         <Navigation>
-          {isNotAssignedToHolding ? (
-            <Navigate
-              href={`/portfolio/${data?.budget.parent}`}
-              onClick={onClose}
-            >
+          {data?.budget.parent !== holding?.id ? (
+            <Navigate onClick={handleOnSwitch}>
               Switch to {data?.budget.type === 'credit' ? data?.budget.holding?.to : data?.budget.holding?.from}
             </Navigate>
           ) : (
             <>
               <Navigate
-                isDisabled={isPending}
-                onClick={handleOnDelete}
-              >
-                Delete
-              </Navigate>
-              <Navigate
-                isDisabled={isPending}
-                isOutline
-                onClick={onClose}
-              >
-                Cancel
-              </Navigate>
-              <Navigate
-                isDisabled={isPending}
                 isPrimary
                 onClick={handleOnEdit}
               >
                 Edit
+              </Navigate>
+              <Navigate
+                isOutline
+                onClick={onClose}
+              >
+                Close
               </Navigate>
             </>
           )}
@@ -114,11 +106,14 @@ const styles = tw({
   `,
   alert: `
     border border-current/12
-    rounded-xl
-    p-3
-    text-sm text-center
+    rounded-lg
+    py-3 px-8
+    text-xs text-center
     leading-[1.5]
+    bg-(--foreground)/6
+    uppercase
+    font-roboto
 
-    md:text-xs
+    md:text-tiny
   `,
 });

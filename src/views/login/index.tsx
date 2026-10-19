@@ -3,6 +3,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
+import { CARD_BEFORE_RADIUS } from '@/constants';
 import { Main } from '@/layout';
 import tw from '@/styles';
 import Ui from '@/ui';
@@ -111,11 +112,11 @@ const styles = tw({
     before:bg-(--foreground)/2
     before:border
     before:border-current/6
-    before:rounded-4xl
 
-    md:before:rounded-2xl
     md:before:inset-x-6
     md:px-9
+
+    ${CARD_BEFORE_RADIUS}
   `,
   header: `
     mb-4

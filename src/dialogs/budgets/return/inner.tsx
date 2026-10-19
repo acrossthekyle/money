@@ -1,11 +1,12 @@
 'use client';
 
+import type { Holding } from '@/types';
 import Ui from '@/ui';
 
 import {
   Amount,
+  Balance,
   Content,
-  Footer,
   Navigate,
   Navigation,
   Subheader,
@@ -14,7 +15,11 @@ import {
 
 import { useModel } from './model';
 
-export default function Inner() {
+type Props = {
+  holding?: Holding;
+};
+
+export default function Inner({ holding }: Props) {
   const { data, isActive, onClose } = useModel();
 
   if (!isActive || data === undefined) {
@@ -24,33 +29,30 @@ export default function Inner() {
   return (
     <>
       <Ui.Dialog.DialogHeader onClose={onClose}>
-        <Ui.Dialog.DialogTitle text={data?.day.dateable.display || ''}>
+        <Ui.Dialog.DialogTitle text={data?.day.return.label || ''}>
           <Subheader>
-            USD{' • '}
-            {data?.day.return.label}{' • '}
-            {Number(data?.holding.interest || 0) > 0 ? '+' : '-'}{data?.holding.interest}%
+            {data?.day.dateable.display || ''}
           </Subheader>
         </Ui.Dialog.DialogTitle>
       </Ui.Dialog.DialogHeader>
       <Ui.Dialog.DialogContent label="return details">
+        <Content>
+          <Title>
+            USD{' • '}
+            {data?.day.return.type}{' • '}
+            Monthly
+          </Title>
+        </Content>
         <Amount
           isNegative={!data?.day.return.isPositive}
           value={data?.day.return.amount}
         />
-        <Content>
-          <Title>
-            {['savings', 'checking', 'credit_card'].includes(data?.holding.type || '') && (
-              <>Growth</>
-            )}
-            {['retirement'].includes(data?.holding.type || '') && (
-              <>Return</>
-            )}
-            {['property'].includes(data?.holding.type || '') && (
-              <>Worth</>
-            )}
-          </Title>
-          <Footer>Projected {data?.day.return.label}</Footer>
-        </Content>
+        <Balance
+          amount={String(data?.day.return.amount || 0)}
+          isNegative={!data?.day.return.isPositive}
+          title={holding?.name || ''}
+          value={data?.day?.balance || 0}
+        />
         <Navigation>
           <Navigate isOutline onClick={onClose}>
             Close

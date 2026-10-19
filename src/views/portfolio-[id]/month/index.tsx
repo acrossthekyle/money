@@ -1,20 +1,21 @@
 'use client';
 
+import { CARD_RADIUS } from '@/constants';
 import tw, { cs } from '@/styles';
 import type { CalendarDay, Dateable } from '@/types';
 
-import { CalendarNavigation } from '../components';
+import Navigation from './navigation';
 
 type Props = {
   date: Dateable;
   days: CalendarDay[];
-  onClick: (dateable: Dateable, view: string) => void;
+  onClick: (dateable: Dateable) => void;
 };
 
 export default function Month({ date, days, onClick }: Props) {
   return (
     <section aria-label="month-by-month calendar" className={styles.container}>
-      <CalendarNavigation date={date} onClick={onClick} view="month" />
+      <Navigation date={date} onClick={onClick} view="month" />
       <ul className={styles.grid}>
         <li
           className={cs(styles.heading, styles.faded)}
@@ -56,7 +57,7 @@ export default function Month({ date, days, onClick }: Props) {
                   (!day.dateable.isInMonth || day.dateable.isBeforeToday) && styles.disabled,
                 )
               }
-              onClick={() => onClick(day.dateable, 'week')}
+              onClick={() => onClick(day.dateable)}
               type="button"
             >
               {day.dateable.day}
@@ -78,14 +79,13 @@ export default function Month({ date, days, onClick }: Props) {
 const styles = tw({
   container: `
     border border-current/6
-    rounded-4xl
     bg-(--foreground)/2
 
-    md:rounded-2xl
+    ${CARD_RADIUS}
   `,
   grid: `
     grid grid-cols-7 gap-x-2 gap-y-3
-    p-4 pt-0
+    p-4
   `,
   heading: `
     h-6
