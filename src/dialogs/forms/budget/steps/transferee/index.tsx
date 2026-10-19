@@ -4,6 +4,7 @@ import type { Holding } from '@/types';
 
 import {
   Action,
+  Actions,
   Container,
   Header,
   Option,
@@ -22,13 +23,14 @@ type Props = {
 };
 
 export default function Section({
+  children,
   header,
   holdings,
   isActive,
   isEditing,
   onNext,
   value,
-}: Props) {
+}: React.PropsWithChildren<Props>) {
   const { handleOnChange, transferee } = useModel(value);
 
   return (
@@ -45,12 +47,15 @@ export default function Section({
           </Option>
         ))}
       </Options>
-      <Action
-        isEditing={isEditing}
-        onClick={() => onNext('transferee', transferee)}
-      >
-        {transferee ? 'Next' : 'Skip'}
-      </Action>
+      <Actions>
+        {children}
+        <Action
+          isEditing={isEditing}
+          onClick={() => onNext('transferee', transferee)}
+        >
+          {transferee ? 'Next' : 'Skip'}
+        </Action>
+      </Actions>
     </Container>
   );
 };

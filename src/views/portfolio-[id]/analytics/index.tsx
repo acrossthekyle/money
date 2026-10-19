@@ -1,11 +1,8 @@
-'use client';
-
 import type { CalendarDay, Dateable } from '@/types';
 
 import { filterDays } from '../utils';
 
 import Chart from './chart';
-import Overview from './overview';
 
 type Props = {
   date: Dateable;
@@ -18,12 +15,7 @@ export default function Analytics({
   days,
   view,
 }: Props) {
-  const filtered = filterDays(view, date, days);
-
   return (
-    <>
-      <Chart days={filtered} />
-      <Overview days={filtered} />
-    </>
+    <Chart days={filterDays(view, date, days)} />
   );
 };

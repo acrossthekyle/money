@@ -7,6 +7,7 @@ import type { Dateable } from '@/types';
 
 import {
   Action,
+  Actions,
   Container,
   Header,
   Option,
@@ -23,11 +24,12 @@ type Props = {
 };
 
 export default function Section({
+  children,
   date,
   header,
   isActive,
   onContinue,
-}: Props) {
+}: React.PropsWithChildren<Props>) {
   const { choice, handleOnChange, isBlocked } = useModel();
 
   if (!date) {
@@ -63,12 +65,15 @@ export default function Section({
           After {format(date?.date, DATE_DISPLAY)}
         </Option>
       </Options>
-      <Action
-        isBlocked={isBlocked}
-        onClick={() => onContinue(choice)}
-      >
-        Continue
-      </Action>
+      <Actions>
+        {children}
+        <Action
+          isBlocked={isBlocked}
+          onClick={() => onContinue(choice)}
+        >
+          Continue
+        </Action>
+      </Actions>
     </Container>
   );
 };

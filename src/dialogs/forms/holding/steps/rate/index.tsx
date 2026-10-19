@@ -6,6 +6,7 @@ import tw from '@/styles';
 
 import {
   Action,
+  Actions,
   Container,
   Content,
   Header,
@@ -22,12 +23,13 @@ type Props = {
 };
 
 export default function Section({
+  children,
   header,
   isActive,
   isEditing,
   onNext,
   value,
-}: Props) {
+}: React.PropsWithChildren<Props>) {
   const { handleOnChange, rate } = useModel(value);
 
   return (
@@ -50,12 +52,15 @@ export default function Section({
           value={rate}
         />
       </Content>
-      <Action
-        isEditing={isEditing}
-        onClick={() => onNext('interest', rate)}
-      >
-        {rate ? 'Next' : 'Skip'}
-      </Action>
+      <Actions>
+        {children}
+        <Action
+          isEditing={isEditing}
+          onClick={() => onNext('interest', rate)}
+        >
+          {rate ? 'Next' : 'Skip'}
+        </Action>
+      </Actions>
     </Container>
   );
 };

@@ -4,6 +4,7 @@ import Ui from '@/ui';
 
 import {
   Action,
+  Actions,
   Container,
   Content,
   Header,
@@ -20,12 +21,13 @@ type Props = {
 };
 
 export default function Section({
+  children,
   header,
   isActive,
   isEditing,
   onNext,
   value,
-}: Props) {
+}: React.PropsWithChildren<Props>) {
   const { handleOnChange, number } = useModel(value);
 
   return (
@@ -42,12 +44,15 @@ export default function Section({
           type="text"
         />
       </Content>
-      <Action
-        isEditing={isEditing}
-        onClick={() => onNext('number', number)}
-      >
-        {number ? 'Next' : 'Skip'}
-      </Action>
+      <Actions>
+        {children}
+        <Action
+          isEditing={isEditing}
+          onClick={() => onNext('number', number)}
+        >
+          {number ? 'Next' : 'Skip'}
+        </Action>
+      </Actions>
     </Container>
   );
 };

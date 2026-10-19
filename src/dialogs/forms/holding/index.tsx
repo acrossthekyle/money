@@ -20,6 +20,26 @@ import {
   getSubtitle,
 } from './utils';
 
+type ActionProps = {
+  canGoBack: boolean;
+  canCancel: boolean;
+  onBack: () => void;
+  onCancel: () => void;
+};
+
+function Actions({ canGoBack, canCancel, onBack, onCancel }: ActionProps) {
+  return (
+    <>
+      {canGoBack && (
+        <Action isOutline onClick={onBack}>Back</Action>
+      )}
+      {canCancel && (
+        <Action isOutline onClick={onCancel}>Cancel</Action>
+      )}
+    </>
+  );
+};
+
 export default function Dialog() {
   const {
     data,
@@ -40,6 +60,9 @@ export default function Dialog() {
 
   const headers = getHeaders(data.type);
   const placeholder = getPlaceholder(data.type);
+
+  const canGoBack = !holding && step > 0 && !isEditing;
+  const canCancel = (holding ? step === 0 || step === steps.length -1 : step === 0) && !isEditing;
 
   return (
     <Ui.Dialog.Dialog
@@ -62,14 +85,28 @@ export default function Dialog() {
             data={data}
             isActive={steps[step] === 'outline'}
             onEdit={handleOnEdit}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+            />
+          </Outline>
           <Type
             header="What kind of portfolio item is this?"
             isActive={steps[step] === 'type'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.type}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+            />
+          </Type>
           <Name
             header={headers.name}
             isActive={steps[step] === 'name'}
@@ -77,41 +114,70 @@ export default function Dialog() {
             onNext={handleOnNext}
             placeholder={placeholder}
             value={data.name}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+            />
+          </Name>
           <Number
             header={headers.number}
             isActive={steps[step] === 'number'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.number}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+            />
+          </Number>
           <Balance
             header={headers.balance}
             isActive={steps[step] === 'balance'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.balance}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+            />
+          </Balance>
           <Rate
             header={headers.rate}
             isActive={steps[step] === 'rate'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.interest}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+            />
+          </Rate>
           <Submit
             data={data}
             isActive={steps[step] === 'submit'}
             isEditing={holding !== undefined}
             onEdit={handleOnEdit}
             onSubmit={handleOnSubmit}
-          />
-          {(!holding && step > 0 && !isEditing && (step !== steps.length - 1)) && (
-            <Action isOutline onClick={handleOnBack}>Back</Action>
-          )}
-          {(step === 0 && !isEditing) && (
-            <Action isOutline onClick={handleOnCancel}>Cancel</Action>
-          )}
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+            />
+          </Submit>
         </Ui.Dialog.DialogContent>
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>

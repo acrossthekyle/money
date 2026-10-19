@@ -3,7 +3,7 @@
 import type { Holding } from '@/types';
 import Ui from '@/ui';
 
-import { Action, Actions } from '../components';
+import { Action } from '../components';
 
 import { useModel } from './model';
 import {
@@ -20,6 +20,38 @@ import {
   Update,
 } from './steps';
 import { getSubtitle } from './utils';
+
+type ActionProps = {
+  canGoBack: boolean;
+  canCancel: boolean;
+  canDelete: boolean;
+  onBack: () => void;
+  onCancel: () => void;
+  onDelete: () => void;
+};
+
+function Actions({
+  canGoBack,
+  canCancel,
+  canDelete,
+  onBack,
+  onCancel,
+  onDelete,
+}: ActionProps) {
+  return (
+    <>
+      {canGoBack && (
+        <Action isOutline onClick={onBack}>Back</Action>
+      )}
+      {canDelete && (
+        <Action onClick={onDelete}>Delete</Action>
+      )}
+      {canCancel && (
+        <Action isOutline onClick={onCancel}>Cancel</Action>
+      )}
+    </>
+  );
+};
 
 type Props = {
   holdings: Holding[];
@@ -48,6 +80,10 @@ export default function Dialog({ holdings, parent }: Props) {
     update,
   } = useModel(parent);
 
+  const canGoBack = !budget && step > 0 && !isEditing;
+  const canCancel = (budget ? step === 0 || step === steps.length -1 : step === 0) && !isEditing;
+  const canDelete = budget && step === 0 && !isEditing ? true : false;
+
   return (
     <Ui.Dialog.Dialog
       id="budget-dialog"
@@ -72,14 +108,32 @@ export default function Dialog({ holdings, parent }: Props) {
             isActive={steps[step] === 'outline'}
             onEdit={handleOnEdit}
             update={update}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              canDelete={canDelete}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+              onDelete={handleOnDelete}
+            />
+          </Outline>
           <Type
             header="What kind of transaction is this?"
             isActive={steps[step] === 'type'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.type}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              canDelete={canDelete}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+              onDelete={handleOnDelete}
+            />
+          </Type>
           <Amount
             header={data.type === 'credit' ? 'How much income is expected?' : 'How much of an expense is it?'}
             isActive={steps[step] === 'amount'}
@@ -87,14 +141,32 @@ export default function Dialog({ holdings, parent }: Props) {
             isNegative={data.type === 'debit'}
             onNext={handleOnNext}
             value={data.amount}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              canDelete={canDelete}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+              onDelete={handleOnDelete}
+            />
+          </Amount>
           <Name
             header="What is this transaction for?"
             isActive={steps[step] === 'name'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.name}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              canDelete={canDelete}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+              onDelete={handleOnDelete}
+            />
+          </Name>
           <Transferee
             header={data.type === 'debit' ? 'Should this be transfered as income to one of the following?' : 'Should this be transfered as an expense from one of the following?'}
             holdings={holdings}
@@ -102,42 +174,96 @@ export default function Dialog({ holdings, parent }: Props) {
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.transferee}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              canDelete={canDelete}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+              onDelete={handleOnDelete}
+            />
+          </Transferee>
           <Start
             header="When does this transaction occur?"
             isActive={steps[step] === 'start'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.start}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              canDelete={canDelete}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+              onDelete={handleOnDelete}
+            />
+          </Start>
           <Schedule
             header="How often does this transaction repeat?"
             isActive={steps[step] === 'schedule'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.schedule}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              canDelete={canDelete}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+              onDelete={handleOnDelete}
+            />
+          </Schedule>
           <End
             header="Does this transaction have an end date?"
             isActive={steps[step] === 'end'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.end}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              canDelete={canDelete}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+              onDelete={handleOnDelete}
+            />
+          </End>
           <Category
             header="Which category does this belong in?"
             isActive={steps[step] === 'category'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.category}
-          />
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              canDelete={canDelete}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+              onDelete={handleOnDelete}
+            />
+          </Category>
           {budget?.schedule !== 'once' && (
             <Update
               date={date}
               header="Choose how to apply these changes."
               isActive={steps[step] === 'update'}
               onContinue={handleOnContinue}
-            />
+            >
+              <Actions
+                canGoBack={canGoBack}
+                canCancel={canCancel}
+                canDelete={canDelete}
+                onBack={handleOnBack}
+                onCancel={handleOnCancel}
+                onDelete={handleOnDelete}
+              />
+            </Update>
           )}
           <Submit
             data={data}
@@ -148,18 +274,16 @@ export default function Dialog({ holdings, parent }: Props) {
             onEdit={handleOnEdit}
             onSubmit={handleOnSubmit}
             update={update}
-          />
-          <Actions>
-            {(!budget && step > 0 && !isEditing && (step !== steps.length - 1)) && (
-              <Action isOutline onClick={handleOnBack}>Back</Action>
-            )}
-            {budget && step === 0 && !isEditing && (
-              <Action onClick={handleOnDelete}>Delete</Action>
-            )}
-            {(step === 0 && !isEditing) && (
-              <Action isOutline onClick={handleOnCancel}>Cancel</Action>
-            )}
-          </Actions>
+          >
+            <Actions
+              canGoBack={canGoBack}
+              canCancel={canCancel}
+              canDelete={canDelete}
+              onBack={handleOnBack}
+              onCancel={handleOnCancel}
+              onDelete={handleOnDelete}
+            />
+          </Submit>
         </Ui.Dialog.DialogContent>
       </Ui.Dialog.DialogInner>
     </Ui.Dialog.Dialog>

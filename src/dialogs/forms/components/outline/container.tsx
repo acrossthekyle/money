@@ -12,7 +12,7 @@ const styles = tw({
   container: `
     flex flex-col gap-3.5
     w-full h-full max-h-104
-    px-2
+    px-0.5
 
     md:gap-4
   `,

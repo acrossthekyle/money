@@ -26,8 +26,9 @@ export default function Action({
         cs(
           styles.container,
           className,
-          isSubmit ? styles.submit : styles.basic,
+          isSubmit && styles.submit,
           isOutline && styles.outline,
+          !isOutline && !isSubmit && styles.basic,
         )
       }
       disabled={isBlocked}
@@ -43,13 +44,13 @@ const styles = tw({
   container: `
     flex items-center justify-center gap-2
     w-full
-    border border-current/12
     rounded-full
     py-2.5
     text-sm text-(--background)
     uppercase
     font-medium
     tracking-wide
+    select-none
 
     motion-safe:duration-300
 
@@ -62,13 +63,16 @@ const styles = tw({
   `,
   basic: `
     bg-(--foreground)
+    border border-(--background)
   `,
   submit: `
     bg-yellow-300
     !text-black
+    border border-current/12
   `,
   outline: `
     !bg-transparent
     !text-(--foreground)
+    border border-current/12
   `,
 });

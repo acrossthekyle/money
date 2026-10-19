@@ -1,5 +1,3 @@
-import { Fragment } from 'react';
-
 import { CARD_RADIUS } from '@/constants';
 import tw from '@/styles';
 import type { CalendarDay, Dateable } from '@/types';
@@ -9,6 +7,7 @@ import { filterDays } from '../utils';
 import Empty from './empty';
 import Return from './return';
 import Transaction from './transaction';
+import { getBudgets } from './utils';
 
 type Props = {
   days: CalendarDay[];
@@ -41,6 +40,8 @@ export default function Budgets({
     }
   });
 
+  const iterables = getBudgets(filtered);
+
   return (
     <section className={styles.container}>
       <h2 className={styles.header}>
@@ -48,26 +49,22 @@ export default function Budgets({
       </h2>
       {hasTransactions ? (
         <ul className={styles.items}>
-          {filtered.map((day) => (
-            <Fragment key={day.dateable.iso}>
-              {day.budgets.map((budget, index) => (
-                <li key={`${day.dateable.iso}-${index}`}>
-                  <Transaction
-                    budget={budget}
-                    day={day}
-                    isHighlighted={hasDateMatches ? date.iso !== day.dateable.iso : false}
-                  />
-                </li>
-              ))}
-              {day.return.amount !== null && (
-                <li>
-                  <Return
-                    day={day}
-                    isHighlighted={hasDateMatches ? date.iso !== day.dateable.iso : false}
-                  />
-                </li>
+          {iterables.map((iterable, index: number) => (
+            <li key={`${iterable.day.dateable.iso}-${index}`}>
+              {iterable.type === 'budget' && iterable.budget && (
+                <Transaction
+                  budget={iterable.budget}
+                  day={iterable.day}
+                  isHighlighted={hasDateMatches ? date.iso !== iterable.day.dateable.iso : false}
+                />
               )}
-            </Fragment>
+              {iterable.type === 'return' && (
+                <Return
+                  day={iterable.day}
+                  isHighlighted={hasDateMatches ? date.iso !== iterable.day.dateable.iso : false}
+                />
+              )}
+            </li>
           ))}
         </ul>
       ) : (
@@ -84,6 +81,7 @@ export default function Budgets({
 
 const styles = tw({
   container: `
+    relative
     p-4 pl-3
     border border-current/6
     bg-(--foreground)/2
@@ -93,9 +91,10 @@ const styles = tw({
   header: `
     mb-4 pl-1
     font-medium
-    text-base
+    text-sm
+    uppercase
 
-    md:text-sm
+    md:text-xs
   `,
   items: `
     group

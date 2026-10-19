@@ -1,6 +1,6 @@
 'use client';
 
-import { Container } from '../../../components';
+import { Actions, Container } from '../../../components';
 import type { Data } from '../../types';
 import { Outline } from '../components';
 
@@ -11,16 +11,20 @@ type Props = {
 };
 
 export default function Section({
+  children,
   data,
   isActive,
   onEdit,
-}: Props) {
+}: React.PropsWithChildren<Props>) {
   return (
     <Container isActive={isActive}>
       <Outline
         data={data}
         onEdit={onEdit}
       />
+      <Actions>
+        {children}
+      </Actions>
     </Container>
   );
 };

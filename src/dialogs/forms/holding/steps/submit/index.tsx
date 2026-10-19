@@ -2,6 +2,7 @@
 
 import {
   Action,
+  Actions,
   Container,
 } from '../../../components';
 import type { Data } from '../../types';
@@ -16,21 +17,25 @@ type Props = {
 };
 
 export default function Section({
+  children,
   data,
   isActive,
   isEditing,
   onEdit,
   onSubmit,
-}: Props) {
+}: React.PropsWithChildren<Props>) {
   return (
     <Container isActive={isActive}>
       <Outline
         data={data}
         onEdit={onEdit}
       />
-      <Action isSubmit onClick={onSubmit}>
-        Looks Good, {isEditing ? 'update' : 'add'} it!
-      </Action>
+      <Actions>
+        {children}
+        <Action isSubmit onClick={onSubmit}>
+          {isEditing ? 'update' : 'add'}
+        </Action>
+      </Actions>
     </Container>
   );
 };

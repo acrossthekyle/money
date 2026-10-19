@@ -2,7 +2,7 @@
 
 import type { Dateable, Holding } from '@/types';
 
-import { Container } from '../../../components';
+import { Actions, Container } from '../../../components';
 import type { Data } from '../../types';
 import { Outline } from '../components';
 
@@ -16,13 +16,14 @@ type Props = {
 };
 
 export default function Section({
+  children,
   data,
   date,
   holdings,
   isActive,
   onEdit,
   update,
-}: Props) {
+}: React.PropsWithChildren<Props>) {
   return (
     <Container isActive={isActive}>
       <Outline
@@ -33,6 +34,9 @@ export default function Section({
         onEdit={onEdit}
         update={update}
       />
+      <Actions>
+        {children}
+      </Actions>
     </Container>
   );
 };

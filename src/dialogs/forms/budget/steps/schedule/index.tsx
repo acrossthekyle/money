@@ -2,6 +2,7 @@
 
 import {
   Action,
+  Actions,
   Container,
   Header,
   Option,
@@ -20,12 +21,13 @@ type Props = {
 };
 
 export default function Section({
+  children,
   header,
   isActive,
   isEditing,
   onNext,
   value,
-}: Props) {
+}: React.PropsWithChildren<Props>) {
   const { handleOnChange, isBlocked, schedule } = useModel(value);
 
   return (
@@ -42,13 +44,16 @@ export default function Section({
           </Option>
         ))}
       </Options>
-      <Action
-        isBlocked={isBlocked}
-        isEditing={isEditing}
-        onClick={() => onNext('schedule', schedule)}
-      >
-        Next
-      </Action>
+      <Actions>
+        {children}
+        <Action
+          isBlocked={isBlocked}
+          isEditing={isEditing}
+          onClick={() => onNext('schedule', schedule)}
+        >
+          Next
+        </Action>
+      </Actions>
     </Container>
   );
 };
