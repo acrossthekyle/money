@@ -39,7 +39,7 @@ const styles = tw({
     w-full max-w-full
     h-full max-h-none
     flex flex-col items-center
-    bg-(--background)/62.5
+    bg-(--background)/32.5
     outline-none
     overflow-hidden
     pt-10

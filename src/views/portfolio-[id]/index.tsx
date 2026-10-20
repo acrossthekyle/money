@@ -77,7 +77,7 @@ export default function View({ data }: Props) {
       <Dialogs.Holding />
       <Dialogs.Budget holdings={data.holdings} parent={data.holding.id} />
       <Dialogs.Transaction holding={data.holding} />
-      <Dialogs.Return holding={data.holding} />
+      <Dialogs.Return />
       <Dialogs.Empty />
     </>
   );

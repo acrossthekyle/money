@@ -35,11 +35,8 @@ export default function Transaction({
   );
 
   return (
-    <TransactionContainer
-      isHighlighted={isHighlighted}
-      onClick={handleOnClick}
-    >
-      <TransactionAvatar type={budget.category} />
+    <TransactionContainer onClick={handleOnClick}>
+      <TransactionAvatar isHighlighted={isHighlighted} type={budget.category} />
         <TransactionContent>
           <TransactionContentUpper>
             <TransactionContentName>{budget.name}</TransactionContentName>

@@ -1,5 +1,6 @@
 'use client';
 
+import tw from '@/styles';
 import Ui from '@/ui';
 
 import {
@@ -8,6 +9,8 @@ import {
   Container,
   Content,
   Header,
+  Option,
+  Options,
 } from '../../../components';
 
 import { useModel } from './model';
@@ -16,7 +19,7 @@ type Props = {
   header: string;
   isActive: boolean;
   isEditing: boolean;
-  isNegative: boolean;
+  isExpense: boolean;
   onNext: (key: string, value: string) => void;
   value: string;
 };
@@ -26,18 +29,39 @@ export default function Section({
   header,
   isActive,
   isEditing,
-  isNegative,
+  isExpense,
   onNext,
   value,
 }: React.PropsWithChildren<Props>) {
-  const { amount, handleOnChange, isBlocked } = useModel(value);
+  const {
+    amount,
+    handleOnChange,
+    handleOnType,
+    isBlocked,
+    type,
+  } = useModel(value, isExpense);
 
   return (
     <Container isActive={isActive}>
       <Header>{header}</Header>
       <Content>
+        <Options className={styles.options}>
+          <Option
+            isActive={type === 'credit'}
+            onClick={() => handleOnType('credit')}
+          >
+            <span>Income</span>
+          </Option>
+          <Option
+            isActive={type === 'debit'}
+            onClick={() => handleOnType('debit')}
+          >
+            <span>Expense</span>
+          </Option>
+        </Options>
         <Ui.Form.Currency
-          isNegative={isNegative}
+          id="transaction-amount"
+          isNegative={type === 'debit'}
           onChange={handleOnChange}
           value={amount}
         />
@@ -47,7 +71,7 @@ export default function Section({
         <Action
           isBlocked={isBlocked}
           isEditing={isEditing}
-          onClick={() => onNext('amount', amount)}
+          onClick={() => onNext('amount', type === 'debit' ? `-${amount}` : amount)}
         >
           Next
         </Action>
@@ -55,3 +79,9 @@ export default function Section({
     </Container>
   );
 };
+
+const styles = tw({
+  options: `
+    mb-4
+  `,
+});

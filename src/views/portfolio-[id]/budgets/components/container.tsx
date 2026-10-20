@@ -1,25 +1,18 @@
 'use client';
 
-import tw, { cs } from '@/styles';
+import tw from '@/styles';
 
 type Props = {
-  isHighlighted?: boolean;
   onClick: () => void;
 };
 
 export default function Container({
   children,
-  isHighlighted,
   onClick,
 }: React.PropsWithChildren<Props>) {
   return (
     <button
-      className={
-        cs(
-          styles.container,
-          isHighlighted && styles.highlighted,
-        )
-      }
+      className={styles.container}
       onClick={onClick}
       type="button"
     >
@@ -33,9 +26,5 @@ const styles = tw({
     relative
     flex items-center gap-4
     w-full
-    opacity-100
-  `,
-  highlighted: `
-    !opacity-32.5
   `,
 });

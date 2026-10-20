@@ -7,5 +7,4 @@ export { default as Schedule } from './schedule';
 export { default as Start } from './start';
 export { default as Submit } from './submit';
 export { default as Transferee } from './transferee';
-export { default as Type } from './type';
 export { default as Update } from './update';

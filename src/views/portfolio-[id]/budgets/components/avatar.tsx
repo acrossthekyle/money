@@ -14,9 +14,10 @@ import {
 } from 'lucide-react';
 
 import { AVATAR_RADIUS } from '@/constants';
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 
 type Props = {
+  isHighlighted?: boolean;
   type: string;
 };
 
@@ -72,9 +73,9 @@ function Icon({ type }: Props) {
   return null;
 };
 
-export default function Avatar({ type }: Props) {
+export default function Avatar({ isHighlighted, type }: Props) {
   return (
-    <span className={styles.container}>
+    <span className={cs(styles.container, isHighlighted && styles.highlighted)}>
       <Icon type={type} />
     </span>
   );
@@ -95,11 +96,13 @@ const styles = tw({
   icon: `
     absolute top-1/2 left-1/2
     -translate-y-1/2 -translate-x-1/2
-    w-6 h-6
+    size-5
     stroke-2
 
-    md:w-5
-    md:h-5
+    md:size-4
     md:stroke-1
+  `,
+  highlighted: `
+    bg-(--foreground)/12
   `,
 });

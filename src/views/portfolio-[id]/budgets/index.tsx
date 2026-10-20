@@ -26,20 +26,6 @@ export default function Budgets({
     return null;
   }
 
-  const hasTransactions = filtered.reduce((accumulator, day) => {
-    if (day.return.amount !== null) {
-      return accumulator + 1;
-    }
-
-    return accumulator + day.budgets.length;
-  }, 0) > 0;
-
-  const hasDateMatches = filtered.some(day => {
-    if (day.budgets.length > 0 || day.return.amount !== null) {
-      return day.dateable.iso === date.iso;
-    }
-  });
-
   const iterables = getBudgets(filtered);
 
   return (
@@ -47,7 +33,7 @@ export default function Budgets({
       <h2 className={styles.header}>
         Upcoming
       </h2>
-      {hasTransactions ? (
+      {iterables.length > 0 ? (
         <ul className={styles.items}>
           {iterables.map((iterable, index: number) => (
             <li key={`${iterable.day.dateable.iso}-${index}`}>
@@ -55,13 +41,13 @@ export default function Budgets({
                 <Transaction
                   budget={iterable.budget}
                   day={iterable.day}
-                  isHighlighted={hasDateMatches ? date.iso !== iterable.day.dateable.iso : false}
+                  isHighlighted={date.iso === iterable.day.dateable.iso}
                 />
               )}
               {iterable.type === 'return' && (
                 <Return
                   day={iterable.day}
-                  isHighlighted={hasDateMatches ? date.iso !== iterable.day.dateable.iso : false}
+                  isHighlighted={date.iso === iterable.day.dateable.iso}
                 />
               )}
             </li>

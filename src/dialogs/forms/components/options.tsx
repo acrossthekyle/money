@@ -18,10 +18,8 @@ export default function Options({
 const styles = tw({
   container: `
     relative
-    flex justify-center gap-1
+    flex justify-center gap-2.5
     flex-wrap
     px-4 mb-2
-
-    md:gap-2.5
   `,
 });

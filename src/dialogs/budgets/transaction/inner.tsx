@@ -1,14 +1,12 @@
 'use client';
 
-import { ALERT_RADIUS } from '@/constants';
-import tw from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
 import { getBudgetDisplayData } from '@/utils/budgets';
 
 import {
+  Alert,
   Amount,
-  Balance,
   Content,
   Navigate,
   Navigation,
@@ -54,24 +52,17 @@ export default function Inner({ holding }: Props) {
       </Ui.Dialog.DialogHeader>
       <Ui.Dialog.DialogContent label="transaction details">
         <Content>
+          <Amount
+            isNegative={isNegative}
+            value={Number(amount)}
+          />
           <Title>
-            USD • {data?.budget.category} • {data?.budget.schedule}
+            {data?.budget.category} • {data?.budget.schedule}
           </Title>
+          {!!alert && (
+            <Alert>{alert}</Alert>
+          )}
         </Content>
-        <Amount
-          balance={data?.day?.balance || 0}
-          isNegative={isNegative}
-          value={Number(amount)}
-        />
-        <Balance
-          title={holding?.name || ''}
-          value={data?.day?.balance || 0}
-        />
-        {!!alert && (
-          <p className={styles.alert}>
-            {alert}
-          </p>
-        )}
         <Navigation>
           {data?.budget.parent !== holding?.id ? (
             <Navigate onClick={handleOnSwitch}>
@@ -98,26 +89,3 @@ export default function Inner({ holding }: Props) {
     </>
   );
 };
-
-const styles = tw({
-  icon: `
-    w-3.5 h-3.5
-    stroke-2
-
-    md:w-3
-    md:h-3
-  `,
-  alert: `
-    border border-current/12
-    py-3 px-8
-    text-xs text-center
-    leading-[1.5]
-    bg-(--foreground)/6
-    uppercase
-    font-roboto
-
-    md:text-tiny
-
-    ${ALERT_RADIUS}
-  `,
-});

@@ -87,6 +87,9 @@ const styles = tw({
   container: `
     border border-current/6
     bg-(--foreground)/2
+    mt-0.5
+
+    md:mt-0
 
     ${CARD_RADIUS}
   `,

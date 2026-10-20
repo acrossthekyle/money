@@ -27,11 +27,8 @@ export default function Return({
   const { handleOnClick } = useModel(day);
 
   return (
-    <TransactionContainer
-      isHighlighted={isHighlighted}
-      onClick={handleOnClick}
-    >
-      <TransactionAvatar type="return" />
+    <TransactionContainer onClick={handleOnClick}>
+      <TransactionAvatar isHighlighted={isHighlighted} type="return" />
       <TransactionContent>
         <TransactionContentUpper>
           <TransactionContentName>

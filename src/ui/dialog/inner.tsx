@@ -23,7 +23,7 @@ const styles = tw({
     relative bottom-6
     flex flex-col justify-between
     w-[calc(100%-2rem)]
-    h-auto min-h-70 max-h-[calc(100svh-3.5rem)]
+    h-auto min-h-60 max-h-[calc(100svh-3.5rem)]
     mt-auto
     shadow-lg/50
     bg-(--background)

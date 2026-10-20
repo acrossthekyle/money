@@ -36,19 +36,10 @@ export default function Block({
   return (
     <Outline>
       <OutlineItem>
-        <OutlineItemAction onClick={() => onEdit('type')}>
-          <OutlineItemHeading>Type</OutlineItemHeading>
-          <OutlineItemText>
-            {data.type === 'debit' && 'Expense'}
-            {data.type === 'credit' && 'Income'}
-          </OutlineItemText>
-        </OutlineItemAction>
-      </OutlineItem>
-      <OutlineItem>
         <OutlineItemAction onClick={() => onEdit('amount')}>
           <OutlineItemHeading>Amount</OutlineItemHeading>
           <OutlineItemText>
-            {Number(data.amount) < 0 ? '-' : ''}${currency(data.amount)}
+            {data.type === 'debit' ? '-' : ''}${currency(data.amount)}
           </OutlineItemText>
         </OutlineItemAction>
       </OutlineItem>

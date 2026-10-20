@@ -1,23 +1,18 @@
-import { ArrowDown, ArrowUp } from 'lucide-react';
-
 import tw, { cs } from '@/styles';
 import { currency } from '@/utils';
 
-import { calculateChange } from '../utils';
-
 type Props = {
-  balance: number;
   isNegative: boolean;
   value: number;
 };
 
-export default function Amount({ balance, isNegative, value }: Props) {
+export default function Amount({ isNegative, value }: Props) {
   const parts = currency(String(value)).split('.');
   const dollars = parts[0];
   const cents = parts[1];
 
   return (
-    <p className={styles.container}>
+    <span className={styles.container}>
       <span
         className={
           cs(
@@ -33,21 +28,7 @@ export default function Amount({ balance, isNegative, value }: Props) {
           .{cents}
         </span>
       </span>
-      <span className={styles.change}>
-        {isNegative ? (
-          <ArrowDown className={styles.icon} />
-        ) : (
-          <ArrowUp className={styles.icon} />
-        )}
-        <span>
-          {
-            isNegative
-              ? calculateChange(balance + Number(value), balance)
-              : calculateChange(balance, balance + Number(value))
-          }%
-        </span>
-      </span>
-    </p>
+    </span>
   );
 };
 
@@ -73,16 +54,6 @@ const styles = tw({
     pl-1
     text-xl
     font-light
-  `,
-  change: `
-    flex gap-2 items-center justify-center
-    font-roboto
-    text-sm text-current/90
-
-    md:text-xs
-  `,
-  icon: `
-    size-3
   `,
   negative: `
     text-red-400 dark:text-rose-400

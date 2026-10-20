@@ -17,7 +17,7 @@ export function useModel() {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setView(saved);
     } else {
-      setView('week');
+      setView('month');
     }
   }, []);
 

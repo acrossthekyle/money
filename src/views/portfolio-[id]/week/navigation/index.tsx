@@ -76,12 +76,13 @@ const styles = tw({
   `,
   current: `
     whitespace-nowrap
-    flex items-center gap-2
-    text-xs
+    flex items-center gap-1
+    text-sm
     font-medium
     uppercase
     tracking-wide
 
-    md:text-tiny
+    md:text-xs
+    md:gap-2
   `,
 });

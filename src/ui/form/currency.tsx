@@ -17,9 +17,9 @@ export default function Currency({ isNegative, value, ...rest }: Props) {
       decimalsLimit={2}
       decimalScale={2}
       prefix={isNegative ? '- $ ' : '$ '}
+      inputMode="decimal"
       // @ts-expect-error - is ok
       value={isNaN(value) ? '' : value}
-      inputMode="text"
       {...rest}
     />
   );
@@ -29,10 +29,11 @@ const styles = tw({
   container: `
     py-2.25 px-4
     outline-none
-    border-b border-current/22.5
+    border-none
     w-66
     text-center text-xl
 
     md:text-base
+    md:w-40
   `,
 });

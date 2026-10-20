@@ -1,11 +1,10 @@
 'use client';
 
-import type { Holding } from '@/types';
 import Ui from '@/ui';
 
 import {
+  Alert,
   Amount,
-  Balance,
   Content,
   Navigate,
   Navigation,
@@ -15,11 +14,7 @@ import {
 
 import { useModel } from './model';
 
-type Props = {
-  holding?: Holding;
-};
-
-export default function Inner({ holding }: Props) {
+export default function Inner() {
   const { data, isActive, onClose } = useModel();
 
   if (!isActive || data === undefined) {
@@ -37,21 +32,18 @@ export default function Inner({ holding }: Props) {
       </Ui.Dialog.DialogHeader>
       <Ui.Dialog.DialogContent label="return details">
         <Content>
+          <Amount
+            isNegative={!data?.day.return.isPositive}
+            value={data?.day.return.amount || 0}
+          />
           <Title>
-            USD{' • '}
-            {data?.day.return.type}{' • '}
-            Monthly
+            {data?.day.return.type} • Monthly
           </Title>
+          <Alert>
+            This is an estimate.<br />
+            Actual {data?.day.return.label} {data?.day.return.type} may vary.
+          </Alert>
         </Content>
-        <Amount
-          balance={data?.day?.balance || 0}
-          isNegative={!data?.day.return.isPositive}
-          value={data?.day.return.amount || 0}
-        />
-        <Balance
-          title={holding?.name || ''}
-          value={data?.day?.balance || 0}
-        />
         <Navigation>
           <Navigate isOutline onClick={onClose}>
             Close

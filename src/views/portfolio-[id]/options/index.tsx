@@ -37,33 +37,6 @@ export default function Options({
         <RotateCcwClock className={styles.icon} />
       </button>
       <button
-        onClick={onWeek}
-        className={
-          cs(
-            styles.option,
-            styles.dynamic,
-            view === 'week' ? styles.active : styles.inactive,
-          )
-        }
-        title="Week by week"
-      >
-        <span className={styles.content}>
-          <CalendarDays className={styles.icon} />
-          <span
-            className={
-              cs(
-                styles.label,
-                view === 'week' ? styles.expanded : styles.collapsed,
-              )
-            }
-          >
-            <span className={styles.text}>
-              Weekly
-            </span>
-          </span>
-        </span>
-      </button>
-      <button
         onClick={onMonth}
         className={
           cs(
@@ -86,6 +59,33 @@ export default function Options({
           >
             <span className={styles.text}>
               Monthly
+            </span>
+          </span>
+        </span>
+      </button>
+      <button
+        onClick={onWeek}
+        className={
+          cs(
+            styles.option,
+            styles.dynamic,
+            view === 'week' ? styles.active : styles.inactive,
+          )
+        }
+        title="Week by week"
+      >
+        <span className={styles.content}>
+          <CalendarDays className={styles.icon} />
+          <span
+            className={
+              cs(
+                styles.label,
+                view === 'week' ? styles.expanded : styles.collapsed,
+              )
+            }
+          >
+            <span className={styles.text}>
+              Weekly
             </span>
           </span>
         </span>
@@ -149,6 +149,8 @@ const styles = tw({
   icon: `
     size-4
     shrink-0
+
+    md:size-3.5
   `,
   label: `
     grid
@@ -170,9 +172,9 @@ const styles = tw({
   text: `
     overflow-hidden
     whitespace-nowrap
-    text-xs
+    text-sm
     uppercase
 
-    md:text-tiny
+    md:text-xs
   `,
 });

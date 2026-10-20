@@ -54,31 +54,21 @@ const styles = tw({
   `,
   option: `
     border border-current/12
-    bg-white dark:bg-(--foreground)/6
-    text-black dark:text-white
+    bg-(--background)
+    text-(--foreground)
     flex items-center justify-center gap-4
     uppercase
     text-sm
     p-2 px-4
     w-full
 
-    motion-safe:duration-300
-
-    hover:bg-(--foreground)/100
-    hover:text-(--background)
-
     md:text-tiny
 
     ${CTA_RADIUS}
   `,
   icon: `
-    w-4 h-4
-    stroke-2
+    size-3.25
 
-    md:w-3
-    md:h-3
-  `,
-  spin: `
-    animate-spin
+    md:size-2.75
   `,
 })

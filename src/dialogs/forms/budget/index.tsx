@@ -16,7 +16,6 @@ import {
   Submit,
   Start,
   Transferee,
-  Type,
   Update,
 } from './steps';
 import { getSubtitle } from './utils';
@@ -118,27 +117,11 @@ export default function Dialog({ holdings, parent }: Props) {
               onDelete={handleOnDelete}
             />
           </Outline>
-          <Type
-            header="What kind of transaction is this?"
-            isActive={steps[step] === 'type'}
-            isEditing={isEditing}
-            onNext={handleOnNext}
-            value={data.type}
-          >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              canDelete={canDelete}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-              onDelete={handleOnDelete}
-            />
-          </Type>
           <Amount
-            header={data.type === 'credit' ? 'How much income is expected?' : 'How much of an expense is it?'}
+            header="Choose either Income or Expense as the type of transaction, and then enter the amount"
             isActive={steps[step] === 'amount'}
             isEditing={isEditing}
-            isNegative={data.type === 'debit'}
+            isExpense={data.type === 'debit'}
             onNext={handleOnNext}
             value={data.amount}
           >

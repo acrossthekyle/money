@@ -47,7 +47,6 @@ export default function Card({
     <Wrapper isHeading={isHeading}>
       <span className={styles.upper}>
         <span className={styles.type}>{holding.type.replace(/_/g, ' ')}</span>
-        <span className={styles.currency}>USD</span>
         <span className={styles.number}>**** {holding.number || '0000'}</span>
       </span>
       <span className={styles.middle}>
@@ -83,9 +82,9 @@ const styles = tw({
   container: `
     relative
     flex flex-col justify-between gap-6
-    text-black dark:text-white
-    bg-linear-to-tl from-gray-100 dark:from-gray-500 to-stone-200 dark:to-zinc-800
     px-4 pt-5 pb-4
+    bg-(--foreground)
+    text-(--background)
 
     md:px-4
     md:pt-4
@@ -113,7 +112,7 @@ const styles = tw({
   `,
   title: `
     text-3xl
-    font-thin
+    font-extralight
     whitespace-wrap
 
     md:text-2xl

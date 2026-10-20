@@ -51,7 +51,6 @@ export function useModel(parent: string) {
 
   const steps = [
     input?.budget && 'outline',
-    'type',
     'amount',
     'name',
     'transferee',
@@ -89,6 +88,7 @@ export function useModel(parent: string) {
     setData({
       ...data,
       [key]: value,
+      type: key === 'amount' ? (Number(value) < 0 ? 'debit' : 'credit') : data.type,
     });
 
     if (isEditing) {

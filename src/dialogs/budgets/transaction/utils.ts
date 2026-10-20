@@ -10,15 +10,15 @@ export function getAlert(budget?: Budget, holding?: Holding) {
     return '';
   }
 
-  const transfered = `a transfer from ${budget?.holding?.from} as income to ${budget?.holding?.to}`;
+  const transfered = `an expense from ${budget?.holding?.from} which is transferred as income to ${budget?.holding?.to}`;
   const managed = `This transaction is managed by ${budget?.type === 'credit' ? budget?.holding?.to : budget?.holding?.from}`;
 
   if (holdingsDoNotMatch && isNotAssignedToHolding) {
-    return `${managed} because it is ${transfered}`;
+    return `${managed} - it is ${transfered}.`;
   }
 
   if (holdingsDoNotMatch) {
-    return `This is ${transfered}`;
+    return `This is ${transfered}.`;
   }
 
   if (isNotAssignedToHolding) {

@@ -3,7 +3,7 @@
 import { Eye, Pen } from 'lucide-react';
 import Link from 'next/link';
 
-import { CARD_RADIUS } from '@/constants';
+import { CTA_RADIUS } from '@/constants';
 import { Dialogs } from '@/dialogs';
 import { Main } from '@/layout';
 import tw from '@/styles';
@@ -79,26 +79,21 @@ const styles = tw({
   `,
   option: `
     border border-current/12
-    bg-white dark:bg-(--foreground)/6
-    text-black dark:text-white
+    bg-(--background)
+    text-(--foreground)
     flex items-center justify-center gap-4
     uppercase
     text-sm
     p-2 px-4
     w-full
 
-    motion-safe:duration-300
-
-    hover:bg-(--foreground)/100
-    hover:text-(--background)
-
     md:text-tiny
 
-    ${CARD_RADIUS}
+    ${CTA_RADIUS}
   `,
   icon: `
-    size-4
+    size-3.25
 
-    md:size-3
+    md:size-2.75
   `,
 })
