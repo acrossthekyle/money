@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 
+import { NAVIGATION_RADIUS } from '@/constants';
 import tw, { cs } from '@/styles';
 
 type Props = {
@@ -61,7 +62,6 @@ const styles = tw({
     flex items-center justify-center gap-3
     w-full
     border border-current/12
-    rounded-full
     py-2.5
     text-sm text-(--background)
     bg-(--foreground)
@@ -72,8 +72,9 @@ const styles = tw({
     motion-safe:duration-300
 
     md:text-tiny
-    md:rounded-lg
     md:py-2
+
+    ${NAVIGATION_RADIUS}
   `,
   primary: `
     !bg-yellow-300

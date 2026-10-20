@@ -13,6 +13,7 @@ import {
   Zap,
 } from 'lucide-react';
 
+import { AVATAR_RADIUS } from '@/constants';
 import tw from '@/styles';
 
 type Props = {
@@ -85,11 +86,11 @@ const styles = tw({
     w-14 h-14
     border border-current/12
     bg-(--background)
-    rounded-4xl
 
     md:w-10
     md:h-10
-    md:rounded-2xl
+
+    ${AVATAR_RADIUS}
   `,
   icon: `
     absolute top-1/2 left-1/2

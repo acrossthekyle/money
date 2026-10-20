@@ -1,3 +1,4 @@
+import { CARD_RADIUS } from '@/constants';
 import tw, { cs } from '@/styles';
 
 type Props = {
@@ -24,7 +25,6 @@ const styles = tw({
     w-[calc(100%-2rem)]
     h-auto min-h-70 max-h-[calc(100svh-3.5rem)]
     mt-auto
-    rounded-4xl
     shadow-lg/50
     bg-(--background)
     text-(--foreground)
@@ -38,6 +38,7 @@ const styles = tw({
       : `scale-80 opacity-0 translate-y-24`}
 
     sm:max-w-xs
-    md:rounded-xl
+
+    ${CARD_RADIUS}
   `),
 });

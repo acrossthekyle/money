@@ -66,7 +66,6 @@ const styles = tw({
     leading-[1]
     text-sm
     tracking-wide
-    rounded-t-xl
 
     md:text-xs
   `,

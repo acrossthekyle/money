@@ -23,8 +23,15 @@ export const MONTHS_FULL = [
 
 export const DIALOG_DELAY = 450; // ms
 
-const CARD_RADIUS_MOBILE = 'rounded-4xl';
-const CARD_RADIUS_DESKTOP = 'rounded-2xl';
-
-export const CARD_RADIUS = `${CARD_RADIUS_MOBILE} md:${CARD_RADIUS_DESKTOP}`;
-export const CARD_BEFORE_RADIUS = `before:${CARD_RADIUS_MOBILE} md:before:${CARD_RADIUS_DESKTOP}`;
+export const CARD_RADIUS = '!rounded-4xl md:!rounded-2xl';
+export const CARD_BEFORE_RADIUS = 'before:rounded-4xl md:before:rounded-2xl';
+export const FILTER_RADIUS = 'rounded-4xl md:rounded-2xl';
+export const NAVIGATION_RADIUS = '!rounded-full md:!rounded-lg';
+export const CTA_RADIUS = 'rounded-4xl md:rounded-xl';
+export const ALERT_RADIUS = 'rounded-lg';
+export const OPTION_RADIUS = 'rounded-full md:rounded-md';
+export const LIST_ITEM_EDIT_RADIUS = 'rounded-full md:rounded-xl';
+export const INPUT_RADIUS = 'rounded-4xl md:rounded-xl';
+export const FORM_ACTION_RADIUS = 'rounded-4xl md:rounded-xl';
+export const TOOLTIP_RADIUS = 'rounded-lg';
+export const AVATAR_RADIUS = 'rounded-4xl md:rounded-2xl';

@@ -44,12 +44,11 @@ export default function Inner({ holding }: Props) {
           </Title>
         </Content>
         <Amount
+          balance={data?.day?.balance || 0}
           isNegative={!data?.day.return.isPositive}
-          value={data?.day.return.amount}
+          value={data?.day.return.amount || 0}
         />
         <Balance
-          amount={String(data?.day.return.amount || 0)}
-          isNegative={!data?.day.return.isPositive}
           title={holding?.name || ''}
           value={data?.day?.balance || 0}
         />

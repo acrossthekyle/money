@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
-import { CARD_RADIUS } from '@/constants';
+import { CARD_RADIUS, TOOLTIP_RADIUS } from '@/constants';
 import tw from '@/styles';
 import type { CalendarDay } from '@/types';
 import { currency } from '@/utils';
@@ -155,8 +155,9 @@ const styles = tw({
     p-3 pt-2.5 pb-2
     bg-(--background)
     text-(--foreground)
-    rounded-lg
     border border-current/12
+
+    ${TOOLTIP_RADIUS}
   `,
   date: `
     text-sm

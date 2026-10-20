@@ -1,5 +1,6 @@
 'use client';
 
+import { OPTION_RADIUS } from '@/constants';
 import tw, { cs } from '@/styles';
 
 type Props = {
@@ -36,7 +37,6 @@ const styles = tw({
     inline-flex items-center gap-3
     w-fit
     text-(--background)
-    rounded-full
     text-sm
     uppercase
     py-2 px-4
@@ -44,10 +44,11 @@ const styles = tw({
     select-none
 
     md:text-tiny
-    md:rounded-md
     md:px-2
     md:py-1.25
     md:gap-2
+
+    ${OPTION_RADIUS}
   `,
   inactive: `
     bg-(--foreground)

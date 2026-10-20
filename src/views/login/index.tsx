@@ -3,7 +3,11 @@
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
-import { CARD_BEFORE_RADIUS } from '@/constants';
+import {
+  CARD_BEFORE_RADIUS,
+  FORM_ACTION_RADIUS,
+  INPUT_RADIUS,
+} from '@/constants';
 import { Main } from '@/layout';
 import tw from '@/styles';
 import Ui from '@/ui';
@@ -144,17 +148,17 @@ const styles = tw({
     appearance-none
     relative
     border border-current/22.5
-    rounded-4xl
     outline-none
     pb-3 pt-3.25 pl-6.5
     text-lg text-(--foreground)
     bg-(--background)
 
-    md:rounded-xl
     md:pb-2.25
     md:pt-2.75
     md:pl-3
     md:text-base
+
+    ${INPUT_RADIUS}
   `,
   label: `
     absolute -top-2.5 left-5.5 right-auto z-2
@@ -198,11 +202,11 @@ const styles = tw({
     h-12
     bg-yellow-300
     text-black text-base
-    rounded-4xl
 
     md:text-sm
     md:h-10
-    md:rounded-xl
+
+    ${FORM_ACTION_RADIUS}
   `,
   footer: `
     absolute bottom-3 left-1/2

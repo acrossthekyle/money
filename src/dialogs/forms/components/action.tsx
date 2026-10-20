@@ -1,5 +1,6 @@
 'use client';
 
+import { NAVIGATION_RADIUS } from '@/constants';
 import tw, { cs } from '@/styles';
 
 type Props = {
@@ -44,7 +45,6 @@ const styles = tw({
   container: `
     flex items-center justify-center gap-2
     w-full
-    rounded-full
     py-2.5
     text-sm text-(--background)
     uppercase
@@ -58,8 +58,9 @@ const styles = tw({
     disabled:!cursor-not-allowed
 
     md:text-tiny
-    md:rounded-lg
     md:py-2
+
+    ${NAVIGATION_RADIUS}
   `,
   basic: `
     bg-(--foreground)

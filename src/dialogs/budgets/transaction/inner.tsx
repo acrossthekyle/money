@@ -1,5 +1,6 @@
 'use client';
 
+import { ALERT_RADIUS } from '@/constants';
 import tw from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
@@ -57,10 +58,12 @@ export default function Inner({ holding }: Props) {
             USD • {data?.budget.category} • {data?.budget.schedule}
           </Title>
         </Content>
-        <Amount isNegative={isNegative} value={amount} />
-        <Balance
-          amount={String(amount)}
+        <Amount
+          balance={data?.day?.balance || 0}
           isNegative={isNegative}
+          value={Number(amount)}
+        />
+        <Balance
           title={holding?.name || ''}
           value={data?.day?.balance || 0}
         />
@@ -106,7 +109,6 @@ const styles = tw({
   `,
   alert: `
     border border-current/12
-    rounded-lg
     py-3 px-8
     text-xs text-center
     leading-[1.5]
@@ -115,5 +117,7 @@ const styles = tw({
     font-roboto
 
     md:text-tiny
+
+    ${ALERT_RADIUS}
   `,
 });

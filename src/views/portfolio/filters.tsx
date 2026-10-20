@@ -1,7 +1,15 @@
 'use client';
 
-import { Banknote, CreditCard, LandPlot, PiggyBank, Plus, Egg } from 'lucide-react';
+import {
+  Banknote,
+  CreditCard,
+  LandPlot,
+  PiggyBank,
+  Plus,
+  Egg,
+} from 'lucide-react';
 
+import { FILTER_RADIUS } from '@/constants';
 import tw, { cs } from '@/styles';
 
 type Props = {
@@ -101,14 +109,13 @@ const styles = tw({
     flex items-center justify-center
     aspect-square
     border
-    rounded-4xl
 
     motion-safe:duration-300
 
     hover:bg-(--foreground)
     hover:text-(--background)
 
-    md:rounded-2xl
+    ${FILTER_RADIUS}
   `,
   highlighted: `
     w-full

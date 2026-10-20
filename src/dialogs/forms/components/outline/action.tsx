@@ -1,5 +1,6 @@
 'use client';
 
+import { LIST_ITEM_EDIT_RADIUS } from '@/constants';
 import tw from '@/styles';
 
 type Props = {
@@ -23,16 +24,6 @@ const styles = tw({
     flex flex-col gap-1
     w-full
     text-left
-
-    before:absolute
-    before:-inset-2
-    before:-z-1
-    before:bg-transparent
-    before:rounded-md
-
-    motion-safe:before:duration-300
-
-    hover:before:bg-(--foreground)/6
   `,
   text: `
     absolute right-0 top-1/2
@@ -43,11 +34,11 @@ const styles = tw({
     tracking-wide
     font-roboto
     border border-current/16
-    rounded-full
 
     md:text-tiny
-    md:rounded-xl
     md:py-1.5
     md:px-2.5
+
+    ${LIST_ITEM_EDIT_RADIUS}
   `,
 });

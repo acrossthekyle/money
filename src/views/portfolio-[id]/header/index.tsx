@@ -2,6 +2,7 @@
 
 import { Pen, Trash } from 'lucide-react';
 
+import { CTA_RADIUS } from '@/constants';
 import tw from '@/styles';
 import type { Dateable, Holding } from '@/types'
 import { Ui } from '@/ui';
@@ -55,7 +56,6 @@ const styles = tw({
     border border-current/12
     bg-white dark:bg-(--foreground)/6
     text-black dark:text-white
-    rounded-4xl
     flex items-center justify-center gap-4
     uppercase
     text-sm
@@ -68,7 +68,8 @@ const styles = tw({
     hover:text-(--background)
 
     md:text-tiny
-    md:rounded-xl
+
+    ${CTA_RADIUS}
   `,
   icon: `
     w-4 h-4
