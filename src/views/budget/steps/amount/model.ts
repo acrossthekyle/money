@@ -2,21 +2,24 @@
 
 import { useEffect, useState } from 'react';
 
-export function useModel(value: string, isExpense: boolean) {
-  const [amount, setAmount] = useState(value);
-  const [type, setType] = useState(isExpense ? 'debit' : 'credit');
+export function useModel(value: string, type: string) {
+  const [amount, setAmount] = useState('0');
+  const [isIncome, setIsIncome] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setAmount(value);
-  }, [value]);
+    setAmount(String(Math.abs(Number(value))));
+    setIsIncome(type === 'credit');
+  }, [value, type]);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(event.target.value.replace('- $ ', '').replace('$ ', '').replace(/,/g, ''));
+    const cleaned = event.target.value.replace('- $ ', '').replace('$ ', '').replace(/,/g, '');
+
+    setAmount(cleaned);
   };
 
-  const handleOnType = (kind: string) => {
-    setType(previous => previous === kind ? '' : kind);
+  const handleOnType = (updated: boolean) => {
+    setIsIncome(updated);
 
     const element = document.getElementById('transaction-amount');
 
@@ -29,7 +32,7 @@ export function useModel(value: string, isExpense: boolean) {
     amount,
     handleOnChange,
     handleOnType,
-    isBlocked: !amount || !type,
-    type,
+    isBlocked: !amount,
+    isIncome,
   };
 };

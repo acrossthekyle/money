@@ -61,7 +61,7 @@ const styles = tw({
   container: `
     flex flex-col items-start justify-end gap-6
     h-full w-full
-    pt-4
+    pt-16
   `,
   items: `
     flex flex-col gap-6

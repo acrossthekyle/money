@@ -28,13 +28,11 @@ export function useModel(
     },
   });
 
-  const eraseable = erase.bind(null, {
+  // @ts-expect-error - is ok
+  const [, action] = useActionState(erase.bind(null, {
     budget,
     dateIso: date.iso,
-  });
-
-  // @ts-expect-error - is ok
-  const [, eraseableAction] = useActionState(eraseable, null);
+  }), null);
 
   const handleOnDelete = async () => {
     let config: UseConfirmConfig = {};
@@ -71,14 +69,14 @@ export function useModel(
     if (result.value === 'all') {
       startTransition(async () => {
         // @ts-expect-error - is ok
-        await eraseableAction(true);
+        await action(true);
 
         router.refresh();
       });
     } else {
       startTransition(async () => {
         // @ts-expect-error - is ok
-        await eraseableAction(false);
+        await action(false);
 
         router.refresh();
       });

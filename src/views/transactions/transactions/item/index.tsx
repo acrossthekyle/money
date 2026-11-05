@@ -6,6 +6,7 @@ import Link from 'next/link';
 import tw, { cs } from '@/styles';
 import type { Budget, CalendarDay } from '@/types';
 import { currency } from '@/utils';
+import { getBudgetDisplayData } from '@/utils/budgets';
 
 import { useModel } from './model';
 
@@ -34,6 +35,11 @@ export default function Transaction({
   if (data === undefined) {
     return null;
   }
+
+  const { amount, isNegative } = getBudgetDisplayData(
+    day.debits,
+    data,
+  );
 
   return (
     <li
@@ -69,7 +75,9 @@ export default function Transaction({
           <span className={styles.capitalize}>{data.schedule}</span>
           <span className={styles.capitalize}>{data.category}</span>
         </span>
-        <span>${currency(data.amount, true)}</span>
+        <span className={cs(isNegative && styles.negative)}>
+          ${currency(amount, true)}
+        </span>
       </p>
     </li>
   );
@@ -126,5 +134,8 @@ const styles = tw({
   pen: `
     size-4.5
     stroke-2
+  `,
+  negative: `
+    text-red-400 dark:text-rose-400
   `,
 });

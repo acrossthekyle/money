@@ -81,7 +81,7 @@ export async function put(
 
   const computed = {
     id: formData.budget === null ? uuidv4() : formData.budget.id,
-    amount: balancize(validated.data.amount),
+    amount: balancize(String(Math.abs(Number(validated.data.amount)))),
     transferee: validated.data.transferee === null ? '' : validated.data.transferee || '',
     end: validated.data.end === null ? '' : validated.data.end || '',
     parent: formData.data.parent,

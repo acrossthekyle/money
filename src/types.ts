@@ -120,13 +120,14 @@ export type StoreData = {
 };
 
 export type Store = {
-  budgets: StoreData['budgets'];
+  budgets: Budget[];
   dateable: Dateable | null;
   days: CalendarDay[];
   holding: string | null;
-  holdings: StoreData['holdings'];
+  holdings: Holding[];
   isReady: boolean;
   months: Array<CalendarDay[]>;
+  setBudget: (budget: Budget) => Promise<void>;
   setDateable: (date: Dateable) => Promise<void>;
   setUnready: () => void;
   syncParams: (holding: string, iso: string, transaction: string) => Promise<void>;

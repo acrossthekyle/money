@@ -1,7 +1,7 @@
 import { parseISO } from 'date-fns';
 import { createStore } from 'zustand';
 
-import type { Dateable, Store, StoreData } from '@/types';
+import type { Budget, Dateable, Store, StoreData } from '@/types';
 import { dateable } from '@/utils';
 import { calculateMonth, calculateYear } from '@/utils/forecast';
 
@@ -39,6 +39,30 @@ export function create(data: StoreData) {
     isReady: false,
     months: [],
     transaction: null,
+    setBudget: async (budget: Budget) => {
+      const { dateable, holding, budgets, holdings } = get();
+
+      if (!dateable) {
+        return;
+      }
+
+      const index = budgets.findIndex((item: Budget) => item.id === budget.id);
+      const mutated = [...budgets];
+
+      mutated[index] = budget;
+
+      const forecast = await getForecast(
+        holding,
+        mutated,
+        dateable,
+        holdings,
+      );
+
+      set({
+        budgets: mutated,
+        ...forecast
+      });
+    },
     setDateable: async (date: Dateable) => {
       localStorage.setItem('dateable', date.iso);
 

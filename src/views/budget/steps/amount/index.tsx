@@ -9,9 +9,9 @@ type Props = {
   header: string;
   isActive: boolean;
   isEditing: boolean;
-  isExpense: boolean;
-  onNext: (key: string, value: string) => void;
+  onNext: (key: string, value: string, isIncome: boolean) => void;
   value: string;
+  type: string;
 };
 
 export default function Section({
@@ -19,17 +19,17 @@ export default function Section({
   header,
   isActive,
   isEditing,
-  isExpense,
   onNext,
   value,
+  type,
 }: React.PropsWithChildren<Props>) {
   const {
     amount,
     handleOnChange,
     handleOnType,
     isBlocked,
-    type,
-  } = useModel(value, isExpense);
+    isIncome,
+  } = useModel(value, type);
 
   return (
     <Ui.Form.Container isActive={isActive}>
@@ -37,21 +37,21 @@ export default function Section({
       <Ui.Form.Content>
         <Ui.Form.Options className={styles.options}>
           <Ui.Form.Option
-            isActive={type === 'credit'}
-            onClick={() => handleOnType('credit')}
+            isActive={isIncome}
+            onClick={() => handleOnType(true)}
           >
             <span>Income</span>
           </Ui.Form.Option>
           <Ui.Form.Option
-            isActive={type === 'debit'}
-            onClick={() => handleOnType('debit')}
+            isActive={!isIncome}
+            onClick={() => handleOnType(false)}
           >
             <span>Expense</span>
           </Ui.Form.Option>
         </Ui.Form.Options>
         <Ui.Form.Currency
           id="transaction-amount"
-          isNegative={type === 'debit'}
+          isNegative={!isIncome}
           onChange={handleOnChange}
           value={amount}
         />
@@ -61,7 +61,7 @@ export default function Section({
         <Ui.Form.Action
           isBlocked={isBlocked}
           isEditing={isEditing}
-          onClick={() => onNext('amount', type === 'debit' ? `-${amount}` : amount)}
+          onClick={() => onNext('amount', amount, isIncome)}
         >
           Next
         </Ui.Form.Action>

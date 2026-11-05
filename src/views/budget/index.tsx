@@ -52,9 +52,9 @@ export default function View() {
           header="Choose either Income or Expense as the type of transaction, and then enter the amount"
           isActive={steps[step] === 'amount'}
           isEditing={isEditing}
-          isExpense={data.type === 'debit'}
           onNext={handleOnNext}
           value={data.amount}
+          type={data.type}
         >
           <Actions
             canGoBack={canGoBack}

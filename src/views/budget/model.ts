@@ -11,7 +11,7 @@ import type { Data } from './types';
 export function useModel() {
   const router = useRouter();
 
-  const { getActiveHoldingId, getBudget, getDateable, getHoldings } = useStore();
+  const { getActiveHoldingId, getBudget, getDateable, getHoldings, setBudget } = useStore();
 
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
@@ -32,7 +32,7 @@ export function useModel() {
   const date = getDateable();
   const holdings = getHoldings();
 
-  const putable = put.bind(null, {
+  const [, action] = useActionState(put.bind(null, {
     budget: budget || null,
     data: {
       ...data,
@@ -40,9 +40,7 @@ export function useModel() {
       parent,
       update,
     },
-  });
-
-  const [, putableAction] = useActionState(putable, null);
+  }), null);
 
   const steps = [
     'amount',
@@ -70,11 +68,11 @@ export function useModel() {
     });
   }, [budget, date]);
 
-  const handleOnNext = (key: string, value: string) => {
+  const handleOnNext = (key: string, value: string, isIncome?: boolean) => {
     setData({
       ...data,
       [key]: value,
-      type: key === 'amount' ? (Number(value) < 0 ? 'debit' : 'credit') : data.type,
+      type: key === 'amount' ? (isIncome ? 'credit' : 'debit') : data.type,
     });
 
     if (isEditing) {
@@ -95,12 +93,19 @@ export function useModel() {
   };
 
   const handleOnSubmit = () => {
+    if (!budget) {
+      return;
+    }
+
     startTransition(async () => {
-      await putableAction();
+      await action();
+
+      setBudget({
+        ...budget,
+        ...data,
+      });
 
       router.refresh();
-
-      router.back();
     });
   };
 

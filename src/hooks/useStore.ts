@@ -19,6 +19,10 @@ export function useStore() {
     state.setDateable(dateable);
   };
 
+  const setBudget = (budget: Budget) => {
+    state.setBudget(budget);
+  };
+
   const getActiveBudgetId = (): string => {
     return state.transaction || '';
   };
@@ -80,6 +84,7 @@ export function useStore() {
     getHolding,
     getHoldings,
     getMonths,
+    setBudget,
     setDateable,
   };
 };
