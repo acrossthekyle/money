@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
-import { MONTHS } from '@/constants';
+import { MONTHS_FULL } from '@/constants';
 import tw from '@/styles';
 import type { CalendarDay } from '@/types';
 import { currency } from '@/utils';
@@ -128,11 +128,11 @@ export default function Chart({ months }: Props) {
               return `
                 <div class="${styles.tooltip}">
                   <h3 class="${styles.heading}">
-                    ${MONTHS[dataPointIndex]}
+                    ${MONTHS_FULL[dataPointIndex]}
                   </h3>
                   <ul class="${styles.balances}">
                     <li class="${styles.item}">
-                      <span class="${styles.title}">Starting</span>
+                      <span class="${styles.title}">Start</span>
                       <span
                         class="${styles.amount} ${values.start > 0 ? styles.positive : styles.negative}"
                       >
@@ -140,7 +140,15 @@ export default function Chart({ months }: Props) {
                       </span>
                     </li>
                     <li class="${styles.item}">
-                      <span class="${styles.title}">Ending</span>
+                      <span class="${styles.title}">Low</span>
+                      <span
+                        class="${styles.amount} ${values.low > 0 ? styles.positive : styles.negative}"
+                      >
+                        $${currency(values.low)}
+                      </span>
+                    </li>
+                    <li class="${styles.item}">
+                      <span class="${styles.title}">End</span>
                       <span
                         class="${styles.amount} ${values.end > 0 ? styles.positive : styles.negative}"
                       >
@@ -148,19 +156,11 @@ export default function Chart({ months }: Props) {
                       </span>
                     </li>
                     <li class="${styles.item}">
-                      <span class="${styles.title}">Highest</span>
+                      <span class="${styles.title}">High</span>
                       <span
                         class="${styles.amount} ${values.high > 0 ? styles.positive : styles.negative}"
                       >
                         $${currency(values.high)}
-                      </span>
-                    </li>
-                    <li class="${styles.item}">
-                      <span class="${styles.title}">Lowest</span>
-                      <span
-                        class="${styles.amount} ${values.low > 0 ? styles.positive : styles.negative}"
-                      >
-                        $${currency(values.low)}
                       </span>
                     </li>
                   </ul>
@@ -188,8 +188,10 @@ const styles = tw({
     h-36 w-full
     select-none
     touch-none
+    mt-8
   `,
   tooltip: `
+    !-mt-3
     flex flex-col gap-1
     pl-4
     text-(--foreground)
@@ -201,7 +203,7 @@ const styles = tw({
     md:text-xs
   `,
   balances: `
-    flex flex-col justify-between gap-1
+    grid grid-cols-2 grid-rows-2 gap-1 gap-x-4
   `,
   item: `
     flex items-center justify-between gap-2

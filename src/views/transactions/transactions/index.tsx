@@ -66,7 +66,6 @@ const styles = tw({
   items: `
     flex flex-col gap-6
     w-full
-    overflow-x-hidden
   `,
   empty: `
     font-bold

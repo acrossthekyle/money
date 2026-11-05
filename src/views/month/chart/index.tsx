@@ -151,8 +151,7 @@ export default function Chart({ days }: Props) {
 const styles = tw({
   container: `
     relative
-    h-54 w-full
-    mt-4
+    h-36 w-full
     select-none
     touch-none
   `,

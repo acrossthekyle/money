@@ -21,8 +21,9 @@ export default function Balance({ balance }: Props) {
 const styles = tw({
   container: `
     relative
-    flex flex-col
-    pt-8
+    flex flex-col items-end
+    w-full
+    py-8
   `,
   balance: `
     text-lg

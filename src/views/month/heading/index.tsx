@@ -18,28 +18,14 @@ export default function Heading({ active, date }: Props) {
         href={`/${active}/year`}
       >
         <ChevronDown className={styles.chevron} />
-        <span>{date.month}</span>
-      </Link>
-      <h1 className={styles.header}>{MONTHS[Number(date.month) - 1]}</h1>
-      <Link
-        className={styles.lid}
-        href={`/${active}/years`}
-      >
-        <ChevronDown className={styles.chevron} />
         <span>{date.year}</span>
       </Link>
+      <h1 className={styles.header}>{MONTHS[Number(date.month) - 1]}</h1>
     </>
   );
 };
 
 const styles = tw({
-  eyebrow: `
-    relative z-10
-    flex items-center gap-2
-    font-semibold
-    text-4xl
-    leading-[0.8]
-  `,
   chevron: `
     size-5
     stroke-2
@@ -48,7 +34,7 @@ const styles = tw({
     text-8xl
     font-semibold
   `,
-  lid: `
+  eyebrow: `
     relative z-10
     flex items-center gap-2
     font-semibold
