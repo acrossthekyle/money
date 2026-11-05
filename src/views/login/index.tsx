@@ -1,56 +1,27 @@
 'use client';
 
-import { ArrowUpRight } from 'lucide-react';
-import Link from 'next/link';
-
-import {
-  CARD_BEFORE_RADIUS,
-  FORM_ACTION_RADIUS,
-  INPUT_RADIUS,
-} from '@/constants';
-import { Main } from '@/layout';
+import { Footer, Header, Main } from '@/layout';
 import tw from '@/styles';
 import Ui from '@/ui';
 
 import { useModel } from './model';
 
-type Props = {
-  data: {
-    alert: string;
-  };
-};
-
-export default function View({ data }: Props) {
+export default function View() {
   const {
     action,
-    alert,
-    error,
-    formData,
+    data,
+    handleOnPassword,
+    handleOnUsername,
     isPending,
-    zone,
-  } = useModel(data.alert);
+  } = useModel();
 
   return (
     <>
-      <Main className={styles.container}>
-        <h1 className={styles.header}>
-          <Ui.Components.Logo />
-        </h1>
-        <p className={styles.paragraph}>
-          Sign in and starting planning.
-        </p>
-        <Ui.Alerts.Banner isFromCookie value={alert} />
-        {error !== null && (
-          <Ui.Alerts.Banner isPositive={false} value={error} />
-        )}
+      <Header isAuthenticated={false}>
+        <Ui.Components.Theme />
+      </Header>
+      <Main>
         <form action={action} className={styles.form} id="login-form">
-          <input
-            className="hidden"
-            name="timezone"
-            readOnly
-            type="text"
-            value={zone}
-          />
           <div className={styles.field}>
             <input
               className={styles.input}
@@ -58,9 +29,10 @@ export default function View({ data }: Props) {
               name="username"
               type="text"
               placeholder=" "
-              defaultValue={formData?.username}
+              defaultValue={data.username}
               required
               disabled={isPending}
+              onChange={handleOnUsername}
             />
             <label className={styles.label} htmlFor="username">
               Username
@@ -75,69 +47,30 @@ export default function View({ data }: Props) {
               placeholder=" "
               required
               disabled={isPending}
+              onChange={handleOnPassword}
             />
             <label className={styles.label} htmlFor="password">
               Password
             </label>
           </div>
-          <button
-            className={styles.action}
-            disabled={isPending}
-            type="submit"
-          >
+          <Ui.Components.Button isDisabled={isPending}>
             {isPending ? 'Processing...' : 'Sign In'}
-          </button>
+          </Ui.Components.Button>
         </form>
       </Main>
-      <footer className={styles.footer}>
-        <Link
-          className={styles.link}
-          href="https://acrossthekyle.com"
-          target="_blank"
-        >
-          <span>About the Developer</span>
-          <ArrowUpRight className={styles.icon} />
-        </Link>
-      </footer>
+      <Ui.Components.Divider />
+      <Footer>
+        <Ui.Components.Branding />
+      </Footer>
     </>
   );
 };
 
 const styles = tw({
-  container: `
-    !absolute top-1/2 left-1/2
-    -translate-y-1/2 -translate-x-1/2
-    px-7 !pb-4
-
-    before:absolute
-    before:inset-y-0
-    before:inset-x-4
-    before:-z-1
-    before:bg-(--foreground)/2
-    before:border
-    before:border-current/6
-
-    md:before:inset-x-6
-    md:px-9
-
-    ${CARD_BEFORE_RADIUS}
-  `,
-  header: `
-    mb-4
-    text-center
-
-    md:mt-3
-  `,
-  paragraph: `
-    text-center
-    text-base
-
-    md:text-sm
-  `,
   form: `
-    relative
-    flex flex-col justify-center gap-5
-    px-0
+    relative top-1/2
+    -translate-y-1/2
+    flex flex-col justify-center gap-8
   `,
   field: `
     relative
@@ -147,83 +80,26 @@ const styles = tw({
     peer
     appearance-none
     relative
-    border border-current/22.5
-    outline-none
-    pb-3 pt-3.25 pl-6.5
-    text-lg text-(--foreground)
-    bg-(--background)
-
-    md:pb-2.25
-    md:pt-2.75
-    md:pl-3
-    md:text-base
-
-    ${INPUT_RADIUS}
+    border-b
+    py-2
+    outline-0
   `,
   label: `
-    absolute -top-2.5 left-5.5 right-auto z-2
-    text-sm text-(--foreground)
+    absolute -top-5 z-2
     font-normal
-    px-1.25
-    truncate
-
-    before:absolute
-    before:top-1/2
-    before:-translate-y-1/2
-    before:-left-4
-    before:-right-4
-    before:-z-1
-    before:h-[2px]
-    before:bg-(--background)
 
     motion-safe:duration-100
 
     peer-focus:absolute
-    peer-focus:-top-2.5
-    peer-focus:right-auto
+    peer-focus:-top-5
     peer-focus:translate-y-0
-    peer-focus:text-sm
 
     peer-placeholder-shown:top-1/2
-    peer-placeholder-shown:right-2.25
     peer-placeholder-shown:-translate-y-1/2
-    peer-placeholder-shown:text-base
 
-    md:-top-2
-    md:left-2.25
-    md:text-xs
-    md:peer-focus:-top-2
-    md:peer-focus:text-xs
-    md:peer-placeholder-shown:text-sm
-  `,
-  action: `
-    flex items-center justify-center
-    w-full
-    h-12
-    bg-yellow-300
-    text-black text-base
-
-    md:text-sm
-    md:h-10
-
-    ${FORM_ACTION_RADIUS}
+    md:peer-focus:-top-5
   `,
   footer: `
-    absolute bottom-3 left-1/2
-    -translate-x-1/2
-
-    md:bottom-6
-  `,
-  link: `
-    flex items-center gap-1.25
-    text-xs
-    uppercase
-    tracking-wide
-
-    md:text-tiny
-  `,
-  icon: `
-    w-3 h-3
-    stroke-2
+    absolute bottom-0
   `,
 });

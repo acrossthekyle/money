@@ -24,6 +24,7 @@ const Form = z.object({
     'property',
   ]),
   interest: z.string().nullable().optional(),
+  pinned: z.boolean().nullable().optional(),
 });
 
 export async function put(
@@ -35,6 +36,7 @@ export async function put(
       number: string;
       balance: string;
       interest: string;
+      pinned: boolean;
     };
   },
 ): Promise<void> {
@@ -44,6 +46,7 @@ export async function put(
     number: formData.data.number,
     type: formData.data.type,
     interest: formData.data.interest,
+    pinned: formData.data.pinned,
   });
 
   if (!validated.success) {
@@ -55,10 +58,11 @@ export async function put(
   const now = date(zone);
 
   const computed = {
-    id: formData.id === null ? '' : formData.id,
     balance: balancize(validated.data.balance),
-    number: validated.data.number === null ? '' : (validated.data?.number || '').slice(-4),
+    id: formData.id === null ? '' : formData.id,
     interest: interestize(validated.data.interest === null ? '' : (validated.data.interest || '')),
+    number: validated.data.number === null ? '' : (validated.data?.number || '').slice(-4),
+    pinned: validated.data.pinned || false,
     updated: format(now, DATE_ISO),
   };
 

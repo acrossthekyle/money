@@ -3,24 +3,39 @@
 import { useActionState, useState } from 'react';
 
 import { login } from '@/actions/auth/login';
-import type { LoginFormState } from '@/types';
 
-export function useModel(message: string) {
-  const [alert] = useState(message);
+export function useModel() {
+  const [data, setData] = useState({
+    password: '',
+    username: '',
+    zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  });
 
-  const [state, action, isPending] = useActionState(login, {
-    data: {
-      username: '',
-    },
-    error: null,
-  } as LoginFormState);
+  const loginable = login.bind(null, {
+    data,
+  });
+
+  const [, action, isPending] = useActionState(loginable, null);
+
+  const handleOnUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setData({
+      ...data,
+      username: event.target.value,
+    });
+  };
+
+  const handleOnPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setData({
+      ...data,
+      password: event.target.value,
+    });
+  };
 
   return {
     action,
-    alert,
-    error: state?.error,
-    formData: state?.data,
+    data,
+    handleOnPassword,
+    handleOnUsername,
     isPending,
-    zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   };
 };

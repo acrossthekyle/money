@@ -1,0 +1,52 @@
+'use client';
+
+import Ui from '@/ui';
+
+import { useModel } from './model';
+
+type Props = {
+  header: string;
+  isActive: boolean;
+  isEditing: boolean;
+  onNext: (key: string, value: string) => void;
+  placeholder: string;
+  value: string;
+};
+
+export default function Section({
+  children,
+  header,
+  isActive,
+  isEditing,
+  onNext,
+  placeholder,
+  value,
+}: React.PropsWithChildren<Props>) {
+  const { handleOnChange, isBlocked, name } = useModel(value);
+
+  return (
+    <Ui.Form.Container isActive={isActive}>
+      <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Content>
+        <Ui.Form.Input
+          value={name}
+          maxLength={48}
+          name="name"
+          onChange={handleOnChange}
+          placeholder={placeholder}
+          type="text"
+        />
+      </Ui.Form.Content>
+      <Ui.Form.Actions>
+        {children}
+        <Ui.Form.Action
+          isBlocked={isBlocked}
+          isEditing={isEditing}
+          onClick={() => onNext('name', name)}
+        >
+          Next
+        </Ui.Form.Action>
+      </Ui.Form.Actions>
+    </Ui.Form.Container>
+  );
+};

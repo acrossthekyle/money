@@ -62,16 +62,16 @@ export function dateable(
 
   const year = pad(getYear(construct));
   const month = pad(getMonth(construct) + 1);
-  const day = pad(getDate(construct));
+  const day = getDate(construct);
 
   const isNow = isToday(construct);
 
   return {
     date: construct,
-    day,
+    day: String(day),
     display: format(construct, DATE_DISPLAY_ABBREVIATED),
     isBeforeToday: isNow ? false : isBefore(construct, today),
-    iso: `${year}-${month}-${day}`,
+    iso: `${year}-${month}-${pad(day)}`,
     isFirstOfMonth: isFirstDayOfMonth(construct),
     isInMonth: false,
     isThisMonth: isThisMonth(construct),
@@ -88,37 +88,11 @@ export function dateable(
       week: getWeek(today),
       year: pad(getYear(today)),
     },
-    uri: `${year}/${month}/${day}`,
+    uri: `${year}/${month}/${pad(day)}`,
     week: getWeek(construct),
     weekdayFull: format(construct, 'iiii'),
     weekdayShort: format(construct, 'iii'),
     year,
     zone,
   };
-};
-
-export function calculateChange(previous: number, current: number): number {
-  if (previous === 0) {
-    if (current === 0) {
-      return 0;
-    }
-
-    return current > 0 ? 100 : -100;
-  }
-
-  const change = current - previous;
-
-  let percentageChange = (change / Math.abs(previous)) * 100;
-
-  const MAX_CAP = 200;
-
-  if (percentageChange > MAX_CAP) {
-    percentageChange = MAX_CAP;
-  }
-
-  if (percentageChange < -MAX_CAP) {
-    percentageChange = -MAX_CAP;
-  }
-
-  return Number(percentageChange.toFixed(2));
 };

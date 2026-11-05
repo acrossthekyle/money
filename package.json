@@ -1,6 +1,6 @@
 {
   "name": "project-basalt.acrossthekyle.com",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -31,7 +31,8 @@
     "sweetalert2": "^11.26.25",
     "sweetalert2-react-content": "^5.1.2",
     "uuid": "^14.0.2",
-    "zod": "^4.5.4"
+    "zod": "^4.5.4",
+    "zustand": "^5.0.16"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.3",

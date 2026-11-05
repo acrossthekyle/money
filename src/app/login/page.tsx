@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
 import { Suspense } from 'react';
 
 import Ui from '@/ui';
@@ -10,12 +9,8 @@ export const metadata: Metadata = {
 };
 
 async function AsyncView() {
-  const cookieStore = await cookies();
-
-  const alert = cookieStore.get('alert')?.value || '';
-
   return (
-    <View data={{ alert }} />
+    <View />
   );
 };
 

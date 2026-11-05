@@ -2,35 +2,48 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import * as z from 'zod';
 
 import { db } from '@/db';
-import type { LoginFormState } from '@/types';
+import { get as getPinned } from '@/getters/pinned';
+
+const Form = z.object({
+  username: z.string(),
+  password: z.string(),
+  zone: z.string(),
+});
 
 export async function login(
-  state: LoginFormState,
-  formData: FormData,
-): Promise<LoginFormState> {
-  const username = formData.get('username') as string;
-  const password = formData.get('password') as string;
-  const timezone = formData.get('timezone') as string;
+  formData: {
+    data: {
+      username: string;
+      password: string;
+      zone: string;
+    };
+  },
+): Promise<void> {
+  const validated = Form.safeParse({
+    username: formData.data.username,
+    password: formData.data.password,
+    zone: formData.data.zone,
+  });
+
+  if (!validated.success) {
+    return;
+  }
 
   if (
-    username.toLowerCase() !== process.env.APP_USERNAME ||
-    password !== process.env.APP_PASSWORD
+    validated.data.username.toLowerCase() !== process.env.APP_USERNAME ||
+    validated.data.password !== process.env.APP_PASSWORD
   ) {
-    return {
-      data: {
-        username,
-        password: '',
-      },
-      error: 'Invalid username or password',
-      success: false,
-    };
+    return;
   }
+
+  const { holding } = await getPinned();
 
   await db.write('settings', {
     id: 'timezone',
-    value: timezone,
+    value: validated.data.zone,
   });
 
   const cookieStore = await cookies();
@@ -43,5 +56,5 @@ export async function login(
     path: '/',
   });
 
-  redirect('/');
+  redirect(holding.id);
 };

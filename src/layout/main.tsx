@@ -1,12 +1,8 @@
-import tw, { cs } from '@/styles';
+import tw from '@/styles';
 
-type Props = {
-  className?: string;
-};
-
-export default function Main({ children, className }: React.PropsWithChildren<Props>) {
+export default function Main({ children }: React.PropsWithChildren) {
   return (
-    <main className={cs(styles.container, className)}>
+    <main className={styles.container}>
       {children}
     </main>
   );
@@ -15,14 +11,8 @@ export default function Main({ children, className }: React.PropsWithChildren<Pr
 const styles = tw({
   container: `
     relative
-    flex flex-col gap-4
+    flex-1
     w-full
-    mx-auto
-    p-4 pt-5
-
-    sm:max-w-sm
-    md:p-6
-    md:pt-4
-    md:gap-4
+    px-6
   `,
 });

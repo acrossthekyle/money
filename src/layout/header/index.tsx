@@ -1,66 +1,49 @@
-import { CARD_BEFORE_RADIUS } from '@/constants';
+'use client';
+
 import tw from '@/styles';
-import { Ui } from '@/ui';
-import { authentication } from '@/utils/authentication';
 
-import Anchor from './anchor';
-import Exit from './exit';
-import Locked from './locked';
-import Theme from './theme';
+import Menu from './menu';
+import { useModel } from './model';
+import Toggle from './toggle';
 
-export default async function Header() {
-  const { isAuthenticated } = await authentication();
+type Props = {
+  isAuthenticated?: boolean;
+};
+
+export default function Header({
+  children,
+  isAuthenticated = true,
+}: React.PropsWithChildren<Props>) {
+  const { canClose, handleOnToggle, isMenuActive } = useModel();
 
   return (
-    <header className={styles.container}>
-      {isAuthenticated ? (
-        <>
-          <Anchor />
-          <Ui.Components.Logo />
-          <nav className={styles.options}>
-            <Theme />
-            <Exit />
-          </nav>
-        </>
-      ) : (
-        <>
-          <Locked />
-          <nav className={styles.options}>
-            <Theme />
-          </nav>
-        </>
+    <>
+      <header className={styles.container}>
+        {isAuthenticated && (
+          <Toggle canClose={canClose} onClick={handleOnToggle} />
+        )}
+        <div className={styles.children}>
+          {children}
+        </div>
+      </header>
+      {isAuthenticated && (
+        <Menu
+          isActive={isMenuActive}
+          onToggle={handleOnToggle}
+        />
       )}
-    </header>
+    </>
   );
 };
 
 const styles = tw({
   container: `
-    relative left-1/2
-    -translate-x-1/2
-    flex items-center justify-between
+    relative
+    flex justify-between items-start
     w-full
-    mt-4
-    py-4 px-7
-    text-(--foreground)
-
-    before:absolute
-    before:inset-y-0
-    before:inset-x-4
-    before:-z-1
-    before:bg-(--foreground)/2
-    before:border
-    before:border-current/6
-
-    sm:max-w-sm
-    md:before:inset-x-6
-    md:mt-6
-    md:py-3
-    md:px-9
-
-    ${CARD_BEFORE_RADIUS}
+    px-6 pt-6
   `,
-  options: `
-    flex items-center gap-2
+  children: `
+    flex flex-col items-end
   `,
 });

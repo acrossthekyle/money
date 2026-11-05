@@ -22,7 +22,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #18181b;
+  --foreground: #2b2928;
 }
 
 [data-theme="dark"] {
@@ -30,12 +30,41 @@
   --foreground: #ffffff;
 }
 
-html:has(dialog[open]),
-body:has(dialog[open]) {
+html:has(body.menu-active) {
   overflow: hidden !important;
 }
 
 body {
+  > header, > main, > footer {
+    transition: transform 0.3s ease;
+  }
+
+  > aside {
+    position: absolute;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  &.menu-active {
+    overflow: hidden !important;
+
+    > header {
+      transform: translateX(100%);
+    }
+
+    > aside {
+      transform: translateX(0);
+    }
+
+    > main {
+      transform: translateX(100%);
+    }
+
+    > footer {
+      transform: translateX(100%);
+    }
+  }
+
   button {
     cursor: pointer;
   }

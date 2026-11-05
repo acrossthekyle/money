@@ -5,13 +5,14 @@ import { Geist, Lobster, Roboto_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { ReactNode, Suspense } from 'react';
 
-import { DialogProvider } from '@/contexts';
-import { Body, Header, Scripting } from '@/layout';
+import { get } from '@/getters/root';
+import { Body, Scripting, Wrapper } from '@/layout';
+import Store from '@/store';
 
 export const metadata: Metadata = {
   title: {
     template: `%s ⌁ Basalt`,
-    default: 'Portfolio ⌁ Basalt',
+    default: 'Basalt',
   },
   formatDetection: {
     telephone: false,
@@ -56,28 +57,27 @@ const serif = Lobster({
   variable: '--font-lobster',
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: ReactNode;
 }) {
+  const data = await get();
+
   return (
-    <html
+    <Wrapper
       className={`${sans.variable} ${mono.variable} ${serif.variable} h-full`}
-      lang="en-US"
-      suppressHydrationWarning
     >
-      <DialogProvider>
-        <Body>
-          <Scripting />
-          <ThemeProvider>
-            <Header />
-            <Suspense fallback={null}>
+      <Body>
+        <Scripting />
+        <ThemeProvider>
+          <Suspense fallback={null}>
+            <Store data={data}>
               {children}
-            </Suspense>
-          </ThemeProvider>
-        </Body>
-      </DialogProvider>
-    </html>
+            </Store>
+          </Suspense>
+        </ThemeProvider>
+      </Body>
+    </Wrapper>
   );
 }

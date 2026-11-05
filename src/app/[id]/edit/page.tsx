@@ -1,0 +1,18 @@
+import type { Metadata } from 'next';
+import { Suspense } from 'react';
+
+import Ui from '@/ui';
+import View from '@/views/holding';
+
+export const metadata: Metadata = {
+  title: `Edit`,
+  description: ``,
+};
+
+export default function Page() {
+  return (
+    <Suspense fallback={<Ui.Loaders.Spinner />}>
+      <View />
+    </Suspense>
+  );
+};

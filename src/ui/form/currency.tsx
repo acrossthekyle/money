@@ -27,13 +27,9 @@ export default function Currency({ isNegative, value, ...rest }: Props) {
 
 const styles = tw({
   container: `
-    py-2.25 px-4
     outline-none
     border-none
-    w-66
-    text-center text-xl
-
-    md:text-base
-    md:w-40
+    w-full
+    text-xl
   `,
 });

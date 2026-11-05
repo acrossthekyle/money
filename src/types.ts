@@ -11,6 +11,7 @@ export type Holding = {
   type: string;
   interest: string;
   updated?: string;
+  pinned: boolean;
 };
 
 export type Budget = {
@@ -37,15 +38,6 @@ export type Setting = {
 };
 
 export type Record = Holding | Budget | Setting;
-
-export type LoginFormState = {
-  data?: {
-    username: string;
-    password: string;
-  };
-  error: string | null;
-  success: boolean;
-};
 
 export type CalendarTransaction = {
   budget: Budget;
@@ -121,25 +113,22 @@ export type UseConfirmConfig = {
   text?: string;
 };
 
-export type DialogTransactionData = {
-  budget: Budget;
-  day: CalendarDay;
+export type StoreData = {
+  budgets: Budget[];
+  holdings: Holding[];
+  zone: string;
 };
 
-export type DialogReturnData = {
-  day: CalendarDay;
-};
-
-export type DialogEmptyData = {
-  range: string[];
-};
-
-export type DialogBudgetData = {
-  budget?: Budget;
-  date?: Dateable;
-  parent?: string;
-};
-
-export type DialogHoldingData = {
-  holding?: Holding;
+export type Store = {
+  budgets: StoreData['budgets'];
+  dateable: Dateable | null;
+  days: CalendarDay[];
+  holding: string | null;
+  holdings: StoreData['holdings'];
+  isReady: boolean;
+  months: Array<CalendarDay[]>;
+  setDateable: (date: Dateable) => Promise<void>;
+  setUnready: () => void;
+  syncParams: (holding: string, iso: string, transaction: string) => Promise<void>;
+  transaction: string | null;
 };
