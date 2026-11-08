@@ -119,17 +119,53 @@ export type StoreData = {
   zone: string;
 };
 
-export type Store = {
-  budgets: Budget[];
-  dateable: Dateable | null;
-  days: CalendarDay[];
-  holding: string | null;
-  holdings: Holding[];
-  isReady: boolean;
-  months: Array<CalendarDay[]>;
-  setBudget: (budget: Budget) => Promise<void>;
-  setDateable: (date: Dateable) => Promise<void>;
-  setUnready: () => void;
-  syncParams: (holding: string, iso: string, transaction: string) => Promise<void>;
-  transaction: string | null;
+export type StoreBudgetsSlice = {
+  id: string;
+  items: Budget[];
+  set: (items: Budget[]) => void;
+  setId: (id: string) => void;
+  select: () => Budget[];
+  selectBudget: () => Budget | undefined;
 };
+
+export type StoreDateSlice = {
+  value: Dateable | null;
+  zone: string;
+  setDateable: (value: Dateable) => void;
+  setZone: (zone: string) => void;
+  select: () => Dateable | null;
+  selectPersisted: () => string;
+  selectZone: () => string;
+};
+
+export type StoreForecastsSlice = {
+  calendar: CalendarDay[];
+  setForecast: () => Promise<void>;
+  selectCalendar: () => CalendarDay[];
+  selectCalendarDay: () => CalendarDay | undefined;
+};
+
+export type StoreHoldingsSlice = {
+  id: string;
+  items: Holding[];
+  set: (items: Holding[]) => void;
+  setId: (id: string) => void;
+  select: () => Holding[];
+  selectHolding: () => Holding | undefined;
+  selectId: () => string;
+};
+
+export type StoreMenuSlice = {
+  isActive: boolean;
+  toggle: () => void;
+};
+
+export type StoreRootSlice = {
+  isReady: boolean;
+  setReady: () => void;
+  setUnready: () => void;
+  selectIsReady: () => boolean;
+  syncParams: (holding: string, iso: string, budget: string) => Promise<void>;
+};
+
+export type Store = StoreBudgetsSlice & StoreDateSlice & StoreForecastsSlice & StoreHoldingsSlice & StoreMenuSlice & StoreRootSlice;

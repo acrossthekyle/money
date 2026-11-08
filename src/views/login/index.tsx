@@ -1,6 +1,5 @@
 'use client';
 
-import { Footer, Header, Main } from '@/layout';
 import tw from '@/styles';
 import Ui from '@/ui';
 
@@ -17,10 +16,8 @@ export default function View() {
 
   return (
     <>
-      <Header isAuthenticated={false}>
-        <Ui.Components.Theme />
-      </Header>
-      <Main>
+      <header></header>
+      <main>
         <form action={action} className={styles.form} id="login-form">
           <div className={styles.field}>
             <input
@@ -57,11 +54,8 @@ export default function View() {
             {isPending ? 'Processing...' : 'Sign In'}
           </Ui.Components.Button>
         </form>
-      </Main>
-      <Ui.Components.Divider />
-      <Footer>
-        <Ui.Components.Branding />
-      </Footer>
+      </main>
+      <footer></footer>
     </>
   );
 };

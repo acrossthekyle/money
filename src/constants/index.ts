@@ -21,6 +21,13 @@ export const MONTHS_FULL = [
   'October', 'November', 'December',
 ];
 
+export const MONTHS_ABSTRACT = [
+  ['Jan', 'u', 'ary'], ['Feb', 'ru', 'ary'], ['Ma', 'r', 'ch'],
+  ['Ap', 'ri', 'l'], ['M', 'a', 'y'], ['J', 'un', 'e'],
+  ['J', 'ul', 'y'], ['Aug', 'u', 'st'], ['Sept', 'em', 'ber'],
+  ['Oct', 'o', 'ber'], ['Nov', 'em' ,'ber'], ['Dec', 'em', 'ber'],
+];
+
 export const DIALOG_DELAY = 450; // ms
 
 export const CARD_RADIUS = '!rounded-xl';

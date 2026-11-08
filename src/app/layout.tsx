@@ -5,9 +5,7 @@ import { Geist, Lobster, Roboto_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { ReactNode, Suspense } from 'react';
 
-import { get } from '@/getters/root';
 import { Body, Scripting, Wrapper } from '@/layout';
-import Store from '@/store';
 
 export const metadata: Metadata = {
   title: {
@@ -57,24 +55,18 @@ const serif = Lobster({
   variable: '--font-lobster',
 });
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const data = await get();
-
   return (
-    <Wrapper
-      className={`${sans.variable} ${mono.variable} ${serif.variable} h-full`}
-    >
+    <Wrapper className={`${sans.variable} ${mono.variable} ${serif.variable}`}>
       <Body>
         <Scripting />
         <ThemeProvider>
           <Suspense fallback={null}>
-            <Store data={data}>
-              {children}
-            </Store>
+            {children}
           </Suspense>
         </ThemeProvider>
       </Body>

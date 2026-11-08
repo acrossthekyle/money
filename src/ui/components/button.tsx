@@ -1,15 +1,34 @@
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 
 type Props = {
   isDisabled?: boolean;
+  isGhost?: boolean;
+  isPrimary?: boolean;
+  onClick?: () => void;
+  type?: 'button' | 'submit';
 };
 
 export default function Button({
   children,
   isDisabled,
+  isGhost,
+  isPrimary,
+  onClick,
+  type = 'submit',
 }: React.PropsWithChildren<Props>) {
   return (
-    <button className={styles.container} disabled={isDisabled} type="submit">
+    <button
+      className={
+        cs(
+          styles.container,
+          isPrimary && styles.primary,
+          isGhost && styles.ghost,
+        )
+      }
+      disabled={isDisabled}
+      onClick={onClick}
+      type={type}
+    >
       {children}
     </button>
   );
@@ -18,16 +37,26 @@ export default function Button({
 const styles = tw({
   container: `
     relative
-    px-5 py-3
-    bg-(--foreground)
-    text-(--background)
+    w-full
+    py-1.25
     rounded-full
-    uppercase
-    text-xs
-    font-black
+    text-sm text-center
+    whitespace-nowrap
+    select-none
 
     motion-safe:duration-300
+  `,
+  primary: `
+    bg-(--foreground)
+    text-(--background)
 
-    hover:bg-(--foreground)/95
+    hover:bg-(--foreground)/90
+  `,
+  ghost: `
+    text-(--foreground)
+    bg-transparent
+    border border-current/10.5
+
+    hover:bg-(--foreground)/4.5
   `,
 });

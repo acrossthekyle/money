@@ -15,6 +15,7 @@ export default function Theme() {
 
   return (
     <button
+      className={styles.container}
       onClick={handleOnTheme}
       title={`Switch theme to ${theme == 'dark' ? 'light' : 'dark'}`}
       type="button"
@@ -29,8 +30,14 @@ export default function Theme() {
 };
 
 const styles = tw({
+  container: `
+    absolute top-4 right-14
+    p-2
+
+    sm:right-4
+  `,
   icon: `
-    size-6
-    stroke-2
+    size-5
+    stroke-1
   `,
 });

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --breakpoint-xs: 23.125rem; /* 370px */
+  --breakpoint-xs: 27.5rem; /* 440px */
 
   --font-geist: var(--font-geist);
   --font-roboto: var(--font-roboto);
@@ -22,49 +22,21 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #2b2928;
+  --foreground: #000000;
 }
 
 [data-theme="dark"] {
-  --background: #18181b;
+  --background: #000000;
   --foreground: #ffffff;
 }
 
-html:has(body.menu-active) {
+html:has(dialog[open]),
+html:has(body.menu-active),
+body:has(dialog[open]) {
   overflow: hidden !important;
 }
 
 body {
-  > header, > main, > footer {
-    transition: transform 0.3s ease;
-  }
-
-  > aside {
-    position: absolute;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-  }
-
-  &.menu-active {
-    overflow: hidden !important;
-
-    > header {
-      transform: translateX(100%);
-    }
-
-    > aside {
-      transform: translateX(0);
-    }
-
-    > main {
-      transform: translateX(100%);
-    }
-
-    > footer {
-      transform: translateX(100%);
-    }
-  }
-
   button {
     cursor: pointer;
   }

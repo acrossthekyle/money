@@ -17,7 +17,6 @@ export default function Header({
 
 const styles = tw({
   container: `
-    text-xl
-    w-full
+
   `,
 });

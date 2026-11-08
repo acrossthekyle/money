@@ -10,8 +10,8 @@ export default function Actions({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    flex flex-row justify-between gap-4
+    flex flex-col gap-3
     w-full
-    mt-4
+    mt-auto
   `,
 });

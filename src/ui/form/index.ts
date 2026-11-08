@@ -12,6 +12,7 @@ export { default as OutlineItem } from './outline/item';
 export { default as OutlineItemHeading } from './outline/heading';
 export { default as OutlineItemText } from './outline/text';
 export { default as OutlineItemAction } from './outline/action';
+export { default as Paragraph } from './paragraph';
 export { default as Step } from './step';
 export { default as Steps } from './steps';
 

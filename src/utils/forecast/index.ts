@@ -4,17 +4,11 @@ import { calendar } from './calendar';
 import { createTransactions } from './utils';
 
 export async function calculateMonth(
-  active: string,
+  holding: Holding,
   budgets: Budget[],
   date: Dateable,
   holdings: Holding[],
 ) {
-  const holding = holdings.find(holding => holding.id === active);
-
-  if (!holding) {
-    return [];
-  }
-
   const transactions = await createTransactions(holding, holdings, budgets);
 
   return calendar(holding, transactions, {

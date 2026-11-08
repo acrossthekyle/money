@@ -13,20 +13,21 @@ export function useSync(store: StoreApi) {
 
   const holding = (params?.id as string) || '';
   const iso = (params?.iso as string) || '';
-  const transaction = (params?.transaction as string) || '';
+  const budget = (params?.transaction as string) || '';
 
-  const isReady = useStore(store, (state: Store) => state.isReady);
-  const syncParams = useStore(store, (state: Store) => state.syncParams);
-  const setUnready = useStore(store, (state: Store) => state.setUnready);
+  const {
+    setUnready,
+    selectIsReady,
+    syncParams,
+  } = useStore(store, (state: Store) => state.root);
 
   useEffect(() => {
     setUnready();
 
-    syncParams(holding, iso, transaction);
-
-  }, [holding, iso, syncParams, setUnready, transaction]);
+    syncParams(holding, iso, budget);
+  }, [holding, iso, budget, syncParams, setUnready]);
 
   return {
-    isReady,
+    isReady: selectIsReady(),
   };
 };
