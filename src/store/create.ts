@@ -15,7 +15,7 @@ import {
 } from './slices';
 
 export function create(data: StoreData) {
-  return createStore<Store>(
+  return createStore<Store, [['zustand/immer', never]]>(
     immer((set, get) => ({
       ...createBudgetsSlice(set, get, data.budgets),
       ...createDateSlice(set, get, data.zone),

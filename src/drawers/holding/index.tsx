@@ -60,7 +60,6 @@ export default function View() {
           <Type
             header={header}
             isActive={steps[step] === 'type'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.type}
           >
@@ -75,7 +74,6 @@ export default function View() {
             header={header}
             paragraph={headers.name}
             isActive={steps[step] === 'name'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             placeholder={placeholder}
             value={data.name}
@@ -91,7 +89,6 @@ export default function View() {
             header={header}
             paragraph={headers.number}
             isActive={steps[step] === 'number'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.number}
           >
@@ -106,7 +103,6 @@ export default function View() {
             header={header}
             paragraph={headers.balance}
             isActive={steps[step] === 'balance'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.balance}
           >
@@ -121,7 +117,6 @@ export default function View() {
             header={header}
             paragraph={headers.rate}
             isActive={steps[step] === 'rate'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.interest}
           >

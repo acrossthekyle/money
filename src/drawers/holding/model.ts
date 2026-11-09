@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
@@ -9,8 +8,6 @@ import { useHolding, useStore } from '@/hooks';
 import type { Data } from './types';
 
 export function useModel() {
-  const router = useRouter();
-
   const { instance, isActive, onBackdrop, onCancel, onClose } = useHolding();
   const { forecasts, holdings } = useStore();
 
@@ -48,10 +45,11 @@ export function useModel() {
 
       onClose();
     }
-  }, [response]);
+  }, [holdings, forecasts, onClose, response]);
 
   useEffect(() => {
     if (isActive) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(0);
     }
   }, [isActive]);

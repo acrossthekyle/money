@@ -7,7 +7,6 @@ import { useModel } from './model';
 type Props = {
   header: string;
   isActive: boolean;
-  isEditing: boolean;
   onNext: (key: string, value: string, isIncome: boolean) => void;
   value: string;
   type: string;
@@ -17,7 +16,6 @@ export default function Section({
   children,
   header,
   isActive,
-  isEditing,
   onNext,
   value,
   type,

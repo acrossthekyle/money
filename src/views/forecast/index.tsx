@@ -1,7 +1,5 @@
 'use client';
 
-import Ui from '@/ui'
-
 import Calendar from './calendar';
 import Balances from './balances';
 import Header from './header';

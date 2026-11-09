@@ -7,7 +7,6 @@ import { useModel } from './model';
 type Props = {
   header: string;
   isActive: boolean;
-  isEditing: boolean;
   onNext: (key: string, value: string) => void;
   value: string;
 };
@@ -16,7 +15,6 @@ export default function Section({
   children,
   header,
   isActive,
-  isEditing,
   onNext,
   value,
 }: React.PropsWithChildren<Props>) {
@@ -66,7 +64,7 @@ export default function Section({
       </Ui.Form.Options>
       <Ui.Form.Actions>
         <Ui.Components.Button
-          isBlocked={isBlocked}
+          isDisabled={isBlocked}
           isPrimary
           onClick={() => onNext('type', type)}
         >

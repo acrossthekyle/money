@@ -7,22 +7,22 @@ import type { Store, StoreRootSlice } from '@/types';
 
 import { dateable } from '@/utils';
 
-export const createRootSlice: StateCreator<
-  Store,
-  [['zustand/immer', never]],
-  [],
-  StoreRootSlice,
-> = (set, get) => {
+type Slice = StateCreator<Store, [['zustand/immer', never]], [], StoreRootSlice>;
+
+export const createRootSlice = (
+  set: Parameters<Slice>[0],
+  get: Parameters<Slice>[1],
+) => {
   return {
     root: {
       isReady: false,
       setReady: () => {
-        set((state) => {
+        set((state: Store) => {
           state.root.isReady = true;
         });
       },
       setUnready: () => {
-        set((state) => {
+        set((state: Store) => {
           state.root.isReady = false;
         });
       },

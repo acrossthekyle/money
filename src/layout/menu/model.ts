@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 
 import { useHolding, useStore } from '@/hooks';
+import type { Holding } from '@/types';
 
 export function useModel() {
   const { onHolding } = useHolding();

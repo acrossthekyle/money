@@ -10,12 +10,12 @@ export async function erase(
   },
   state: null,
   isPurge: boolean,
-): Promise<boolean | Budget> {
+): Promise<{ result: Budget; purged: boolean; }> {
   if (isPurge || data.budget.schedule === 'once') {
     await db.erase('budgets', data.budget.id);
 
     return {
-      id: data.budget.id,
+      result: data.budget,
       purged: true,
     };
   }

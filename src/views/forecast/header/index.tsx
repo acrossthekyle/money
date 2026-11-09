@@ -1,4 +1,3 @@
-import { MONTHS_ABSTRACT } from '@/constants';
 import tw from '@/styles';
 import type { Holding } from '@/types'
 

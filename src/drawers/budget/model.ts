@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/budgets/put';
@@ -9,8 +8,6 @@ import { useBudget, useStore, useTransactions } from '@/hooks';
 import type { Data } from './types';
 
 export function useModel() {
-  const router = useRouter();
-
   const { date, budgets, forecasts, holdings } = useStore();
   const { instance, isActive, onBackdrop, onCancel, onClose } = useBudget();
   const { onTransactions } = useTransactions();
@@ -36,7 +33,7 @@ export function useModel() {
     budget: budget || null,
     data: {
       ...data,
-      date: dateable,
+      date: dateable || undefined,
       parent: holdings.selectId(),
       update,
     },
@@ -65,10 +62,11 @@ export function useModel() {
 
       onTransactions();
     }
-  }, [response]);
+  }, [budgets, forecasts, onClose, onTransactions, response]);
 
   useEffect(() => {
     if (isActive) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(0);
     }
   }, [isActive]);
@@ -81,7 +79,7 @@ export function useModel() {
       end: budget?.end || '',
       name: budget?.name || '',
       schedule: budget?.schedule || '',
-      start: budget?.start || (dateable.iso || ''),
+      start: budget?.start || (dateable === null ? '' : dateable.iso),
       transferee: budget?.transferee || '',
       type: budget?.type || '',
     });

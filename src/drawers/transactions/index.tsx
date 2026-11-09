@@ -16,6 +16,7 @@ export default function View() {
     isActive,
     onBackdrop,
     onCancel,
+    onClose,
   } = useModel();
 
   return (
@@ -44,7 +45,7 @@ export default function View() {
             <Ui.Components.Button isPrimary onClick={handleOnAdd}>
               Add Transaction
             </Ui.Components.Button>
-            <Ui.Components.Button isGhost onClick={onCancel}>
+            <Ui.Components.Button isGhost onClick={onClose}>
               Close
             </Ui.Components.Button>
           </Ui.Drawer.Footer>

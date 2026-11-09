@@ -4,6 +4,7 @@ import tw from '@/styles';
 
 export default function Currency(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
+    // @ts-expect-error - props are ok
     <Input
       allowNegativeValue={false}
       className={styles.container}

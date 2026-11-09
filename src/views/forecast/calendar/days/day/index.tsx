@@ -18,7 +18,6 @@ export default function Day({ date, day }: Props) {
     isFaded,
     isDisabled,
     isHoverable,
-    isHighlighted,
     isNegative,
     isBold,
   } = useModel(date, day);

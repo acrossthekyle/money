@@ -4,12 +4,13 @@ import type { StateCreator } from 'zustand';
 
 import type { Budget, Store, StoreBudgetsSlice } from '@/types';
 
-export const createBudgetsSlice: StateCreator<
-  Store,
-  [['zustand/immer', never]],
-  [],
-  StoreBudgetsSlice,
-> = (set, get, initialData: Budget[]) => {
+type Slice = StateCreator<Store, [['zustand/immer', never]], [], StoreBudgetsSlice>;
+
+export const createBudgetsSlice = (
+  set: Parameters<Slice>[0],
+  get: Parameters<Slice>[1],
+  initialData: Budget[],
+) => {
   return {
     budgets: {
       id: '',
@@ -17,22 +18,26 @@ export const createBudgetsSlice: StateCreator<
       removeBudget: (id: string) => {
         const { budgets } = get();
 
-        set((state) => {
-          state.budgets.items = budgets.items.filter((item) => item.id !== id);
+        set((state: Store) => {
+          state.budgets.items = budgets.items.filter(
+            (item: Budget) => item.id !== id,
+          );
         });
       },
       set: (items: Budget[]) => {
-        set((state) => {
+        set((state: Store) => {
           state.budgets.items = items;
         });
       },
       setBudgets: (items: Budget[]) => {
         const { budgets } = get();
 
-        let all = [...budgets.items];
+        const all = [...budgets.items];
 
         items.forEach((item) => {
-          const index = all.findIndex((budget) => budget.id === item.id);
+          const index = all.findIndex(
+            (budget: Budget) => budget.id === item.id,
+          );
 
           if (index > -1) {
             all[index] = item;
@@ -41,12 +46,12 @@ export const createBudgetsSlice: StateCreator<
           }
         });
 
-        set((state) => {
+        set((state: Store) => {
           state.budgets.items = all;
         });
       },
       setId: (id: string) => {
-        set((state) => {
+        set((state: Store) => {
           state.budgets.id = id;
         });
       },
@@ -56,7 +61,7 @@ export const createBudgetsSlice: StateCreator<
       selectBudget: () => {
         const { budgets } = get();
 
-        return budgets.items.find((item) => item.id === budgets.id);
+        return budgets.items.find((item: Budget) => item.id === budgets.id);
       },
     },
   };

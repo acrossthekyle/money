@@ -4,12 +4,12 @@ import type { StateCreator } from 'zustand';
 
 import type { Store, StoreMenuSlice } from '@/types';
 
-export const createMenuSlice: StateCreator<
-  Store,
-  [['zustand/immer', never]],
-  [],
-  StoreMenuSlice,
-> = (set, get) => {
+type Slice = StateCreator<Store, [['zustand/immer', never]], [], StoreMenuSlice>;
+
+export const createMenuSlice = (
+  set: Parameters<Slice>[0],
+  get: Parameters<Slice>[1],
+) => {
   return {
     menu: {
       isActive: false,
@@ -17,7 +17,7 @@ export const createMenuSlice: StateCreator<
         return get().menu.isActive;
       },
       toggle: () => {
-        set((state) => {
+        set((state: Store) => {
           state.menu.isActive = !state.menu.isActive;
         });
       },

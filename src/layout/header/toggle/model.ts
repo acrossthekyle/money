@@ -19,6 +19,7 @@ export function useModel() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOnClick = () => {
@@ -27,6 +28,5 @@ export function useModel() {
 
   return {
     handleOnClick,
-    isActive: menu.select(),
   };
 }

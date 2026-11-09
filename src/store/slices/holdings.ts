@@ -4,12 +4,14 @@ import type { StateCreator } from 'zustand';
 
 import type { Holding, Store, StoreHoldingsSlice } from '@/types';
 
-export const createHoldingsSlice: StateCreator<
-  Store,
-  [['zustand/immer', never]],
-  [],
-  StoreHoldingsSlice,
-> = (set, get, initialData: Holding[], pinned: string) => {
+type Slice = StateCreator<Store, [['zustand/immer', never]], [], StoreHoldingsSlice>;
+
+export const createHoldingsSlice = (
+  set: Parameters<Slice>[0],
+  get: Parameters<Slice>[1],
+  initialData: Holding[],
+  pinned: string,
+) => {
   return {
     holdings: {
       id: '',
@@ -19,16 +21,16 @@ export const createHoldingsSlice: StateCreator<
       removeHolding: (id: string) => {
         const { holdings } = get();
 
-        const filtered = holdings.items.filter((item) => item.id !== id);
+        const filtered = holdings.items.filter((item: Holding) => item.id !== id);
 
-        set((state) => {
+        set((state: Store) => {
           state.holdings.items = filtered;
         });
 
         return filtered;
       },
       set: (items: Holding[]) => {
-        set((state) => {
+        set((state: Store) => {
           state.holdings.items = items;
         });
       },
@@ -37,21 +39,26 @@ export const createHoldingsSlice: StateCreator<
 
         const all = [...holdings.items];
 
-        const index = all.findIndex((holding) => holding.id === item.id);
+        const index = all.findIndex((holding: Holding) => holding.id === item.id);
 
         all[index] = item
 
-        set((state) => {
+        set((state: Store) => {
           state.holdings.items = all;
         });
       },
       setId: (id: string) => {
-        set((state) => {
+        set((state: Store) => {
           state.holdings.id = id;
         });
       },
+      setNullable: (value: boolean) => {
+        set((state: Store) => {
+          state.holdings.isNullable = value;
+        });
+      },
       setPinned: (id: string) => {
-        set((state) => {
+        set((state: Store) => {
           state.holdings.pinned = id;
         });
       },
@@ -61,7 +68,7 @@ export const createHoldingsSlice: StateCreator<
       selectHolding: () => {
         const { holdings } = get();
 
-        return holdings.items.find((item) => item.id === holdings.id);
+        return holdings.items.find((item: Holding) => item.id === holdings.id);
       },
       selectHoldingForManaging: () => {
         const { holdings } = get();
@@ -70,18 +77,13 @@ export const createHoldingsSlice: StateCreator<
           return undefined;
         }
 
-        return holdings.items.find((item) => item.id === holdings.id);
+        return holdings.items.find((item: Holding) => item.id === holdings.id);
       },
       selectId: () => {
         return get().holdings.id;
       },
       selectPinned: () => {
         return get().holdings.pinned;
-      },
-      setNullable: (value: boolean) => {
-        set((state) => {
-          state.holdings.isNullable = value;
-        });
       },
     },
   };

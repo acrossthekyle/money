@@ -4,12 +4,13 @@ import type { StateCreator } from 'zustand';
 
 import type { Dateable, Store, StoreDateSlice } from '@/types';
 
-export const createDateSlice: StateCreator<
-  Store,
-  [['zustand/immer', never]],
-  [],
-  StoreDateSlice,
-> = (set, get, initialData: string) => {
+type Slice = StateCreator<Store, [['zustand/immer', never]], [], StoreDateSlice>;
+
+export const createDateSlice = (
+  set: Parameters<Slice>[0],
+  get: Parameters<Slice>[1],
+  initialData: string,
+) => {
   return {
     date: {
       value: null,
@@ -17,12 +18,12 @@ export const createDateSlice: StateCreator<
       setDateable: (value: Dateable) => {
         localStorage.setItem('dateable', value.iso);
 
-        set((state) => {
+        set((state: Store) => {
           state.date.value = value;
         });
       },
       setZone: (zone: string) => {
-        set((state) => {
+        set((state: Store) => {
           state.date.zone = zone;
         });
       },

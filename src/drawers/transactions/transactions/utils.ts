@@ -13,7 +13,7 @@ export function getItems(day: CalendarDay) {
     );
 
     results.push({
-      amount,
+      amount: String(amount),
       category: budget.category,
       icon: budget.category,
       id: budget.id,
@@ -25,10 +25,10 @@ export function getItems(day: CalendarDay) {
 
   if (day.return.amount !== null) {
     results.push({
-      amount: day.return.amount,
+      amount: String(day.return.amount),
       category: day.return.type,
       icon: 'return',
-      id: null,
+      id: '',
       isNegative: false,
       name: day.return.label,
       schedule: 'monthly',

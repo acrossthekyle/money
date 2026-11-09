@@ -11,13 +11,12 @@ import { getItems } from './utils';
 import Wrapper from './wrapper';
 
 type Props = {
-  active: string;
   day: CalendarDay;
-  onDelete: (id: string | null) => void;
-  onEdit: (id: string | null) => void;
+  onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
 };
 
-export default function Transactions({ active, day, onDelete, onEdit }: Props) {
+export default function Transactions({ day, onDelete, onEdit }: Props) {
   const items = getItems(day);
 
   if (items.length > 0) {
@@ -26,7 +25,7 @@ export default function Transactions({ active, day, onDelete, onEdit }: Props) {
         {items.map((item, index) => (
           <li className={styles.item} key={index}>
             <Wrapper
-              isClickable={item.id !== null}
+              isClickable={!!item.id}
               onClick={() => onEdit(item.id)}
             >
               <span className={styles.icon}>
@@ -50,7 +49,7 @@ export default function Transactions({ active, day, onDelete, onEdit }: Props) {
                 </p>
               </span>
             </Wrapper>
-            {item.id !== null && (
+            {!!item.id && (
               <button
                 className={styles.delete}
                 onClick={() => onDelete(item.id)}

@@ -1,12 +1,6 @@
 import tw, { cs } from '@/styles';
-import type { Budget, CalendarDay, Holding } from '@/types';
+import type { CalendarDay } from '@/types';
 import { currency } from '@/utils';
-
-type Filtered = {
-  budget?: Budget;
-  day: CalendarDay;
-  type: string;
-};
 
 type Props = {
   days: CalendarDay[];
@@ -24,26 +18,24 @@ export default function Balances({ days }: Props) {
 
   const range = highest - lowest;
 
-  let lowPercent = 0;
   let from = range === 0 ? 0 : ((start - lowest) / range) * 100;
   let to = range === 0 ? 100 : ((end - lowest) / range) * 100;
-  let highPercent = 100;
 
   const minPadding = 8;
 
-  if (from - lowPercent < minPadding) {
-    from = lowPercent + minPadding;
+  if (from - 0 < minPadding) {
+    from = 0 + minPadding;
   }
 
-  if (highPercent - to < minPadding) {
-    to = highPercent - minPadding;
+  if (100 - to < minPadding) {
+    to = 100 - minPadding;
   }
 
   if (to - from < minPadding) {
     const midpoint = (from + to) / 2;
 
-    from = Math.max(lowPercent + minPadding, midpoint - minPadding / 2);
-    to = Math.min(highPercent - minPadding, midpoint + minPadding / 2);
+    from = Math.max(0 + minPadding, midpoint - minPadding / 2);
+    to = Math.min(100 - minPadding, midpoint + minPadding / 2);
   }
 
   return (

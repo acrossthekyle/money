@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
-    "data": "npx tsx --experimental-modules --env-file=.env scripts/data.ts",
+    "check": "npm run lint && npm run build",
     "test": "jest",
     "prepare": "husky"
   },

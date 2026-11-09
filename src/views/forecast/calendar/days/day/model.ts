@@ -19,7 +19,6 @@ export function useModel(current: Dateable, day: CalendarDay) {
     isFaded: !day.dateable.isInMonth,
     isDisabled: !day.dateable.isInMonth || day.dateable.isBeforeToday,
     isHoverable: day.dateable.isInMonth && !day.dateable.isBeforeToday,
-    isHighlighted: day.dateable.iso === current.iso,
     isNegative: day.dateable.isInMonth && !day.dateable.isBeforeToday && day.balance < 0,
     isBold: day.dateable.iso === current.iso,
   };

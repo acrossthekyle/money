@@ -115,59 +115,75 @@ export type StoreData = {
 };
 
 export type StoreBudgetsSlice = {
-  id: string;
-  items: Budget[];
-  removeBudget: (id: string) => void;
-  set: (items: Budget[]) => void;
-  setBudgets: (items: Budget[]) => void;
-  setId: (id: string) => void;
-  select: () => Budget[];
-  selectBudget: () => Budget | undefined;
+  budgets: {
+    id: string;
+    items: Budget[];
+    removeBudget: (id: string) => void;
+    set: (items: Budget[]) => void;
+    setBudgets: (items: Budget[]) => void;
+    setId: (id: string) => void;
+    select: () => Budget[];
+    selectBudget: () => Budget | undefined;
+  };
 };
 
 export type StoreDateSlice = {
-  value: Dateable | null;
-  zone: string;
-  setDateable: (value: Dateable) => void;
-  setZone: (zone: string) => void;
-  select: () => Dateable | null;
-  selectPersisted: () => string;
-  selectZone: () => string;
+  date: {
+    value: Dateable | null;
+    zone: string;
+    setDateable: (value: Dateable) => void;
+    setZone: (zone: string) => void;
+    select: () => Dateable | null;
+    selectPersisted: () => string | null;
+    selectZone: () => string;
+  };
 };
 
 export type StoreForecastsSlice = {
-  calendar: CalendarDay[];
-  setForecast: () => Promise<void>;
-  selectCalendar: () => CalendarDay[];
-  selectCalendarDay: () => CalendarDay | undefined;
+  forecasts: {
+    calendar: CalendarDay[];
+    setForecast: () => Promise<void>;
+    selectCalendar: () => CalendarDay[];
+    selectCalendarDay: () => CalendarDay | undefined;
+  };
 };
 
 export type StoreHoldingsSlice = {
-  id: string;
-  items: Holding[];
-  pinned: string;
-  removeHolding: (id: string) => Holding[];
-  set: (items: Holding[]) => void;
-  setHolding: (item: Holding) => void;
-  setId: (id: string) => void;
-  setPinned: (id: string) => void;
-  select: () => Holding[];
-  selectHolding: () => Holding | undefined;
-  selectId: () => string;
-  setNullable: (value: boolean) => void;
+  holdings: {
+    id: string;
+    items: Holding[];
+    isNullable: boolean;
+    pinned: string;
+    removeHolding: (id: string) => Holding[];
+    set: (items: Holding[]) => void;
+    setHolding: (item: Holding) => void;
+    setId: (id: string) => void;
+    setPinned: (id: string) => void;
+    select: () => Holding[];
+    selectHolding: () => Holding | undefined;
+    selectHoldingForManaging: () => Holding | undefined;
+    selectId: () => string;
+    selectPinned: () => string;
+    setNullable: (value: boolean) => void;
+  };
 };
 
 export type StoreMenuSlice = {
-  isActive: boolean;
-  toggle: () => void;
+  menu: {
+    isActive: boolean;
+    select: () => boolean;
+    toggle: () => void;
+  };
 };
 
 export type StoreRootSlice = {
-  isReady: boolean;
-  setReady: () => void;
-  setUnready: () => void;
-  selectIsReady: () => boolean;
-  syncParams: (holding: string, iso: string, budget: string) => Promise<void>;
+  root: {
+    isReady: boolean;
+    setReady: () => void;
+    setUnready: () => void;
+    selectIsReady: () => boolean;
+    syncParams: (holding: string, iso: string, budget: string) => Promise<void>;
+  };
 };
 
 export type Store = StoreBudgetsSlice & StoreDateSlice & StoreForecastsSlice & StoreHoldingsSlice & StoreMenuSlice & StoreRootSlice;

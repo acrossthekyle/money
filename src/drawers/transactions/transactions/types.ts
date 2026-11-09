@@ -1,10 +1,8 @@
-import type { Budget, CalendarReturn } from '@/types';
-
 export type Filtered = {
-  amount: number;
+  amount: string;
   category: string;
   icon: string;
-  id: string | null;
+  id: string;
   isNegative: boolean;
   name: string;
   schedule: string;

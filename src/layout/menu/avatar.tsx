@@ -10,15 +10,10 @@ import {
 import tw from '@/styles';
 
 type Props = {
-  current: string;
-  onClick: (key: string) => void;
-};
-
-type IconProps = {
   type: string;
 };
 
-function Icon({ type }: IconProps) {
+function Icon({ type }: Props) {
   if (type === 'credit_card') {
     return <CreditCard className={styles.icon} />
   }

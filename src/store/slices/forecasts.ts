@@ -5,12 +5,12 @@ import type { StateCreator } from 'zustand';
 import type { CalendarDay, Store, StoreForecastsSlice } from '@/types';
 import { calculateMonth } from '@/utils/forecast';
 
-export const createForecastsSlice: StateCreator<
-  Store,
-  [['zustand/immer', never]],
-  [],
-  StoreForecastsSlice,
-> = (set, get) => {
+type Slice = StateCreator<Store, [['zustand/immer', never]], [], StoreForecastsSlice>;
+
+export const createForecastsSlice = (
+  set: Parameters<Slice>[0],
+  get: Parameters<Slice>[1],
+) => {
   return {
     forecasts: {
       calendar: [] as CalendarDay[],
@@ -18,9 +18,10 @@ export const createForecastsSlice: StateCreator<
         const { budgets, date, holdings } = get();
 
         const holding = holdings.selectHolding();
+        const dateable = date.select();
 
-        if (!holding) {
-          set((state) => {
+        if (!holding || !dateable) {
+          set((state: Store) => {
             state.forecasts.calendar = [];
           });
 
@@ -30,11 +31,11 @@ export const createForecastsSlice: StateCreator<
         const result = await calculateMonth(
           holding,
           budgets.select(),
-          date.select(),
+          dateable,
           holdings.select(),
         );
 
-        set((state) => {
+        set((state: Store) => {
           state.forecasts.calendar = result;
         });
       },
@@ -44,9 +45,11 @@ export const createForecastsSlice: StateCreator<
       selectCalendarDay: () => {
         const { date, forecasts } = get();
 
-        const current = date.select().iso;
+        const dateable = date.select();
 
-        return forecasts.calendar.find((day) => day.dateable.iso === current);
+        return forecasts.calendar.find(
+          (day: CalendarDay) => day.dateable.iso === (dateable ? dateable.iso : ''),
+        );
       },
     },
   };

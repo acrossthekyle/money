@@ -9,7 +9,6 @@ type Props = {
   header: string;
   holdings: Holding[];
   isActive: boolean;
-  isEditing: boolean;
   onNext: (key: string, value: string) => void;
   value: string;
   type: string;
@@ -20,7 +19,6 @@ export default function Section({
   header,
   holdings,
   isActive,
-  isEditing,
   onNext,
   value,
   type,

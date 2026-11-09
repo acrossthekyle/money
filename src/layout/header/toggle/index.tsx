@@ -7,7 +7,7 @@ import tw from '@/styles';
 import { useModel } from './model';
 
 export default function Toggle() {
-  const { handleOnClick, isActive } = useModel();
+  const { handleOnClick } = useModel();
 
   return (
     <button

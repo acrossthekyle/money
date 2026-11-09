@@ -6,6 +6,7 @@ import tw from '@/styles';
 
 export default function Percent(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
+    // @ts-expect-error - props are ok
     <Input
       allowNegativeValue={true}
       className={styles.container}

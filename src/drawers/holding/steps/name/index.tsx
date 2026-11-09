@@ -7,7 +7,6 @@ import { useModel } from './model';
 type Props = {
   header: string;
   isActive: boolean;
-  isEditing: boolean;
   onNext: (key: string, value: string) => void;
   paragraph: string;
   placeholder: string;
@@ -18,7 +17,6 @@ export default function Section({
   children,
   header,
   isActive,
-  isEditing,
   onNext,
   paragraph,
   placeholder,
@@ -44,7 +42,7 @@ export default function Section({
       </Ui.Form.Content>
       <Ui.Form.Actions>
         <Ui.Components.Button
-          isBlocked={isBlocked}
+          isDisabled={isBlocked}
           isPrimary
           onClick={() => onNext('name', name)}
         >

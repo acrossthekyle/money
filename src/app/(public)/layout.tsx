@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Header, Main } from '@/layout';
+import { Main } from '@/layout';
 
 export default function Layout({
   children,
@@ -8,10 +8,8 @@ export default function Layout({
   children: ReactNode;
 }) {
   return (
-    <>
-      <Main>
-        {children}
-      </Main>
-    </>
+    <Main>
+      {children}
+    </Main>
   );
 }

@@ -59,7 +59,6 @@ export default function View() {
           <Amount
             header={header}
             isActive={steps[step] === 'amount'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.amount}
             type={data.type}
@@ -74,7 +73,6 @@ export default function View() {
           <Name
             header={header}
             isActive={steps[step] === 'name'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.name}
           >
@@ -89,7 +87,6 @@ export default function View() {
             header={header}
             holdings={holdings}
             isActive={steps[step] === 'transferee'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.transferee}
             type={data.type}
@@ -104,7 +101,6 @@ export default function View() {
           <Start
             header={header}
             isActive={steps[step] === 'start'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.start}
           >
@@ -118,7 +114,6 @@ export default function View() {
           <Schedule
             header={header}
             isActive={steps[step] === 'schedule'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.schedule}
           >
@@ -132,7 +127,6 @@ export default function View() {
           <End
             header={header}
             isActive={steps[step] === 'end'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.end}
           >
@@ -146,7 +140,6 @@ export default function View() {
           <Category
             header={header}
             isActive={steps[step] === 'category'}
-            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.category}
           >
@@ -159,7 +152,7 @@ export default function View() {
           </Category>
           {budget?.schedule !== 'once' && (
             <Update
-              date={date}
+              date={date || undefined}
               header={header}
               isActive={steps[step] === 'update'}
               onContinue={handleOnContinue}
@@ -174,7 +167,7 @@ export default function View() {
           )}
           <Submit
             data={data}
-            date={date}
+            date={date || undefined}
             holdings={holdings}
             isActive={steps[step] === 'submit'}
             isEditing={budget !== undefined}

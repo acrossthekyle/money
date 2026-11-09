@@ -4,7 +4,7 @@ import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { erase } from '@/actions/budgets/erase';
 import { useBudget, useConfirm, useStore, useTransactions } from '@/hooks';
-import type { UseConfirmConfig } from '@/types';
+import type { Budget, UseConfirmConfig } from '@/types';
 
 export function useModel() {
   const { onBudget } = useBudget();
@@ -12,27 +12,27 @@ export function useModel() {
   const { budgets, forecasts } = useStore();
   const { instance, isActive, onBackdrop, onCancel, onClose } = useTransactions();
 
-  const [budget, setBudget] = useState(null);
+  const [budget, setBudget] = useState<Budget | null>(null);
 
   const day = forecasts.selectCalendarDay();
 
   // @ts-expect-error - is ok
   const [response, action] = useActionState(erase.bind(null, {
-    budget,
-    dateIso: day?.dateable.iso,
+    budget: budget as Budget,
+    dateIso: day?.dateable.iso || '',
   }), null);
 
   useEffect(() => {
     if (response !== null) {
       if (response.purged) {
-        budgets.removeBudget(response.id);
+        budgets.removeBudget(response.result.id);
       } else {
         budgets.setBudgets([response.result]);
       }
 
       forecasts.setForecast();
     }
-  }, [response]);
+  }, [budgets, forecasts, response]);
 
   const handleOnAdd = () => {
     onClose();
@@ -68,7 +68,7 @@ export function useModel() {
         input: 'radio',
         inputOptions: {
           'all': `Entire series (all dates)`,
-          'this': `Only ${day.dateable.display}`,
+          'this': `Only ${day?.dateable.display}`,
         },
         inputValidator: (value: string): string => {
           if (!value) {
@@ -116,5 +116,6 @@ export function useModel() {
     isActive,
     onBackdrop,
     onCancel,
+    onClose,
   };
 };

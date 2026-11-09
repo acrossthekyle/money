@@ -12,8 +12,7 @@ import {
 } from 'react';
 
 type DrawerContextType = {
-  data: unknown;
-  dialog: string;
+  drawer: string;
   isOpen: boolean;
   onBackdrop: (event: MouseEvent<HTMLDialogElement>) => void;
   onCancel: (event: KeyboardEvent<HTMLDialogElement>) => void;

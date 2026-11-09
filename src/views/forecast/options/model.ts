@@ -30,7 +30,7 @@ export function useModel() {
     if (response !== null) {
       holdings.setPinned(response);
     }
-  }, [response]);
+  }, [holdings, response]);
 
   const handleOnDelete = async () => {
     const result = await confirm({
