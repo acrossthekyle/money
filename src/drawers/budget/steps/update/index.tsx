@@ -31,31 +31,39 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>
+        How should these changes be applied?
+      </Ui.Form.Paragraph>
       <Ui.Form.Options>
+        <Ui.Form.Legend>Choose one</Ui.Form.Legend>
         <Ui.Form.Option
           isActive={choice === 'all'}
-          onClick={() => handleOnChange('all')}
-        >
-          All past, present, and future dates
-        </Ui.Form.Option>
+          label="All past, present, and future dates"
+          name="update"
+          onSelect={() => handleOnChange('all')}
+          value="all"
+        />
         <Ui.Form.Option
           isActive={choice === 'this'}
-          onClick={() => handleOnChange('this')}
-        >
-          Only {format(date?.date, DATE_DISPLAY)}
-        </Ui.Form.Option>
+          label={`Only ${format(date?.date, DATE_DISPLAY)}`}
+          name="update"
+          onSelect={() => handleOnChange('this')}
+          value="this"
+        />
         <Ui.Form.Option
           isActive={choice === 'prospective'}
-          onClick={() => handleOnChange('prospective')}
-        >
-          From {format(date?.date, DATE_DISPLAY)} onwards
-        </Ui.Form.Option>
+          label={`From ${format(date?.date, DATE_DISPLAY)} onwards`}
+          name="update"
+          onSelect={() => handleOnChange('prospective')}
+          value="prospective"
+        />
         <Ui.Form.Option
           isActive={choice === 'future'}
-          onClick={() => handleOnChange('future')}
-        >
-          After {format(date?.date, DATE_DISPLAY)}
-        </Ui.Form.Option>
+          label={`After ${format(date?.date, DATE_DISPLAY)}`}
+          name="update"
+          onSelect={() => handleOnChange('future')}
+          value="future"
+        />
       </Ui.Form.Options>
       <Ui.Form.Actions>
         <Ui.Components.Button

@@ -25,9 +25,13 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>
+        Does this transaction stop at some point?
+      </Ui.Form.Paragraph>
       <Ui.Form.Content>
+        <Ui.Form.Label htmlFor="end">End date (optional)</Ui.Form.Label>
         <Ui.Form.Input
-          className="!w-66"
+          id="end"
           value={end}
           name="end"
           onChange={handleOnChange}

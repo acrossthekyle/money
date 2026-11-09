@@ -32,6 +32,10 @@ export default function Section({
 }: React.PropsWithChildren<Props>) {
   return (
     <Ui.Form.Container isActive={isActive}>
+      <Ui.Form.Header>Review</Ui.Form.Header>
+      <Ui.Form.Paragraph>
+        Make sure everything is correct before submitting.
+      </Ui.Form.Paragraph>
       <Ui.Form.Outline>
         <Ui.Form.OutlineItem>
           <Ui.Form.OutlineItemHeading>Amount</Ui.Form.OutlineItemHeading>
@@ -100,7 +104,7 @@ export default function Section({
           isPrimary
           onClick={onSubmit}
         >
-          {isEditing ? 'update' : 'add'}
+          {isEditing ? 'Update' : 'Add'}
         </Ui.Components.Button>
         {children}
       </Ui.Form.Actions>

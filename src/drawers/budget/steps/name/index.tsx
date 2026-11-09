@@ -25,8 +25,13 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>
+        What is this transaction for?
+      </Ui.Form.Paragraph>
       <Ui.Form.Content>
+        <Ui.Form.Label htmlFor="name">Name</Ui.Form.Label>
         <Ui.Form.Input
+          id="name"
           value={name}
           maxLength={48}
           name="name"
@@ -34,6 +39,7 @@ export default function Section({
           placeholder="Eg. Paramount+"
           type="text"
         />
+        <Ui.Form.Hint>Maximum length: 48 characters</Ui.Form.Hint>
       </Ui.Form.Content>
       <Ui.Form.Actions>
         <Ui.Components.Button

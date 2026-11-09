@@ -27,19 +27,23 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>
+        Which category does this belong in?
+      </Ui.Form.Paragraph>
       <Ui.Form.Options>
+        <Ui.Form.Legend>Choose one</Ui.Form.Legend>
         {CATEGORIES.map((item) => (
           <Ui.Form.Option
             isActive={category === item.value}
             key={item.value}
-            onClick={() => handleOnChange(item.value)}
-          >
-            <span>{item.name}</span>
-          </Ui.Form.Option>
+            label={item.name}
+            name="category"
+            onSelect={() => handleOnChange(item.value)}
+            value={item.value}
+          />
         ))}
       </Ui.Form.Options>
       <Ui.Form.Actions>
-        {children}
         <Ui.Components.Button
           isDisabled={isBlocked}
           isPrimary
@@ -47,6 +51,7 @@ export default function Section({
         >
           Next
         </Ui.Components.Button>
+        {children}
       </Ui.Form.Actions>
     </Ui.Form.Container>
   );

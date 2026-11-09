@@ -58,10 +58,9 @@ const styles = tw({
   container: `
     relative
     w-6 h-10
-    flex items-center justify-center
   `,
   icon: `
-    size-5
+    size-4
     stroke-1
   `,
 });

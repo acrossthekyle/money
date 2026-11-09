@@ -1,6 +1,5 @@
 'use client';
 
-import tw from '@/styles';
 import Ui from '@/ui';
 
 import { useModel } from './model';
@@ -33,29 +32,35 @@ export default function Section({
 
   return (
     <Ui.Form.Container isActive={isActive}>
-      <Ui.Form.Header>Amount</Ui.Form.Header>
-      <Ui.Form.Paragraph>{header}</Ui.Form.Paragraph>
+      <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>
+        Choose either Income or Expense as the type of transaction, and then enter the amount.
+      </Ui.Form.Paragraph>
       <Ui.Form.Content>
-        <Ui.Form.Options className={styles.options}>
+        <Ui.Form.Options>
+          <Ui.Form.Legend>Type</Ui.Form.Legend>
           <Ui.Form.Option
             isActive={isIncome}
-            onClick={() => handleOnType(true)}
-          >
-            <span>Income</span>
-          </Ui.Form.Option>
+            label="Income"
+            name="type"
+            onSelect={() => handleOnType(true)}
+            value="income"
+          />
           <Ui.Form.Option
             isActive={!isIncome}
-            onClick={() => handleOnType(false)}
-          >
-            <span>Expense</span>
-          </Ui.Form.Option>
+            label="Expense"
+            name="type"
+            onSelect={() => handleOnType(false)}
+            value="expense"
+          />
         </Ui.Form.Options>
+        <Ui.Form.Label htmlFor="transaction-amount">Amount</Ui.Form.Label>
         <Ui.Form.Currency
           id="transaction-amount"
-          isNegative={!isIncome}
           onChange={handleOnChange}
           value={amount}
         />
+        <Ui.Form.Hint>Only enter numbers and decimal points</Ui.Form.Hint>
       </Ui.Form.Content>
       <Ui.Form.Actions>
         <Ui.Components.Button
@@ -70,9 +75,3 @@ export default function Section({
     </Ui.Form.Container>
   );
 };
-
-const styles = tw({
-  options: `
-    mb-4
-  `,
-});

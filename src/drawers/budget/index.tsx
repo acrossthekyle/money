@@ -41,6 +41,8 @@ export default function View() {
   const canGoBack = step > 0 && !isEditing;
   const canCancel = step === 0 && !isEditing;
 
+  const header = `Step ${step + 1} of ${steps.length}`;
+
   return (
     <Ui.Drawer.Container
       id="budget-drawer"
@@ -50,16 +52,12 @@ export default function View() {
       onCancel={onCancel}
     >
       <Ui.Drawer.Inner isActive={isActive}>
-        <Ui.Drawer.Content>
+        <Ui.Drawer.Content key={budget?.id}>
           <Ui.Drawer.Header>
-            <Heading
-              isEditing={budget !== undefined}
-              step={step + 1}
-              total={steps.length}
-            />
+            <Heading isEditing={budget !== undefined} />
           </Ui.Drawer.Header>
           <Amount
-            header="Choose either Income or Expense as the type of transaction, and then enter the amount"
+            header={header}
             isActive={steps[step] === 'amount'}
             isEditing={isEditing}
             onNext={handleOnNext}
@@ -74,7 +72,7 @@ export default function View() {
             />
           </Amount>
           <Name
-            header="What is this transaction for?"
+            header={header}
             isActive={steps[step] === 'name'}
             isEditing={isEditing}
             onNext={handleOnNext}
@@ -88,12 +86,13 @@ export default function View() {
             />
           </Name>
           <Transferee
-            header={data.type === 'debit' ? 'Should this be transfered as income to one of the following?' : 'Should this be transfered as an expense from one of the following?'}
+            header={header}
             holdings={holdings}
             isActive={steps[step] === 'transferee'}
             isEditing={isEditing}
             onNext={handleOnNext}
             value={data.transferee}
+            type={data.type}
           >
             <Actions
               canGoBack={canGoBack}
@@ -103,7 +102,7 @@ export default function View() {
             />
           </Transferee>
           <Start
-            header="When does this transaction occur?"
+            header={header}
             isActive={steps[step] === 'start'}
             isEditing={isEditing}
             onNext={handleOnNext}
@@ -117,7 +116,7 @@ export default function View() {
             />
           </Start>
           <Schedule
-            header="How often does this transaction repeat?"
+            header={header}
             isActive={steps[step] === 'schedule'}
             isEditing={isEditing}
             onNext={handleOnNext}
@@ -131,7 +130,7 @@ export default function View() {
             />
           </Schedule>
           <End
-            header="Does this transaction have an end date?"
+            header={header}
             isActive={steps[step] === 'end'}
             isEditing={isEditing}
             onNext={handleOnNext}
@@ -145,7 +144,7 @@ export default function View() {
             />
           </End>
           <Category
-            header="Which category does this belong in?"
+            header={header}
             isActive={steps[step] === 'category'}
             isEditing={isEditing}
             onNext={handleOnNext}
@@ -161,7 +160,7 @@ export default function View() {
           {budget?.schedule !== 'once' && (
             <Update
               date={date}
-              header="Choose how to apply these changes."
+              header={header}
               isActive={steps[step] === 'update'}
               onContinue={handleOnContinue}
             >

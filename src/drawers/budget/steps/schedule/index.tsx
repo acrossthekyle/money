@@ -27,19 +27,23 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>
+        How often does this transaction repeat?
+      </Ui.Form.Paragraph>
       <Ui.Form.Options>
+        <Ui.Form.Legend>Frequency</Ui.Form.Legend>
         {SCHEDULES.map((item) => (
           <Ui.Form.Option
             isActive={schedule === item.value}
             key={item.value}
-            onClick={() => handleOnChange(item.value)}
-          >
-            <span>{item.name}</span>
-          </Ui.Form.Option>
+            label={item.name}
+            name="schedule"
+            onSelect={() => handleOnChange(item.value)}
+            value={item.value}
+          />
         ))}
       </Ui.Form.Options>
       <Ui.Form.Actions>
-        {children}
         <Ui.Components.Button
           isDisabled={isBlocked}
           isPrimary
@@ -47,6 +51,7 @@ export default function Section({
         >
           Next
         </Ui.Components.Button>
+        {children}
       </Ui.Form.Actions>
     </Ui.Form.Container>
   );

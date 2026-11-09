@@ -2,18 +2,16 @@ import tw from '@/styles';
 
 type Props = {
   isEditing: boolean;
-  step: number;
-  total: number;
 };
 
-export default function Heading({ isEditing, step, total }: Props) {
+export default function Heading({ isEditing }: Props) {
   return (
     <h2 className={styles.container} id="dialog-header">
       <span>
         {isEditing ? 'Edit' : 'Add'} transaction
       </span>
       <span className={styles.lid}>
-        <span>Step {step} of {total}</span>
+        <span>Multi-step form</span>
       </span>
     </h2>
   );

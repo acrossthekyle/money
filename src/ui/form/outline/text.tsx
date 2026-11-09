@@ -17,8 +17,7 @@ export default function Text({
 
 const styles = tw({
   container: `
-    text-xl
-    font-bold
+    text-sm text-current/62.5
   `,
   capitalize: `
     capitalize

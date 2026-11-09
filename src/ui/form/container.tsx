@@ -17,9 +17,8 @@ export default function Container({
 
 const styles = tw({
   section: `
-    flex-col items-start justify-end gap-4
+    flex-col
     h-full
-    pt-4
     hidden
   `,
   visible: `

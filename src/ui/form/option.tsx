@@ -1,21 +1,30 @@
 'use client';
 
+import { useId } from 'react';
+
 import tw, { cs } from '@/styles';
 
 type Props = {
   className?: string;
   isActive: boolean;
-  onClick: () => void;
+  label: string;
+  name: string;
+  onSelect: () => void;
+  value: string;
 };
 
 export default function Section({
-  children,
   className,
   isActive,
-  onClick,
-}: React.PropsWithChildren<Props>) {
+  label,
+  name,
+  onSelect,
+  value,
+}: Props) {
+  const id = useId();
+
   return (
-    <button
+    <label
       className={
         cs(
           styles.container,
@@ -23,30 +32,52 @@ export default function Section({
           isActive ? styles.active : styles.inactive,
         )
       }
-      onClick={onClick}
-      type="button"
+      htmlFor={id}
     >
-      {children}
-    </button>
+      <input
+        className={styles.input}
+        type="radio"
+        id={id}
+        name={name}
+        value={value}
+        checked={isActive}
+        onChange={onSelect}
+      />
+      {label}
+    </label>
   );
 };
 
 const styles = tw({
   container: `
-    inline-flex items-center
-    w-fit
-    rounded-full
-    text-(--background) text-sm
-    uppercase
+    relative
+    flex items-center
+    w-full
+    rounded-lg
+    text-sm
     py-2 px-4
     whitespace-nowrap
     select-none
+    border border-current/17.5
+    cursor-pointer
   `,
   inactive: `
-    bg-(--foreground)
+    bg-(--background)
   `,
   active: `
-    bg-yellow-300
-    !text-black
+    bg-(--foreground)/2.5
+  `,
+  input: `
+    appearance-none
+    size-3.5
+    rounded-full
+    bg-(--foreground)/17.5
+    mr-3
+
+    motion-safe:duration-300
+
+    checked:bg-(--background)
+    checked:border-2
+    checked:border-(--foreground)
   `,
 });

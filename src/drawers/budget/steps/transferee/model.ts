@@ -11,7 +11,7 @@ export function useModel(value: string) {
   }, [value]);
 
   const handleOnChange = (item: string) => {
-    setTransferee(() => transferee === item ? '' : item);
+    setTransferee(item);
   };
 
   return {

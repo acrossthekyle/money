@@ -12,6 +12,7 @@ type Props = {
   isEditing: boolean;
   onNext: (key: string, value: string) => void;
   value: string;
+  type: string;
 };
 
 export default function Section({
@@ -22,21 +23,35 @@ export default function Section({
   isEditing,
   onNext,
   value,
+  type,
 }: React.PropsWithChildren<Props>) {
   const { handleOnChange, transferee } = useModel(value);
 
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>
+        {type === 'debit' && 'Should this be transfered as income to one of the following?'}
+        {type === 'credit' && 'Should this be transfered as an expense from one of the following?'}
+      </Ui.Form.Paragraph>
       <Ui.Form.Options>
+        <Ui.Form.Legend>Choose one</Ui.Form.Legend>
+        <Ui.Form.Option
+          isActive={transferee === ''}
+          label="None"
+          name="transferee"
+          onSelect={() => handleOnChange('')}
+          value="none"
+        />
         {holdings.map((holding) => (
           <Ui.Form.Option
             isActive={transferee === holding.id}
+            label={holding.name}
             key={holding.id}
-            onClick={() => handleOnChange(holding.id)}
-          >
-            <span>{holding.name}</span>
-          </Ui.Form.Option>
+            name="transferee"
+            onSelect={() => handleOnChange(holding.id)}
+            value={holding.id}
+          />
         ))}
       </Ui.Form.Options>
       <Ui.Form.Actions>

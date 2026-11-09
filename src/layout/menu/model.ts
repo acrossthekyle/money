@@ -13,13 +13,22 @@ export function useModel() {
     document.body.classList.toggle('menu-active', isActive);
   }, [isActive]);
 
+  const items = holdings.select();
+
   return {
     handleOnToggle: () => {
       setTimeout(() => {
         menu.toggle();
       }, 100);
     },
-    holdings: holdings.select(),
+    holdings: items,
     isActive,
+    worth: items.reduce((accumulator: number, item: Holding) => {
+      if (item.type === 'credit_card') {
+        return accumulator - Number(item.balance);
+      }
+
+      return accumulator + Number(item.balance);
+    }, 0),
   };
 }

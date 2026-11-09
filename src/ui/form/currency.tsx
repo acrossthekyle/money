@@ -1,35 +1,39 @@
-'use client';
-
 import Input from 'react-currency-input-field';
 
 import tw from '@/styles';
 
-type Props = React.InputHTMLAttributes<HTMLInputElement> & {
-  isNegative?: boolean;
-};
-
-export default function Currency({ isNegative, value, ...rest }: Props) {
+export default function Currency(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <Input
+      allowNegativeValue={false}
       className={styles.container}
+      id="currency"
       name="currency"
       placeholder="$ 0.00"
       decimalsLimit={2}
       decimalScale={2}
-      prefix={isNegative ? '- $ ' : '$ '}
+      prefix="$ "
       inputMode="decimal"
-      // @ts-expect-error - is ok
-      value={isNaN(value) ? '' : value}
-      {...rest}
+      {...props}
     />
   );
 };
 
 const styles = tw({
   container: `
-    outline-none
-    border-none
+    appearance-none
+    relative
     w-full
-    text-xl
+    mb-1
+    py-1 px-3
+    bg-(--background)
+    border border-(--foreground)/17.5
+    outline-3 outline-transparent
+    rounded-lg
+
+    motion-safe:duration-300
+
+    focus:border-(--foreground)/62.5
+    focus:outline-(--foreground)/32.5
   `,
 });

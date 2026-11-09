@@ -11,7 +11,7 @@ import Exit from './exit';
 import { useModel } from './model';
 
 export default function Menu() {
-  const { handleOnToggle, holdings, isActive } = useModel();
+  const { handleOnToggle, holdings, isActive, worth } = useModel();
 
   return (
     <>
@@ -24,7 +24,10 @@ export default function Menu() {
           )
         }
       >
-        <h2 className={styles.header}>Portfolio</h2>
+        <h2 className={styles.header}>
+          <span>Portfolio</span>
+          <span className={styles.lid}>Net worth: ${currency(worth, true)}</span>
+        </h2>
         <Ui.Components.Theme />
         <nav aria-label="primary navigation">
           <ul className={styles.links}>
@@ -38,26 +41,20 @@ export default function Menu() {
                   <Avatar type={holding.type} />
                   <span className={styles.content}>
                     <span className={styles.name}>{holding.name}</span>
+                    <span className={styles.lid}>
+                      ${currency(holding.balance, true)} Balance
+                    </span>
                   </span>
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                className={styles.link}
-                href={`/add`}
-                onClick={handleOnToggle}
-              >
-                <Avatar type="plus" />
-                <span className={styles.content}>
-                  <span className={styles.name}>Add</span>
-                </span>
-              </Link>
-            </li>
           </ul>
         </nav>
+        <Ui.Components.Button isGhost>
+          Add to Portfolio
+        </Ui.Components.Button>
         <Exit />
-        <Ui.Components.Branding />
+        {/*<Ui.Components.Branding />*/}
       </aside>
       <div className={styles.backdrop(isActive)} />
     </>
@@ -66,7 +63,7 @@ export default function Menu() {
 
 const styles = tw({
   container: `
-    fixed top-0 left-0 z-10000
+    fixed top-2 left-2 z-10000
     flex flex-col gap-0
     h-full min-h-svh
     bg-(--background)
@@ -90,45 +87,40 @@ const styles = tw({
   `),
   expanded: `
     w-svw
+    rounded-3xl
 
-    sm:border-r
-    sm:border-current/22.5
-    sm:w-100
+    sm:border
+    sm:border-current/12.5
+    sm:w-96
   `,
   collapsed: `
     w-0
   `,
   header: `
-    p-6
-    uppercase
-    font-black
-    border-b border-dashed border-current/32.5
+    flex flex-col
+    p-6 pb-0
+    font-medium
+    text-sm
   `,
   links: `
-    flex flex-col gap-2
+    flex flex-col gap-3
     w-svw
-    p-6 pb-6
-    mb-6
-    border-b border-dashed border-current/32.5
+    p-6
 
-    sm:w-100
+    sm:w-96
   `,
   link: `
     relative
-    flex items-center gap-4
+    flex items-start gap-1
     w-full
+    text-sm
   `,
   content: `
     flex flex-col gap-1
-    text-sm
   `,
   name: `
-    font-bold
-    leading-[1]
-    text-base
   `,
   lid: `
-    capitalize
-    text-sm text-current/62.5
+    text-current/62.5
   `,
 });

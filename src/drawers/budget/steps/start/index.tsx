@@ -25,9 +25,13 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>
+        When does this transaction occur?
+      </Ui.Form.Paragraph>
       <Ui.Form.Content>
+        <Ui.Form.Label htmlFor="start">Start date</Ui.Form.Label>
         <Ui.Form.Input
-          className="!w-66 md:!w-50"
+          id="start"
           value={start}
           name="start"
           onChange={handleOnChange}
@@ -35,7 +39,6 @@ export default function Section({
         />
       </Ui.Form.Content>
       <Ui.Form.Actions>
-        {children}
         <Ui.Components.Button
           isDisabled={isBlocked}
           isPrimary
@@ -43,6 +46,7 @@ export default function Section({
         >
           Next
         </Ui.Components.Button>
+        {children}
       </Ui.Form.Actions>
     </Ui.Form.Container>
   );

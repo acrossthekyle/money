@@ -135,7 +135,7 @@ const styles = tw({
   heading: `
     text-sm
     font-semibold
-    mb-4
+    mb-1
   `,
   content: `
     text-sm text-current/62.5

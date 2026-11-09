@@ -21,6 +21,8 @@ const styles = tw({
     relative left-1/2
     -translate-x-1/2
     w-full max-w-sm
-    px-2
+    px-2 pt-2
+
+    md:pt-4
   `,
 });

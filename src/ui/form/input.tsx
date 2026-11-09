@@ -14,13 +14,13 @@ export default function Input({
   ...rest
 }: Props) {
   return (
-    <>
+    <div className={styles.container}>
       <input
         className={
           cs(
-            styles.container,
+            styles.input,
             className,
-            type === 'date' && styles.date,
+            type === 'date' ? styles.date : styles.basic,
           )
         }
         type={type}
@@ -36,26 +36,50 @@ export default function Input({
           {!!value ? format(parseISO(String(value)), DATE_DISPLAY) : 'Eg. September 1st, 2026'}
         </span>
       )}
-    </>
+    </div>
   );
 };
 
 const styles = tw({
   container: `
-    appearance-none
     relative
+  `,
+  input: `
+    peer
+    appearance-none
     w-full
-    text-xl
-    outline-none
+    mb-1
+    py-1 px-3
+    bg-(--background)
+    rounded-lg
+  `,
+  basic: `
+    border border-(--foreground)/17.5
+    outline-3 outline-transparent
+
+    motion-safe:duration-300
+
+    focus:border-(--foreground)/62.5
+    focus:outline-(--foreground)/32.5
   `,
   date: `
+    outline-0
     cursor-pointer
   `,
   mask: `
     absolute inset-0 z-1
+    flex items-center
+    px-3
+    rounded-lg
     bg-(--background)
-    text-xl
     pointer-events-none
+    border border-(--foreground)/17.5
+    outline-3 outline-transparent
+
+    motion-safe:duration-300
+
+    peer-focus:border-(--foreground)/62.5
+    peer-focus:outline-(--foreground)/32.5
   `,
   placeholder: `
     text-current/50

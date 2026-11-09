@@ -9,17 +9,16 @@ export default function Options({
   className,
 }: React.PropsWithChildren<Props>) {
   return (
-    <div className={cs(styles.container, className)}>
+    <fieldset className={cs(styles.container, className)}>
       {children}
-    </div>
+    </fieldset>
   );
 };
 
 const styles = tw({
   container: `
     relative
-    flex gap-3
-    flex-wrap
-    pr-8
+    flex flex-col gap-3
+    mb-4
   `,
 });
