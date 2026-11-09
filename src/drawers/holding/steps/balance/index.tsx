@@ -9,6 +9,7 @@ type Props = {
   isActive: boolean;
   isEditing: boolean;
   onNext: (key: string, value: string) => void;
+  paragraph: string;
   value: string;
 };
 
@@ -18,6 +19,7 @@ export default function Section({
   isActive,
   isEditing,
   onNext,
+  paragraph,
   value,
 }: React.PropsWithChildren<Props>) {
   const { balance, handleOnChange, isBlocked } = useModel(value);
@@ -25,18 +27,24 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
       <Ui.Form.Content>
-        <Ui.Form.Currency onChange={handleOnChange} value={balance} />
+        <Ui.Form.Label htmlFor="holding-amount">Amount</Ui.Form.Label>
+        <Ui.Form.Currency
+          id="holding-amount"
+          onChange={handleOnChange}
+          value={balance}
+        />
       </Ui.Form.Content>
       <Ui.Form.Actions>
-        {children}
-        <Ui.Form.Action
+        <Ui.Components.Button
           isBlocked={isBlocked}
-          isEditing={isEditing}
+          isPrimary
           onClick={() => onNext('balance', balance)}
         >
           Next
-        </Ui.Form.Action>
+        </Ui.Components.Button>
+        {children}
       </Ui.Form.Actions>
     </Ui.Form.Container>
   );

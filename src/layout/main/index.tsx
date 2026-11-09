@@ -10,14 +10,11 @@ export default function Main({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    absolute left-1/2 bottom-2
-    -translate-x-1/2
+    absolute top-1/2 left-1/2
+    -translate-y-1/2 -translate-x-1/2
     flex-1
     w-full max-w-sm
     px-2
-
-    md:bottom-auto
-    md:top-1/2
-    md:-translate-y-1/2
+    -mt-6
   `,
 });

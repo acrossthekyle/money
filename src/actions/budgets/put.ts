@@ -1,6 +1,5 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
@@ -61,7 +60,7 @@ export async function put(
       update: string;
     };
   },
-): Promise<void> {
+): Promise<null | Budget[]> {
   const validated = Form.safeParse({
     name: formData.data.name,
     amount: formData.data.amount,
@@ -74,7 +73,7 @@ export async function put(
   });
 
   if (!validated.success) {
-    return;
+    return null;
   }
 
   const { zone } = await getSettings();
@@ -96,17 +95,13 @@ export async function put(
   if (formData.budget === null) {
     await db.write('budgets', result);
 
-    revalidatePath('/');
-
-    return;
+    return [result];
   }
 
   if (formData.data.update === 'none' || formData.data.update === 'all') {
     await db.write('budgets', result);
 
-    revalidatePath('/');
-
-    return;
+    return [result];
   }
 
   const iterations = createBudgetIterations(formData.budget, zone);
@@ -146,10 +141,10 @@ export async function put(
 
       await db.writeAll('budgets', updates as Budget[]);
 
-      revalidatePath('/');
+      return updates;
     }
 
-    return;
+    return null;
   }
 
   if (formData.data.update === 'prospective') {
@@ -175,10 +170,10 @@ export async function put(
 
       await db.writeAll('budgets', updates as Budget[]);
 
-      revalidatePath('/');
+      return updates;
     }
 
-    return;
+    return null;
   }
 
   if (formData.data.update === 'future') {
@@ -206,13 +201,11 @@ export async function put(
 
       await db.writeAll('budgets', updates);
 
-      revalidatePath('/');
+      return updates;
     }
 
-    return;
+    return null;
   }
 
-  revalidatePath('/');
-
-  return;
+  return null;
 };

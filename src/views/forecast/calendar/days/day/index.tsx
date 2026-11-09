@@ -72,22 +72,24 @@ const styles = tw({
     group
     relative
     aspect-square
-    bg-(--foreground)/12.5
-    rounded-md
+    bg-(--foreground)/5.5 dark:bg-(--foreground)/12.5
+    rounded-xl
     text-sm
   `,
   faded: `
     text-current/90
   `,
   hoverable: `
-    hover:bg-(--foreground)/17.5
+    hover:bg-(--foreground)/22.5
+    hover:dark:bg-(--foreground)/17.5
     hover:text-(--foreground)
   `,
   highlighted: `
-    bg-current
+    !bg-(--foreground)
+    !hover:text-(--foreground)
   `,
   boldened: `
-    bg-(--foreground)/17.5
+    bg-(--foreground)/22.5 dark:bg-(--foreground)/17.5
     outline-2 outline-current/32.5
   `,
   action: `
@@ -104,7 +106,8 @@ const styles = tw({
   dark: `
     text-(--background)
 
-    group-hover:text-(--foreground)
+    group-hover:!text-(--background)
+    group-hover:!dark:text-(--foreground)
   `,
   balance: `
     text-[min(2.25vw,0.55rem)]

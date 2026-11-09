@@ -4,14 +4,15 @@ import { useRouter } from 'next/navigation';
 import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
-import { useStore } from '@/hooks';
+import { useHolding, useStore } from '@/hooks';
 
 import type { Data } from './types';
 
 export function useModel() {
   const router = useRouter();
 
-  const { getHolding } = useStore();
+  const { instance, isActive, onBackdrop, onCancel, onClose } = useHolding();
+  const { forecasts, holdings } = useStore();
 
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
@@ -21,12 +22,11 @@ export function useModel() {
     number: '',
     balance: '',
     interest: '',
-    pinned: false,
   });
 
-  const holding = getHolding();
+  const holding = holdings.selectHoldingForManaging();
 
-  const [, action, isPending] = useActionState(put.bind(null, {
+  const [response, action, isPending] = useActionState(put.bind(null, {
     id: holding?.id || null,
     data,
   }), null);
@@ -37,9 +37,24 @@ export function useModel() {
     ['credit_card', 'checking', 'savings', 'retirement'].includes(data.type) && 'number',
     'balance',
     ['checking', 'savings', 'retirement', 'property'].includes(data.type) && 'rate',
-    'pinned',
     'submit',
   ].filter(Boolean).filter((step): step is string => typeof step === 'string');
+
+  useEffect(() => {
+    if (response !== null) {
+      holdings.setHolding(response);
+
+      forecasts.setForecast();
+
+      onClose();
+    }
+  }, [response]);
+
+  useEffect(() => {
+    if (isActive) {
+      setStep(0);
+    }
+  }, [isActive]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -49,12 +64,11 @@ export function useModel() {
       number: holding?.number || '',
       balance: holding?.balance || '',
       interest: holding?.interest || '',
-      pinned: holding?.pinned || false,
     });
   }, [holding]);
 
   const handleOnCancel = () => {
-    router.back();
+    onClose();
   };
 
   const handleOnNext = (key: string, value: string | boolean) => {
@@ -79,10 +93,6 @@ export function useModel() {
   const handleOnSubmit = () => {
     startTransition(async () => {
       await action();
-
-      router.refresh();
-
-      router.back();
     });
   };
 
@@ -93,8 +103,12 @@ export function useModel() {
     handleOnNext,
     handleOnSubmit,
     holding,
+    instance,
+    isActive,
     isEditing,
     isPending,
+    onBackdrop,
+    onCancel,
     step,
     steps,
   };

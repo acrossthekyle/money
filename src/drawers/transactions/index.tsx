@@ -45,7 +45,7 @@ export default function View() {
               Add Transaction
             </Ui.Components.Button>
             <Ui.Components.Button isGhost onClick={onCancel}>
-              Cancel
+              Close
             </Ui.Components.Button>
           </Ui.Drawer.Footer>
         </Ui.Drawer.Content>

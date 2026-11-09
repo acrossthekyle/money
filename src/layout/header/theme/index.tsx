@@ -31,13 +31,10 @@ export default function Theme() {
 
 const styles = tw({
   container: `
-    absolute top-4 right-14
     p-2
-
-    sm:right-4
   `,
   icon: `
-    size-5
-    stroke-1
+    size-4.5
+    stroke-2
   `,
 });

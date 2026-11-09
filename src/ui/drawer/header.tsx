@@ -17,7 +17,19 @@ export default function Header({
 
 const styles = tw({
   container: `
+    relative
     flex flex-col
-    mb-6
+
+    after:absolute
+    after:left-0
+    after:right-0
+    after:top-full
+    after:z-100
+    after:h-6
+    after:bg-linear-to-b
+    after:from-zinc-50
+    dark:after:from-zinc-950
+    after:to-transparent
+    after:pointer-events-none
   `,
 });

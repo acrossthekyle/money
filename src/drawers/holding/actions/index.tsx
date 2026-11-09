@@ -18,10 +18,10 @@ export default function Actions({
   return (
     <>
       {canGoBack && (
-        <Ui.Form.Action isOutline onClick={onBack}>Back</Ui.Form.Action>
+        <Ui.Components.Button isGhost onClick={onBack}>Back</Ui.Components.Button>
       )}
       {canCancel && (
-        <Ui.Form.Action isOutline onClick={onCancel}>Cancel</Ui.Form.Action>
+        <Ui.Components.Button isGhost onClick={onCancel}>Cancel</Ui.Components.Button>
       )}
     </>
   );

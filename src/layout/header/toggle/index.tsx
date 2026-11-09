@@ -1,6 +1,6 @@
 'use client';
 
-import { TextAlignJustifyStart } from 'lucide-react';
+import { TextAlignStart } from 'lucide-react';
 
 import tw from '@/styles';
 
@@ -12,17 +12,21 @@ export default function Toggle() {
   return (
     <button
       aria-label="toggle menu sidebar"
+      className={styles.container}
       onClick={handleOnClick}
       type="button"
     >
-      <TextAlignJustifyStart className={styles.icon} />
+      <TextAlignStart className={styles.icon} />
     </button>
   );
 };
 
 const styles = tw({
+  container: `
+    p-2
+  `,
   icon: `
-    size-5
-    stroke-1
+    size-4.5
+    stroke-2
   `,
 });

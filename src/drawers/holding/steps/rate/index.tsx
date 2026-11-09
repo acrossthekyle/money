@@ -12,6 +12,7 @@ type Props = {
   isActive: boolean;
   isEditing: boolean;
   onNext: (key: string, value: string) => void;
+  paragraph: string;
   value: string;
 };
 
@@ -21,6 +22,7 @@ export default function Section({
   isActive,
   isEditing,
   onNext,
+  paragraph,
   value,
 }: React.PropsWithChildren<Props>) {
   const { handleOnChange, rate } = useModel(value);
@@ -28,31 +30,23 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
       <Ui.Form.Content>
-        <Input
-          allowNegativeValue={true}
-          className={styles.input}
-          id="percent"
-          name="percent"
-          placeholder="% 0.00"
-          decimalsLimit={2}
-          decimalScale={2}
-          disableGroupSeparators
-          fixedDecimalLength={2}
-          maxLength={5}
-          prefix="% "
+        <Ui.Form.Label htmlFor="holding-rate">Value</Ui.Form.Label>
+        <Ui.Form.Percent
+          id="holding-rate"
           onChange={handleOnChange}
           value={rate}
         />
       </Ui.Form.Content>
       <Ui.Form.Actions>
-        {children}
-        <Ui.Form.Action
-          isEditing={isEditing}
+        <Ui.Components.Button
+          isPrimary
           onClick={() => onNext('interest', rate)}
         >
           {rate ? 'Next' : 'Skip'}
-        </Ui.Form.Action>
+        </Ui.Components.Button>
+        {children}
       </Ui.Form.Actions>
     </Ui.Form.Container>
   );

@@ -61,6 +61,6 @@ const styles = tw({
   `,
   icon: `
     size-4
-    stroke-1
+    stroke-2
   `,
 });

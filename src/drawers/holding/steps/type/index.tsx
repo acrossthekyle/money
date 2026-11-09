@@ -25,47 +25,54 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>What kind of portfolio item is this?</Ui.Form.Paragraph>
       <Ui.Form.Options>
+        <Ui.Form.Legend>Choose one:</Ui.Form.Legend>
         <Ui.Form.Option
           isActive={type === 'credit_card'}
-          onClick={() => handleOnChange('credit_card')}
-        >
-          Credit Card
-        </Ui.Form.Option>
+          label="Credit Card"
+          name="type"
+          onSelect={() => handleOnChange('credit_card')}
+          value="credit_card"
+        />
         <Ui.Form.Option
           isActive={type === 'savings'}
-          onClick={() => handleOnChange('savings')}
-        >
-          Savings
-        </Ui.Form.Option>
+          label="Savings"
+          name="type"
+          onSelect={() => handleOnChange('savings')}
+          value="savings"
+        />
         <Ui.Form.Option
           isActive={type === 'checking'}
-          onClick={() => handleOnChange('checking')}
-        >
-          Checking
-        </Ui.Form.Option>
+          label="Checking"
+          name="type"
+          onSelect={() => handleOnChange('checking')}
+          value="checking"
+        />
         <Ui.Form.Option
           isActive={type === 'retirement'}
-          onClick={() => handleOnChange('retirement')}
-        >
-          Retirement Holding
-        </Ui.Form.Option>
+          label="Retirement"
+          name="type"
+          onSelect={() => handleOnChange('retirement')}
+          value="retirement"
+        />
         <Ui.Form.Option
           isActive={type === 'property'}
-          onClick={() => handleOnChange('property')}
-        >
-          Property/Asset
-        </Ui.Form.Option>
+          label="Property/Asset"
+          name="type"
+          onSelect={() => handleOnChange('property')}
+          value="property"
+        />
       </Ui.Form.Options>
       <Ui.Form.Actions>
-        {children}
-        <Ui.Form.Action
+        <Ui.Components.Button
           isBlocked={isBlocked}
-          isEditing={isEditing}
+          isPrimary
           onClick={() => onNext('type', type)}
         >
           Next
-        </Ui.Form.Action>
+        </Ui.Components.Button>
+        {children}
       </Ui.Form.Actions>
     </Ui.Form.Container>
   );

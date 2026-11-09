@@ -12,13 +12,13 @@ export default function Content({
 
 const styles = tw({
   container: `
-    flex-1
-    flex flex-col justify-between
-    bg-(--foreground)/7.5
+    flex flex-col
+    bg-zinc-50 dark:bg-neutral-950
     text-(--foreground)
-    overflow-y-auto
     border border-current/12.5
     rounded-3xl
+    overflow-y-auto
+    h-full
     p-4
   `,
 });

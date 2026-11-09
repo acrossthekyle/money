@@ -1,13 +1,13 @@
 'use server';
 
 import { format } from 'date-fns';
-import { revalidatePath } from 'next/cache';
 import { v4 as uuidv4 } from 'uuid';
 import * as z from 'zod';
 
 import { DATE_ISO } from '@/constants';
 import { db } from '@/db';
 import { get as getSettings } from '@/getters/settings';
+import type { Holding } from '@/types';
 import { date } from '@/utils';
 
 import { balancize, interestize } from '../utils';
@@ -24,7 +24,6 @@ const Form = z.object({
     'property',
   ]),
   interest: z.string().nullable().optional(),
-  pinned: z.boolean().nullable().optional(),
 });
 
 export async function put(
@@ -36,21 +35,19 @@ export async function put(
       number: string;
       balance: string;
       interest: string;
-      pinned: boolean;
     };
   },
-): Promise<void> {
+): Promise<Holding | null> {
   const validated = Form.safeParse({
     name: formData.data.name,
     balance: formData.data.balance,
     number: formData.data.number,
     type: formData.data.type,
     interest: formData.data.interest,
-    pinned: formData.data.pinned,
   });
 
   if (!validated.success) {
-    return;
+    return null;
   }
 
   const { zone } = await getSettings();
@@ -59,10 +56,9 @@ export async function put(
 
   const computed = {
     balance: balancize(validated.data.balance),
-    id: formData.id === null ? '' : formData.id,
+    id: formData.id === null ? uuidv4() : formData.id,
     interest: interestize(validated.data.interest === null ? '' : (validated.data.interest || '')),
     number: validated.data.number === null ? '' : (validated.data?.number || '').slice(-4),
-    pinned: validated.data.pinned || false,
     updated: format(now, DATE_ISO),
   };
 
@@ -71,16 +67,7 @@ export async function put(
     ...computed,
   };
 
-  if (formData.id === null) {
-    const identifier = uuidv4();
+  await db.write('holdings', result);
 
-    await db.write('holdings', {
-      ...result,
-      id: identifier,
-    });
-  } else {
-    await db.write('holdings', result);
-  }
-
-  revalidatePath('/');
+  return result;
 };

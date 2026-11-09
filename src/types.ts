@@ -1,8 +1,3 @@
-export type FormStateError ={
-  field: string;
-  error: string;
-};
-
 export type Holding = {
   id: string;
   name: string;
@@ -11,7 +6,6 @@ export type Holding = {
   type: string;
   interest: string;
   updated?: string;
-  pinned: boolean;
 };
 
 export type Budget = {
@@ -116,13 +110,16 @@ export type UseConfirmConfig = {
 export type StoreData = {
   budgets: Budget[];
   holdings: Holding[];
+  pinned: string;
   zone: string;
 };
 
 export type StoreBudgetsSlice = {
   id: string;
   items: Budget[];
+  removeBudget: (id: string) => void;
   set: (items: Budget[]) => void;
+  setBudgets: (items: Budget[]) => void;
   setId: (id: string) => void;
   select: () => Budget[];
   selectBudget: () => Budget | undefined;
@@ -148,11 +145,16 @@ export type StoreForecastsSlice = {
 export type StoreHoldingsSlice = {
   id: string;
   items: Holding[];
+  pinned: string;
+  removeHolding: (id: string) => Holding[];
   set: (items: Holding[]) => void;
+  setHolding: (item: Holding) => void;
   setId: (id: string) => void;
+  setPinned: (id: string) => void;
   select: () => Holding[];
   selectHolding: () => Holding | undefined;
   selectId: () => string;
+  setNullable: (value: boolean) => void;
 };
 
 export type StoreMenuSlice = {

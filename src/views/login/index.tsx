@@ -16,84 +16,62 @@ export default function View() {
 
   return (
     <>
-      <header></header>
-      <main>
-        <form action={action} className={styles.form} id="login-form">
-          <div className={styles.field}>
-            <input
-              className={styles.input}
-              id="username"
-              name="username"
-              type="text"
-              placeholder=" "
-              defaultValue={data.username}
-              required
-              disabled={isPending}
-              onChange={handleOnUsername}
-            />
-            <label className={styles.label} htmlFor="username">
-              Username
-            </label>
-          </div>
-          <div className={styles.field}>
-            <input
-              className={styles.input}
-              id="password"
-              name="password"
-              type="password"
-              placeholder=" "
-              required
-              disabled={isPending}
-              onChange={handleOnPassword}
-            />
-            <label className={styles.label} htmlFor="password">
-              Password
-            </label>
-          </div>
-          <Ui.Components.Button isDisabled={isPending}>
-            {isPending ? 'Processing...' : 'Sign In'}
-          </Ui.Components.Button>
-        </form>
-      </main>
-      <footer></footer>
+      <h1 className={styles.header}>BASALT</h1>
+      <p className={styles.paragraph}>
+        Sign in and starting planning.
+      </p>
+      <form action={action} className={styles.form} id="login-form">
+        <div className={styles.field}>
+          <Ui.Form.Label htmlFor="username">Username</Ui.Form.Label>
+          <Ui.Form.Input
+            id="username"
+            name="username"
+            placeholder=""
+            type="text"
+            defaultValue={data.username}
+            required
+            disabled={isPending}
+            onChange={handleOnUsername}
+          />
+          <Ui.Form.Hint></Ui.Form.Hint>
+        </div>
+        <div className={styles.field}>
+          <Ui.Form.Label htmlFor="password">Password</Ui.Form.Label>
+          <Ui.Form.Input
+            id="password"
+            name="password"
+            type="password"
+            placeholder=""
+            required
+            disabled={isPending}
+            onChange={handleOnPassword}
+          />
+          <Ui.Form.Hint></Ui.Form.Hint>
+        </div>
+        <Ui.Components.Button isPrimary isDisabled={isPending}>
+          {isPending ? 'Processing...' : 'Sign In'}
+        </Ui.Components.Button>
+      </form>
     </>
   );
 };
 
 const styles = tw({
+  header: `
+    mb-2
+    font-bold
+    text-center
+  `,
+  paragraph: `
+    pb-6
+    text-center
+    text-sm
+  `,
   form: `
-    relative top-1/2
-    -translate-y-1/2
-    flex flex-col justify-center gap-8
+    flex flex-col gap-4
+    mt-4
   `,
   field: `
-    relative
     flex flex-col
-  `,
-  input: `
-    peer
-    appearance-none
-    relative
-    border-b
-    py-2
-    outline-0
-  `,
-  label: `
-    absolute -top-5 z-2
-    font-normal
-
-    motion-safe:duration-100
-
-    peer-focus:absolute
-    peer-focus:-top-5
-    peer-focus:translate-y-0
-
-    peer-placeholder-shown:top-1/2
-    peer-placeholder-shown:-translate-y-1/2
-
-    md:peer-focus:-top-5
-  `,
-  footer: `
-    absolute bottom-0
   `,
 });

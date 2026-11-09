@@ -1,7 +1,4 @@
-import { ArrowDown, Play, Square, ArrowUp } from 'lucide-react';
-import Link from 'next/link';
-
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import type { Budget, CalendarDay, Holding } from '@/types';
 import { currency } from '@/utils';
 
@@ -25,66 +22,132 @@ export default function Balances({ days }: Props) {
   const highest = Math.max(...balances);
   const end = balances[balances.length - 1];
 
+  const range = highest - lowest;
+
+  let lowPercent = 0;
+  let from = range === 0 ? 0 : ((start - lowest) / range) * 100;
+  let to = range === 0 ? 100 : ((end - lowest) / range) * 100;
+  let highPercent = 100;
+
+  const minPadding = 8;
+
+  if (from - lowPercent < minPadding) {
+    from = lowPercent + minPadding;
+  }
+
+  if (highPercent - to < minPadding) {
+    to = highPercent - minPadding;
+  }
+
+  if (to - from < minPadding) {
+    const midpoint = (from + to) / 2;
+
+    from = Math.max(lowPercent + minPadding, midpoint - minPadding / 2);
+    to = Math.min(highPercent - minPadding, midpoint + minPadding / 2);
+  }
+
   return (
     <section className={styles.container}>
-      <h2 className={styles.header}>Balance</h2>
-      <ul className={styles.stats}>
-        <li className={styles.stat}>
-          <span className={styles.label}>
-            <Play className={styles.icon} /> Start
+      <h2>Balance Range</h2>
+      <div className={styles.range}>
+        <div className={styles.bar} />
+        <div
+          className={styles.highlight}
+          style={{
+            left: `${Math.min(from, to)}%`,
+            width: `${Math.abs(to - from)}%`
+          }}
+        />
+        <div className={styles.start}>
+          <div className={styles.endcap} />
+          <span className={styles.value}>
+            <span>${currency(lowest, true)}</span>
+            <span>Low</span>
           </span>
-          <span className={styles.value}>{start < 0 ? '-' : ''}${currency(start)}</span>
-        </li>
-        <li className={styles.stat}>
-          <span className={styles.label}>
-            <Square className={styles.icon} /> End
+        </div>
+        <div
+          className={styles.from}
+          style={{
+            left: `${from}%`
+          }}
+        >
+          <div className={styles.marker} />
+        </div>
+        <div
+          className={styles.to}
+          style={{
+            right: `${100 - to}%`,
+          }}
+        >
+          <div className={styles.marker} />
+        </div>
+        <div className={styles.end}>
+          <div className={styles.endcap} />
+          <span className={cs(styles.value, styles.right)}>
+            <span>${currency(highest, true)}</span>
+            <span>High</span>
           </span>
-          <span className={styles.value}>{end < 0 ? '-' : ''}${currency(end)}</span>
-        </li>
-        <li className={styles.stat}>
-          <span className={styles.label}>
-            <ArrowUp className={styles.icon} /> High
-          </span>
-          <span className={styles.value}>{highest < 0 ? '-' : ''}${currency(highest)}</span>
-        </li>
-        <li className={styles.stat}>
-          <span className={styles.label}>
-            <ArrowDown className={styles.icon} /> Low
-          </span>
-          <span className={styles.value}>{lowest < 0 ? '-' : ''}${currency(lowest)}</span>
-        </li>
-      </ul>
+        </div>
+      </div>
     </section>
   );
 };
 
 const styles = tw({
   container: `
-    flex gap-4
+    flex flex-col gap-4
     mt-6
-    font-roboto
-    text-tiny
+    text-sm
   `,
-  header: `
-    font-bold
-    uppercase
+  range: `
+    relative
   `,
-  stats: `
-    flex-1
-    flex flex-col gap-2
+  bar: `
+    h-1
+    bg-(--foreground)
+    rounded-full
   `,
-  stat: `
-    flex justify-between gap-2
+  highlight: `
+    absolute top-0
+    h-1
+    bg-(--background)
+    border
+    rounded-full
   `,
-  label: `
-    flex items-center gap-2
-    text-left
-    uppercase
+  start: `
+    absolute -left-0.25 -top-1.5
+    flex flex-col items-start
+  `,
+  end: `
+    absolute -right-0.25 -top-1.5
+    flex flex-col items-end
+  `,
+  marker: `
+    size-4
+    bg-(--foreground)
+    border-2
+    rounded-full
+  `,
+  endcap: `
+    size-4
+    bg-(--background)
+    border-2
+    rounded-full
   `,
   value: `
+    flex flex-col
+    mt-3
+    text-xs text-current/62.5
+  `,
+  right: `
     text-right
   `,
-  icon: `
-    size-2.5
+  from: `
+    absolute -bottom-1.5
+    flex flex-col items-start
+  `,
+  to: `
+    absolute -bottom-1.5
+    flex flex-col items-end
   `,
 });

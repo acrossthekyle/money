@@ -20,7 +20,7 @@ export function create(data: StoreData) {
       ...createBudgetsSlice(set, get, data.budgets),
       ...createDateSlice(set, get, data.zone),
       ...createForecastsSlice(set, get),
-      ...createHoldingsSlice(set, get, data.holdings),
+      ...createHoldingsSlice(set, get, data.holdings, data.pinned),
       ...createMenuSlice(set, get),
       ...createRootSlice(set, get),
     })),

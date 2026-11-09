@@ -14,19 +14,32 @@ export const createBudgetsSlice: StateCreator<
     budgets: {
       id: '',
       items: initialData,
+      removeBudget: (id: string) => {
+        const { budgets } = get();
+
+        set((state) => {
+          state.budgets.items = budgets.items.filter((item) => item.id !== id);
+        });
+      },
       set: (items: Budget[]) => {
         set((state) => {
           state.budgets.items = items;
         });
       },
-      setBudget: (item: Budget) => {
+      setBudgets: (items: Budget[]) => {
         const { budgets } = get();
 
-        const all = [...budgets.select()];
+        let all = [...budgets.items];
 
-        const index = all.findIndex((budget) => budget.id === item.id);
+        items.forEach((item) => {
+          const index = all.findIndex((budget) => budget.id === item.id);
 
-        all[index] = item
+          if (index > -1) {
+            all[index] = item;
+          } else {
+            all.push(item);
+          }
+        });
 
         set((state) => {
           state.budgets.items = all;

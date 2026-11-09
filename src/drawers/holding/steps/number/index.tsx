@@ -9,6 +9,7 @@ type Props = {
   isActive: boolean;
   isEditing: boolean;
   onNext: (key: string, value: string) => void;
+  paragraph: string;
   value: string;
 };
 
@@ -18,6 +19,7 @@ export default function Section({
   isActive,
   isEditing,
   onNext,
+  paragraph,
   value,
 }: React.PropsWithChildren<Props>) {
   const { handleOnChange, number } = useModel(value);
@@ -25,9 +27,10 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
       <Ui.Form.Content>
+        <Ui.Form.Label htmlFor="holding-number">Last Four</Ui.Form.Label>
         <Ui.Form.Input
-          className="!w-20"
           value={number}
           maxLength={4}
           name="number"
@@ -37,13 +40,13 @@ export default function Section({
         />
       </Ui.Form.Content>
       <Ui.Form.Actions>
-        {children}
-        <Ui.Form.Action
-          isEditing={isEditing}
+        <Ui.Components.Button
+          isPrimary
           onClick={() => onNext('number', number)}
         >
           {number ? 'Next' : 'Skip'}
-        </Ui.Form.Action>
+        </Ui.Components.Button>
+        {children}
       </Ui.Form.Actions>
     </Ui.Form.Container>
   );

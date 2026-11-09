@@ -12,5 +12,6 @@ export function useModel() {
     date: dateable,
     days,
     holding: holdings.selectHolding(),
+    pinned: holdings.selectPinned(),
   };
 };

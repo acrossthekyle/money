@@ -22,7 +22,7 @@ export default function Transactions({ active, day, onDelete, onEdit }: Props) {
 
   if (items.length > 0) {
     return (
-      <ul className={styles.items}>
+      <ul className={styles.container}>
         {items.map((item, index) => (
           <li className={styles.item} key={index}>
             <Wrapper
@@ -79,13 +79,9 @@ export default function Transactions({ active, day, onDelete, onEdit }: Props) {
 
 const styles = tw({
   container: `
-    flex flex-col items-start justify-end gap-6
-    h-full w-full
-    pt-16
-  `,
-  items: `
     flex flex-col gap-2
     w-full
+    pt-6
   `,
   item: `
     relative

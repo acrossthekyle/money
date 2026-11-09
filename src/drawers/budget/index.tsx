@@ -52,7 +52,7 @@ export default function View() {
       onCancel={onCancel}
     >
       <Ui.Drawer.Inner isActive={isActive}>
-        <Ui.Drawer.Content key={budget?.id}>
+        <Ui.Drawer.Content>
           <Ui.Drawer.Header>
             <Heading isEditing={budget !== undefined} />
           </Ui.Drawer.Header>

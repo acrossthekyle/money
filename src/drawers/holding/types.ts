@@ -4,5 +4,4 @@ export type Data = {
   number: string;
   balance: string;
   interest: string;
-  pinned: boolean;
 };

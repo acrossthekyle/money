@@ -9,6 +9,7 @@ type Props = {
   isActive: boolean;
   isEditing: boolean;
   onNext: (key: string, value: string) => void;
+  paragraph: string;
   placeholder: string;
   value: string;
 };
@@ -19,6 +20,7 @@ export default function Section({
   isActive,
   isEditing,
   onNext,
+  paragraph,
   placeholder,
   value,
 }: React.PropsWithChildren<Props>) {
@@ -27,8 +29,11 @@ export default function Section({
   return (
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>{header}</Ui.Form.Header>
+      <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
       <Ui.Form.Content>
+        <Ui.Form.Label htmlFor="holding-name">Name</Ui.Form.Label>
         <Ui.Form.Input
+          id="holding-name"
           value={name}
           maxLength={48}
           name="name"
@@ -38,14 +43,14 @@ export default function Section({
         />
       </Ui.Form.Content>
       <Ui.Form.Actions>
-        {children}
-        <Ui.Form.Action
+        <Ui.Components.Button
           isBlocked={isBlocked}
-          isEditing={isEditing}
+          isPrimary
           onClick={() => onNext('name', name)}
         >
           Next
-        </Ui.Form.Action>
+        </Ui.Components.Button>
+        {children}
       </Ui.Form.Actions>
     </Ui.Form.Container>
   );

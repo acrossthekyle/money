@@ -85,30 +85,22 @@ const styles = tw({
   container: `
     relative
     grid grid-cols-7 gap-2
-    pb-2
+    mb-6
   `,
   navigate: `
     col-span-1
     flex items-center justify-center
-    aspect-square
-    bg-(--foreground)/12.5
-    rounded-md
 
     disabled:opacity-50
     disabled:!cursor-not-allowed
   `,
   arrow: `
-    w-5 h-5
+    size-4
     stroke-2
-
-    md:w-4
-    md:h-4
-    md:stroke-1
   `,
   field: `
     relative
     flex items-center justify-center
-    rounded-md
   `,
   months: `
     col-span-3
@@ -120,28 +112,20 @@ const styles = tw({
     relative z-0
     appearance-none
     w-full
-    rounded-md
-    py-2
+    py-1.25
     opacity-0
     cursor-pointer
   `,
   mask: `
     absolute inset-0 z-1
     flex items-center justify-between
-    px-3
     text-sm
     pointer-events-none
-    bg-(--foreground)/12.5
-    rounded-md
     select-none
   `,
   chevron: `
     shrink-0
-    w-5 h-5
+    size-4
     stroke-2
-
-    md:w-4
-    md:h-4
-    md:stroke-1
   `,
 });

@@ -11,7 +11,7 @@ import type { Data } from './types';
 export function useModel() {
   const router = useRouter();
 
-  const { date, budgets, holdings } = useStore();
+  const { date, budgets, forecasts, holdings } = useStore();
   const { instance, isActive, onBackdrop, onCancel, onClose } = useBudget();
   const { onTransactions } = useTransactions();
 
@@ -32,7 +32,7 @@ export function useModel() {
   const budget = budgets.selectBudget();
   const dateable = date.select();
 
-  const [, action] = useActionState(put.bind(null, {
+  const [response, action] = useActionState(put.bind(null, {
     budget: budget || null,
     data: {
       ...data,
@@ -53,6 +53,25 @@ export function useModel() {
     (budget && budget?.schedule !== 'once') && 'update',
     'submit',
   ].filter(Boolean).filter((step): step is string => typeof step === 'string');
+
+  useEffect(() => {
+    if (response !== null) {
+      budgets.setBudgets(response);
+      budgets.setId('');
+
+      forecasts.setForecast();
+
+      onClose();
+
+      onTransactions();
+    }
+  }, [response]);
+
+  useEffect(() => {
+    if (isActive) {
+      setStep(0);
+    }
+  }, [isActive]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -99,17 +118,6 @@ export function useModel() {
 
     startTransition(async () => {
       await action();
-
-      budgets.setBudget({
-        ...budget,
-        ...data,
-      });
-
-      onClose();
-
-      budgets.setId('');
-
-      onTransactions();
     });
   };
 

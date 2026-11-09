@@ -33,8 +33,8 @@ const styles = tw({
     flex items-center justify-center
     aspect-square
     text-xs text-center
-    bg-(--foreground)/12.5
-    rounded-md
+    bg-(--foreground)/5.5 dark:bg-(--foreground)/12.5
+    rounded-xl
     select-none
   `,
 });

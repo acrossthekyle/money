@@ -55,6 +55,17 @@ body {
     cursor: pointer;
   }
 
+  aside {
+    left: -100vw;
+    width: 100vw;
+    transition: left 0s linear 250ms;
+  }
+
+  aside.is-active {
+    left: 0;
+    transition-delay: 0s;
+  }
+
   dialog {
     left: -100vw;
     width: 100vw;

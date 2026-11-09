@@ -9,11 +9,11 @@ type Props = {
 export default function Header({ holding }: Props) {
   return (
     <h1 className={styles.container}>
-      <span className={styles.title}>
+      <span>
         {holding.name}
       </span>
       <span className={styles.lid}>
-        USD • {holding.type.replace(/_/g, ' ')} • Monthly Forecast
+        Monthly Forecast
       </span>
     </h1>
   );
@@ -23,15 +23,9 @@ const styles = tw({
   container: `
     flex flex-col
     mb-6
-  `,
-  title: `
-    font-black
-    text-lg
+    text-sm
   `,
   lid: `
-    font-roboto
-    uppercase
-    text-xs
-    tracking-wide
+    text-current/62.5
   `,
 })

@@ -1,6 +1,6 @@
 'use client';
 
-import { startTransition, useActionState, useState } from 'react';
+import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { erase } from '@/actions/budgets/erase';
 import { useBudget, useConfirm, useStore, useTransactions } from '@/hooks';
@@ -17,10 +17,22 @@ export function useModel() {
   const day = forecasts.selectCalendarDay();
 
   // @ts-expect-error - is ok
-  const [, action] = useActionState(erase.bind(null, {
+  const [response, action] = useActionState(erase.bind(null, {
     budget,
-    dateIso: day.dateable.iso,
+    dateIso: day?.dateable.iso,
   }), null);
+
+  useEffect(() => {
+    if (response !== null) {
+      if (response.purged) {
+        budgets.removeBudget(response.id);
+      } else {
+        budgets.setBudgets([response.result]);
+      }
+
+      forecasts.setForecast();
+    }
+  }, [response]);
 
   const handleOnAdd = () => {
     onClose();
@@ -78,15 +90,11 @@ export function useModel() {
       startTransition(async () => {
         // @ts-expect-error - is ok
         await action(true);
-
-        router.refresh();
       });
     } else {
       startTransition(async () => {
         // @ts-expect-error - is ok
         await action(false);
-
-        router.refresh();
       });
     }
   };

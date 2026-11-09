@@ -2,39 +2,27 @@ import tw from '@/styles';
 
 type Props = {
   isEditing: boolean;
-  step: number;
-  total: number;
 };
 
-export default function Heading({ isEditing, step, total }: Props) {
+export default function Heading({ isEditing }: Props) {
   return (
-    <h1 className={styles.container}>
-      <span className={styles.eyebrow}>
-        {isEditing ? 'Edit' : 'Add'}
+    <h2 className={styles.container} id="dialog-header">
+      <span>
+        {isEditing ? 'Edit' : 'Add to'} Portfolio
       </span>
-      <span className={styles.title}>Step {step + 1}</span>
-      <span className={styles.lid}>of {total}</span>
-    </h1>
+      <span className={styles.lid}>
+        <span>Multi-step form</span>
+      </span>
+    </h2>
   );
 };
 
 const styles = tw({
   container: `
-    flex flex-col items-end gap-1
-  `,
-  eyebrow: `
-    font-bold
-    text-lg
-    leading-[0.8]
-    uppercase
-  `,
-  title: `
-    text-5xl
-    font-semibold
+    flex flex-col
   `,
   lid: `
-    font-bold
-    text-base
-    leading-[0.8]
+    flex justify-between
+    text-sm text-current/62.5
   `,
 })

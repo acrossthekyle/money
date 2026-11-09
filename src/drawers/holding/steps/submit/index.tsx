@@ -9,6 +9,7 @@ type Props = {
   data: Data;
   isActive: boolean;
   isEditing: boolean;
+  isPending: boolean;
   onSubmit: () => void;
 };
 
@@ -17,10 +18,15 @@ export default function Section({
   data,
   isActive,
   isEditing,
+  isPending,
   onSubmit,
 }: React.PropsWithChildren<Props>) {
   return (
     <Ui.Form.Container isActive={isActive}>
+      <Ui.Form.Header>Review</Ui.Form.Header>
+      <Ui.Form.Paragraph>
+        Make sure everything is correct before submitting.
+      </Ui.Form.Paragraph>
       <Ui.Form.Outline>
         <Ui.Form.OutlineItem>
           <Ui.Form.OutlineItemHeading>Type</Ui.Form.OutlineItemHeading>
@@ -52,20 +58,16 @@ export default function Section({
             <Ui.Form.OutlineItemText>{data.interest} %</Ui.Form.OutlineItemText>
           </Ui.Form.OutlineItem>
         )}
-        <Ui.Form.OutlineItem>
-          <Ui.Form.OutlineItemHeading>
-            Is the default upon login
-          </Ui.Form.OutlineItemHeading>
-          <Ui.Form.OutlineItemText>
-            {data.pinned ? 'Yes' : 'No'}
-          </Ui.Form.OutlineItemText>
-        </Ui.Form.OutlineItem>
       </Ui.Form.Outline>
       <Ui.Form.Actions>
+        <Ui.Components.Button
+          isDisabled={isPending}
+          isPrimary
+          onClick={onSubmit}
+        >
+          {isEditing ? 'Update' : 'Add'}
+        </Ui.Components.Button>
         {children}
-        <Ui.Form.Action isSubmit onClick={onSubmit}>
-          {isEditing ? 'update' : 'add'}
-        </Ui.Form.Action>
       </Ui.Form.Actions>
     </Ui.Form.Container>
   );

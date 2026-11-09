@@ -1,5 +1,6 @@
 import tw from '@/styles';
 
+import Theme from './theme';
 import Toggle from './toggle';
 
 type Props = {
@@ -12,17 +13,14 @@ export default function Header({ isAuthenticated = true }: Props) {
       {isAuthenticated && (
         <Toggle />
       )}
+      <Theme />
     </header>
   );
 };
 
 const styles = tw({
   container: `
-    relative left-1/2
-    -translate-x-1/2
-    w-full max-w-sm
-    px-2 pt-2
-
-    md:pt-4
+    fixed left-2 right-2 top-2
+    flex items-center justify-between
   `,
 });

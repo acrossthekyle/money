@@ -1,9 +1,9 @@
-import { ReactNode, Suspense } from 'react';
+import { ReactNode } from 'react';
 
 import { DrawerProvider } from '@/contexts';
-import { Budget, Transactions } from '@/drawers';
+import { Budget, Holding, Transactions } from '@/drawers';
 import { get } from '@/getters/root';
-import { Body, Header, Main, Menu } from '@/layout';
+import { Header, Main, Menu } from '@/layout';
 import StoreProvider from '@/store';
 
 export default async function Layout({
@@ -22,6 +22,7 @@ export default async function Layout({
           {children}
         </Main>
         <Budget />
+        <Holding />
         <Transactions />
       </StoreProvider>
     </DrawerProvider>

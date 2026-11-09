@@ -2,9 +2,10 @@
 
 import { useEffect } from 'react';
 
-import { useStore } from '@/hooks';
+import { useHolding, useStore } from '@/hooks';
 
 export function useModel() {
+  const { onHolding } = useHolding();
   const { holdings, menu } = useStore();
 
   const isActive = menu.select();
@@ -15,7 +16,17 @@ export function useModel() {
 
   const items = holdings.select();
 
+  const handleOnAdd = () => {
+    menu.toggle();
+
+    holdings.setNullable(true);
+
+    onHolding();
+  };
+
   return {
+    active: holdings.selectId(),
+    handleOnAdd,
     handleOnToggle: () => {
       setTimeout(() => {
         menu.toggle();
