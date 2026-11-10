@@ -56,5 +56,5 @@ export async function login(
     path: '/',
   });
 
-  redirect(holding.id);
+  redirect(`/${holding.id}`);
 };
