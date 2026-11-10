@@ -111,10 +111,6 @@ export function useModel() {
   };
 
   const handleOnSubmit = () => {
-    if (!budget) {
-      return;
-    }
-
     startTransition(async () => {
       await action();
     });
