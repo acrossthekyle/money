@@ -30,7 +30,8 @@ export function useModel() {
     if (response !== null) {
       holdings.setPinned(response);
     }
-  }, [holdings, response]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response]);
 
   const handleOnDelete = async () => {
     const result = await confirm({

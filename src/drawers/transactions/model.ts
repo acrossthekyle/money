@@ -32,7 +32,8 @@ export function useModel() {
 
       forecasts.setForecast();
     }
-  }, [budgets, forecasts, response]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response]);
 
   const handleOnAdd = () => {
     budgets.setId('');

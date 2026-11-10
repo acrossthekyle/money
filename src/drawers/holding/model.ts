@@ -45,7 +45,8 @@ export function useModel() {
 
       onClose();
     }
-  }, [holdings, forecasts, onClose, response]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response]);
 
   useEffect(() => {
     if (isActive) {

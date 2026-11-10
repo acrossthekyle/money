@@ -62,7 +62,8 @@ export function useModel() {
 
       onTransactions();
     }
-  }, [budgets, forecasts, onClose, onTransactions, response]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response]);
 
   useEffect(() => {
     if (isActive) {
