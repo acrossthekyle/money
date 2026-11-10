@@ -24,7 +24,7 @@ export default function Heading({ day }: Props) {
             )
           }
         >
-          {day.balance < 0 && '-'}${currency(day.balance, true)}
+          {day.balance < 0 && '-'}${currency(day.balance)}
         </span>
       </span>
     </h2>

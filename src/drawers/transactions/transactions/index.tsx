@@ -41,7 +41,7 @@ export default function Transactions({ day, onDelete, onEdit }: Props) {
                   ) : (
                     <ArrowDownLeft className={styles.arrow} />
                   )}
-                  <span>${currency(item.amount, true)}</span>
+                  <span>${currency(item.amount)}</span>
                   <span>•</span>
                   <span>
                     <span className={styles.capitalize}>{item.schedule}</span> {item.category}

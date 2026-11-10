@@ -57,7 +57,7 @@ export default function Drawer() {
                           )
                         }
                       >
-                        ${currency(holding.balance, true)}
+                        ${currency(holding.balance)}
                       </span>
                     </span>
                     {active === holding.id && (
