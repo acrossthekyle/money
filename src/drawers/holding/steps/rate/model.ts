@@ -11,7 +11,7 @@ export function useModel(value: string) {
   }, [value]);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRate(event.target.value);
+    setRate(event.target.value.replace('% ', ''));
   };
 
   return {

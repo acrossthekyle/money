@@ -55,7 +55,7 @@ export default function Section({
         {!!data.interest && (
           <Ui.Form.OutlineItem>
             <Ui.Form.OutlineItemHeading>Rate</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>{data.interest} %</Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineItemText>{currency(data.interest)} %</Ui.Form.OutlineItemText>
           </Ui.Form.OutlineItem>
         )}
       </Ui.Form.Outline>

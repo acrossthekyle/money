@@ -13,7 +13,7 @@ export function useModel(value: string, type: string) {
   }, [value, type]);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const cleaned = event.target.value.replace('$ ', '');
+    const cleaned = event.target.value.replace('$ ', '').replace(/,/g, '');
 
     setAmount(cleaned);
   };

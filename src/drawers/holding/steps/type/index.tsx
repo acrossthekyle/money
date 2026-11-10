@@ -25,7 +25,7 @@ export default function Section({
       <Ui.Form.Header>{header}</Ui.Form.Header>
       <Ui.Form.Paragraph>What kind of portfolio item is this?</Ui.Form.Paragraph>
       <Ui.Form.Options>
-        <Ui.Form.Legend>Choose one:</Ui.Form.Legend>
+        <Ui.Form.Legend>Choose one</Ui.Form.Legend>
         <Ui.Form.Option
           isActive={type === 'credit_card'}
           label="Credit Card"
@@ -35,21 +35,21 @@ export default function Section({
         />
         <Ui.Form.Option
           isActive={type === 'savings'}
-          label="Savings"
+          label="Savings Account"
           name="type"
           onSelect={() => handleOnChange('savings')}
           value="savings"
         />
         <Ui.Form.Option
           isActive={type === 'checking'}
-          label="Checking"
+          label="Checking Account"
           name="type"
           onSelect={() => handleOnChange('checking')}
           value="checking"
         />
         <Ui.Form.Option
           isActive={type === 'retirement'}
-          label="Retirement"
+          label="Retirement Account"
           name="type"
           onSelect={() => handleOnChange('retirement')}
           value="retirement"

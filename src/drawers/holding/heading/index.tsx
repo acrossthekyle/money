@@ -8,7 +8,7 @@ export default function Heading({ isEditing }: Props) {
   return (
     <h2 className={styles.container} id="dialog-header">
       <span>
-        {isEditing ? 'Edit' : 'Add to'} Portfolio
+        {isEditing ? 'Edit' : 'Add to'} portfolio
       </span>
       <span className={styles.lid}>
         <span>Multi-step form</span>
