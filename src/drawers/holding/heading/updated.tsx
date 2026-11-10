@@ -43,7 +43,8 @@ const styles = tw({
   container: `
     flex gap-3 items-start
     mt-4
-    bg-amber-950
+    bg-amber-800 dark:bg-amber-950
+    text-white
     border border-amber-900
     rounded-lg
     p-3
@@ -57,6 +58,6 @@ const styles = tw({
     stroke-2
   `,
   text: `
-    text-current/62.5
+    text-current/82.5 dark:text-current/62.5
   `,
 })
