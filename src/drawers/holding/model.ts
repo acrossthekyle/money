@@ -107,6 +107,7 @@ export function useModel() {
     isPending,
     onBackdrop,
     onCancel,
+    onClose,
     step,
     steps,
   };

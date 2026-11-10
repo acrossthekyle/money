@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import tw, { cs } from '@/styles';
+import tw from '@/styles';
 import Ui from '@/ui';
 import { currency } from '@/utils';
 
@@ -10,35 +10,41 @@ import Avatar from './avatar';
 import Exit from './exit';
 import { useModel } from './model';
 
-export default function Menu() {
+export default function Drawer() {
   const {
     active,
     handleOnAdd,
-    handleOnToggle,
     holdings,
+    instance,
     isActive,
+    onBackdrop,
+    onCancel,
+    onClose,
     worth,
   } = useModel();
 
   return (
-    <aside
-      aria-label="menu"
-      className={cs(styles.container, isActive && 'is-active')}
+    <Ui.Drawer.Container
+      id="menu-drawer"
+      instance={instance}
+      isActive={isActive}
+      onBackdrop={onBackdrop}
+      onCancel={onCancel}
     >
-      <div className={styles.inner(isActive)}>
-        <div className={styles.content}>
-          <h2 className={styles.header}>
-            <span>Portfolio</span>
+      <Ui.Drawer.Inner isActive={isActive} isMenu>
+        <Ui.Drawer.Content isMenu>
+          <Ui.Drawer.Header onClose={onClose}>
+            <span className={styles.header}>Portfolio</span>
             <span className={styles.lid}>Net worth: ${currency(worth, true)}</span>
-          </h2>
-          <nav aria-label="primary navigation">
+          </Ui.Drawer.Header>
+          <nav aria-label="primary navigation" className={styles.container}>
             <ul className={styles.links}>
               {holdings.map((holding) => (
                 <li key={holding.id}>
                   <Link
                     className={styles.link}
                     href={`/${holding.id}`}
-                    onClick={handleOnToggle}
+                    onClick={onClose}
                   >
                     <Avatar type={holding.type} />
                     <span className={styles.details}>
@@ -55,73 +61,51 @@ export default function Menu() {
               ))}
             </ul>
           </nav>
-          <footer className={styles.footer}>
-            <Ui.Components.Button isGhost onClick={handleOnAdd}>
-              Add to Portfolio
-            </Ui.Components.Button>
-            <Exit />
-          </footer>
-        </div>
-      </div>
-      <button className={styles.backdrop} onClick={handleOnToggle} type="button" />
-    </aside>
+          <Ui.Drawer.Footer>
+              <Ui.Components.Button isGhost onClick={handleOnAdd}>
+                Add to Portfolio
+              </Ui.Components.Button>
+              <Exit />
+            </Ui.Drawer.Footer>
+        </Ui.Drawer.Content>
+      </Ui.Drawer.Inner>
+    </Ui.Drawer.Container>
   );
 };
 
 const styles = tw({
   container: `
-    fixed inset-0 z-10000
-    flex justify-start
-    w-full max-w-full
-    h-full max-h-none
-    bg-(--background)/32.5
-    outline-none
-    overflow-hidden
-    backdrop-blur-sm
-  `,
-  backdrop: `
-    absolute inset-0 z-0
-    !cursor-default
-  `,
-  inner: (isActive: boolean) => tw(`
-    relative z-10
-    flex flex-col justify-between
-    w-full max-w-sm
-    h-svh
-    p-2
+    relative
+    flex flex-col
+    h-[calc(100%-9rem)]
+    pt-6
     overflow-y-auto
 
-    motion-safe:duration-300
+    after:fixed
+    after:left-0
+    after:right-0
+    after:bottom-27
+    after:z-100
+    after:h-6
+    after:bg-linear-to-t
+    after:from-zinc-50
+    dark:after:from-zinc-950
+    after:to-transparent
+    after:pointer-events-none
 
-    ${isActive
-      ? `opacity-100 translate-x-0`
-      : `opacity-0 -translate-x-24`}
-  `),
-  content: `
-    flex-1
-    flex flex-col justify-between
-    bg-zinc-50 dark:bg-neutral-950
-    text-(--foreground)
-    border border-current/12.5
-    rounded-3xl
-    p-4
-  `,
-  header: `
-    flex flex-col
-    mb-6
-    font-medium
-    text-sm
+    sm:after:left-6
+    sm:after:right-6
   `,
   links: `
     flex flex-col gap-3
-    w-full
-    mb-4
+    pb-6
   `,
   link: `
     relative
     flex items-start gap-1
     w-full
-    text-sm
+
+    sm:text-sm
   `,
   details: `
     flex flex-col gap-1
@@ -129,16 +113,23 @@ const styles = tw({
   name: `
     leading-[1]
   `,
+  header: `
+    sm:text-sm
+  `,
   lid: `
     text-current/62.5
+
+    sm:text-sm
   `,
   circle: `
     absolute top-1/2 right-0
     -translate-y-1/2
     bg-(--background)
     rounded-full
-    size-3
-    border
+    size-4
+    border-2
+
+    sm:size-3
   `,
   footer: `
     flex flex-col gap-3

@@ -148,6 +148,7 @@ export function useModel() {
     isEditing,
     onBackdrop,
     onCancel,
+    onClose,
     step,
     steps,
     update,

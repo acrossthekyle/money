@@ -29,20 +29,6 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
 
   const refs = useRef<Record<string, HTMLDialogElement | null>>({});
 
-  const updateBackdropHeight = useCallback((forcedName?: string) => {
-    const activeNode = refs.current[forcedName || drawer];
-
-    if (activeNode) {
-      const height = document.documentElement.scrollHeight;
-
-      activeNode.style.setProperty('--dialog-backdrop-height', `${height}px`);
-    }
-  }, [drawer]);
-
-  const handleOnWindowResize = useCallback(() => {
-    updateBackdropHeight();
-  }, [updateBackdropHeight]);
-
   const handleOnClose = useCallback(() => {
     const activeNode = refs.current[drawer];
 
@@ -78,17 +64,13 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
 
   useLayoutEffect(() => {
     if (isOpen) {
-      updateBackdropHeight();
-
-      window.addEventListener('resize', handleOnWindowResize);
       window.addEventListener('keyup', handleOnEscape);
 
       return () => {
-        window.removeEventListener('resize', handleOnWindowResize);
         window.removeEventListener('keyup', handleOnEscape);
       };
     }
-  }, [handleOnEscape, handleOnWindowResize, isOpen, updateBackdropHeight]);
+  }, [handleOnEscape, isOpen]);
 
   const handleOnRegister = useCallback((name: string, node: HTMLDialogElement | null) => {
     refs.current[name] = node;
@@ -101,11 +83,7 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
       return;
     }
 
-    activeNode.style.setProperty('--dialog-top-position', `${window.scrollY}px`);
-
     activeNode.showModal();
-
-    updateBackdropHeight(name);
 
     requestAnimationFrame(() => {
       setIsOpen(true);
@@ -119,7 +97,7 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
         }
       }, 50);
     });
-  }, [updateBackdropHeight]);
+  }, []);
 
   const handleOnCancel = useCallback((event: React.SyntheticEvent<HTMLDialogElement>) => {
     event.preventDefault();

@@ -1,6 +1,6 @@
 'use client';
 
-import { MoonStar, Sun } from 'lucide-react';
+import { LightbulbOff, Lightbulb } from 'lucide-react';
 
 import tw from '@/styles';
 
@@ -21,9 +21,9 @@ export default function Theme() {
       type="button"
     >
       {theme === 'dark' ? (
-        <Sun className={styles.icon} />
+        <Lightbulb className={styles.icon} />
       ) : (
-        <MoonStar className={styles.icon} />
+        <LightbulbOff className={styles.icon} />
       )}
     </button>
   );
@@ -34,7 +34,9 @@ const styles = tw({
     p-2
   `,
   icon: `
-    size-4.5
+    size-5.25
     stroke-2
+
+    sm:size-4.25
   `,
 });

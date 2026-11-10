@@ -54,7 +54,6 @@ export default function Balances({ days }: Props) {
           <div className={styles.endcap} />
           <span className={styles.value}>
             <span>${currency(lowest, true)}</span>
-            <span>Low</span>
           </span>
         </div>
         <div
@@ -77,7 +76,6 @@ export default function Balances({ days }: Props) {
           <div className={styles.endcap} />
           <span className={cs(styles.value, styles.right)}>
             <span>${currency(highest, true)}</span>
-            <span>High</span>
           </span>
         </div>
       </div>
@@ -88,8 +86,11 @@ export default function Balances({ days }: Props) {
 const styles = tw({
   container: `
     flex flex-col gap-4
-    mt-6
+    mt-4
     text-sm
+
+    sm:gap-5
+    sm:mt-8
   `,
   range: `
     relative
@@ -127,9 +128,11 @@ const styles = tw({
     rounded-full
   `,
   value: `
-    flex flex-col
-    mt-3
-    text-xs text-current/62.5
+    mt-2
+    text-sm text-current/62.5
+
+    sm:mt-3
+    sm:text-xs
   `,
   right: `
     text-right

@@ -73,7 +73,8 @@ const styles = tw({
     aspect-square
     bg-(--foreground)/5.5 dark:bg-(--foreground)/12.5
     rounded-xl
-    text-sm
+
+    sm:text-sm
   `,
   faded: `
     text-current/90
@@ -88,16 +89,18 @@ const styles = tw({
     !hover:text-(--foreground)
   `,
   boldened: `
-    bg-(--foreground)/22.5 dark:bg-(--foreground)/17.5
-    outline-2 outline-current/32.5
+    bg-(--foreground)/12.5 dark:bg-(--foreground)/17.5
+    outline-3 outline-current/17.5 dark:outline-current/32.5
   `,
   action: `
     relative
-    flex flex-col items-center justify-center gap-0.5
+    flex flex-col items-center justify-center
     w-full h-full
     select-none
 
     disabled:cursor-default
+
+    sm:gap-0.5
   `,
   disabled: `
     text-current/62.5

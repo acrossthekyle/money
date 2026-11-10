@@ -1,6 +1,6 @@
 'use client';
 
-import { TextAlignStart } from 'lucide-react';
+import { ListMinus } from 'lucide-react';
 
 import tw from '@/styles';
 
@@ -16,7 +16,7 @@ export default function Toggle() {
       onClick={handleOnClick}
       type="button"
     >
-      <TextAlignStart className={styles.icon} />
+      <ListMinus className={styles.icon} />
     </button>
   );
 };
@@ -26,7 +26,9 @@ const styles = tw({
     p-2
   `,
   icon: `
-    size-4.5
+    size-6
     stroke-2
+
+    sm:size-4.5
   `,
 });

@@ -15,6 +15,8 @@ export function useModel() {
 
   const handleOnTheme = () => {
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+
+    window.location.reload();
   };
 
   return {

@@ -12,6 +12,7 @@ export default function Label({
 const styles = tw({
   label: `
     mb-2
-    text-sm
+
+    sm:text-sm
   `,
 });

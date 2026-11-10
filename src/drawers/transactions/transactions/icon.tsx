@@ -73,7 +73,9 @@ export default function Icon({ type }: Props) {
 
 const styles = tw({
   icon: `
-    size-3.5
+    size-4
     stroke-2
+
+    sm:size-3.5
   `,
 });

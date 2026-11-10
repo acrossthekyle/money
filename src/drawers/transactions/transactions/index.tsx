@@ -89,7 +89,9 @@ const styles = tw({
     rounded-xl
   `,
   icon: `
-    mt-0.5
+    mt-1.25
+
+    sm:mt-0.5
   `,
   info: `
     relative
@@ -97,16 +99,21 @@ const styles = tw({
   `,
   name: `
     font-medium
-    text-sm
+
+    sm:text-sm
   `,
   arrow: `
-    size-4
+    size-4.5
     stroke-2
+
+    sm:size-4
   `,
   details: `
     flex items-center gap-2
-    text-sm text-current/62.5
+    text-current/62.5
     lowercase
+
+    sm:text-sm
   `,
   capitalize: `
     capitalize
@@ -124,15 +131,20 @@ const styles = tw({
     hover:bg-(--foreground)/7.5
   `,
   trash: `
-    size-3.5
+    size-4.5
     stroke-2
+
+    sm:size-3.5
   `,
   heading: `
-    text-sm
     font-semibold
-    mb-1
+    pt-6 mb-1
+
+    sm:text-sm
   `,
   content: `
-    text-sm text-current/62.5
+    text-current/62.5
+
+    sm:text-sm
   `,
 });

@@ -35,6 +35,8 @@ export function useModel() {
   }, [budgets, forecasts, response]);
 
   const handleOnAdd = () => {
+    budgets.setId('');
+
     onClose();
 
     onBudget();

@@ -17,7 +17,7 @@ import {
   Update,
 } from './steps';
 
-export default function View() {
+export default function Drawer() {
   const {
     budget,
     data,
@@ -33,6 +33,7 @@ export default function View() {
     isEditing,
     onBackdrop,
     onCancel,
+    onClose,
     step,
     steps,
     update,
@@ -53,7 +54,7 @@ export default function View() {
     >
       <Ui.Drawer.Inner isActive={isActive}>
         <Ui.Drawer.Content>
-          <Ui.Drawer.Header>
+          <Ui.Drawer.Header onClose={onClose}>
             <Heading isEditing={budget !== undefined} />
           </Ui.Drawer.Header>
           <Amount

@@ -9,10 +9,8 @@ export default function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (process.env.AUTH_SESSION_MODE !== 'guest') {
-    if (!sessionToken || sessionToken !== process.env.AUTH_COOKIE_VALUE) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
+  if (!sessionToken || sessionToken !== process.env.AUTH_COOKIE_VALUE) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   const response = NextResponse.next();

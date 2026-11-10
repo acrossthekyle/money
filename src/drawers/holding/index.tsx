@@ -18,7 +18,7 @@ import {
   getPlaceholder,
 } from './utils';
 
-export default function View() {
+export default function Drawer() {
   const {
     data,
     handleOnBack,
@@ -32,6 +32,7 @@ export default function View() {
     isPending,
     onBackdrop,
     onCancel,
+    onClose,
     step,
     steps,
   } = useModel();
@@ -54,7 +55,7 @@ export default function View() {
     >
       <Ui.Drawer.Inner isActive={isActive}>
         <Ui.Drawer.Content>
-          <Ui.Drawer.Header>
+          <Ui.Drawer.Header onClose={onClose}>
             <Heading isEditing={holding !== undefined} />
           </Ui.Drawer.Header>
           <Type

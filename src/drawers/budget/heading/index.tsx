@@ -23,6 +23,8 @@ const styles = tw({
   `,
   lid: `
     flex justify-between
-    text-sm text-current/62.5
+    text-current/62.5
+
+    sm:text-sm
   `,
 })

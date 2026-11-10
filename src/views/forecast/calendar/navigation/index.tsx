@@ -95,8 +95,10 @@ const styles = tw({
     disabled:!cursor-not-allowed
   `,
   arrow: `
-    size-4
+    size-5
     stroke-2
+
+    sm:size-4
   `,
   field: `
     relative
@@ -119,13 +121,15 @@ const styles = tw({
   mask: `
     absolute inset-0 z-1
     flex items-center justify-between
-    text-sm
     pointer-events-none
     select-none
+
+    sm:text-sm
   `,
   chevron: `
-    shrink-0
-    size-4
+    size-5
     stroke-2
+
+    sm:size-4
   `,
 });

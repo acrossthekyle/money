@@ -37,7 +37,9 @@ const styles = tw({
   `,
   balance: `
     flex justify-between
-    text-sm text-current/62.5
+    text-current/62.5
+
+    sm:text-sm
   `,
   negative: `
     text-red-400

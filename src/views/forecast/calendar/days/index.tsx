@@ -32,9 +32,11 @@ const styles = tw({
   heading: `
     flex items-center justify-center
     aspect-square
-    text-xs text-center
+    text-sm text-center
     bg-(--foreground)/5.5 dark:bg-(--foreground)/12.5
     rounded-xl
     select-none
+
+    sm:text-xs
   `,
 });

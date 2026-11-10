@@ -40,11 +40,13 @@ const styles = tw({
     w-full
     py-1.25
     rounded-full
-    text-sm text-center
+    text-center
     whitespace-nowrap
     select-none
 
     motion-safe:duration-300
+
+    sm:text-sm
   `,
   primary: `
     bg-(--foreground)

@@ -8,6 +8,6 @@ export default function Heading({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    text-sm
+    sm:text-sm
   `,
 });

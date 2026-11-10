@@ -20,7 +20,7 @@ export default function Header({ isAuthenticated = true }: Props) {
 
 const styles = tw({
   container: `
-    fixed left-2 right-2 top-2
+    fixed left-2 right-2 top-2 z-10
     flex items-center justify-between
   `,
 });

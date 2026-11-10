@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
 import { DrawerProvider } from '@/contexts';
-import { Budget, Holding, Transactions } from '@/drawers';
+import { Budget, Holding, Menu, Transactions } from '@/drawers';
 import { get } from '@/getters/root';
-import { Header, Main, Menu } from '@/layout';
+import { Header, Main } from '@/layout';
 import StoreProvider from '@/store';
 
 export default async function Layout({

@@ -55,9 +55,9 @@ const styles = tw({
     border border-current/22.5
     text-base text-(--foreground)
 
-    md:px-4
-    md:py-3
-    md:text-sm
+    sm:px-4
+    sm:py-3
+    sm:text-sm
 
     ${ALERT_RADIUS}
   `,

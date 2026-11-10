@@ -1,6 +1,6 @@
 'use client';
 
-import { Pen, Pin, PinOff, Trash } from 'lucide-react';
+import { SlidersVertical, Pin, PinOff, Trash } from 'lucide-react';
 
 import tw from '@/styles';
 import type { Holding } from '@/types';
@@ -23,7 +23,7 @@ export default function Options({ holding, pinned }: Props) {
         aria-label="pin/unpin portfolio item"
         className={styles.action}
         onClick={handleOnPin}
-        title={isPinned ? 'Unset as default portfolio item upon login' : 'Set as default portfolio item upon login'}
+        title={isPinned ? 'Unset as default upon login' : 'Set as default upon login'}
         type="button"
       >
         {isPinned ? (
@@ -33,17 +33,17 @@ export default function Options({ holding, pinned }: Props) {
         )}
       </button>
       <button
-        aria-label="edit portfolio item"
         className={styles.action}
         onClick={handleOnEdit}
+        title="Edit"
         type="button"
       >
-        <Pen className={styles.icon} />
+        <SlidersVertical className={styles.icon} />
       </button>
       <button
-        aria-label="delete portfolio item"
         className={styles.action}
         onClick={handleOnDelete}
+        title="Delete"
         type="button"
       >
         <Trash className={styles.icon} />
@@ -54,14 +54,16 @@ export default function Options({ holding, pinned }: Props) {
 
 const styles = tw({
   container: `
-    absolute top-0 right-0
+    absolute top-0 -right-2
     flex gap-2
   `,
   action: `
     p-2
   `,
   icon: `
-    size-3.5
+    size-4.5
     stroke-2
+
+    sm:size-3.5
   `,
 });

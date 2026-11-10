@@ -9,6 +9,7 @@ export default function Legend({ children }: React.PropsWithChildren) {
 const styles = tw({
   container: `
     mb-2
-    text-sm
+
+    sm:text-sm
   `,
 });

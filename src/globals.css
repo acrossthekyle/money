@@ -31,7 +31,6 @@
 }
 
 html:has(dialog[open]),
-html:has(body.menu-active),
 body:has(dialog[open]) {
   overflow: hidden !important;
 }
@@ -53,17 +52,6 @@ body {
     color: transparent;
     background: transparent;
     cursor: pointer;
-  }
-
-  aside {
-    left: -100vw;
-    width: 100vw;
-    transition: left 0s linear 250ms;
-  }
-
-  aside.is-active {
-    left: 0;
-    transition-delay: 0s;
   }
 
   dialog {

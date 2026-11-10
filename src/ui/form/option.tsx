@@ -54,12 +54,13 @@ const styles = tw({
     flex items-center
     w-full
     rounded-lg
-    text-sm
     py-2 px-4
     whitespace-nowrap
     select-none
     border border-current/17.5
     cursor-pointer
+
+    sm:text-sm
   `,
   inactive: `
     bg-(--background)

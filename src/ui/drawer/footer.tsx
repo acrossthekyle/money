@@ -12,7 +12,9 @@ export default function Content({
 
 const styles = tw({
   container: `
-    fixed bottom-6 left-6 right-6
+    fixed bottom-3 left-6 right-6
     flex flex-col gap-3
+
+    sm:bottom-6
   `,
 });

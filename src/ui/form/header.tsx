@@ -17,7 +17,8 @@ export default function Header({
 
 const styles = tw({
   container: `
-    text-sm
     mb-1
+
+    sm:text-sm
   `,
 });

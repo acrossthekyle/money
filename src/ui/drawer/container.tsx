@@ -6,6 +6,7 @@ type Props = {
   id: string;
   instance: (node: HTMLDialogElement | null) => void;
   isActive: boolean;
+  isLeft?: boolean;
   onBackdrop: (event: React.MouseEvent<HTMLDialogElement>) => void;
   onCancel: (event: React.KeyboardEvent<HTMLDialogElement>) => void;
 };
@@ -21,7 +22,12 @@ export default function Container({
   return (
     <dialog
       aria-labelledby="drawer-header"
-      className={cs(styles.container, isActive && 'is-active')}
+      className={
+        cs(
+          styles.container,
+          isActive && 'is-active',
+        )
+      }
       closedby="none"
       id={id}
       onClick={onBackdrop}
@@ -36,7 +42,6 @@ export default function Container({
 const styles = tw({
   container: `
     fixed inset-0 z-10000
-    flex justify-end
     w-full max-w-full
     h-full max-h-none
     bg-(--background)/32.5

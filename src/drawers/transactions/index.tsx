@@ -6,7 +6,7 @@ import Heading from './heading';
 import { useModel } from './model';
 import Transactions from './transactions';
 
-export default function View() {
+export default function Drawer() {
   const {
     day,
     handleOnAdd,
@@ -29,7 +29,7 @@ export default function View() {
     >
       <Ui.Drawer.Inner isActive={isActive}>
         <Ui.Drawer.Content>
-          <Ui.Drawer.Header>
+          <Ui.Drawer.Header onClose={onClose}>
             {day !== undefined && (
               <Heading day={day} />
             )}
