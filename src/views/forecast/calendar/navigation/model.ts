@@ -41,7 +41,7 @@ export function useModel(current: Dateable) {
           iso: {
             year: event.target.value,
             month: current.month,
-            day: current.day,
+            day: pad(Number(current.day)),
           },
         },
       ),
