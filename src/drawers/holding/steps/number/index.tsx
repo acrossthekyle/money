@@ -27,7 +27,9 @@ export default function Section({
       <Ui.Form.Header>{header}</Ui.Form.Header>
       <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
       <Ui.Form.Content>
-        <Ui.Form.Label htmlFor="holding-number">Last Four</Ui.Form.Label>
+        <Ui.Form.Label htmlFor="holding-number">
+          Last four (optional)
+        </Ui.Form.Label>
         <Ui.Form.Input
           value={number}
           maxLength={4}

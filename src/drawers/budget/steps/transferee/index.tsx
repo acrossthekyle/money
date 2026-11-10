@@ -33,7 +33,7 @@ export default function Section({
         {type === 'credit' && 'Should this be transfered as an expense from one of the following?'}
       </Ui.Form.Paragraph>
       <Ui.Form.Options>
-        <Ui.Form.Legend>Choose one</Ui.Form.Legend>
+        <Ui.Form.Legend>Choose one (optional)</Ui.Form.Legend>
         <Ui.Form.Option
           isActive={transferee === ''}
           label="None"

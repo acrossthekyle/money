@@ -33,6 +33,7 @@ export default function Section({
           onChange={handleOnChange}
           value={balance}
         />
+        <Ui.Form.Hint>Only enter numbers and decimal points</Ui.Form.Hint>
       </Ui.Form.Content>
       <Ui.Form.Actions>
         <Ui.Components.Button

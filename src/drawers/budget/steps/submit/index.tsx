@@ -34,7 +34,7 @@ export default function Section({
     <Ui.Form.Container isActive={isActive}>
       <Ui.Form.Header>Review</Ui.Form.Header>
       <Ui.Form.Paragraph>
-        Make sure everything is correct before submitting.
+        Make sure everything is correct before submitting. Once you click {isEditing ? '"update"' : '"add"'} it's finalized and can't be changed.
       </Ui.Form.Paragraph>
       <Ui.Form.Outline>
         <Ui.Form.OutlineItem>

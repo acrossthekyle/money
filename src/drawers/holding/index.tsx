@@ -35,6 +35,7 @@ export default function Drawer() {
     onClose,
     step,
     steps,
+    zone,
   } = useModel();
 
   const headers = getHeaders(data.type);
@@ -56,7 +57,7 @@ export default function Drawer() {
       <Ui.Drawer.Inner isActive={isActive}>
         <Ui.Drawer.Content>
           <Ui.Drawer.Header onClose={onClose}>
-            <Heading isEditing={holding !== undefined} />
+            <Heading holding={holding} zone={zone} />
           </Ui.Drawer.Header>
           <Type
             header={header}

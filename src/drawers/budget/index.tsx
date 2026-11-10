@@ -55,7 +55,7 @@ export default function Drawer() {
       <Ui.Drawer.Inner isActive={isActive}>
         <Ui.Drawer.Content>
           <Ui.Drawer.Header onClose={onClose}>
-            <Heading isEditing={budget !== undefined} />
+            <Heading budget={budget} />
           </Ui.Drawer.Header>
           <Amount
             header={header}

@@ -1,19 +1,30 @@
 import tw from '@/styles';
+import type { Holding } from '@/types';
+
+import Updated from './updated';
 
 type Props = {
-  isEditing: boolean;
+  holding?: Holding;
+  zone: string;
 };
 
-export default function Heading({ isEditing }: Props) {
+export default function Heading({ holding, zone }: Props) {
+  const isEditing = holding !== undefined;
+
   return (
-    <h2 className={styles.container} id="dialog-header">
-      <span>
-        {isEditing ? 'Edit' : 'Add to'} portfolio
-      </span>
-      <span className={styles.lid}>
-        <span>Multi-step form</span>
-      </span>
-    </h2>
+    <>
+      <h2 className={styles.container} id="dialog-header">
+        <span>
+          {isEditing ? `Edit ${holding.name}` : 'Add to portfolio'}
+        </span>
+        <span className={styles.lid}>
+          <span>Multi-step form</span>
+        </span>
+      </h2>
+      {isEditing && (
+        <Updated updated={holding?.updated} zone={zone} />
+      )}
+    </>
   );
 };
 

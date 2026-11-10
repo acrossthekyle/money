@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import Ui from '@/ui';
 import { currency } from '@/utils';
 
@@ -49,8 +49,15 @@ export default function Drawer() {
                     <Avatar type={holding.type} />
                     <span className={styles.details}>
                       <span className={styles.name}>{holding.name}</span>
-                      <span className={styles.lid}>
-                        ${currency(holding.balance, true)} Balance
+                      <span
+                        className={
+                          cs(
+                            styles.lid,
+                            Number(holding.balance) < 0 && styles.negative,
+                          )
+                        }
+                      >
+                        ${currency(holding.balance, true)}
                       </span>
                     </span>
                     {active === holding.id && (
@@ -135,5 +142,8 @@ const styles = tw({
     flex flex-col gap-3
     w-full
     mt-auto
+  `,
+  negative: `
+    text-red-400
   `,
 });

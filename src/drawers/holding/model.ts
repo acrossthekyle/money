@@ -9,7 +9,7 @@ import type { Data } from './types';
 
 export function useModel() {
   const { instance, isActive, onBackdrop, onCancel, onClose } = useHolding();
-  const { forecasts, holdings } = useStore();
+  const { date, forecasts, holdings } = useStore();
 
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
@@ -111,5 +111,6 @@ export function useModel() {
     onClose,
     step,
     steps,
+    zone: date.selectZone(),
   };
 };

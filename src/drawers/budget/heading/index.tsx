@@ -1,14 +1,15 @@
 import tw from '@/styles';
+import type { Budget } from '@/types';
 
 type Props = {
-  isEditing: boolean;
+  budget?: Budget;
 };
 
-export default function Heading({ isEditing }: Props) {
+export default function Heading({ budget }: Props) {
   return (
     <h2 className={styles.container} id="dialog-header">
       <span>
-        {isEditing ? 'Edit' : 'Add'} transaction
+        {budget !== undefined ? `Edit ${budget.name}` : 'Add transaction'}
       </span>
       <span className={styles.lid}>
         <span>Multi-step form</span>
