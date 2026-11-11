@@ -48,7 +48,6 @@ const styles = tw({
     peer
     appearance-none
     w-full
-    mb-1
     py-1 px-3
     bg-(--background)
     rounded-lg

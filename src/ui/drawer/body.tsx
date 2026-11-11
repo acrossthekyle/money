@@ -4,23 +4,21 @@ type Props = {
   className?: string;
 };
 
-export default function Step({
+export default function Body({
   children,
   className,
 }: React.PropsWithChildren<Props>) {
   return (
-    <li className={cs(styles.container, className)}>
+    <div className={cs(styles.container, className)}>
       {children}
-    </li>
+    </div>
   );
 };
 
 const styles = tw({
   container: `
-    shrink-0
-    h-1
-    w-8
-    rounded-full
-    bg-(--foreground)
+    flex-1
+    overflow-y-auto
+    p-4
   `,
 });

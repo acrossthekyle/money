@@ -86,16 +86,10 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
     activeNode.showModal();
 
     requestAnimationFrame(() => {
-      setIsOpen(true);
-      setDrawer(name);
-
-      setTimeout(() => {
-        const firstButton = activeNode.querySelector('button');
-
-        if (firstButton) {
-          firstButton.focus();
-        }
-      }, 50);
+      requestAnimationFrame(() => {
+        setIsOpen(true);
+        setDrawer(name);
+      });
     });
   }, []);
 

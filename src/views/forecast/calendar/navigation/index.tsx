@@ -85,7 +85,7 @@ const styles = tw({
   container: `
     relative
     grid grid-cols-7 gap-2
-    mb-6
+    mb-2
   `,
   navigate: `
     col-span-1

@@ -1,7 +1,8 @@
-export { default as Actions } from './actions';
+export { default as Back } from './back';
 export { default as Container } from './container';
 export { default as Content } from './content';
 export { default as Currency } from './currency';
+export { default as Field } from './field';
 export { default as Header } from './header';
 export { default as Hint } from './hint';
 export { default as Input } from './input';
@@ -15,6 +16,5 @@ export { default as OutlineItemHeading } from './outline/heading';
 export { default as OutlineItemText } from './outline/text';
 export { default as Paragraph } from './paragraph';
 export { default as Percent } from './percent';
-export { default as Step } from './step';
 export { default as Steps } from './steps';
 

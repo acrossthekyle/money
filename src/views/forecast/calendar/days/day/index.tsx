@@ -17,6 +17,7 @@ export default function Day({ date, day }: Props) {
     hasItems,
     isFaded,
     isDisabled,
+    isToday,
     isHoverable,
     isNegative,
     isBold,
@@ -31,6 +32,7 @@ export default function Day({ date, day }: Props) {
           isFaded && styles.faded,
           isHoverable && styles.hoverable,
           isBold && styles.boldened,
+          isToday && styles.today,
         )
       }
     >
@@ -79,6 +81,12 @@ const styles = tw({
   faded: `
     text-current/90
   `,
+  today: `
+    bg-(--foreground)/32.5
+    dark:bg-(--foreground)/22.5
+    text-(--foreground)
+    !outline-1 !outline-(--foreground)
+  `,
   hoverable: `
     hover:bg-(--foreground)/22.5
     hover:dark:bg-(--foreground)/17.5
@@ -112,7 +120,7 @@ const styles = tw({
     group-hover:!dark:text-(--foreground)
   `,
   balance: `
-    text-[min(2.25vw,0.55rem)]
+    text-[min(2.25vw,0.6rem)]
     font-roboto font-medium
   `,
   negative: `

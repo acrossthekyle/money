@@ -20,31 +20,39 @@ export default function Section({
 }: React.PropsWithChildren<Props>) {
   const { end, handleOnChange } = useModel(value);
 
+  if (!isActive) {
+    return null;
+  }
+
   return (
-    <Ui.Form.Container isActive={isActive}>
-      <Ui.Form.Header>{header}</Ui.Form.Header>
-      <Ui.Form.Paragraph>
-        Does this transaction stop at some point?
-      </Ui.Form.Paragraph>
-      <Ui.Form.Content>
-        <Ui.Form.Label htmlFor="end">End date (optional)</Ui.Form.Label>
-        <Ui.Form.Input
-          id="end"
-          value={end}
-          name="end"
-          onChange={handleOnChange}
-          type="date"
-        />
-      </Ui.Form.Content>
-      <Ui.Form.Actions>
+    <>
+      <Ui.Drawer.Body>
+        <Ui.Form.Header>{header}</Ui.Form.Header>
+        <Ui.Form.Paragraph>
+          Does this transaction stop at some point?
+        </Ui.Form.Paragraph>
+        <Ui.Form.Container>
+          <Ui.Form.Field>
+            <Ui.Form.Label htmlFor="end">End date (optional)</Ui.Form.Label>
+            <Ui.Form.Input
+              id="end"
+              value={end}
+              name="end"
+              onChange={handleOnChange}
+              type="date"
+            />
+          </Ui.Form.Field>
+        </Ui.Form.Container>
+      </Ui.Drawer.Body>
+      <Ui.Drawer.Footer>
         <Ui.Components.Button
           isPrimary
           onClick={() => onNext('end', end)}
         >
-          {end ? 'Next' : 'Skip'}
+          {end ? 'Save & Continue' : 'Skip'}
         </Ui.Components.Button>
         {children}
-      </Ui.Form.Actions>
-    </Ui.Form.Container>
+      </Ui.Drawer.Footer>
+    </>
   );
 };

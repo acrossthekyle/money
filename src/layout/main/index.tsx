@@ -14,7 +14,7 @@ const styles = tw({
     -translate-x-1/2
     flex-1
     flex flex-col justify-end
-    w-full max-w-sm
+    w-full max-w-md
     px-2 pb-9
 
     sm:justify-center

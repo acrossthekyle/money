@@ -31,49 +31,51 @@ export default function Drawer() {
       onBackdrop={onBackdrop}
       onCancel={onCancel}
     >
-      <Ui.Drawer.Inner isActive={isActive} isMenu>
-        <Ui.Drawer.Content isMenu>
+      <Ui.Drawer.Inner isMenu>
+        <Ui.Drawer.Content isActive={isActive} isMenu>
           <Ui.Drawer.Header onClose={onClose}>
-            <span className={styles.header}>Portfolio</span>
+            <span>Portfolio</span>
             <span className={styles.lid}>Net worth: ${currency(worth, true)}</span>
           </Ui.Drawer.Header>
-          <nav aria-label="primary navigation" className={styles.container}>
-            <ul className={styles.links}>
-              {holdings.map((holding) => (
-                <li key={holding.id}>
-                  <Link
-                    className={styles.link}
-                    href={`/${holding.id}`}
-                    onClick={onClose}
-                  >
-                    <Avatar type={holding.type} />
-                    <span className={styles.details}>
-                      <span className={styles.name}>{holding.name}</span>
-                      <span
-                        className={
-                          cs(
-                            styles.lid,
-                            Number(holding.balance) < 0 && styles.negative,
-                          )
-                        }
-                      >
-                        ${currency(holding.balance)}
+          <Ui.Drawer.Body>
+            <nav aria-label="primary navigation">
+              <ul className={styles.links}>
+                {holdings.map((holding) => (
+                  <li key={holding.id}>
+                    <Link
+                      className={styles.link}
+                      href={`/${holding.id}`}
+                      onClick={onClose}
+                    >
+                      <Avatar type={holding.type} />
+                      <span className={styles.details}>
+                        <span className={styles.name}>{holding.name}</span>
+                        <span
+                          className={
+                            cs(
+                              styles.lid,
+                              Number(holding.balance) < 0 && styles.negative,
+                            )
+                          }
+                        >
+                          ${currency(holding.balance)}
+                        </span>
                       </span>
-                    </span>
-                    {active === holding.id && (
-                      <span className={styles.circle} />
-                    )}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+                      {active === holding.id && (
+                        <span className={styles.circle} />
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </Ui.Drawer.Body>
           <Ui.Drawer.Footer>
-              <Ui.Components.Button isGhost onClick={handleOnAdd}>
-                Add to Portfolio
-              </Ui.Components.Button>
-              <Exit />
-            </Ui.Drawer.Footer>
+            <Ui.Components.Button isGhost onClick={handleOnAdd}>
+              Add to Portfolio
+            </Ui.Components.Button>
+            <Exit />
+          </Ui.Drawer.Footer>
         </Ui.Drawer.Content>
       </Ui.Drawer.Inner>
     </Ui.Drawer.Container>
@@ -81,31 +83,8 @@ export default function Drawer() {
 };
 
 const styles = tw({
-  container: `
-    relative
-    flex flex-col
-    h-[calc(100%-9rem)]
-    pt-6
-    overflow-y-auto
-
-    after:fixed
-    after:left-0
-    after:right-0
-    after:bottom-27
-    after:z-100
-    after:h-6
-    after:bg-linear-to-t
-    after:from-zinc-50
-    dark:after:from-zinc-950
-    after:to-transparent
-    after:pointer-events-none
-
-    sm:after:left-6
-    sm:after:right-6
-  `,
   links: `
     flex flex-col gap-3
-    pb-6
   `,
   link: `
     relative
@@ -119,9 +98,6 @@ const styles = tw({
   `,
   name: `
     leading-[1]
-  `,
-  header: `
-    sm:text-sm
   `,
   lid: `
     text-current/62.5
@@ -137,11 +113,6 @@ const styles = tw({
     border-2
 
     sm:size-3
-  `,
-  footer: `
-    flex flex-col gap-3
-    w-full
-    mt-auto
   `,
   negative: `
     text-red-400

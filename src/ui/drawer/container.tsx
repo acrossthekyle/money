@@ -44,6 +44,7 @@ const styles = tw({
     fixed inset-0 z-10000
     w-full max-w-full
     h-full max-h-none
+    m-0 p-0
     bg-(--background)/32.5
     outline-none
     overflow-hidden

@@ -12,7 +12,6 @@ export function useModel() {
   const { instance, isActive, onBackdrop, onCancel, onClose } = useBudget();
   const { onTransactions } = useTransactions();
 
-  const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
   const [data, setData] = useState<Data>({
     amount: '',
@@ -44,10 +43,10 @@ export function useModel() {
     'name',
     'transferee',
     'start',
-    'schedule',
+    'frequency',
     'end',
     'category',
-    (budget && budget?.schedule !== 'once') && 'update',
+    (budget && budget?.schedule !== 'once') && 'dates',
     'submit',
   ].filter(Boolean).filter((step): step is string => typeof step === 'string');
 
@@ -93,17 +92,7 @@ export function useModel() {
       type: key === 'amount' ? (isIncome ? 'credit' : 'debit') : data.type,
     });
 
-    if (isEditing) {
-      if (budget) {
-        setStep(budget?.schedule !== 'once' ? steps.length - 2 : steps.length - 1);
-      } else {
-        setStep(steps.length - 1);
-      }
-    } else {
-      setStep(previous => previous + 1);
-    }
-
-    setIsEditing(false);
+    setStep(previous => previous + 1);
   };
 
   const handleOnBack = () => {
@@ -124,10 +113,14 @@ export function useModel() {
     onTransactions();
   };
 
-  const handleOnContinue = async (choice: string) => {
+  const handleOnContinue = (choice: string) => {
     setUpdate(choice);
 
     setStep(steps.length - 1);
+  };
+
+  const handleOnJump = (value: number) => {
+    setStep(value);
   };
 
   return {
@@ -137,12 +130,12 @@ export function useModel() {
     handleOnBack,
     handleOnCancel,
     handleOnContinue,
+    handleOnJump,
     handleOnNext,
     handleOnSubmit,
     holdings: holdings.select(),
     instance,
     isActive,
-    isEditing,
     onBackdrop,
     onCancel,
     onClose,

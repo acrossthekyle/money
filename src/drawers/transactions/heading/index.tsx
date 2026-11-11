@@ -11,11 +11,11 @@ type Props = {
 
 export default function Heading({ day }: Props) {
   return (
-    <h2 className={styles.container} id="dialog-header">
-      <span>
+    <>
+      <h2 id="dialog-header">
         {day.dateable.weekdayFull}, {MONTHS_FULL[Number(day.dateable.month) - 1]} {format(day.dateable.date, 'do')} {day.dateable.year}
-      </span>
-      <span className={styles.balance}>
+      </h2>
+      <p className={styles.balance}>
         <span>Projected balance</span>
         <span
           className={
@@ -26,15 +26,12 @@ export default function Heading({ day }: Props) {
         >
           {day.balance < 0 && '-'}${currency(day.balance)}
         </span>
-      </span>
-    </h2>
+      </p>
+    </>
   );
 };
 
 const styles = tw({
-  container: `
-    flex flex-col
-  `,
   balance: `
     flex justify-between
     text-current/62.5

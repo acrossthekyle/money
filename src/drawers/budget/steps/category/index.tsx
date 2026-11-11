@@ -22,35 +22,43 @@ export default function Section({
 }: React.PropsWithChildren<Props>) {
   const { category, handleOnChange, isBlocked } = useModel(value);
 
+  if (!isActive) {
+    return null;
+  }
+
   return (
-    <Ui.Form.Container isActive={isActive}>
-      <Ui.Form.Header>{header}</Ui.Form.Header>
-      <Ui.Form.Paragraph>
-        Which category does this belong in?
-      </Ui.Form.Paragraph>
-      <Ui.Form.Options>
-        <Ui.Form.Legend>Choose one</Ui.Form.Legend>
-        {CATEGORIES.map((item) => (
-          <Ui.Form.Option
-            isActive={category === item.value}
-            key={item.value}
-            label={item.name}
-            name="category"
-            onSelect={() => handleOnChange(item.value)}
-            value={item.value}
-          />
-        ))}
-      </Ui.Form.Options>
-      <Ui.Form.Actions>
+    <>
+      <Ui.Drawer.Body>
+        <Ui.Form.Header>{header}</Ui.Form.Header>
+        <Ui.Form.Paragraph>
+          Which category does this belong in?
+        </Ui.Form.Paragraph>
+        <Ui.Form.Container>
+          <Ui.Form.Field>
+            <Ui.Form.Legend>Choose one</Ui.Form.Legend>
+            <Ui.Form.Options>
+              {CATEGORIES.map((item) => (
+                <Ui.Form.Option
+                  isActive={category === item.value}
+                  key={item.value}
+                  label={item.name}
+                  onSelect={() => handleOnChange(item.value)}
+                />
+              ))}
+            </Ui.Form.Options>
+          </Ui.Form.Field>
+        </Ui.Form.Container>
+      </Ui.Drawer.Body>
+      <Ui.Drawer.Footer>
         <Ui.Components.Button
           isDisabled={isBlocked}
           isPrimary
           onClick={() => onNext('category', category)}
         >
-          Next
+          Save & Continue
         </Ui.Components.Button>
         {children}
-      </Ui.Form.Actions>
-    </Ui.Form.Container>
+      </Ui.Drawer.Footer>
+    </>
   );
 };

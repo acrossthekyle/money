@@ -22,29 +22,37 @@ export default function Section({
 }: React.PropsWithChildren<Props>) {
   const { balance, handleOnChange, isBlocked } = useModel(value);
 
+  if (!isActive) {
+    return null;
+  }
+
   return (
-    <Ui.Form.Container isActive={isActive}>
-      <Ui.Form.Header>{header}</Ui.Form.Header>
-      <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
-      <Ui.Form.Content>
-        <Ui.Form.Label htmlFor="holding-amount">Amount</Ui.Form.Label>
-        <Ui.Form.Currency
-          id="holding-amount"
-          onChange={handleOnChange}
-          value={balance}
-        />
-        <Ui.Form.Hint>Only enter numbers and decimal points</Ui.Form.Hint>
-      </Ui.Form.Content>
-      <Ui.Form.Actions>
+    <>
+      <Ui.Drawer.Body>
+        <Ui.Form.Header>{header}</Ui.Form.Header>
+        <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
+        <Ui.Form.Container>
+          <Ui.Form.Field>
+            <Ui.Form.Label htmlFor="holding-amount">Amount</Ui.Form.Label>
+            <Ui.Form.Currency
+              id="holding-amount"
+              onChange={handleOnChange}
+              value={balance}
+            />
+            <Ui.Form.Hint>Only enter numbers and decimal points</Ui.Form.Hint>
+          </Ui.Form.Field>
+        </Ui.Form.Container>
+      </Ui.Drawer.Body>
+      <Ui.Drawer.Footer>
         <Ui.Components.Button
           isDisabled={isBlocked}
           isPrimary
           onClick={() => onNext('balance', balance)}
         >
-          Next
+          Save & Continue
         </Ui.Components.Button>
         {children}
-      </Ui.Form.Actions>
-    </Ui.Form.Container>
+      </Ui.Drawer.Footer>
+    </>
   );
 };

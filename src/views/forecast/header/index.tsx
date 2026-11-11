@@ -27,7 +27,9 @@ export default function Header({ holding, pinned }: Props) {
 const styles = tw({
   container: `
     relative
-    mb-6
+    mb-4
+
+    sm:mb-6
   `,
   header: `
     flex flex-col

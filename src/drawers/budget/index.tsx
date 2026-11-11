@@ -30,17 +30,12 @@ export default function Drawer() {
     holdings,
     instance,
     isActive,
-    isEditing,
     onBackdrop,
     onCancel,
-    onClose,
     step,
     steps,
     update,
   } = useModel();
-
-  const canGoBack = step > 0 && !isEditing;
-  const canCancel = step === 0 && !isEditing;
 
   const header = `Step ${step + 1} of ${steps.length}`;
 
@@ -52,10 +47,14 @@ export default function Drawer() {
       onBackdrop={onBackdrop}
       onCancel={onCancel}
     >
-      <Ui.Drawer.Inner isActive={isActive}>
-        <Ui.Drawer.Content>
-          <Ui.Drawer.Header onClose={onClose}>
-            <Heading budget={budget} />
+      <Ui.Drawer.Inner>
+        <Ui.Drawer.Content isActive={isActive}>
+          <Ui.Drawer.Header>
+            <Heading
+              budget={budget}
+              onBack={handleOnBack}
+              step={step}
+            />
           </Ui.Drawer.Header>
           <Amount
             header={header}
@@ -64,12 +63,7 @@ export default function Drawer() {
             value={data.amount}
             type={data.type}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Amount>
           <Name
             header={header}
@@ -77,12 +71,7 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.name}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Name>
           <Transferee
             header={header}
@@ -92,12 +81,7 @@ export default function Drawer() {
             value={data.transferee}
             type={data.type}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Transferee>
           <Start
             header={header}
@@ -105,25 +89,15 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.start}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Start>
           <Schedule
             header={header}
-            isActive={steps[step] === 'schedule'}
+            isActive={steps[step] === 'frequency'}
             onNext={handleOnNext}
             value={data.schedule}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Schedule>
           <End
             header={header}
@@ -131,12 +105,7 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.end}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </End>
           <Category
             header={header}
@@ -144,26 +113,16 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.category}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Category>
           {budget?.schedule !== 'once' && (
             <Update
               date={date || undefined}
               header={header}
-              isActive={steps[step] === 'update'}
+              isActive={steps[step] === 'dates'}
               onContinue={handleOnContinue}
             >
-              <Actions
-                canGoBack={canGoBack}
-                canCancel={canCancel}
-                onBack={handleOnBack}
-                onCancel={handleOnCancel}
-              />
+              <Actions onCancel={handleOnCancel} />
             </Update>
           )}
           <Submit
@@ -175,12 +134,7 @@ export default function Drawer() {
             onSubmit={handleOnSubmit}
             update={update}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Submit>
         </Ui.Drawer.Content>
       </Ui.Drawer.Inner>

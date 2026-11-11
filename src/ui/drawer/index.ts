@@ -1,3 +1,4 @@
+export { default as Body } from './body';
 export { default as Container } from './container';
 export { default as Content } from './content';
 export { default as Footer } from './footer';

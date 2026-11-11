@@ -89,7 +89,7 @@ const styles = tw({
     mt-4
   `,
   field: `
-    flex flex-col
+    flex flex-col gap-1
   `,
   footer: `
     fixed bottom-4

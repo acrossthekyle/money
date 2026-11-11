@@ -12,9 +12,24 @@ export default function Content({
 
 const styles = tw({
   container: `
-    fixed bottom-3 left-6 right-6
+    relative
     flex flex-col gap-3
+    shrink-0
+    p-4 pt-0
+    mt-auto
 
-    sm:bottom-6
+    before:absolute
+    before:left-0
+    before:right-0
+    before:-top-6
+    before:z-100
+    before:h-6
+    before:bg-linear-to-t
+    before:from-(--background)
+    before:to-transparent
+    before:pointer-events-none
+
+    sm:before:from-zinc-50
+    sm:dark:before:from-neutral-900
   `,
 });

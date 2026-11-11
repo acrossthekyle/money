@@ -20,35 +20,43 @@ export default function Section({
 }: React.PropsWithChildren<Props>) {
   const { handleOnChange, isBlocked, name } = useModel(value);
 
+  if (!isActive) {
+    return null;
+  }
+
   return (
-    <Ui.Form.Container isActive={isActive}>
-      <Ui.Form.Header>{header}</Ui.Form.Header>
-      <Ui.Form.Paragraph>
-        What is this transaction for?
-      </Ui.Form.Paragraph>
-      <Ui.Form.Content>
-        <Ui.Form.Label htmlFor="name">Name</Ui.Form.Label>
-        <Ui.Form.Input
-          id="name"
-          value={name}
-          maxLength={48}
-          name="name"
-          onChange={handleOnChange}
-          placeholder="Eg. Paramount+"
-          type="text"
-        />
-        <Ui.Form.Hint>Maximum length: 48 characters</Ui.Form.Hint>
-      </Ui.Form.Content>
-      <Ui.Form.Actions>
+    <>
+      <Ui.Drawer.Body>
+        <Ui.Form.Header>{header}</Ui.Form.Header>
+        <Ui.Form.Paragraph>
+          What is this transaction for?
+        </Ui.Form.Paragraph>
+        <Ui.Form.Container>
+          <Ui.Form.Field>
+            <Ui.Form.Label htmlFor="name">Name</Ui.Form.Label>
+            <Ui.Form.Input
+              id="name"
+              value={name}
+              maxLength={48}
+              name="name"
+              onChange={handleOnChange}
+              placeholder="Eg. Paramount+"
+              type="text"
+            />
+            <Ui.Form.Hint>Maximum length: 48 characters</Ui.Form.Hint>
+          </Ui.Form.Field>
+        </Ui.Form.Container>
+      </Ui.Drawer.Body>
+      <Ui.Drawer.Footer>
         <Ui.Components.Button
           isDisabled={isBlocked}
           isPrimary
           onClick={() => onNext('name', name)}
         >
-          Next
+          Save & Continue
         </Ui.Components.Button>
         {children}
-      </Ui.Form.Actions>
-    </Ui.Form.Container>
+      </Ui.Drawer.Footer>
+    </>
   );
 };

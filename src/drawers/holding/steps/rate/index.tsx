@@ -22,27 +22,35 @@ export default function Section({
 }: React.PropsWithChildren<Props>) {
   const { handleOnChange, rate } = useModel(value);
 
+  if (!isActive) {
+    return null;
+  }
+
   return (
-    <Ui.Form.Container isActive={isActive}>
-      <Ui.Form.Header>{header}</Ui.Form.Header>
-      <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
-      <Ui.Form.Content>
-        <Ui.Form.Label htmlFor="holding-rate">Value</Ui.Form.Label>
-        <Ui.Form.Percent
-          id="holding-rate"
-          onChange={handleOnChange}
-          value={rate}
-        />
-      </Ui.Form.Content>
-      <Ui.Form.Actions>
+    <>
+      <Ui.Drawer.Body>
+        <Ui.Form.Header>{header}</Ui.Form.Header>
+        <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
+        <Ui.Form.Container>
+          <Ui.Form.Field>
+            <Ui.Form.Label htmlFor="holding-rate">Value</Ui.Form.Label>
+            <Ui.Form.Percent
+              id="holding-rate"
+              onChange={handleOnChange}
+              value={rate}
+            />
+          </Ui.Form.Field>
+        </Ui.Form.Container>
+      </Ui.Drawer.Body>
+      <Ui.Drawer.Footer>
         <Ui.Components.Button
           isPrimary
           onClick={() => onNext('interest', rate)}
         >
-          {rate ? 'Next' : 'Skip'}
+          {rate ? 'Save & Continue' : 'Skip'}
         </Ui.Components.Button>
         {children}
-      </Ui.Form.Actions>
-    </Ui.Form.Container>
+      </Ui.Drawer.Footer>
+    </>
   );
 };

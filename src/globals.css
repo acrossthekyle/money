@@ -35,6 +35,10 @@ body:has(dialog[open]) {
   overflow: hidden !important;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   button {
     cursor: pointer;
@@ -52,17 +56,6 @@ body {
     color: transparent;
     background: transparent;
     cursor: pointer;
-  }
-
-  dialog {
-    left: -100vw;
-    width: 100vw;
-    transition: left 0s linear 250ms;
-  }
-
-  dialog.is-active {
-    left: 0;
-    transition-delay: 0s;
   }
 
   .apexcharts-tooltip {

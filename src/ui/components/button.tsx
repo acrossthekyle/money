@@ -46,19 +46,24 @@ const styles = tw({
 
     motion-safe:duration-300
 
+    disabled:opacity-50
+    disabled:!cursor-default
+
     sm:text-sm
   `,
   primary: `
     bg-(--foreground)
     text-(--background)
 
-    hover:bg-(--foreground)/90
+    not-disabled:hover:bg-(--foreground)/90
   `,
   ghost: `
     text-(--foreground)
     bg-transparent
-    border border-current/10.5
+    border border-current/17.5
 
-    hover:bg-(--foreground)/4.5
+    not-disabled:hover:bg-(--foreground)/4.5
+
+    sm:border-current/10.5
   `,
 });

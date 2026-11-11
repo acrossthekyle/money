@@ -28,48 +28,54 @@ export default function Section({
     isIncome,
   } = useModel(value, type);
 
+  if (!isActive) {
+    return null;
+  }
+
   return (
-    <Ui.Form.Container isActive={isActive}>
-      <Ui.Form.Header>{header}</Ui.Form.Header>
-      <Ui.Form.Paragraph>
-        Choose either Income or Expense as the type of transaction, and then enter the amount.
-      </Ui.Form.Paragraph>
-      <Ui.Form.Content>
-        <Ui.Form.Options>
-          <Ui.Form.Legend>Type</Ui.Form.Legend>
-          <Ui.Form.Option
-            isActive={isIncome}
-            label="Income"
-            name="type"
-            onSelect={() => handleOnType(true)}
-            value="income"
-          />
-          <Ui.Form.Option
-            isActive={!isIncome}
-            label="Expense"
-            name="type"
-            onSelect={() => handleOnType(false)}
-            value="expense"
-          />
-        </Ui.Form.Options>
-        <Ui.Form.Label htmlFor="transaction-amount">Amount</Ui.Form.Label>
-        <Ui.Form.Currency
-          id="transaction-amount"
-          onChange={handleOnChange}
-          value={amount}
-        />
-        <Ui.Form.Hint>Only enter numbers and decimal points</Ui.Form.Hint>
-      </Ui.Form.Content>
-      <Ui.Form.Actions>
+    <>
+      <Ui.Drawer.Body>
+        <Ui.Form.Header>{header}</Ui.Form.Header>
+        <Ui.Form.Paragraph>
+          Choose either Income or Expense as the type of transaction, and then enter the amount.
+        </Ui.Form.Paragraph>
+        <Ui.Form.Container>
+          <Ui.Form.Field>
+            <Ui.Form.Legend>Type</Ui.Form.Legend>
+            <Ui.Form.Options>
+              <Ui.Form.Option
+                isActive={isIncome === true}
+                label="Income"
+                onSelect={() => handleOnType(true)}
+              />
+              <Ui.Form.Option
+                isActive={isIncome === false}
+                label="Expense"
+                onSelect={() => handleOnType(false)}
+              />
+            </Ui.Form.Options>
+          </Ui.Form.Field>
+          <Ui.Form.Field>
+            <Ui.Form.Label htmlFor="transaction-amount">Amount</Ui.Form.Label>
+            <Ui.Form.Currency
+              id="transaction-amount"
+              onChange={handleOnChange}
+              value={amount}
+            />
+            <Ui.Form.Hint>Only enter numbers and decimal points</Ui.Form.Hint>
+          </Ui.Form.Field>
+        </Ui.Form.Container>
+      </Ui.Drawer.Body>
+      <Ui.Drawer.Footer>
         <Ui.Components.Button
           isDisabled={isBlocked}
           isPrimary
           onClick={() => onNext('amount', amount, isIncome)}
         >
-          Next
+          Save & Continue
         </Ui.Components.Button>
         {children}
-      </Ui.Form.Actions>
-    </Ui.Form.Container>
+      </Ui.Drawer.Footer>
+    </>
   );
 };

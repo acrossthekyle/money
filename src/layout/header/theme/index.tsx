@@ -35,7 +35,7 @@ const styles = tw({
   `,
   icon: `
     size-5.25
-    stroke-2
+    stroke-1
 
     sm:size-4.25
   `,

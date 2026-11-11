@@ -1,12 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import { useEffect, useState } from 'react';
 
 export function useModel(value: string, type: string) {
-  const router = useRouter();
-
   const [amount, setAmount] = useState('');
   const [isIncome, setIsIncome] = useState(true);
 
@@ -24,8 +20,6 @@ export function useModel(value: string, type: string) {
 
   const handleOnType = (updated: boolean) => {
     setIsIncome(updated);
-
-    router.refresh();
   };
 
   return {

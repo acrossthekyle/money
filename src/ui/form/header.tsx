@@ -9,9 +9,9 @@ export default function Header({
   className,
 }: React.PropsWithChildren<Props>) {
   return (
-    <h2 className={cs(styles.container, className)}>
+    <h3 className={cs(styles.container, className)}>
       {children}
-    </h2>
+    </h3>
   );
 };
 

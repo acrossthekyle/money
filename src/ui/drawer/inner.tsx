@@ -2,14 +2,12 @@ import tw, { cs } from '@/styles';
 
 type Props = {
   className?: string;
-  isActive?: boolean;
   isMenu?: boolean;
 };
 
 export default function Inner({
   children,
   className = '',
-  isActive,
   isMenu,
 }: React.PropsWithChildren<Props>) {
   return (
@@ -18,7 +16,7 @@ export default function Inner({
         cs(
           styles.container,
           className,
-          isMenu ? styles.menu(isActive) : styles.modal(isActive),
+          !isMenu && styles.modal,
         )
       }
     >
@@ -30,27 +28,12 @@ export default function Inner({
 const styles = tw({
   container: `
     relative
-    flex flex-col justify-between
+    flex
     w-full
     h-svh
-
-    motion-safe:duration-300
+    pointer-events-none
   `,
-  menu: (isActive: boolean) => tw(`
-    sm:max-w-sm
-
-    ${isActive
-      ? `opacity-100 translate-x-0`
-      : `opacity-0 -translate-x-24`}
-  `),
-  modal: (isActive: boolean) => tw(`
-    left-1/2 -translate-x-1/2
-
-    sm:p-2
-    sm:max-w-100
-
-    ${isActive
-      ? `opacity-100 translate-y-0`
-      : `opacity-0 translate-y-24`}
-  `),
+  modal: `
+    p-2
+  `,
 });

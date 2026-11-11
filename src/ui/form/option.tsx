@@ -1,50 +1,36 @@
 'use client';
 
-import { useId } from 'react';
-
 import tw, { cs } from '@/styles';
 
 type Props = {
-  className?: string;
   isActive: boolean;
   label: string;
-  name: string;
   onSelect: () => void;
-  value: string;
 };
 
 export default function Section({
-  className,
   isActive,
   label,
-  name,
   onSelect,
-  value,
 }: Props) {
-  const id = useId();
-
   return (
-    <label
-      className={
-        cs(
-          styles.container,
-          className,
-          isActive ? styles.active : styles.inactive,
-        )
-      }
-      htmlFor={id}
-    >
-      <input
-        className={styles.input}
-        type="radio"
-        id={id}
-        name={name}
-        value={value}
-        checked={isActive}
-        onChange={onSelect}
-      />
-      {label}
-    </label>
+    <>
+      <button
+        className={styles.container}
+        onClick={onSelect}
+        type="button"
+      >
+        <span
+          className={
+            cs(
+              styles.circle,
+              isActive ? styles.active : styles.inactive,
+            )
+          }
+        />
+        {label}
+      </button>
+    </>
   );
 };
 
@@ -59,26 +45,26 @@ const styles = tw({
     select-none
     border border-current/17.5
     cursor-pointer
+    bg-(--background)
+    outline-0
 
     sm:text-sm
   `,
-  inactive: `
-    bg-(--background)
-  `,
-  active: `
-    bg-(--foreground)/2.5
-  `,
-  input: `
+  circle: `
     appearance-none
     size-3.5
     rounded-full
     bg-(--foreground)/17.5
+    border-2
     mr-3
 
     motion-safe:duration-300
-
-    checked:bg-(--background)
-    checked:border-2
-    checked:border-(--foreground)
+  `,
+  active: `
+    bg-(--background)
+    border-(--foreground)
+  `,
+  inactive: `
+    border-transparent
   `,
 });

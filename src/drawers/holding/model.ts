@@ -11,7 +11,6 @@ export function useModel() {
   const { instance, isActive, onBackdrop, onCancel, onClose } = useHolding();
   const { date, forecasts, holdings } = useStore();
 
-  const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
   const [data, setData] = useState<Data>({
     type: '',
@@ -76,13 +75,7 @@ export function useModel() {
       [key]: value,
     });
 
-    if (isEditing) {
-      setStep(steps.length - 1);
-    } else {
-      setStep(previous => previous + 1);
-    }
-
-    setIsEditing(false);
+    setStep(previous => previous + 1);
   };
 
   const handleOnBack = () => {
@@ -95,16 +88,20 @@ export function useModel() {
     });
   };
 
+  const handleOnJump = (value: number) => {
+    setStep(value);
+  };
+
   return {
     data,
     handleOnBack,
     handleOnCancel,
+    handleOnJump,
     handleOnNext,
     handleOnSubmit,
     holding,
     instance,
     isActive,
-    isEditing,
     isPending,
     onBackdrop,
     onCancel,

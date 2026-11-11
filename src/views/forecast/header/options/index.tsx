@@ -1,6 +1,6 @@
 'use client';
 
-import { SlidersVertical, Pin, PinOff, Trash } from 'lucide-react';
+import { Settings, Pin, PinOff, Trash } from 'lucide-react';
 
 import tw from '@/styles';
 import type { Holding } from '@/types';
@@ -38,7 +38,7 @@ export default function Options({ holding, pinned }: Props) {
         title="Edit"
         type="button"
       >
-        <SlidersVertical className={styles.icon} />
+        <Settings className={styles.icon} />
       </button>
       <button
         className={styles.action}

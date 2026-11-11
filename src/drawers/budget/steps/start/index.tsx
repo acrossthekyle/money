@@ -20,32 +20,40 @@ export default function Section({
 }: React.PropsWithChildren<Props>) {
   const { handleOnChange, isBlocked, start } = useModel(value);
 
+  if (!isActive) {
+    return null;
+  }
+
   return (
-    <Ui.Form.Container isActive={isActive}>
-      <Ui.Form.Header>{header}</Ui.Form.Header>
-      <Ui.Form.Paragraph>
-        When does this transaction occur?
-      </Ui.Form.Paragraph>
-      <Ui.Form.Content>
-        <Ui.Form.Label htmlFor="start">Start date</Ui.Form.Label>
-        <Ui.Form.Input
-          id="start"
-          value={start}
-          name="start"
-          onChange={handleOnChange}
-          type="date"
-        />
-      </Ui.Form.Content>
-      <Ui.Form.Actions>
+    <>
+      <Ui.Drawer.Body>
+        <Ui.Form.Header>{header}</Ui.Form.Header>
+        <Ui.Form.Paragraph>
+          When does this transaction occur?
+        </Ui.Form.Paragraph>
+        <Ui.Form.Container>
+          <Ui.Form.Field>
+            <Ui.Form.Label htmlFor="start">Start date</Ui.Form.Label>
+            <Ui.Form.Input
+              id="start"
+              value={start}
+              name="start"
+              onChange={handleOnChange}
+              type="date"
+            />
+          </Ui.Form.Field>
+        </Ui.Form.Container>
+      </Ui.Drawer.Body>
+      <Ui.Drawer.Footer>
         <Ui.Components.Button
           isDisabled={isBlocked}
           isPrimary
           onClick={() => onNext('start', start)}
         >
-          Next
+          Save & Continue
         </Ui.Components.Button>
         {children}
-      </Ui.Form.Actions>
-    </Ui.Form.Container>
+      </Ui.Drawer.Footer>
+    </>
   );
 };

@@ -78,15 +78,16 @@ export default function Transactions({ day, onDelete, onEdit }: Props) {
 
 const styles = tw({
   container: `
-    flex flex-col gap-2
+    flex flex-col gap-3
     w-full
-    pt-6
   `,
   item: `
     relative
-    bg-(--background)/5.5
-    border border-current/7.5
+    bg-(--background)/22.5
+    border border-current/17.5
     rounded-xl
+
+    sm:border-current/10.5
   `,
   icon: `
     mt-1.25
@@ -123,7 +124,7 @@ const styles = tw({
     -translate-y-1/2
     border border-current/7.5
     rounded-full
-    bg-(--foreground)/2.5
+    bg-(--foreground)/5.5
     p-2
 
     motion-safe:duration-300
@@ -137,8 +138,7 @@ const styles = tw({
     sm:size-3.5
   `,
   heading: `
-    font-semibold
-    pt-6 mb-1
+    mb-1
 
     sm:text-sm
   `,

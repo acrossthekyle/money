@@ -38,5 +38,11 @@ const styles = tw({
     p-3
     rounded-xl
     text-left
+    bg-transparent
+    outline-0
+
+    motion-safe:duration-300
+
+    hover:bg-(--background)/5.5
   `,
 });

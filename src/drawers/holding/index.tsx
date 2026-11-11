@@ -28,11 +28,9 @@ export default function Drawer() {
     holding,
     instance,
     isActive,
-    isEditing,
     isPending,
     onBackdrop,
     onCancel,
-    onClose,
     step,
     steps,
     zone,
@@ -40,9 +38,6 @@ export default function Drawer() {
 
   const headers = getHeaders(data.type);
   const placeholder = getPlaceholder(data.type);
-
-  const canGoBack = step > 0 && !isEditing;
-  const canCancel = step === 0 && !isEditing;
 
   const header = `Step ${step + 1} of ${steps.length}`;
 
@@ -54,10 +49,15 @@ export default function Drawer() {
       onBackdrop={onBackdrop}
       onCancel={onCancel}
     >
-      <Ui.Drawer.Inner isActive={isActive}>
-        <Ui.Drawer.Content>
-          <Ui.Drawer.Header onClose={onClose}>
-            <Heading holding={holding} zone={zone} />
+      <Ui.Drawer.Inner>
+        <Ui.Drawer.Content isActive={isActive}>
+          <Ui.Drawer.Header>
+            <Heading
+              holding={holding}
+              onBack={handleOnBack}
+              step={step}
+              zone={zone}
+            />
           </Ui.Drawer.Header>
           <Type
             header={header}
@@ -65,12 +65,7 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.type}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Type>
           <Name
             header={header}
@@ -80,12 +75,7 @@ export default function Drawer() {
             placeholder={placeholder}
             value={data.name}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Name>
           <Number
             header={header}
@@ -94,12 +84,7 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.number}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Number>
           <Balance
             header={header}
@@ -108,12 +93,7 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.balance}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Balance>
           <Rate
             header={header}
@@ -122,12 +102,7 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.interest}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Rate>
           <Submit
             data={data}
@@ -136,12 +111,7 @@ export default function Drawer() {
             isPending={isPending}
             onSubmit={handleOnSubmit}
           >
-            <Actions
-              canGoBack={canGoBack}
-              canCancel={canCancel}
-              onBack={handleOnBack}
-              onCancel={handleOnCancel}
-            />
+            <Actions onCancel={handleOnCancel} />
           </Submit>
         </Ui.Drawer.Content>
       </Ui.Drawer.Inner>

@@ -28,7 +28,6 @@ const styles = tw({
     appearance-none
     relative
     w-full
-    mb-1
     py-1 px-3
     bg-(--background)
     border border-(--foreground)/17.5

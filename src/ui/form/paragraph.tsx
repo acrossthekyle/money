@@ -12,7 +12,7 @@ export default function Paragraph({
 
 const styles = tw({
   container: `
-    mb-6
+    mb-4
     text-current/62.5
 
     sm:text-sm

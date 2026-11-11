@@ -27,20 +27,22 @@ export default function Drawer() {
       onBackdrop={onBackdrop}
       onCancel={onCancel}
     >
-      <Ui.Drawer.Inner isActive={isActive}>
-        <Ui.Drawer.Content>
-          <Ui.Drawer.Header onClose={onClose}>
+      <Ui.Drawer.Inner>
+        <Ui.Drawer.Content isActive={isActive}>
+          <Ui.Drawer.Header>
             {day !== undefined && (
               <Heading day={day} />
             )}
           </Ui.Drawer.Header>
-          {day !== undefined && (
-            <Transactions
-              day={day}
-              onDelete={handleOnDelete}
-              onEdit={handleOnEdit}
-            />
-          )}
+          <Ui.Drawer.Body>
+            {day !== undefined && (
+              <Transactions
+                day={day}
+                onDelete={handleOnDelete}
+                onEdit={handleOnEdit}
+              />
+            )}
+          </Ui.Drawer.Body>
           <Ui.Drawer.Footer>
             <Ui.Components.Button isPrimary onClick={handleOnAdd}>
               Add Transaction
