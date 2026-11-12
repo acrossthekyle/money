@@ -12,7 +12,7 @@ type Props = {
 export default function Heading({ day }: Props) {
   return (
     <>
-      <h2 id="dialog-header">
+      <h2 id="drawer-header">
         {day.dateable.weekdayFull}, {MONTHS_FULL[Number(day.dateable.month) - 1]} {format(day.dateable.date, 'do')} {day.dateable.year}
       </h2>
       <p className={styles.balance}>

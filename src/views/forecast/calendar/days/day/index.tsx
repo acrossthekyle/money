@@ -20,7 +20,7 @@ export default function Day({ date, day }: Props) {
     isToday,
     isHoverable,
     isNegative,
-    isBold,
+    isSelected,
   } = useModel(date, day);
 
   return (
@@ -31,11 +31,18 @@ export default function Day({ date, day }: Props) {
           hasItems && styles.highlighted,
           isFaded && styles.faded,
           isHoverable && styles.hoverable,
-          isBold && styles.boldened,
+          isSelected && styles.selected,
           isToday && styles.today,
         )
       }
     >
+      {!day.dateable.isInMonth && (
+        <span
+          className={cs(styles.action, styles.disabled)}
+        >
+          {day.dateable.day}
+        </span>
+      )}
       {day.dateable.isInMonth && (
         <button
           className={
@@ -50,18 +57,17 @@ export default function Day({ date, day }: Props) {
           type="button"
         >
           {day.dateable.day}
-          {day.dateable.isInMonth && (
-            <span
-              className={
-                cs(
-                  styles.balance,
-                  isNegative && styles.negative,
-                )
-              }
-            >
-              ${currency(day.balance, true)}
-            </span>
-          )}
+          <span
+            className={
+              cs(
+                styles.balance,
+                isNegative && styles.negative,
+                String(day.balance).split('.')[0].length > 4 && styles.shrink,
+              )
+            }
+          >
+            ${currency(day.balance, true)}
+          </span>
         </button>
       )}
     </li>
@@ -71,9 +77,8 @@ export default function Day({ date, day }: Props) {
 const styles = tw({
   container: `
     group
-    relative
+    flex items-center justify-center
     aspect-square
-    bg-(--foreground)/5.5 dark:bg-(--foreground)/12.5
     rounded-xl
 
     sm:text-sm
@@ -82,33 +87,32 @@ const styles = tw({
     text-current/90
   `,
   today: `
-    bg-(--foreground)/32.5
-    dark:bg-(--foreground)/22.5
-    text-(--foreground)
-    !outline-1 !outline-(--foreground)
+    !bg-(--foreground)/10.5
+
+    dark:!bg-(--foreground)/7.5
   `,
   hoverable: `
-    hover:bg-(--foreground)/22.5
-    hover:dark:bg-(--foreground)/17.5
+    hover:bg-(--foreground)/5.5
     hover:text-(--foreground)
+
+    hover:dark:bg-(--foreground)/2.5
   `,
   highlighted: `
-    !bg-(--foreground)
-    !hover:text-(--foreground)
+    !bg-(--foreground)/90
   `,
-  boldened: `
-    bg-(--foreground)/12.5 dark:bg-(--foreground)/17.5
-    outline-3 outline-current/17.5 dark:outline-current/32.5
+  selected: `
+    bg-(--foreground)/10.5
+    outline outline-current/22.5
+
+    dark:bg-(--foreground)/12.5
   `,
   action: `
-    relative
     flex flex-col items-center justify-center
-    w-full h-full
+    p-1
     select-none
+    rounded-xl
 
     disabled:cursor-default
-
-    sm:gap-0.5
   `,
   disabled: `
     text-current/62.5
@@ -120,8 +124,14 @@ const styles = tw({
     group-hover:!dark:text-(--foreground)
   `,
   balance: `
-    text-[min(2.25vw,0.6rem)]
-    font-roboto font-medium
+    text-tiny text-current/72.5
+
+    sm:text-xs
+  `,
+  shrink: `
+    text-xtiny
+
+    sm:text-tiny
   `,
   negative: `
     !text-red-400

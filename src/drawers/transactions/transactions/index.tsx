@@ -2,7 +2,7 @@
 
 import { ArrowDownLeft, ArrowUpRight, Trash } from 'lucide-react';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import type { CalendarDay } from '@/types';
 import { currency } from '@/utils';
 
@@ -37,9 +37,9 @@ export default function Transactions({ day, onDelete, onEdit }: Props) {
                 </h4>
                 <p className={styles.details}>
                   {item.isNegative ? (
-                    <ArrowUpRight className={styles.arrow} />
+                    <ArrowUpRight className={cs(styles.arrow, styles.negative)} />
                   ) : (
-                    <ArrowDownLeft className={styles.arrow} />
+                    <ArrowDownLeft className={cs(styles.arrow, styles.positive)} />
                   )}
                   <span>${currency(item.amount)}</span>
                   <span>•</span>
@@ -84,10 +84,8 @@ const styles = tw({
   item: `
     relative
     bg-(--background)/22.5
-    border border-current/17.5
+    border border-current/10.5
     rounded-xl
-
-    sm:border-current/10.5
   `,
   icon: `
     mt-1.25
@@ -109,12 +107,18 @@ const styles = tw({
 
     sm:size-4
   `,
-  details: `
-    flex items-center gap-2
-    text-current/62.5
-    lowercase
+  negative: `
+    text-rose-300
 
-    sm:text-sm
+    dark:text-red-400
+  `,
+  positive: `
+    text-lime-600
+  `,
+  details: `
+    flex items-center gap-1
+    text-sm text-current/62.5
+    lowercase
   `,
   capitalize: `
     capitalize
@@ -143,8 +147,6 @@ const styles = tw({
     sm:text-sm
   `,
   content: `
-    text-current/62.5
-
-    sm:text-sm
+    text-sm text-current/62.5
   `,
 });

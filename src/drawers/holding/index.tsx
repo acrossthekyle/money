@@ -8,7 +8,6 @@ import { useModel } from './model';
 import {
   Balance,
   Name,
-  Number,
   Rate,
   Submit,
   Type,
@@ -77,15 +76,6 @@ export default function Drawer() {
           >
             <Actions onCancel={handleOnCancel} />
           </Name>
-          <Number
-            header={header}
-            paragraph={headers.number}
-            isActive={steps[step] === 'number'}
-            onNext={handleOnNext}
-            value={data.number}
-          >
-            <Actions onCancel={handleOnCancel} />
-          </Number>
           <Balance
             header={header}
             paragraph={headers.balance}

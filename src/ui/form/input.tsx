@@ -49,11 +49,11 @@ const styles = tw({
     appearance-none
     w-full
     py-1 px-3
-    bg-(--background)
-    rounded-lg
+    bg-(--foreground)/5.5
+    rounded-md
   `,
   basic: `
-    border border-(--foreground)/17.5
+    border border-(--foreground)/10.5
     outline-3 outline-transparent
 
     motion-safe:duration-300
@@ -64,16 +64,17 @@ const styles = tw({
   date: `
     outline-0
     cursor-pointer
+    opacity-0
   `,
   mask: `
     absolute inset-0 z-1
     flex items-center
     px-3
-    rounded-lg
-    bg-(--background)
+    rounded-md
     pointer-events-none
-    border border-(--foreground)/17.5
+    border border-(--foreground)/10.5
     outline-3 outline-transparent
+    bg-(--foreground)/5.5
 
     motion-safe:duration-300
 

@@ -29,10 +29,10 @@ const styles = tw({
     relative
     w-full
     py-1 px-3
-    bg-(--background)
-    border border-(--foreground)/17.5
+    bg-(--foreground)/5.5
+    border border-(--foreground)/10.5
     outline-3 outline-transparent
-    rounded-lg
+    rounded-md
 
     motion-safe:duration-300
 

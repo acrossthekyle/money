@@ -21,6 +21,6 @@ export function useModel(current: Dateable, day: CalendarDay) {
     isToday: day.dateable.isToday,
     isHoverable: day.dateable.isInMonth && !day.dateable.isBeforeToday,
     isNegative: day.dateable.isInMonth && !day.dateable.isBeforeToday && day.balance < 0,
-    isBold: day.dateable.iso === current.iso,
+    isSelected: day.dateable.iso === current.iso,
   };
 };

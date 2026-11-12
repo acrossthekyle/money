@@ -20,11 +20,30 @@ export default function Header({ isAuthenticated = true }: Props) {
 
 const styles = tw({
   container: `
-    fixed left-0 right-0 top-0 z-10
     flex items-center justify-between
+    w-[calc(100%-1rem)] max-w-100
+    mx-auto
+    mt-2 px-2 py-1
 
-    sm:left-2
-    sm:right-2
-    sm:top-2
+    bg-zinc-50
+    border border-current/7.5
+    rounded-lg
+
+    dark:bg-neutral-900
+
+    sm:border-0
+    sm:bg-transparent
+    sm:fixed
+    sm:left-4
+    sm:right-4
+    sm:top-6
+    sm:z-0
+    sm:max-w-none
+    sm:mx-none
+    sm:w-auto
+    sm:mt-0
+    sm:py-0
+
+    sm:dark:bg-transparent
   `,
 });

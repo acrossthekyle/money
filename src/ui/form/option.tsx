@@ -39,13 +39,13 @@ const styles = tw({
     relative
     flex items-center
     w-full
-    rounded-lg
+    rounded-md
     py-2 px-4
     whitespace-nowrap
     select-none
-    border border-current/17.5
+    border border-current/10.5
     cursor-pointer
-    bg-(--background)
+    bg-(--foreground)/5.5
     outline-0
 
     sm:text-sm
@@ -54,7 +54,7 @@ const styles = tw({
     appearance-none
     size-3.5
     rounded-full
-    bg-(--foreground)/17.5
+    bg-(--background)/32.5
     border-2
     mr-3
 

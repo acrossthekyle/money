@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Stone } from 'lucide-react';
 import Link from 'next/link';
 
 import tw from '@/styles';
@@ -19,13 +19,16 @@ export default function View() {
 
   return (
     <>
-      <div className={styles.container}>
-        <h1 className={styles.header}>BASALT</h1>
+      <main className={styles.container}>
+        <h1 className={styles.header}>
+          <Stone className={styles.stone} />
+          BASALT
+        </h1>
         <p className={styles.paragraph}>
-          Sign in and starting planning.
+          Sign in. Start planning.
         </p>
-        <form action={action} className={styles.form} id="login-form">
-          <div className={styles.field}>
+        <form action={action} className={styles.form}>
+          <Ui.Form.Field>
             <Ui.Form.Label htmlFor="username">Username</Ui.Form.Label>
             <Ui.Form.Input
               id="username"
@@ -37,9 +40,8 @@ export default function View() {
               disabled={isPending}
               onChange={handleOnUsername}
             />
-            <Ui.Form.Hint></Ui.Form.Hint>
-          </div>
-          <div className={styles.field}>
+          </Ui.Form.Field>
+          <Ui.Form.Field>
             <Ui.Form.Label htmlFor="password">Password</Ui.Form.Label>
             <Ui.Form.Input
               id="password"
@@ -50,17 +52,16 @@ export default function View() {
               disabled={isPending}
               onChange={handleOnPassword}
             />
-            <Ui.Form.Hint></Ui.Form.Hint>
-          </div>
+          </Ui.Form.Field>
           <Ui.Components.Button isPrimary isDisabled={isPending}>
             {isPending ? 'Processing...' : 'Sign In'}
           </Ui.Components.Button>
         </form>
-      </div>
+      </main>
       <footer className={styles.footer}>
         <Link className={styles.link} href="https://acrossthekyle.com" target="_blank">
           <span>About the developer</span>
-          <ArrowUpRight className={styles.icon} />
+          <ArrowUpRight className={styles.arrow} />
         </Link>
       </footer>
     </>
@@ -72,11 +73,20 @@ const styles = tw({
     absolute top-1/2 left-1/2
     -translate-y-1/2 -translate-x-1/2
     w-full max-w-xs
+    p-4
+    bg-zinc-50
+    rounded-3xl
+    border border-current/7.5
+
+    dark:bg-neutral-900
   `,
   header: `
+    flex flex-col items-center
     mb-2
     font-bold
-    text-center
+  `,
+  stone: `
+    mb-2
   `,
   paragraph: `
     pb-6
@@ -86,10 +96,6 @@ const styles = tw({
   `,
   form: `
     flex flex-col gap-4
-    mt-4
-  `,
-  field: `
-    flex flex-col gap-1
   `,
   footer: `
     fixed bottom-4
@@ -102,7 +108,7 @@ const styles = tw({
 
     sm:text-tiny
   `,
-  icon: `
+  arrow: `
     size-4
     stroke-2
 

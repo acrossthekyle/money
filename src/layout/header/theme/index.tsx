@@ -21,9 +21,9 @@ export default function Theme() {
       type="button"
     >
       {theme === 'dark' ? (
-        <Lightbulb className={styles.icon} />
-      ) : (
         <LightbulbOff className={styles.icon} />
+      ) : (
+        <Lightbulb className={styles.icon} />
       )}
     </button>
   );
@@ -32,9 +32,15 @@ export default function Theme() {
 const styles = tw({
   container: `
     p-2
+
+    sm:border
+    sm:border-current/7.5
+    sm:rounded-lg
+    sm:bg-zinc-50
+    sm:dark:bg-neutral-900
   `,
   icon: `
-    size-5.25
+    size-4.75
     stroke-1
 
     sm:size-4.25

@@ -15,7 +15,6 @@ import { balancize, interestize } from '../utils';
 const Form = z.object({
   name: z.string(),
   balance: z.string(),
-  number: z.string().nullable().optional(),
   type: z.enum([
     'credit_card',
     'checking',
@@ -32,7 +31,6 @@ export async function put(
     data: {
       type: string;
       name: string;
-      number: string;
       balance: string;
       interest: string;
     };
@@ -41,7 +39,6 @@ export async function put(
   const validated = Form.safeParse({
     name: formData.data.name,
     balance: formData.data.balance,
-    number: formData.data.number,
     type: formData.data.type,
     interest: formData.data.interest,
   });
@@ -58,7 +55,6 @@ export async function put(
     balance: balancize(validated.data.balance),
     id: formData.id === null ? uuidv4() : formData.id,
     interest: interestize(validated.data.interest === null ? '' : (validated.data.interest || '')),
-    number: validated.data.number === null ? '' : (validated.data?.number || '').slice(-4),
     updated: format(now, DATE_ISO),
   };
 

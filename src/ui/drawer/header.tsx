@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeftToLine } from 'lucide-react';
+import { X } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
 
@@ -19,7 +19,7 @@ export default function Header({
       {children}
       {onClose && (
         <button className={styles.close} onClick={onClose} type="button">
-          <ArrowLeftToLine className={styles.icon} />
+          <X className={styles.icon} />
         </button>
       )}
     </header>
@@ -39,18 +39,21 @@ const styles = tw({
     after:z-100
     after:h-6
     after:bg-linear-to-b
-    after:from-(--background)
+    after:from-zinc-50
     after:to-transparent
     after:pointer-events-none
 
-    sm:after:from-zinc-50
-    sm:dark:after:from-neutral-900
+    dark:after:from-neutral-900
   `,
   close: `
     absolute top-4 right-4
+    bg-(--background)/22.5
+    border border-current/12.5
+    rounded-lg
+    p-1
   `,
   icon: `
-    size-6
+    size-5.5
     stroke-1
 
     sm:size-4.5

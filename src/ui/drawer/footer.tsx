@@ -25,11 +25,10 @@ const styles = tw({
     before:z-100
     before:h-6
     before:bg-linear-to-t
-    before:from-(--background)
+    before:from-zinc-50
     before:to-transparent
     before:pointer-events-none
 
-    sm:before:from-zinc-50
-    sm:dark:before:from-neutral-900
+    dark:before:from-neutral-900
   `,
 });

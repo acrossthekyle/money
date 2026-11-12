@@ -30,7 +30,7 @@ const styles = tw({
     relative
     flex
     w-full
-    h-svh
+    h-dvh
     pointer-events-none
   `,
   modal: `

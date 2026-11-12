@@ -2,7 +2,6 @@ export type Holding = {
   id: string;
   name: string;
   balance: string;
-  number: string;
   type: string;
   interest: string;
   updated?: string;

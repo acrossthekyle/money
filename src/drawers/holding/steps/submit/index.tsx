@@ -43,14 +43,6 @@ export default function Section({
             <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText>{data.name}</Ui.Form.OutlineItemText>
           </Ui.Form.OutlineItem>
-          {!!data.number && (
-            <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineItemHeading>Number</Ui.Form.OutlineItemHeading>
-              <Ui.Form.OutlineItemText>
-                **** {data.number}
-              </Ui.Form.OutlineItemText>
-            </Ui.Form.OutlineItem>
-          )}
           <Ui.Form.OutlineItem>
             <Ui.Form.OutlineItemHeading>Balance</Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText>

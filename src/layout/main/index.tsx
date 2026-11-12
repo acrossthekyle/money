@@ -13,10 +13,10 @@ const styles = tw({
     relative left-1/2 z-0
     -translate-x-1/2
     flex-1
-    flex flex-col justify-end
-    w-full max-w-md
-    px-2 pb-9
+    flex flex-col
+    w-full max-w-104
+    p-2
 
-    sm:justify-center
+    sm:py-6
   `,
 });

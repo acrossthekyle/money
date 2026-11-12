@@ -17,7 +17,7 @@ export default function Heading({
 
   return (
     <>
-      <h2 id="dialog-header">
+      <h2 id="drawer-header">
         {isEditing ? `Edit ${budget.name}` : 'Add transaction'}
       </h2>
       <p className={styles.lid}>

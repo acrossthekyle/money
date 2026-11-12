@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --breakpoint-xs: 27.5rem; /* 440px */
+  --breakpoint-xs: 24.375rem; /* 390px */
 
   --font-geist: var(--font-geist);
   --font-roboto: var(--font-roboto);
@@ -28,11 +28,6 @@
 [data-theme="dark"] {
   --background: #000000;
   --foreground: #ffffff;
-}
-
-html:has(dialog[open]),
-body:has(dialog[open]) {
-  overflow: hidden !important;
 }
 
 html {

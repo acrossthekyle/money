@@ -1,6 +1,7 @@
-import tw, { cs } from '@/styles';
+import tw from '@/styles';
 import type { CalendarDay } from '@/types';
-import { currency } from '@/utils';
+
+import Chart from './chart';
 
 type Props = {
   days: CalendarDay[];
@@ -16,133 +17,19 @@ export default function Balances({ days }: Props) {
   const highest = Math.max(...balances);
   const end = balances[balances.length - 1];
 
-  const range = highest - lowest;
-
-  let from = range === 0 ? 0 : ((start - lowest) / range) * 100;
-  let to = range === 0 ? 100 : ((end - lowest) / range) * 100;
-
-  const minPadding = 8;
-
-  if (from - 0 < minPadding) {
-    from = 0 + minPadding;
-  }
-
-  if (100 - to < minPadding) {
-    to = 100 - minPadding;
-  }
-
-  if (to - from < minPadding) {
-    const midpoint = (from + to) / 2;
-
-    from = Math.max(0 + minPadding, midpoint - minPadding / 2);
-    to = Math.min(100 - minPadding, midpoint + minPadding / 2);
-  }
-
   return (
-    <section className={styles.container}>
-      <h2>Balance Range</h2>
-      <div className={styles.range}>
-        <div className={styles.bar} />
-        <div
-          className={styles.highlight}
-          style={{
-            left: `${Math.min(from, to)}%`,
-            width: `${Math.abs(to - from)}%`
-          }}
-        />
-        <div className={styles.start}>
-          <div className={styles.endcap} />
-          <span className={styles.value}>
-            <span>${currency(lowest, true)}</span>
-          </span>
-        </div>
-        <div
-          className={styles.from}
-          style={{
-            left: `${from}%`
-          }}
-        >
-          <div className={styles.marker} />
-        </div>
-        <div
-          className={styles.to}
-          style={{
-            right: `${100 - to}%`,
-          }}
-        >
-          <div className={styles.marker} />
-        </div>
-        <div className={styles.end}>
-          <div className={styles.endcap} />
-          <span className={cs(styles.value, styles.right)}>
-            <span>${currency(highest, true)}</span>
-          </span>
-        </div>
-      </div>
+    <section aria-label="balance range" className={styles.container}>
+      <Chart data={[start, lowest, highest, end]} />
     </section>
   );
 };
 
 const styles = tw({
   container: `
-    flex flex-col gap-4
-    mt-4
+    flex flex-col
+    mt-5
     text-sm
 
     sm:gap-5
-    sm:mt-8
-  `,
-  range: `
-    relative
-  `,
-  bar: `
-    h-1
-    bg-(--foreground)
-    rounded-full
-  `,
-  highlight: `
-    absolute top-0
-    h-1
-    bg-(--background)
-    border
-    rounded-full
-  `,
-  start: `
-    absolute -left-0.25 -top-1.5
-    flex flex-col items-start
-  `,
-  end: `
-    absolute -right-0.25 -top-1.5
-    flex flex-col items-end
-  `,
-  marker: `
-    size-4
-    bg-(--foreground)
-    border-2
-    rounded-full
-  `,
-  endcap: `
-    size-4
-    bg-(--background)
-    border-2
-    rounded-full
-  `,
-  value: `
-    mt-2
-    text-sm text-current/62.5
-
-    sm:mt-3
-    sm:text-xs
-  `,
-  right: `
-    text-right
-  `,
-  from: `
-    absolute -bottom-1.5
-    flex flex-col items-start
-  `,
-  to: `
-    absolute -bottom-1.5
-    flex flex-col items-end
   `,
 });

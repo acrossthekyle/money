@@ -15,7 +15,6 @@ export function useModel() {
   const [data, setData] = useState<Data>({
     type: '',
     name: '',
-    number: '',
     balance: '',
     interest: '',
   });
@@ -30,7 +29,6 @@ export function useModel() {
   const steps = [
     'type',
     'name',
-    ['credit_card', 'checking', 'savings', 'retirement'].includes(data.type) && 'number',
     'balance',
     ['checking', 'savings', 'retirement', 'property'].includes(data.type) && 'rate',
     'submit',
@@ -59,7 +57,6 @@ export function useModel() {
     setData({
       type: holding?.type || '',
       name: holding?.name || '',
-      number: holding?.number || '',
       balance: holding?.balance || '',
       interest: holding?.interest || '',
     });

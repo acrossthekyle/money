@@ -52,10 +52,11 @@ export default function Avatar({ type }: Props) {
 const styles = tw({
   container: `
     relative
-    w-6 h-10
+    border-r border-current/12.5
+    pr-3
   `,
   icon: `
     size-4
-    stroke-2
+    stroke-1
   `,
 });

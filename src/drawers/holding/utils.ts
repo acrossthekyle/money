@@ -3,7 +3,6 @@ export function getHeaders(type: string) {
     return {
       balance: `What's the card's current balance?`,
       name: `Enter a name for the credit card.`,
-      number: `Enter the last 4 numbers of the credit card.`,
       rate: '',
     };
   }
@@ -12,7 +11,6 @@ export function getHeaders(type: string) {
     return {
       balance: `How much is in this savings account?`,
       name: `Enter a name for the savings account.`,
-      number: `Enter the last 4 numbers of the savings account.`,
       rate: `What's the savings account interest rate?`,
     };
   }
@@ -21,7 +19,6 @@ export function getHeaders(type: string) {
     return {
       balance: `What's the checking account balance?`,
       name: `Enter a name for the checking account.`,
-      number: `Enter the last 4 numbers of the checking account.`,
       rate: `What's the checking account interest rate?`,
     };
   }
@@ -30,7 +27,6 @@ export function getHeaders(type: string) {
     return {
       balance: `How much is in this retirement account?`,
       name: `Enter a name for the retirement holding.`,
-      number: `Enter the last 4 numbers of the retirement account.`,
       rate: `What's the projected retirement account rate of appreciation?`,
     };
   }
@@ -39,7 +35,6 @@ export function getHeaders(type: string) {
     return {
       balance: `What's the property/asset currently worth?`,
       name: `Enter a name for the property/asset.`,
-      number: ``,
       rate: `What's the anticipated rate of appreciation for the property/asset?`,
     };
   }
@@ -47,7 +42,6 @@ export function getHeaders(type: string) {
   return {
     balance: ``,
     name: ``,
-    number: ``,
     rate: ``,
   };
 }

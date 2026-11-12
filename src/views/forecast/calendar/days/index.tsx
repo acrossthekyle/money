@@ -32,10 +32,9 @@ const styles = tw({
   heading: `
     flex items-center justify-center
     aspect-square
-    text-sm text-center
-    bg-(--foreground)/5.5 dark:bg-(--foreground)/12.5
-    rounded-xl
+    text-sm text-center text-current/62.5
     select-none
+    tracking-wider
 
     sm:text-xs
   `,

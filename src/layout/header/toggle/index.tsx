@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRightFromLine } from 'lucide-react';
+import { ListMinus } from 'lucide-react';
 
 import tw from '@/styles';
 
@@ -16,7 +16,7 @@ export default function Toggle() {
       onClick={handleOnClick}
       type="button"
     >
-      <ArrowRightFromLine className={styles.icon} />
+      <ListMinus className={styles.icon} />
     </button>
   );
 };
@@ -24,9 +24,15 @@ export default function Toggle() {
 const styles = tw({
   container: `
     p-2
+
+    sm:border
+    sm:border-current/7.5
+    sm:rounded-lg
+    sm:bg-zinc-50
+    sm:dark:bg-neutral-900
   `,
   icon: `
-    size-6
+    size-5
     stroke-1
 
     sm:size-4.5
