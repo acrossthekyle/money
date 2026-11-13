@@ -57,9 +57,10 @@ export async function put(
       start: string;
       transferee: string;
       type: string;
-      update: string;
     };
   },
+  state: null,
+  update?: string,
 ): Promise<null | Budget[]> {
   const validated = Form.safeParse({
     name: formData.data.name,
@@ -98,7 +99,7 @@ export async function put(
     return [result];
   }
 
-  if (formData.data.update === 'none' || formData.data.update === 'all') {
+  if (update === 'none' || update === 'all') {
     await db.write('budgets', result);
 
     return [result];
@@ -107,7 +108,7 @@ export async function put(
   const iterations = createBudgetIterations(formData.budget, zone);
   const thisDateIndex = iterations.findIndex(iteration => iteration === formData.data.date?.iso || '');
 
-  if (formData.data.update === 'this') {
+  if (update === 'this') {
     if (thisDateIndex >= 0 && formData.data.date?.iso) {
       const past = iterations.slice(0, thisDateIndex);
       const current = [formData.data.date.iso];
@@ -147,7 +148,7 @@ export async function put(
     return null;
   }
 
-  if (formData.data.update === 'prospective') {
+  if (update === 'prospective') {
     if (thisDateIndex >= 0 && formData.data.date?.iso) {
       const past = iterations.slice(0, thisDateIndex);
       const current = [formData.data.date.iso];
@@ -176,7 +177,7 @@ export async function put(
     return null;
   }
 
-  if (formData.data.update === 'future') {
+  if (update === 'future') {
     if (thisDateIndex >= 0) {
       const past = iterations.slice(0, thisDateIndex + 1);
       const future = iterations.slice(thisDateIndex + 1);

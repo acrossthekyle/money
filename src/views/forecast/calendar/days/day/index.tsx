@@ -28,7 +28,7 @@ export default function Day({ date, day }: Props) {
       className={
         cs(
           styles.container,
-          hasItems && styles.highlighted,
+          hasItems && styles.occupied,
           isFaded && styles.faded,
           isHoverable && styles.hoverable,
           isSelected && styles.selected,
@@ -66,7 +66,7 @@ export default function Day({ date, day }: Props) {
               )
             }
           >
-            ${currency(day.balance, true)}
+            ${currency(day.balance, true, day.balance > 99999)}
           </span>
         </button>
       )}
@@ -97,7 +97,7 @@ const styles = tw({
 
     hover:dark:bg-(--foreground)/2.5
   `,
-  highlighted: `
+  occupied: `
     !bg-(--foreground)/90
   `,
   selected: `

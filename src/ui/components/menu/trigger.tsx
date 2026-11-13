@@ -23,6 +23,7 @@ export default function Trigger() {
 
 const styles = tw({
   action: `
+    h-full
     text-current/92.5
     rounded-e-lg
     p-2
@@ -30,12 +31,13 @@ const styles = tw({
     motion-safe:duration-300
   `,
   active: `
-    bg-zinc-50
+    bg-zinc-100
 
     dark:bg-neutral-900
   `,
   inactive: `
-    hover:bg-(--foreground)/2.5
+    hover:bg-neutral-50
+    hover:dark:bg-neutral-900
   `,
   icon: `
     size-4.5

@@ -32,12 +32,6 @@ export default function Theme() {
 const styles = tw({
   container: `
     p-2
-
-    sm:border
-    sm:border-current/7.5
-    sm:rounded-lg
-    sm:bg-zinc-50
-    sm:dark:bg-neutral-900
   `,
   icon: `
     size-4.75

@@ -55,7 +55,8 @@ const styles = tw({
 
     motion-safe:duration-300
 
-    hover:bg-(--foreground)/2.5
+    hover:bg-neutral-50
+    hover:dark:bg-neutral-900
 
     [&_svg]:size-3
     [&_svg]:stroke-2

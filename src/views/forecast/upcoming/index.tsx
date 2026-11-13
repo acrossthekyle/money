@@ -79,11 +79,11 @@ const styles = tw({
     flex items-center gap-2
     px-2 py-1
     rounded-full
-    bg-(--foreground)/10.5
     text-xs
     font-medium
+    bg-neutral-300/62.5
 
-    dark:bg-(--foreground)/5.5
+    dark:bg-neutral-900/62.5
 
     xs:top-1/2
     xs:-translate-y-1/2

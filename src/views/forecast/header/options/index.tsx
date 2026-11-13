@@ -1,6 +1,6 @@
 'use client';
 
-import { Pen, Pin, PinOff, Trash } from 'lucide-react';
+import { Pin, PinOff, Settings, Trash } from 'lucide-react';
 
 import tw from '@/styles';
 import type { Holding } from '@/types';
@@ -14,9 +14,12 @@ type Props = {
 };
 
 export default function Options({ holding, pinned }: Props) {
-  const { handleOnDelete, handleOnEdit, handleOnPin } = useModel();
-
-  const isPinned = pinned === holding.id;
+  const {
+    handleOnDelete,
+    handleOnEdit,
+    handleOnPin,
+    isPinned,
+  } = useModel(holding, pinned);
 
   return (
     <nav aria-label="options" className={styles.container}>
@@ -38,8 +41,8 @@ export default function Options({ holding, pinned }: Props) {
         <Ui.Components.Menu.Trigger />
         <Ui.Components.Menu.Items>
           <Ui.Components.Menu.Item onClick={handleOnEdit}>
-            <Pen />
-            <Ui.Components.Menu.Label>Edit</Ui.Components.Menu.Label>
+            <Settings />
+            <Ui.Components.Menu.Label>Manage</Ui.Components.Menu.Label>
           </Ui.Components.Menu.Item>
           <Ui.Components.Menu.Item
             isDestructive
@@ -60,9 +63,11 @@ const styles = tw({
     absolute top-0 right-0
     flex
     border border-current/17.5
-    bg-(--background)/32.5
+    bg-(--background)
     rounded-lg
     divide-x divide-current/12.5
+
+    dark:bg-neutral-950
   `,
   action: `
     flex items-center gap-2
@@ -72,7 +77,8 @@ const styles = tw({
 
     motion-safe:duration-300
 
-    hover:bg-(--foreground)/2.5
+    hover:bg-neutral-50
+    hover:dark:bg-neutral-900
   `,
   label: `
     text-sm

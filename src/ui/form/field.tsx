@@ -8,6 +8,6 @@ export default function field({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    flex flex-col gap-1
+    flex flex-col gap-1.5
   `,
 });

@@ -20,9 +20,9 @@ export function pad(index: number, padding: number = 2) {
   return String(index).padStart(padding, '0');
 };
 
-export function currency(value: number | string, isCompact?: boolean) {
+export function currency(value: number | string, isCompact?: boolean, isCondensed?: boolean) {
   return new Intl.NumberFormat('en', {
-    notation: 'standard',
+    notation: isCondensed ? 'compact' : 'standard',
     minimumFractionDigits: isCompact ? 0 : 2,
     maximumFractionDigits: isCompact ? 0 : 2,
   }).format(Math.abs(Number(value)));

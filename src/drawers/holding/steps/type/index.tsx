@@ -5,16 +5,16 @@ import Ui from '@/ui';
 import { useModel } from './model';
 
 type Props = {
-  header: string;
   isActive: boolean;
+  isEditing: boolean;
   onNext: (key: string, value: string) => void;
   value: string;
 };
 
 export default function Section({
   children,
-  header,
   isActive,
+  isEditing,
   onNext,
   value,
 }: React.PropsWithChildren<Props>) {
@@ -27,11 +27,10 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
-        <Ui.Form.Header>{header}</Ui.Form.Header>
-        <Ui.Form.Paragraph>What kind of portfolio item is this?</Ui.Form.Paragraph>
+        <Ui.Form.Header>What kind of portfolio item is this?</Ui.Form.Header>
+        <Ui.Form.Paragraph>Choose from the following:</Ui.Form.Paragraph>
         <Ui.Form.Container>
           <Ui.Form.Field>
-            <Ui.Form.Legend>Choose one</Ui.Form.Legend>
             <Ui.Form.Options>
               <Ui.Form.Option
                 isActive={type === 'credit_card'}
@@ -68,7 +67,7 @@ export default function Section({
           isPrimary
           onClick={() => onNext('type', type)}
         >
-          Save & Continue
+          {isEditing ? 'Save & Review' : 'Save & Continue'}
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>

@@ -7,16 +7,16 @@ import { SCHEDULES } from '../../constants';
 import { useModel } from './model';
 
 type Props = {
-  header: string;
   isActive: boolean;
+  isEditing: boolean;
   onNext: (key: string, value: string) => void;
   value: string;
 };
 
 export default function Section({
   children,
-  header,
   isActive,
+  isEditing,
   onNext,
   value,
 }: React.PropsWithChildren<Props>) {
@@ -29,13 +29,12 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
-        <Ui.Form.Header>{header}</Ui.Form.Header>
+        <Ui.Form.Header>How often does this transaction repeat?</Ui.Form.Header>
         <Ui.Form.Paragraph>
-          How often does this transaction repeat?
+          Choose from the following:
         </Ui.Form.Paragraph>
         <Ui.Form.Container>
           <Ui.Form.Field>
-            <Ui.Form.Legend>Frequency</Ui.Form.Legend>
             <Ui.Form.Options>
               {SCHEDULES.map((item) => (
                 <Ui.Form.Option
@@ -55,7 +54,7 @@ export default function Section({
           isPrimary
           onClick={() => onNext('schedule', schedule)}
         >
-          Save & Continue
+          {isEditing ? 'Save & Review' : 'Save & Continue'}
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>

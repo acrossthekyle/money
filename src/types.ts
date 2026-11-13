@@ -186,3 +186,8 @@ export type StoreRootSlice = {
 };
 
 export type Store = StoreBudgetsSlice & StoreDateSlice & StoreForecastsSlice & StoreHoldingsSlice & StoreMenuSlice & StoreRootSlice;
+
+export type Toast = {
+  title: string;
+  body: string;
+};

@@ -18,7 +18,9 @@ type DrawerContextType = {
   onCancel: (event: KeyboardEvent<HTMLDialogElement>) => void;
   onClose: () => void;
   onDrawer: (name: string) => void;
+  onReferred: (value?: string) => void;
   onRegister: (name: string, node: HTMLDialogElement | null) => void;
+  referrer?: string;
 };
 
 export const DrawerContext = createContext<DrawerContextType | null>(null);
@@ -26,6 +28,7 @@ export const DrawerContext = createContext<DrawerContextType | null>(null);
 export default function DrawerProvider({ children }: PropsWithChildren) {
   const [drawer, setDrawer] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [referrer, setReferrer] = useState<string | undefined>(undefined);
 
   const refs = useRef<Record<string, HTMLDialogElement | null>>({});
 
@@ -34,6 +37,7 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
 
     setIsOpen(false);
     setDrawer('');
+    setReferrer(undefined);
 
     if (!activeNode) {
       return;
@@ -107,6 +111,10 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
     }
   }, [drawer, handleOnClose]);
 
+  const handleOnReferred = useCallback((value?: string) => {
+    setReferrer(value);
+  }, []);
+
   return (
     <DrawerContext.Provider value={{
       drawer,
@@ -115,7 +123,9 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
       onCancel: handleOnCancel,
       onClose: handleOnClose,
       onDrawer: handleOnOpen,
+      onReferred: handleOnReferred,
       onRegister: handleOnRegister,
+      referrer,
     }}>
       {children}
     </DrawerContext.Provider>

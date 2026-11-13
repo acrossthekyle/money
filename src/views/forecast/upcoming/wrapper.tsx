@@ -38,8 +38,8 @@ const styles = tw({
     p-4
     rounded-xl
     w-full
-    bg-(--foreground)/10.5
+    bg-neutral-200/62.5
 
-    dark:bg-(--foreground)/5.5
+    dark:bg-neutral-800/62.5
   `,
 });

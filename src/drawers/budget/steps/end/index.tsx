@@ -5,16 +5,16 @@ import Ui from '@/ui';
 import { useModel } from './model';
 
 type Props = {
-  header: string;
   isActive: boolean;
+  isEditing: boolean;
   onNext: (key: string, value: string) => void;
   value: string;
 };
 
 export default function Section({
   children,
-  header,
   isActive,
+  isEditing,
   onNext,
   value,
 }: React.PropsWithChildren<Props>) {
@@ -27,13 +27,11 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
-        <Ui.Form.Header>{header}</Ui.Form.Header>
-        <Ui.Form.Paragraph>
-          Does this transaction stop at some point?
-        </Ui.Form.Paragraph>
         <Ui.Form.Container>
           <Ui.Form.Field>
-            <Ui.Form.Label htmlFor="end">End date (optional)</Ui.Form.Label>
+            <Ui.Form.Label htmlFor="end">
+              Does this transaction stop at some point?
+            </Ui.Form.Label>
             <Ui.Form.Input
               id="end"
               value={end}
@@ -41,6 +39,9 @@ export default function Section({
               onChange={handleOnChange}
               type="date"
             />
+            <Ui.Form.Hint>
+              Optional
+            </Ui.Form.Hint>
           </Ui.Form.Field>
         </Ui.Form.Container>
       </Ui.Drawer.Body>
@@ -49,7 +50,7 @@ export default function Section({
           isPrimary
           onClick={() => onNext('end', end)}
         >
-          {end ? 'Save & Continue' : 'Skip'}
+          {isEditing ? 'Save & Review' : (end ? 'Save & Continue' : 'Skip')}
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>

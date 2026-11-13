@@ -1,50 +1,59 @@
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
-
-import Updated from './updated';
 
 type Props = {
   holding?: Holding;
   onBack: () => void;
   step: number;
-  zone: string;
+  total: number;
 };
 
 export default function Heading({
   holding,
   onBack,
   step,
-  zone,
+  total,
 }: Props) {
-  const isEditing = holding !== undefined;
+  if (holding) {
+    return (
+      <>
+        <h2 id="drawer-header">
+          Manage {holding.name}
+        </h2>
+        <p className={cs(styles.lid, styles.capitalize)}>
+          {holding.type.replace(/_/g, ' ')} {holding.type === 'property' ? 'Asset' : 'Account'}
+        </p>
+      </>
+    );
+  }
 
   return (
     <>
       <h2 id="drawer-header">
-        {isEditing ? `Edit ${holding.name}` : 'Add to portfolio'}
+        Add to portfolio
       </h2>
       <p className={styles.lid}>
-        Multi-step form
+        {step === total ? `Review` : `Step ${step + 1}`}
       </p>
       <Ui.Form.Back
         isDisabled={step === 0}
         onBack={onBack}
       />
-      {isEditing && (
-        <Updated updated={holding?.updated} zone={zone} />
-      )}
+      <Ui.Components.Progress.Container>
+        <Ui.Components.Progress.Bar percent={(step/total) * 100} />
+      </Ui.Components.Progress.Container>
     </>
   );
 };
 
 const styles = tw({
-  container: `
-    flex flex-col
-  `,
   lid: `
     text-current/62.5
 
     sm:text-sm
+  `,
+  capitalize: `
+    capitalize
   `,
 })

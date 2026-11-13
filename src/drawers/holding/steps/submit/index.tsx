@@ -8,8 +8,8 @@ import type { Data } from '../../types';
 type Props = {
   data: Data;
   isActive: boolean;
-  isEditing: boolean;
   isPending: boolean;
+  onEdit: (section: string) => void;
   onSubmit: () => void;
 };
 
@@ -17,8 +17,8 @@ export default function Section({
   children,
   data,
   isActive,
-  isEditing,
   isPending,
+  onEdit,
   onSubmit,
 }: React.PropsWithChildren<Props>) {
   if (!isActive) {
@@ -28,31 +28,41 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
-        <Ui.Form.Header>Review</Ui.Form.Header>
-        <Ui.Form.Paragraph>
-          Make sure everything is correct before submitting. Once you click {isEditing ? '"update"' : '"add"'} it's finalized and can't be changed.
-        </Ui.Form.Paragraph>
         <Ui.Form.Outline>
           <Ui.Form.OutlineItem>
             <Ui.Form.OutlineItemHeading>Type</Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText capitalize>
               {data.type.replace(/_/g, ' ')}
             </Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineAction onClick={() => onEdit('type')}>
+              Edit
+            </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
             <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText>{data.name}</Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineAction onClick={() => onEdit('name')}>
+              Edit
+            </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
             <Ui.Form.OutlineItemHeading>Balance</Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText>
               {Number(data.balance) < 0 ? '-' : ''}${currency(data.balance)}
             </Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineAction onClick={() => onEdit('balance')}>
+              Edit
+            </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
-          {!!data.interest && (
+          {data.type !== 'credit_card' && (
             <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineItemHeading>Rate</Ui.Form.OutlineItemHeading>
-              <Ui.Form.OutlineItemText>{currency(data.interest)} %</Ui.Form.OutlineItemText>
+              <Ui.Form.OutlineItemHeading>Interest</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {!!data.interest ? currency(data.interest) : '0.00'} %
+              </Ui.Form.OutlineItemText>
+              <Ui.Form.OutlineAction onClick={() => onEdit('interest')}>
+                Edit
+              </Ui.Form.OutlineAction>
             </Ui.Form.OutlineItem>
           )}
         </Ui.Form.Outline>
@@ -63,7 +73,7 @@ export default function Section({
           isPrimary
           onClick={onSubmit}
         >
-          {isEditing ? 'Update' : 'Add'}
+          Confirm & Submit
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>

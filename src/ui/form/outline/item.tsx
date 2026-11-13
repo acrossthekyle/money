@@ -1,7 +1,15 @@
+import tw from '@/styles';
+
 export default function Item({ children }: React.PropsWithChildren) {
   return (
-    <li>
+    <li className={styles.container}>
       {children}
     </li>
   );
 };
+
+const styles = tw({
+  container: `
+    relative
+  `,
+});

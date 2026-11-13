@@ -10,6 +10,7 @@ export { default as Label } from './label';
 export { default as Legend } from './legend';
 export { default as Option } from './option';
 export { default as Options } from './options';
+export { default as OutlineAction } from './outline/action';
 export { default as Outline } from './outline/container';
 export { default as OutlineItem } from './outline/item';
 export { default as OutlineItemHeading } from './outline/heading';

@@ -3,50 +3,54 @@
 import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/budgets/put';
-import { useBudget, useStore, useTransactions } from '@/hooks';
+import { useBudget, useStore, useToasts, useTransactions } from '@/hooks';
 
 import type { Data } from './types';
 
+const DEFAULT_DATA = {
+  amount: '',
+  category: '',
+  end: '',
+  name: '',
+  schedule: '',
+  start: '',
+  transferee: '',
+  type: '',
+};
+
 export function useModel() {
   const { date, budgets, forecasts, holdings } = useStore();
-  const { instance, isActive, onBackdrop, onCancel, onClose } = useBudget();
+  const { instance, isActive, onBackdrop, onCancel, onClose, referrer } = useBudget();
+  const { onToast } = useToasts();
   const { onTransactions } = useTransactions();
 
+  const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
-  const [data, setData] = useState<Data>({
-    amount: '',
-    category: '',
-    end: '',
-    name: '',
-    schedule: '',
-    start: '',
-    transferee: '',
-    type: '',
-  });
-  const [update, setUpdate] = useState('this');
+  const [data, setData] = useState<Data>(DEFAULT_DATA);
 
   const budget = budgets.selectBudget();
   const dateable = date.select();
 
+  // @ts-expect-error - is ok
   const [response, action] = useActionState(put.bind(null, {
     budget: budget || null,
     data: {
       ...data,
       date: dateable || undefined,
       parent: holdings.selectId(),
-      update,
     },
   }), null);
 
   const steps = [
+    budget && 'outline',
     'amount',
     'name',
     'transferee',
     'start',
-    'frequency',
+    'schedule',
     'end',
     'category',
-    (budget && budget?.schedule !== 'once') && 'dates',
+    (budget && budget?.schedule !== 'once') && 'update',
     'submit',
   ].filter(Boolean).filter((step): step is string => typeof step === 'string');
 
@@ -57,9 +61,16 @@ export function useModel() {
 
       forecasts.setForecast();
 
+      onToast({
+        title: budget ? 'Updated' : 'Created',
+        body: budget ? `${data.name} transaction successfully updated` : `Added ${data.name} to transactions`,
+      });
+
       onClose();
 
-      onTransactions();
+      if (referrer === 'transactions-drawer') {
+        onTransactions();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
@@ -68,22 +79,15 @@ export function useModel() {
     if (isActive) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(0);
-    }
-  }, [isActive]);
+      setIsEditing(false);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setData({
-      amount: budget?.amount || '',
-      category: budget?.category || '',
-      end: budget?.end || '',
-      name: budget?.name || '',
-      schedule: budget?.schedule || '',
-      start: budget?.start || (dateable === null ? '' : dateable.iso),
-      transferee: budget?.transferee || '',
-      type: budget?.type || '',
-    });
-  }, [budget, dateable]);
+      setData({
+        ...DEFAULT_DATA,
+        ...(budget || {}),
+        start: budget?.start || (dateable === null ? '' : dateable.iso),
+      });
+    }
+  }, [budget, dateable, isActive]);
 
   const handleOnNext = (key: string, value: string, isIncome?: boolean) => {
     setData({
@@ -92,16 +96,31 @@ export function useModel() {
       type: key === 'amount' ? (isIncome ? 'credit' : 'debit') : data.type,
     });
 
-    setStep(previous => previous + 1);
+    if (isEditing) {
+      if (!budget) {
+        setStep(steps.length - 1);
+      } else {
+        setStep(0);
+      }
+    } else {
+      setStep(previous => previous + 1);
+    }
+
+    setIsEditing(false);
   };
 
   const handleOnBack = () => {
-    setStep(previous => previous - 1);
+    if (!isEditing && steps[step] !== 'update') {
+      setStep(previous => previous - 1);
+    } else {
+      setStep(0);
+    }
   };
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (choice?: string) => {
     startTransition(async () => {
-      await action();
+      // @ts-expect-error - is ok
+      await action(choice || 'none');
     });
   };
 
@@ -110,17 +129,19 @@ export function useModel() {
 
     budgets.setId('');
 
-    onTransactions();
+    if (referrer === 'transactions-drawer') {
+      onTransactions();
+    }
   };
 
-  const handleOnContinue = (choice: string) => {
-    setUpdate(choice);
-
-    setStep(steps.length - 1);
+  const handleOnContinue = () => {
+    setStep(steps.length - 2);
   };
 
-  const handleOnJump = (value: number) => {
-    setStep(value);
+  const handleOnEdit = (section: string) => {
+    setIsEditing(true);
+
+    setStep(steps.findIndex(item => item === section));
   };
 
   return {
@@ -130,17 +151,17 @@ export function useModel() {
     handleOnBack,
     handleOnCancel,
     handleOnContinue,
-    handleOnJump,
+    handleOnEdit,
     handleOnNext,
     handleOnSubmit,
     holdings: holdings.select(),
     instance,
     isActive,
+    isEditing,
     onBackdrop,
     onCancel,
     onClose,
     step,
     steps,
-    update,
   };
 };

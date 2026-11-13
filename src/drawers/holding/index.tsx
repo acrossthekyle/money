@@ -1,14 +1,15 @@
 'use client';
 
-import Ui from '@/ui'
+import Ui from '@/ui';
 
 import Actions from './actions';
 import Heading from './heading';
 import { useModel } from './model';
 import {
   Balance,
+  Interest,
   Name,
-  Rate,
+  Outline,
   Submit,
   Type,
 } from './steps';
@@ -22,11 +23,13 @@ export default function Drawer() {
     data,
     handleOnBack,
     handleOnCancel,
+    handleOnEdit,
     handleOnNext,
     handleOnSubmit,
     holding,
     instance,
     isActive,
+    isEditing,
     isPending,
     onBackdrop,
     onCancel,
@@ -37,8 +40,6 @@ export default function Drawer() {
 
   const headers = getHeaders(data.type);
   const placeholder = getPlaceholder(data.type);
-
-  const header = `Step ${step + 1} of ${steps.length}`;
 
   return (
     <Ui.Drawer.Container
@@ -55,21 +56,31 @@ export default function Drawer() {
               holding={holding}
               onBack={handleOnBack}
               step={step}
-              zone={zone}
+              total={steps.length - 1}
             />
           </Ui.Drawer.Header>
+          <Outline
+            data={data}
+            holding={holding}
+            isActive={steps[step] === 'outline'}
+            onSubmit={handleOnSubmit}
+            onEdit={handleOnEdit}
+            zone={zone}
+          >
+            <Actions onCancel={handleOnCancel} />
+          </Outline>
           <Type
-            header={header}
             isActive={steps[step] === 'type'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.type}
           >
             <Actions onCancel={handleOnCancel} />
           </Type>
           <Name
-            header={header}
-            paragraph={headers.name}
+            label={headers.name}
             isActive={steps[step] === 'name'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             placeholder={placeholder}
             value={data.name}
@@ -77,28 +88,28 @@ export default function Drawer() {
             <Actions onCancel={handleOnCancel} />
           </Name>
           <Balance
-            header={header}
-            paragraph={headers.balance}
+            label={headers.balance}
             isActive={steps[step] === 'balance'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.balance}
           >
             <Actions onCancel={handleOnCancel} />
           </Balance>
-          <Rate
-            header={header}
-            paragraph={headers.rate}
-            isActive={steps[step] === 'rate'}
+          <Interest
+            label={headers.interest}
+            isActive={steps[step] === 'interest'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.interest}
           >
             <Actions onCancel={handleOnCancel} />
-          </Rate>
+          </Interest>
           <Submit
             data={data}
             isActive={steps[step] === 'submit'}
-            isEditing={holding !== undefined}
             isPending={isPending}
+            onEdit={handleOnEdit}
             onSubmit={handleOnSubmit}
           >
             <Actions onCancel={handleOnCancel} />

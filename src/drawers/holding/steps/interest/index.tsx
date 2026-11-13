@@ -5,22 +5,22 @@ import Ui from '@/ui';
 import { useModel } from './model';
 
 type Props = {
-  header: string;
   isActive: boolean;
+  isEditing: boolean;
   onNext: (key: string, value: string) => void;
-  paragraph: string;
+  label: string;
   value: string;
 };
 
 export default function Section({
   children,
-  header,
   isActive,
+  isEditing,
   onNext,
-  paragraph,
+  label,
   value,
 }: React.PropsWithChildren<Props>) {
-  const { handleOnChange, rate } = useModel(value);
+  const { handleOnChange, interest } = useModel(value);
 
   if (!isActive) {
     return null;
@@ -29,25 +29,24 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
-        <Ui.Form.Header>{header}</Ui.Form.Header>
-        <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
         <Ui.Form.Container>
           <Ui.Form.Field>
-            <Ui.Form.Label htmlFor="holding-rate">Value</Ui.Form.Label>
+            <Ui.Form.Label htmlFor="holding-interest">{label}</Ui.Form.Label>
             <Ui.Form.Percent
-              id="holding-rate"
+              id="holding-interest"
               onChange={handleOnChange}
-              value={rate}
+              value={interest}
             />
+            <Ui.Form.Hint>Optional, only enter numbers and decimal points</Ui.Form.Hint>
           </Ui.Form.Field>
         </Ui.Form.Container>
       </Ui.Drawer.Body>
       <Ui.Drawer.Footer>
         <Ui.Components.Button
           isPrimary
-          onClick={() => onNext('interest', rate)}
+          onClick={() => onNext('interest', interest)}
         >
-          {rate ? 'Save & Continue' : 'Skip'}
+          {isEditing ? 'Save & Review' : (interest ? 'Save & Continue' : 'Skip')}
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>

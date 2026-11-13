@@ -3,13 +3,14 @@
 import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { erase } from '@/actions/budgets/erase';
-import { useBudget, useConfirm, useStore, useTransactions } from '@/hooks';
+import { useBudget, useConfirm, useStore, useToasts, useTransactions } from '@/hooks';
 import type { Budget, UseConfirmConfig } from '@/types';
 
 export function useModel() {
   const { onBudget } = useBudget();
   const confirm = useConfirm();
   const { budgets, forecasts } = useStore();
+  const { onToast } = useToasts();
   const { instance, isActive, onBackdrop, onCancel, onClose } = useTransactions();
 
   const [budget, setBudget] = useState<Budget | null>(null);
@@ -40,7 +41,7 @@ export function useModel() {
 
     onClose();
 
-    onBudget();
+    onBudget('transactions-drawer');
   };
 
   const handleOnDelete = async (id: string) => {
@@ -93,11 +94,25 @@ export function useModel() {
       startTransition(async () => {
         // @ts-expect-error - is ok
         await action(true);
+
+        onClose();
+
+        onToast({
+          title: 'Deleted',
+          body: `All instances of ${found?.name} transactions were removed`,
+        });
       });
     } else {
       startTransition(async () => {
         // @ts-expect-error - is ok
         await action(false);
+
+        onClose();
+
+        onToast({
+          title: 'Deleted',
+          body: `${found?.name} transaction on ${day?.dateable.display} was removed`,
+        });
       });
     }
   };
@@ -107,7 +122,7 @@ export function useModel() {
 
     onClose();
 
-    onBudget();
+    onBudget('transactions-drawer');
   };
 
   return {

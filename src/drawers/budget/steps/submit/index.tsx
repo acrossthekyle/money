@@ -3,7 +3,7 @@
 import { format, parseISO } from 'date-fns';
 
 import { DATE_DISPLAY } from '@/constants';
-import type { Dateable, Holding } from '@/types';
+import type { Holding } from '@/types';
 import Ui from '@/ui';
 import { currency } from '@/utils';
 
@@ -12,23 +12,19 @@ import type { Data } from '../../types';
 
 type Props = {
   data: Data;
-  date?: Dateable;
   holdings: Holding[];
   isActive: boolean;
-  isEditing: boolean;
+  onEdit: (section: string) => void;
   onSubmit: () => void;
-  update: string;
 };
 
 export default function Section({
   children,
   data,
-  date,
   holdings,
   isActive,
-  isEditing,
+  onEdit,
   onSubmit,
-  update,
 }: React.PropsWithChildren<Props>) {
   if (!isActive) {
     return null;
@@ -37,72 +33,78 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
-        <Ui.Form.Header>Review</Ui.Form.Header>
-        <Ui.Form.Paragraph>
-          Make sure everything is correct before submitting. Once you click {isEditing ? '"update"' : '"add"'} it's finalized and can't be changed.
-        </Ui.Form.Paragraph>
         <Ui.Form.Outline>
           <Ui.Form.OutlineItem>
             <Ui.Form.OutlineItemHeading>Amount</Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText>
               {data.type === 'debit' ? '-' : ''}${currency(data.amount)}
             </Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineAction onClick={() => onEdit('amount')}>
+              Edit
+            </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
             <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText>
               {data.name}
             </Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineAction onClick={() => onEdit('name')}>
+              Edit
+            </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
-          {!!data.transferee && (
-            <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineItemHeading>Transfers as</Ui.Form.OutlineItemHeading>
-              <Ui.Form.OutlineItemText>
-                {data.type === 'debit' && 'Income to '}
-                {data.type === 'credit' && 'Expense from '}
-                {holdings.find(item => item.id === data.transferee)?.name}
-              </Ui.Form.OutlineItemText>
-            </Ui.Form.OutlineItem>
-          )}
-          {!!data.start && (
-            <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineItemHeading>Starts on</Ui.Form.OutlineItemHeading>
-              <Ui.Form.OutlineItemText>
-                {format(parseISO(String(data.start)), DATE_DISPLAY)}
-              </Ui.Form.OutlineItemText>
-            </Ui.Form.OutlineItem>
-          )}
+          <Ui.Form.OutlineItem>
+            <Ui.Form.OutlineItemHeading>Transfer</Ui.Form.OutlineItemHeading>
+            <Ui.Form.OutlineItemText>
+              {!!data.transferee ? (
+                <>
+                  {data.type === 'debit' && 'As income to '}
+                  {data.type === 'credit' && 'As expense from '}
+                  {holdings.find(item => item.id === data.transferee)?.name}
+                </>
+              ) : (
+                <>--</>
+              )}
+            </Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineAction onClick={() => onEdit('transferee')}>
+              Edit
+            </Ui.Form.OutlineAction>
+          </Ui.Form.OutlineItem>
+          <Ui.Form.OutlineItem>
+            <Ui.Form.OutlineItemHeading>Starts on</Ui.Form.OutlineItemHeading>
+            <Ui.Form.OutlineItemText>
+              {format(parseISO(String(data.start)), DATE_DISPLAY)}
+            </Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineAction onClick={() => onEdit('start')}>
+              Edit
+            </Ui.Form.OutlineAction>
+          </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
             <Ui.Form.OutlineItemHeading>Repeats</Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText>
               {SCHEDULES.find(item => item.value === data.schedule)?.name}
             </Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineAction onClick={() => onEdit('schedule')}>
+              Edit
+            </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
-          {!!data.end && (
-            <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineItemHeading>Ends on</Ui.Form.OutlineItemHeading>
-              <Ui.Form.OutlineItemText>
-                {format(parseISO(data.end), DATE_DISPLAY)}
-              </Ui.Form.OutlineItemText>
-            </Ui.Form.OutlineItem>
-          )}
+          <Ui.Form.OutlineItem>
+            <Ui.Form.OutlineItemHeading>Ends on</Ui.Form.OutlineItemHeading>
+            <Ui.Form.OutlineItemText>
+              {!!data.end ? format(parseISO(data.end), DATE_DISPLAY) : '--'}
+            </Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineAction onClick={() => onEdit('end')}>
+              Edit
+            </Ui.Form.OutlineAction>
+          </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
             <Ui.Form.OutlineItemHeading>Categorized as</Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText>
               {CATEGORIES.find(item => item.value === data.category)?.name}
             </Ui.Form.OutlineItemText>
+            <Ui.Form.OutlineAction onClick={() => onEdit('category')}>
+              Edit
+            </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
-          {isEditing && date && (
-            <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineItemHeading>Changes apply to</Ui.Form.OutlineItemHeading>
-              <Ui.Form.OutlineItemText>
-                {update === 'all' && <>All past, present, and future dates</>}
-                {update === 'this' && <>Only {format(date?.date, DATE_DISPLAY)}</>}
-                {update === 'prospective' && <>From {format(date?.date, DATE_DISPLAY)} onwards</>}
-                {update === 'future' && <>After {format(date?.date, DATE_DISPLAY)}</>}
-              </Ui.Form.OutlineItemText>
-            </Ui.Form.OutlineItem>
-          )}
         </Ui.Form.Outline>
       </Ui.Drawer.Body>
       <Ui.Drawer.Footer>
@@ -110,7 +112,7 @@ export default function Section({
           isPrimary
           onClick={onSubmit}
         >
-          {isEditing ? 'Update' : 'Add'}
+          Confirm & Submit
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>

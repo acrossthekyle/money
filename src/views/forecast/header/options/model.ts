@@ -5,14 +5,16 @@ import { startTransition, useActionState, useEffect } from 'react';
 
 import { erase } from '@/actions/holdings/erase';
 import { pin } from '@/actions/holdings/pin';
-import { useConfirm, useHolding, useStore } from '@/hooks';
+import { useConfirm, useHolding, useStore, useToasts } from '@/hooks';
+import type { Holding } from '@/types';
 
-export function useModel() {
+export function useModel(holding: Holding, pinned: string) {
   const router = useRouter();
 
   const confirm = useConfirm();
   const { onHolding } = useHolding();
   const { holdings } = useStore();
+  const { onToast } = useToasts();
 
   const id = holdings.selectId();
 
@@ -29,6 +31,11 @@ export function useModel() {
   useEffect(() => {
     if (response !== null) {
       holdings.setPinned(response);
+
+      onToast({
+        title: response === holding.id ? 'Pinned' : 'Unpinned',
+        body: response === holding.id ? 'This is now the default upon login.' : 'This is no longer the default upon login.',
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
@@ -45,6 +52,11 @@ export function useModel() {
     startTransition(async () => {
       // @ts-expect-error - is ok
       await eraseable(true);
+
+      onToast({
+        title: `${holding.name} Deleted`,
+        body: 'Removed from portfolio along with all related transactions',
+      });
 
       const remaining = holdings.removeHolding(id);
 
@@ -69,5 +81,6 @@ export function useModel() {
     handleOnDelete,
     handleOnEdit,
     handleOnPin,
+    isPinned: pinned === holding.id,
   };
 }

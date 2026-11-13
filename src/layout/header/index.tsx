@@ -27,16 +27,16 @@ const styles = tw({
 
     bg-zinc-50
     border border-current/7.5
-    rounded-lg
+    rounded-2xl
 
     dark:bg-neutral-900
 
     sm:border-0
     sm:bg-transparent
     sm:fixed
-    sm:left-4
-    sm:right-4
-    sm:top-6
+    sm:left-2
+    sm:right-2
+    sm:top-4
     sm:z-0
     sm:max-w-none
     sm:mx-none

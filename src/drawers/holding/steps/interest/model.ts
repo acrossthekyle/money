@@ -3,19 +3,19 @@
 import { useEffect, useState } from 'react';
 
 export function useModel(value: string) {
-  const [rate, setRate] = useState(value);
+  const [interest, setInterest] = useState(value);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setRate(value);
+    setInterest(value);
   }, [value]);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRate(event.target.value.replace('% ', ''));
+    setInterest(event.target.value.replace('% ', ''));
   };
 
   return {
     handleOnChange,
-    rate,
+    interest,
   };
 };

@@ -10,17 +10,15 @@ import { useModel } from './model';
 
 type Props = {
   date?: Dateable;
-  header: string;
   isActive: boolean;
-  onContinue: (choice: string) => void;
+  onSubmit: (choice: string) => void;
 };
 
 export default function Section({
   children,
   date,
-  header,
   isActive,
-  onContinue,
+  onSubmit,
 }: React.PropsWithChildren<Props>) {
   const { choice, handleOnChange, isBlocked } = useModel();
 
@@ -31,7 +29,7 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
-        <Ui.Form.Header>{header}</Ui.Form.Header>
+        <Ui.Form.Header>Outcome</Ui.Form.Header>
         <Ui.Form.Paragraph>
           How should these changes be applied?
         </Ui.Form.Paragraph>
@@ -67,9 +65,9 @@ export default function Section({
         <Ui.Components.Button
           isDisabled={isBlocked}
           isPrimary
-          onClick={() => onContinue(choice)}
+          onClick={() => onSubmit(choice)}
         >
-          Save & Continue
+          Confirm & Update
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>

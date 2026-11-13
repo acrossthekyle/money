@@ -3,21 +3,25 @@
 import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
-import { useHolding, useStore } from '@/hooks';
+import { useHolding, useStore, useToasts } from '@/hooks';
 
 import type { Data } from './types';
+
+const DEFAULT_DATA = {
+  type: '',
+  name: '',
+  balance: '',
+  interest: '',
+};
 
 export function useModel() {
   const { instance, isActive, onBackdrop, onCancel, onClose } = useHolding();
   const { date, forecasts, holdings } = useStore();
+  const { onToast } = useToasts();
 
+  const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
-  const [data, setData] = useState<Data>({
-    type: '',
-    name: '',
-    balance: '',
-    interest: '',
-  });
+  const [data, setData] = useState<Data>(DEFAULT_DATA);
 
   const holding = holdings.selectHoldingForManaging();
 
@@ -27,10 +31,11 @@ export function useModel() {
   }), null);
 
   const steps = [
+    holding && 'outline',
     'type',
     'name',
     'balance',
-    ['checking', 'savings', 'retirement', 'property'].includes(data.type) && 'rate',
+    ['checking', 'savings', 'retirement', 'property'].includes(data.type) && 'interest',
     'submit',
   ].filter(Boolean).filter((step): step is string => typeof step === 'string');
 
@@ -39,6 +44,11 @@ export function useModel() {
       holdings.setHolding(response);
 
       forecasts.setForecast();
+
+      onToast({
+        title: holding ? 'Updated' : 'Created',
+        body: holding ? `${data.name} successfully updated` : `${data.name} added to portfolio`,
+      });
 
       onClose();
     }
@@ -49,34 +59,49 @@ export function useModel() {
     if (isActive) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(0);
-    }
-  }, [isActive]);
+      setIsEditing(false);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setData({
-      type: holding?.type || '',
-      name: holding?.name || '',
-      balance: holding?.balance || '',
-      interest: holding?.interest || '',
-    });
-  }, [holding]);
+      setData({
+        ...DEFAULT_DATA,
+        ...(holding || {}),
+      });
+    }
+  }, [holding, isActive]);
 
   const handleOnCancel = () => {
     onClose();
   };
 
   const handleOnNext = (key: string, value: string | boolean) => {
+    const wasCreditCard = data.type === 'credit_card';
+    const isCreditCard = key === 'type' ? value === 'credit_card' : false;
+
     setData({
       ...data,
       [key]: value,
     });
 
-    setStep(previous => previous + 1);
+    if (isEditing) {
+      if (!holding) {
+        setStep(
+          !wasCreditCard && isCreditCard ? steps.length - 2 : steps.length - 1,
+        );
+      } else {
+        setStep(0);
+      }
+    } else {
+      setStep(previous => previous + 1);
+    }
+
+    setIsEditing(false);
   };
 
   const handleOnBack = () => {
-    setStep(previous => previous - 1);
+    if (!isEditing) {
+      setStep(previous => previous - 1);
+    } else {
+      setStep(0);
+    }
   };
 
   const handleOnSubmit = () => {
@@ -85,20 +110,23 @@ export function useModel() {
     });
   };
 
-  const handleOnJump = (value: number) => {
-    setStep(value);
+  const handleOnEdit = (section: string) => {
+    setIsEditing(true);
+
+    setStep(steps.findIndex(item => item === section));
   };
 
   return {
     data,
     handleOnBack,
     handleOnCancel,
-    handleOnJump,
+    handleOnEdit,
     handleOnNext,
     handleOnSubmit,
     holding,
     instance,
     isActive,
+    isEditing,
     isPending,
     onBackdrop,
     onCancel,

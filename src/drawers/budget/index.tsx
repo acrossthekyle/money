@@ -10,6 +10,7 @@ import {
   Category,
   End,
   Name,
+  Outline,
   Schedule,
   Submit,
   Start,
@@ -25,19 +26,18 @@ export default function Drawer() {
     handleOnBack,
     handleOnCancel,
     handleOnContinue,
+    handleOnEdit,
     handleOnNext,
     handleOnSubmit,
     holdings,
     instance,
     isActive,
+    isEditing,
     onBackdrop,
     onCancel,
     step,
     steps,
-    update,
   } = useModel();
-
-  const header = `Step ${step + 1} of ${steps.length}`;
 
   return (
     <Ui.Drawer.Container
@@ -54,11 +54,22 @@ export default function Drawer() {
               budget={budget}
               onBack={handleOnBack}
               step={step}
+              total={steps.length - 1}
             />
           </Ui.Drawer.Header>
+          <Outline
+            budget={budget}
+            data={data}
+            holdings={holdings}
+            isActive={steps[step] === 'outline'}
+            onContinue={handleOnContinue}
+            onEdit={handleOnEdit}
+          >
+            <Actions onCancel={handleOnCancel} />
+          </Outline>
           <Amount
-            header={header}
             isActive={steps[step] === 'amount'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.amount}
             type={data.type}
@@ -66,17 +77,17 @@ export default function Drawer() {
             <Actions onCancel={handleOnCancel} />
           </Amount>
           <Name
-            header={header}
             isActive={steps[step] === 'name'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.name}
           >
             <Actions onCancel={handleOnCancel} />
           </Name>
           <Transferee
-            header={header}
             holdings={holdings}
             isActive={steps[step] === 'transferee'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.transferee}
             type={data.type}
@@ -84,32 +95,32 @@ export default function Drawer() {
             <Actions onCancel={handleOnCancel} />
           </Transferee>
           <Start
-            header={header}
             isActive={steps[step] === 'start'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.start}
           >
             <Actions onCancel={handleOnCancel} />
           </Start>
           <Schedule
-            header={header}
-            isActive={steps[step] === 'frequency'}
+            isActive={steps[step] === 'schedule'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.schedule}
           >
             <Actions onCancel={handleOnCancel} />
           </Schedule>
           <End
-            header={header}
             isActive={steps[step] === 'end'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.end}
           >
             <Actions onCancel={handleOnCancel} />
           </End>
           <Category
-            header={header}
             isActive={steps[step] === 'category'}
+            isEditing={isEditing}
             onNext={handleOnNext}
             value={data.category}
           >
@@ -118,21 +129,18 @@ export default function Drawer() {
           {budget?.schedule !== 'once' && (
             <Update
               date={date || undefined}
-              header={header}
-              isActive={steps[step] === 'dates'}
-              onContinue={handleOnContinue}
+              isActive={steps[step] === 'update'}
+              onSubmit={handleOnSubmit}
             >
               <Actions onCancel={handleOnCancel} />
             </Update>
           )}
           <Submit
             data={data}
-            date={date || undefined}
             holdings={holdings}
             isActive={steps[step] === 'submit'}
-            isEditing={budget !== undefined}
+            onEdit={handleOnEdit}
             onSubmit={handleOnSubmit}
-            update={update}
           >
             <Actions onCancel={handleOnCancel} />
           </Submit>

@@ -5,20 +5,20 @@ import Ui from '@/ui';
 import { useModel } from './model';
 
 type Props = {
-  header: string;
   isActive: boolean;
+  isEditing: boolean;
   onNext: (key: string, value: string) => void;
-  paragraph: string;
+  label: string;
   placeholder: string;
   value: string;
 };
 
 export default function Section({
   children,
-  header,
   isActive,
+  isEditing,
   onNext,
-  paragraph,
+  label,
   placeholder,
   value,
 }: React.PropsWithChildren<Props>) {
@@ -31,11 +31,9 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
-        <Ui.Form.Header>{header}</Ui.Form.Header>
-        <Ui.Form.Paragraph>{paragraph}</Ui.Form.Paragraph>
         <Ui.Form.Container>
           <Ui.Form.Field>
-            <Ui.Form.Label htmlFor="holding-name">Name</Ui.Form.Label>
+            <Ui.Form.Label htmlFor="holding-name">{label}</Ui.Form.Label>
             <Ui.Form.Input
               id="holding-name"
               value={name}
@@ -45,6 +43,7 @@ export default function Section({
               placeholder={placeholder}
               type="text"
             />
+            <Ui.Form.Hint>Maximum length is 48 characters</Ui.Form.Hint>
           </Ui.Form.Field>
         </Ui.Form.Container>
       </Ui.Drawer.Body>
@@ -54,7 +53,7 @@ export default function Section({
           isPrimary
           onClick={() => onNext('name', name)}
         >
-          Save & Continue
+          {isEditing ? 'Save & Review' : 'Save & Continue'}
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>

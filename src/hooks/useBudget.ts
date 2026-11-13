@@ -15,8 +15,9 @@ export function useBudget() {
     context.onRegister('budget', node);
   }, [context]);
 
-  const handleOnOpen = () => {
+  const handleOnOpen = (referrer?: string) => {
     context.onDrawer('budget');
+    context.onReferred(referrer);
   };
 
   return {

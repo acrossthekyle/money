@@ -5,8 +5,8 @@ import Ui from '@/ui';
 import { useModel } from './model';
 
 type Props = {
-  header: string;
   isActive: boolean;
+  isEditing: boolean;
   onNext: (key: string, value: string, isIncome: boolean) => void;
   value: string;
   type: string;
@@ -14,8 +14,8 @@ type Props = {
 
 export default function Section({
   children,
-  header,
   isActive,
+  isEditing,
   onNext,
   value,
   type,
@@ -35,13 +35,14 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
-        <Ui.Form.Header>{header}</Ui.Form.Header>
+        <Ui.Form.Header>
+          Type and amount
+        </Ui.Form.Header>
         <Ui.Form.Paragraph>
-          Choose either Income or Expense as the type of transaction, and then enter the amount.
+          Choose either Income or Expense as the type of transaction, and then enter the amount
         </Ui.Form.Paragraph>
         <Ui.Form.Container>
           <Ui.Form.Field>
-            <Ui.Form.Legend>Type</Ui.Form.Legend>
             <Ui.Form.Options>
               <Ui.Form.Option
                 isActive={isIncome === true}
@@ -72,7 +73,7 @@ export default function Section({
           isPrimary
           onClick={() => onNext('amount', amount, isIncome)}
         >
-          Save & Continue
+          {isEditing ? 'Save & Review' : 'Save & Continue'}
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>
