@@ -79,7 +79,7 @@ const styles = tw({
     group
     flex items-center justify-center
     aspect-square
-    rounded-xl
+    rounded-lg
 
     sm:text-sm
   `,
