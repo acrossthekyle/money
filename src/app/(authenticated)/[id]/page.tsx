@@ -5,8 +5,7 @@ import Ui from '@/ui';
 import View from '@/views/forecast';
 
 export const metadata: Metadata = {
-  title: `Details ⌁ Month ⌁ Calendar`,
-  description: ``,
+  title: `Portfolio`,
 };
 
 export default function Page() {
