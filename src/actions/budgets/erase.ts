@@ -1,37 +1,52 @@
 'use server';
 
 import { db } from '@/db';
-import type { Budget } from '@/types';
+import { get } from '@/getters/budgets';
+import type {
+  Budget,
+  BudgetEraseActionInput,
+  BudgetEraseActionResponse,
+} from '@/types';
 
 export async function erase(
-  data: {
-    budget: Budget,
-    dateIso: string,
-  },
-  state: null,
-  isPurge: boolean,
-): Promise<{ result: Budget; purged: boolean; }> {
-  if (isPurge || data.budget.schedule === 'once') {
-    await db.erase('budgets', data.budget.id);
+  state: BudgetEraseActionResponse | null,
+  input: BudgetEraseActionInput,
+): Promise<BudgetEraseActionResponse> {
+  const { budgets } = await get();
 
+  const budget = budgets.find((item: Budget) => item.id === input.id);
+
+  if (!budget) {
     return {
-      result: data.budget,
-      purged: true,
+      budget: {} as Budget,
+      isSuccess: false,
+      wasPurged: false,
     };
   }
 
-  const updated = {
-    ...data.budget,
+  if (input.isPurge) {
+    await db.erase('budgets', input.id);
+
+    return {
+      budget,
+      isSuccess: true,
+      wasPurged: true,
+    };
+  }
+
+  const result = {
+    ...budget,
     omissions: [
-      ...(data.budget.omissions || []),
-      data.dateIso,
+      ...(budget.omissions || []),
+      ...(input.iso ? input.iso : ''),
     ],
   };
 
-  await db.write('budgets', updated);
+  await db.write('budgets', result);
 
   return {
-    result: updated,
-    purged: false,
+    budget: result,
+    isSuccess: true,
+    wasPurged: false,
   };
 };

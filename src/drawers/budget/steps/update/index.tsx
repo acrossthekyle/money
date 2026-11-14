@@ -3,7 +3,7 @@
 import { format } from 'date-fns';
 
 import { DATE_DISPLAY } from '@/constants';
-import type { Dateable } from '@/types';
+import { BudgetPutActionInputApplysTo, type Dateable } from '@/types';
 import Ui from '@/ui';
 
 import { useModel } from './model';
@@ -11,7 +11,7 @@ import { useModel } from './model';
 type Props = {
   date?: Dateable;
   isActive: boolean;
-  onSubmit: (choice: string) => void;
+  onSubmit: (choice: BudgetPutActionInputApplysTo) => void;
 };
 
 export default function Section({
@@ -38,24 +38,24 @@ export default function Section({
             <Ui.Form.Legend>Choose one</Ui.Form.Legend>
             <Ui.Form.Options>
               <Ui.Form.Option
-                isActive={choice === 'all'}
+                isActive={choice === BudgetPutActionInputApplysTo.All}
                 label="All past, present, and future dates"
-                onSelect={() => handleOnChange('all')}
+                onSelect={() => handleOnChange(BudgetPutActionInputApplysTo.All)}
               />
               <Ui.Form.Option
-                isActive={choice === 'this'}
+                isActive={choice === BudgetPutActionInputApplysTo.This}
                 label={`Only ${format(date?.date, DATE_DISPLAY)}`}
-                onSelect={() => handleOnChange('this')}
+                onSelect={() => handleOnChange(BudgetPutActionInputApplysTo.This)}
               />
               <Ui.Form.Option
-                isActive={choice === 'prospective'}
+                isActive={choice === BudgetPutActionInputApplysTo.Prospective}
                 label={`From ${format(date?.date, DATE_DISPLAY)} onwards`}
-                onSelect={() => handleOnChange('prospective')}
+                onSelect={() => handleOnChange(BudgetPutActionInputApplysTo.Prospective)}
               />
               <Ui.Form.Option
-                isActive={choice === 'future'}
+                isActive={choice === BudgetPutActionInputApplysTo.Future}
                 label={`After ${format(date?.date, DATE_DISPLAY)}`}
-                onSelect={() => handleOnChange('future')}
+                onSelect={() => handleOnChange(BudgetPutActionInputApplysTo.Future)}
               />
             </Ui.Form.Options>
           </Ui.Form.Field>

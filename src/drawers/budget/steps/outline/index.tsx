@@ -114,7 +114,7 @@ export default function Section({
           isPrimary
           onClick={onContinue}
         >
-          {budget?.schedule === 'once' ? 'Update' : 'Proceed'}
+          {budget?.schedule === 'once' ? 'Update' : 'Next'}
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>

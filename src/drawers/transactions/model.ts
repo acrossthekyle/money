@@ -1,74 +1,81 @@
 'use client';
 
-import { startTransition, useActionState, useEffect, useState } from 'react';
+import { startTransition, useActionState, useEffect } from 'react';
 
 import { erase } from '@/actions/budgets/erase';
-import { useBudget, useConfirm, useStore, useToasts, useTransactions } from '@/hooks';
-import type { Budget, UseConfirmConfig } from '@/types';
+import {
+  useBudget,
+  useConfirm,
+  useStore,
+  useToasts,
+  useTransactions,
+} from '@/hooks';
+import type { UseConfirmConfig } from '@/types';
 
 export function useModel() {
   const { onBudget } = useBudget();
-  const confirm = useConfirm();
+  const { onConfirm } = useConfirm();
   const { budgets, forecasts } = useStore();
   const { onToast } = useToasts();
   const { instance, isActive, onBackdrop, onCancel, onClose } = useTransactions();
 
-  const [budget, setBudget] = useState<Budget | null>(null);
-
   const day = forecasts.selectCalendarDay();
 
-  // @ts-expect-error - is ok
-  const [response, action] = useActionState(erase.bind(null, {
-    budget: budget as Budget,
-    dateIso: day?.dateable.iso || '',
-  }), null);
+  const [response, action] = useActionState(erase, null);
 
   useEffect(() => {
-    if (response !== null) {
-      if (response.purged) {
-        budgets.removeBudget(response.result.id);
+    if (response) {
+      if (!response.isSuccess) {
+        onToast({
+          title: 'Oops',
+          body: `Something went wrong when trying to erase the transaction. Please try again.`,
+        });
+
+        return;
+      }
+
+      let message = `All instances of ${response.budget.name} transactions were erased`;
+
+      if (response.wasPurged) {
+        budgets.removeBudget(response.budget.id);
       } else {
-        budgets.setBudgets([response.result]);
+        budgets.setBudgets([response.budget]);
+
+        message = `${response.budget.name} transaction on ${day?.dateable.display} was removed`;
       }
 
       forecasts.setForecast();
+
+      onClose();
+
+      onToast({
+        title: 'Deleted',
+        body: message,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
-  const handleOnAdd = () => {
-    budgets.setId('');
-
-    onClose();
-
-    onBudget('transactions-drawer');
-  };
-
   const handleOnDelete = async (id: string) => {
-    budgets.setId(id);
+    const budget = budgets.selectBudget(id);
 
-    const found = budgets.selectBudget();
-
-    if (!found) {
+    if (!budget || !day) {
       return;
     }
-
-    setBudget(found);
 
     let config: UseConfirmConfig = {
       target: '#transactions-drawer',
     };
 
-    if (found?.schedule === 'once') {
+    if (budget.schedule === 'once') {
       config = {
         ...config,
-        text: 'This action cannot be undone. This will permanently delete this budget.',
+        text: `This action cannot be undone. This will permanently delete "${budget.name}".`,
       };
     } else {
       config = {
         ...config,
-        title: 'Are you absolutely sure?',
-        text: `This will be a permanent deletion. This action cannot be undone. Choose an option:`,
+        text: `This will be a permanent deletion of the "${budget.name}" transaction. This action cannot be undone. Choose an option:`,
         input: 'radio',
         inputOptions: {
           'all': `Entire series (all dates)`,
@@ -84,37 +91,27 @@ export function useModel() {
       };
     }
 
-    const result = await confirm(config);
+    const result = await onConfirm(config);
 
     if (!result.isConfirmed) {
       return;
     }
 
-    if (result.value === 'all') {
-      startTransition(async () => {
-        // @ts-expect-error - is ok
-        await action(true);
-
-        onClose();
-
-        onToast({
-          title: 'Deleted',
-          body: `All instances of ${found?.name} transactions were removed`,
-        });
+    startTransition(async () => {
+      await action({
+        id,
+        iso: day.dateable.iso,
+        isPurge: result.value === 'all' || budget.schedule === 'once' ? true : false,
       });
-    } else {
-      startTransition(async () => {
-        // @ts-expect-error - is ok
-        await action(false);
+    });
+  };
 
-        onClose();
+  const handleOnAdd = () => {
+    budgets.setId('');
 
-        onToast({
-          title: 'Deleted',
-          body: `${found?.name} transaction on ${day?.dateable.display} was removed`,
-        });
-      });
-    }
+    onClose();
+
+    onBudget('transactions-drawer');
   };
 
   const handleOnEdit = (id: string) => {

@@ -25,10 +25,7 @@ export function useModel() {
 
   const holding = holdings.selectHoldingForManaging();
 
-  const [response, action, isPending] = useActionState(put.bind(null, {
-    id: holding?.id || null,
-    data,
-  }), null);
+  const [response, action, isPending] = useActionState(put, null);
 
   const steps = [
     holding && 'outline',
@@ -40,9 +37,17 @@ export function useModel() {
   ].filter(Boolean).filter((step): step is string => typeof step === 'string');
 
   useEffect(() => {
-    if (response !== null) {
-      holdings.setHolding(response);
+    if (response) {
+      if (!response.isSuccess) {
+        onToast({
+          title: 'Oops',
+          body: `Something went wrong when updating ${data.name}, please try again`,
+        });
 
+        return;
+      }
+
+      holdings.setHolding(response.holding);
       forecasts.setForecast();
 
       onToast({
@@ -106,7 +111,10 @@ export function useModel() {
 
   const handleOnSubmit = () => {
     startTransition(async () => {
-      await action();
+      await action({
+        data,
+        id: holding?.id || null,
+      });
     });
   };
 

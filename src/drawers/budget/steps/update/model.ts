@@ -2,16 +2,18 @@
 
 import { useState } from 'react';
 
-export function useModel() {
-  const [choice, setChoice] = useState('');
+import { BudgetPutActionInputApplysTo } from '@/types';
 
-  const handleOnChange = (item: string) => {
-    setChoice(() => choice === item ? '' : item);
+export function useModel() {
+  const [choice, setChoice] = useState(BudgetPutActionInputApplysTo.None);
+
+  const handleOnChange = (item: BudgetPutActionInputApplysTo) => {
+    setChoice(() => choice === item ? BudgetPutActionInputApplysTo.None : item);
   };
 
   return {
     choice,
     handleOnChange,
-    isBlocked: !choice,
+    isBlocked: choice === BudgetPutActionInputApplysTo.None,
   };
 };

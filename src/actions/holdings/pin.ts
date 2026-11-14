@@ -2,18 +2,26 @@
 
 import { db } from '@/db';
 import { get as getSettings } from '@/getters/settings';
+import type {
+  HoldingPinActionInput,
+  HoldingPinActionResponse,
+} from '@/types';
 
 export async function pin(
-  id: string,
-): Promise<null | string> {
+  state: HoldingPinActionResponse | null,
+  input: HoldingPinActionInput,
+): Promise<HoldingPinActionResponse> {
   const { pinned } = await getSettings();
 
-  const result = pinned === id ? '' : id;
+  const result = pinned === input.id ? '' : input.id;
 
   await db.write('settings', {
     id: 'pinned',
     value: result,
   });
 
-  return result;
+  return {
+    id: result,
+    isSuccess: true,
+  };
 };

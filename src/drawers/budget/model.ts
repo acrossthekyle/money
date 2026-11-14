@@ -4,6 +4,7 @@ import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/budgets/put';
 import { useBudget, useStore, useToasts, useTransactions } from '@/hooks';
+import { BudgetPutActionInputApplysTo } from '@/types';
 
 import type { Data } from './types';
 
@@ -30,16 +31,9 @@ export function useModel() {
 
   const budget = budgets.selectBudget();
   const dateable = date.select();
+  const holding = holdings.selectId();
 
-  // @ts-expect-error - is ok
-  const [response, action] = useActionState(put.bind(null, {
-    budget: budget || null,
-    data: {
-      ...data,
-      date: dateable || undefined,
-      parent: holdings.selectId(),
-    },
-  }), null);
+  const [response, action] = useActionState(put, null);
 
   const steps = [
     budget && 'outline',
@@ -55,8 +49,17 @@ export function useModel() {
   ].filter(Boolean).filter((step): step is string => typeof step === 'string');
 
   useEffect(() => {
-    if (response !== null) {
-      budgets.setBudgets(response);
+    if (response) {
+      if (!response.isSuccess) {
+        onToast({
+          title: 'Oops',
+          body: `Something went wrong when trying to ${budget ? 'update' : 'create'} ${data.name}. Please try again.`,
+        });
+
+        return;
+      }
+
+      budgets.setBudgets(response.budgets);
       budgets.setId('');
 
       forecasts.setForecast();
@@ -117,10 +120,15 @@ export function useModel() {
     }
   };
 
-  const handleOnSubmit = (choice?: string) => {
+  const handleOnSubmit = (choice?: BudgetPutActionInputApplysTo) => {
     startTransition(async () => {
-      // @ts-expect-error - is ok
-      await action(choice || 'none');
+      await action({
+        applysTo: choice || BudgetPutActionInputApplysTo.None,
+        data,
+        holding,
+        id: budget?.id || null,
+        iso: dateable === null ? null : dateable.iso,
+      });
     });
   };
 

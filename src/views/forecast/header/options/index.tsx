@@ -1,6 +1,6 @@
 'use client';
 
-import { Pin, PinOff, Settings, Trash } from 'lucide-react';
+import { Pencil, Pin, PinOff, Trash } from 'lucide-react';
 
 import tw from '@/styles';
 import type { Holding } from '@/types';
@@ -41,8 +41,8 @@ export default function Options({ holding, pinned }: Props) {
         <Ui.Components.Menu.Trigger />
         <Ui.Components.Menu.Items>
           <Ui.Components.Menu.Item onClick={handleOnEdit}>
-            <Settings />
-            <Ui.Components.Menu.Label>Manage</Ui.Components.Menu.Label>
+            <Pencil />
+            <Ui.Components.Menu.Label>Update</Ui.Components.Menu.Label>
           </Ui.Components.Menu.Item>
           <Ui.Components.Menu.Item
             isDestructive

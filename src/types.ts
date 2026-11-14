@@ -122,7 +122,7 @@ export type StoreBudgetsSlice = {
     setBudgets: (items: Budget[]) => void;
     setId: (id: string) => void;
     select: () => Budget[];
-    selectBudget: () => Budget | undefined;
+    selectBudget: (id?: string) => Budget | undefined;
   };
 };
 
@@ -190,4 +190,78 @@ export type Store = StoreBudgetsSlice & StoreDateSlice & StoreForecastsSlice & S
 export type Toast = {
   title: string;
   body: string;
+};
+
+export type BudgetEraseActionInput = {
+  id: string;
+  isPurge: boolean;
+  iso?: string;
+};
+
+export type BudgetEraseActionResponse = {
+  budget: Budget;
+  isSuccess: boolean;
+  wasPurged: boolean;
+};
+
+export enum BudgetPutActionInputApplysTo {
+  None = 'none',
+  All = 'all',
+  This = 'this',
+  Prospective = 'prospective',
+  Future = 'future',
+};
+
+export type BudgetPutActionInput = {
+  applysTo: BudgetPutActionInputApplysTo;
+  data: {
+    amount: string;
+    category: string;
+    end: string;
+    name: string;
+    schedule: string;
+    start: string;
+    transferee: string;
+    type: string;
+  };
+  holding: string;
+  id: string | null;
+  iso: string | null;
+};
+
+export type BudgetPutActionResponse = {
+  budgets: Budget[];
+  isSuccess: boolean;
+};
+
+export type HoldingEraseActionInput = {
+  id: string;
+};
+
+export type HoldingEraseActionResponse = {
+  isSuccess: boolean;
+};
+
+export type HoldingPinActionInput = {
+  id: string;
+};
+
+export type HoldingPinActionResponse = {
+  id: string;
+  isSuccess: boolean;
+};
+
+export type HoldingPutActionInput = {
+  data: {
+    type: string;
+    name: string;
+    balance: string;
+    interest: string;
+  };
+  id: string | null;
+};
+
+export type HoldingPutActionResponse = {
+  holding: Holding;
+  isSuccess: boolean;
 };

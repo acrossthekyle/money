@@ -78,7 +78,7 @@ export default function Section({
           isPrimary
           onClick={onSubmit}
         >
-          Update
+          Confirm & Update
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>
