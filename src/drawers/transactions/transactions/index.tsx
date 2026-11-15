@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowDownLeft, ArrowUpRight, Trash } from 'lucide-react';
+import { ArrowDownLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
 import type { CalendarDay } from '@/types';
@@ -12,11 +12,10 @@ import Wrapper from './wrapper';
 
 type Props = {
   day: CalendarDay;
-  onDelete: (id: string) => void;
   onEdit: (id: string) => void;
 };
 
-export default function Transactions({ day, onDelete, onEdit }: Props) {
+export default function Transactions({ day, onEdit }: Props) {
   const items = getItems(day);
 
   if (items.length > 0) {
@@ -46,18 +45,10 @@ export default function Transactions({ day, onDelete, onEdit }: Props) {
                   <span>
                     <span className={styles.capitalize}>{item.schedule}</span> {item.category}
                   </span>
+                  <ArrowRight className={styles.right} />
                 </p>
               </span>
             </Wrapper>
-            {!!item.id && (
-              <button
-                className={styles.delete}
-                onClick={() => onDelete(item.id)}
-                type="button"
-              >
-                <Trash className={styles.trash} />
-              </button>
-            )}
           </li>
         ))}
       </ul>
@@ -123,24 +114,6 @@ const styles = tw({
   capitalize: `
     capitalize
   `,
-  delete: `
-    absolute top-1/2 right-3
-    -translate-y-1/2
-    border border-current/7.5
-    rounded-full
-    bg-(--foreground)/5.5
-    p-2
-
-    motion-safe:duration-300
-
-    hover:bg-(--foreground)/7.5
-  `,
-  trash: `
-    size-4.5
-    stroke-2
-
-    sm:size-3.5
-  `,
   heading: `
     mb-1
 
@@ -148,5 +121,11 @@ const styles = tw({
   `,
   content: `
     text-sm text-current/62.5
+  `,
+  right: `
+    absolute top-1/2 right-0
+    -translate-y-1/2
+    size-4
+    stroke-2 stroke-(--foreground)
   `,
 });

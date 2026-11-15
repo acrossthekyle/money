@@ -1,3 +1,5 @@
+'use client';
+
 import type { Budget, CalendarTransaction, Holding } from '@/types';
 
 function getBudgetHolding(

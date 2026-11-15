@@ -2,6 +2,7 @@ export type Holding = {
   id: string;
   name: string;
   balance: string;
+  limit?: string;
   type: string;
   interest: string;
   updated?: string;
@@ -141,9 +142,11 @@ export type StoreDateSlice = {
 export type StoreForecastsSlice = {
   forecasts: {
     calendar: CalendarDay[];
+    year: Array<CalendarDay[]>;
     setForecast: () => Promise<void>;
     selectCalendar: () => CalendarDay[];
     selectCalendarDay: () => CalendarDay | undefined;
+    selectYear: () => Array<CalendarDay[]>;
   };
 };
 
@@ -181,7 +184,7 @@ export type StoreRootSlice = {
     setReady: () => void;
     setUnready: () => void;
     selectIsReady: () => boolean;
-    syncParams: (holding: string, iso: string, budget: string) => Promise<void>;
+    syncParams: (holding: string) => Promise<void>;
   };
 };
 
@@ -256,6 +259,7 @@ export type HoldingPutActionInput = {
     type: string;
     name: string;
     balance: string;
+    limit: string;
     interest: string;
   };
   id: string | null;

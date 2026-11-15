@@ -25,6 +25,7 @@ export async function put(
   const validated = validator.safeParse({
     name: input.data.name,
     balance: input.data.balance,
+    limit: input.data.limit,
     type: input.data.type,
     interest: input.data.interest,
   });
@@ -52,6 +53,7 @@ export async function put(
     ...validated.data,
     ...{
       balance: balancize(validated.data.balance),
+      limit: validated.data.limit === null ? '' : balancize(validated.data.limit || ''),
       id: input.id || uuidv4(),
       interest: interestize(validated.data.interest === null ? '' : (validated.data.interest || '')),
       updated: format(date(zone), DATE_ISO),

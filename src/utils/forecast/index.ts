@@ -1,4 +1,10 @@
+'use client';
+
+import { addMonths, getMonth, getYear } from 'date-fns';
+
 import type { Budget, Dateable, Holding } from '@/types';
+
+import { date } from '../index';
 
 import { calendar } from './calendar';
 import { createTransactions } from './utils';
@@ -17,26 +23,23 @@ export async function calculateMonth(
 };
 
 export async function calculateYear(
-  active: string,
+  holding: Holding,
   budgets: Budget[],
-  date: Dateable,
+  dateable: Dateable,
   holdings: Holding[],
 ) {
-  const holding = holdings.find(holding => holding.id === active);
-
-  if (!holding) {
-    return [];
-  }
-
   const transactions = await createTransactions(holding, holdings, budgets);
 
   const months = [];
+  let base = date(dateable.zone);
 
   for (let i = 0; i < 12; ++i) {
+    base = addMonths(base, 1);
+
     const month = calendar(holding, transactions, {
-      date,
-      year: date.year,
-      month: i,
+      date: dateable,
+      year: String(getYear(base)),
+      month: getMonth(base),
     });
 
     months.push(month);

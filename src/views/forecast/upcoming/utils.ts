@@ -27,7 +27,7 @@ export function getItems(days: CalendarDay[]) {
     if (day.return.amount !== null) {
       results.push({
         amount: String(day.return.amount),
-        category: day.return.type,
+        category: `Projected ${day.return.type}`,
         dateable: day.dateable,
         id: '',
         isNegative: false,

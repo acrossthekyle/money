@@ -2,6 +2,7 @@ export { default as Back } from './back';
 export { default as Container } from './container';
 export { default as Content } from './content';
 export { default as Currency } from './currency';
+export { default as Delete } from './delete';
 export { default as Field } from './field';
 export { default as Header } from './header';
 export { default as Hint } from './hint';

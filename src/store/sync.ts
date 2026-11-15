@@ -12,8 +12,6 @@ export function useSync(store: StoreApi) {
   const params = useParams();
 
   const holding = (params?.id as string) || '';
-  const iso = (params?.iso as string) || '';
-  const budget = (params?.transaction as string) || '';
 
   const {
     setUnready,
@@ -24,8 +22,8 @@ export function useSync(store: StoreApi) {
   useEffect(() => {
     setUnready();
 
-    syncParams(holding, iso, budget);
-  }, [holding, iso, budget, syncParams, setUnready]);
+    syncParams(holding);
+  }, [holding, syncParams, setUnready]);
 
   return {
     isReady: selectIsReady(),

@@ -13,6 +13,7 @@ export const createForecastsSlice = (
   return {
     forecasts: {
       calendar: [] as CalendarDay[],
+      year: [] as Array<CalendarDay[]>,
       ...setters(set, get),
       ...getters(get),
     },

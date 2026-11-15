@@ -7,6 +7,7 @@ import { useBudget, useStore, useToasts, useTransactions } from '@/hooks';
 import { BudgetPutActionInputApplysTo } from '@/types';
 
 import type { Data } from './types';
+import { useDelete } from './useDelete';
 
 const DEFAULT_DATA = {
   amount: '',
@@ -20,6 +21,7 @@ const DEFAULT_DATA = {
 };
 
 export function useModel() {
+  const { onDelete } = useDelete();
   const { date, budgets, forecasts, holdings } = useStore();
   const { instance, isActive, onBackdrop, onCancel, onClose, referrer } = useBudget();
   const { onToast } = useToasts();
@@ -159,6 +161,7 @@ export function useModel() {
     handleOnBack,
     handleOnCancel,
     handleOnContinue,
+    handleOnDelete: () => onDelete(budget?.id || undefined),
     handleOnEdit,
     handleOnNext,
     handleOnSubmit,

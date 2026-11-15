@@ -1,9 +1,9 @@
 'use client';
 
-import { format, parseISO } from 'date-fns';
+import { format, isBefore, parseISO } from 'date-fns';
 
 import { DATE_DISPLAY } from '@/constants';
-import type { Budget, Holding } from '@/types';
+import type { Budget, Dateable, Holding } from '@/types';
 import Ui from '@/ui';
 import { currency } from '@/utils';
 
@@ -13,9 +13,11 @@ import type { Data } from '../../types';
 type Props = {
   budget?: Budget;
   data: Data;
+  date: Dateable | null;
   holdings: Holding[];
   isActive: boolean;
   onContinue: () => void;
+  onDelete: () => void;
   onEdit: (section: string) => void;
 };
 
@@ -23,14 +25,19 @@ export default function Section({
   budget,
   children,
   data,
+  date,
   holdings,
   isActive,
   onContinue,
+  onDelete,
   onEdit,
 }: React.PropsWithChildren<Props>) {
   if (!isActive) {
     return null;
   }
+
+  const hasStarted = !!data.start && date ? isBefore(parseISO(String(data.start)), date.today.date) : false;
+  const start = !!data.start ? format(parseISO(String(data.start)), DATE_DISPLAY) : '';
 
   return (
     <>
@@ -42,7 +49,7 @@ export default function Section({
               {data.type === 'debit' ? '-' : ''}${currency(data.amount)}
             </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('amount')}>
-              Update
+              Change
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
@@ -51,7 +58,7 @@ export default function Section({
               {data.name}
             </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('name')}>
-              Update
+              Change
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
@@ -64,20 +71,26 @@ export default function Section({
                   {holdings.find(item => item.id === data.transferee)?.name}
                 </>
               ) : (
-                <>--</>
+                <>No transfer specified</>
               )}
             </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('type')}>
-              Update
+              Change
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Starts on</Ui.Form.OutlineItemHeading>
+            <Ui.Form.OutlineItemHeading>
+              {hasStarted ? 'Started' : 'Starts'} on
+            </Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText>
-              {!!data.start ? format(parseISO(String(data.start)), DATE_DISPLAY) : '--'}
+              {!!data.start ? start : 'No date specified'}
             </Ui.Form.OutlineItemText>
-            <Ui.Form.OutlineAction onClick={() => onEdit('start')}>
-              Update
+            <Ui.Form.OutlineAction
+              isDisabled={hasStarted}
+              onClick={() => onEdit('start')}
+              title={hasStarted ? `Transaction started on ${start}` : undefined}
+            >
+              Change
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
@@ -86,16 +99,16 @@ export default function Section({
               {SCHEDULES.find(item => item.value === data.schedule)?.name}
             </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('schedule')}>
-              Update
+              Change
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
             <Ui.Form.OutlineItemHeading>Ends on</Ui.Form.OutlineItemHeading>
             <Ui.Form.OutlineItemText>
-              {!!data.end ? format(parseISO(data.end), DATE_DISPLAY) : '--'}
+              {!!data.end ? format(parseISO(data.end), DATE_DISPLAY) : 'No date specified'}
             </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('end')}>
-              Update
+              Change
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
@@ -104,17 +117,20 @@ export default function Section({
               {CATEGORIES.find(item => item.value === data.category)?.name}
             </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('category')}>
-              Update
+              Change
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
         </Ui.Form.Outline>
       </Ui.Drawer.Body>
       <Ui.Drawer.Footer>
+        <Ui.Form.Delete onClick={onDelete}>
+          Delete transaction and update forecast
+        </Ui.Form.Delete>
         <Ui.Components.Button
           isPrimary
           onClick={onContinue}
         >
-          {budget?.schedule === 'once' ? 'Update' : 'Next'}
+          {budget?.schedule === 'once' ? 'Confirm & Update' : 'Next'}
         </Ui.Components.Button>
         {children}
       </Ui.Drawer.Footer>

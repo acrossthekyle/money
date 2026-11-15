@@ -19,6 +19,12 @@ export default function Balances({ days }: Props) {
 
   return (
     <section aria-label="balance range" className={styles.container}>
+      <h3 className={styles.header}>
+        Monthly Balance
+      </h3>
+      <p className={styles.text}>
+        From lowest to highest
+      </p>
       <Chart data={[start, lowest, highest, end]} />
     </section>
   );
@@ -29,7 +35,12 @@ const styles = tw({
     flex flex-col
     mt-5
     text-sm
-
-    sm:gap-5
+  `,
+  header: `
+    text-sm
+  `,
+  text: `
+    mb-3
+    text-sm text-current/62.5
   `,
 });

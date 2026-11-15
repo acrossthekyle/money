@@ -8,6 +8,7 @@ import { useModel } from './model';
 import {
   Balance,
   Interest,
+  Limit,
   Name,
   Outline,
   Submit,
@@ -96,6 +97,14 @@ export default function Drawer() {
           >
             <Actions onCancel={handleOnCancel} />
           </Balance>
+          <Limit
+            isActive={steps[step] === 'limit'}
+            isEditing={isEditing}
+            onNext={handleOnNext}
+            value={data.limit}
+          >
+            <Actions onCancel={handleOnCancel} />
+          </Limit>
           <Interest
             label={headers.interest}
             isActive={steps[step] === 'interest'}

@@ -5,12 +5,13 @@ import tw from '@/styles';
 import Calendar from './calendar';
 import Balances from './balances';
 import Header from './header';
+import Projection from './projection';
 import Upcoming from './upcoming';
 
 import { useModel } from './model';
 
 export default function View() {
-  const { date, days, holding, pinned } = useModel();
+  const { date, days, holding, months, pinned } = useModel();
 
   if (date === null || !holding) {
     return null;
@@ -21,7 +22,8 @@ export default function View() {
       <Header holding={holding} pinned={pinned} />
       <Calendar date={date} days={days} />
       <Balances days={days} />
-      <Upcoming days={days} />
+      <Upcoming date={date} days={days} />
+      <Projection months={months} />
     </div>
   );
 };

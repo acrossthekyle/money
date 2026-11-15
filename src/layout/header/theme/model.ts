@@ -22,8 +22,8 @@ export function useModel() {
     setTheme(updated);
 
     onToast({
-      title: 'Theme updated',
-      body: `Now using ${updated} mode` ,
+      title: 'Updated',
+      body: `Lights turned ${updated === 'light' ? 'on' : 'off'}` ,
     });
   };
 

@@ -11,6 +11,7 @@ const DEFAULT_DATA = {
   type: '',
   name: '',
   balance: '',
+  limit: '',
   interest: '',
 };
 
@@ -32,6 +33,7 @@ export function useModel() {
     'type',
     'name',
     'balance',
+    ['credit_card'].includes(data.type) && 'limit',
     ['checking', 'savings', 'retirement', 'property'].includes(data.type) && 'interest',
     'submit',
   ].filter(Boolean).filter((step): step is string => typeof step === 'string');

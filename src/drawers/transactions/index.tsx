@@ -10,7 +10,6 @@ export default function Drawer() {
   const {
     day,
     handleOnAdd,
-    handleOnDelete,
     handleOnEdit,
     instance,
     isActive,
@@ -38,7 +37,6 @@ export default function Drawer() {
             {day !== undefined && (
               <Transactions
                 day={day}
-                onDelete={handleOnDelete}
                 onEdit={handleOnEdit}
               />
             )}

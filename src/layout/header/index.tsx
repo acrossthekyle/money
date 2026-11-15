@@ -35,7 +35,7 @@ const styles = tw({
     sm:bg-transparent
     sm:fixed
     sm:left-2
-    sm:right-2
+    sm:right-4
     sm:top-4
     sm:z-0
     sm:max-w-none

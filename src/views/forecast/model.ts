@@ -7,11 +7,13 @@ export function useModel() {
 
   const dateable = date.select();
   const days = forecasts.selectCalendar();
+  const months = forecasts.selectYear();
 
   return {
     date: dateable,
     days,
     holding: holdings.selectHolding(),
+    months,
     pinned: holdings.selectPinned(),
   };
 };

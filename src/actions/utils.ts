@@ -1,8 +1,12 @@
 export function balancize(raw: string) {
-  const cleaned = raw.replace(/,/g, '').replace('$ ', '').trim();
-  const number = parseFloat(cleaned);
+  if (!!raw) {
+    const cleaned = raw.replace(/,/g, '').replace('$ ', '').trim();
+    const number = parseFloat(cleaned);
 
-  return number.toFixed(2);
+    return number.toFixed(2);
+  }
+
+  return '';
 };
 
 export function interestize(raw: string) {

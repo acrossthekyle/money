@@ -20,20 +20,18 @@ export function setters(set: Set, get: Get) {
         state.root.isReady = false;
       });
     },
-    syncParams: async (holding: string, iso: string, budget: string) => {
-      const { budgets, date, forecasts, holdings, root } = get();
+    syncParams: async (holding: string) => {
+      const { date, forecasts, holdings, root } = get();
 
-      const saved = date.selectPersisted();
+      const iso = date.selectPersisted();
       const zone = date.selectZone();
 
-      const targetIso = iso || saved;
-
-      budgets.setId(budget);
       date.setDateable(
-        targetIso
-          ? dateable(zone, { date: parseISO(targetIso) })
+        iso
+          ? dateable(zone, { date: parseISO(iso) })
           : dateable(zone)
       );
+
       holdings.setId(holding);
 
       await forecasts.setForecast();

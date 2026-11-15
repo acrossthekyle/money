@@ -9,6 +9,9 @@ export function getters(get: Get) {
     selectCalendar: () => {
       return get().forecasts.calendar;
     },
+    selectYear: () => {
+      return get().forecasts.year;
+    },
     selectCalendarDay: () => {
       const { date, forecasts } = get();
 

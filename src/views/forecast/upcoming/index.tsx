@@ -2,8 +2,9 @@
 
 import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 
+import { MONTHS_FULL } from '@/constants';
 import tw, { cs } from '@/styles';
-import type { CalendarDay } from '@/types';
+import type { CalendarDay, Dateable } from '@/types';
 import { currency } from '@/utils';
 
 import { useModel } from './model';
@@ -11,10 +12,11 @@ import { getItems } from './utils';
 import Wrapper from './wrapper';
 
 type Props = {
+  date: Dateable;
   days: CalendarDay[];
 };
 
-export default function Upcoming({ days }: Props) {
+export default function Upcoming({ date, days }: Props) {
   const { handleOnClick } = useModel();
 
   const iterables = getItems(days);
@@ -24,36 +26,51 @@ export default function Upcoming({ days }: Props) {
   }
 
   return (
-    <ul className={styles.items}>
-      {iterables.map((item, index) => (
-        <li key={index}>
-          <Wrapper
-            isClickable={!!item.id}
-            onClick={() => handleOnClick(item.id)}
-          >
-            <span className={styles.name}>{item.name}</span>
-            <span className={styles.date}>
-              {item.dateable.display} • {item.category}
-            </span>
-            <span className={styles.amount}>
-              <span>${currency(item.amount, true)}</span>
-              {item.isNegative ? (
-                <ArrowUpRight className={cs(styles.arrow, styles.negative)} />
-              ) : (
-                <ArrowDownLeft className={cs(styles.arrow, styles.positive)} />
-              )}
-            </span>
-          </Wrapper>
-        </li>
-      ))}
-    </ul>
+    <>
+      <h3 className={styles.header}>
+        Upcoming
+      </h3>
+      <p className={styles.text}>
+        Remaining transactions in {MONTHS_FULL[Number(date.month) - 1]}
+      </p>
+      <ul className={styles.items}>
+        {iterables.map((item, index) => (
+          <li key={index}>
+            <Wrapper
+              isClickable={!!item.id}
+              onClick={() => handleOnClick(item.id)}
+            >
+              <span className={styles.name}>{item.name}</span>
+              <span className={styles.date}>
+                {item.dateable.display} • {item.category}
+              </span>
+              <span className={styles.amount}>
+                <span>${currency(item.amount, true)}</span>
+                {item.isNegative ? (
+                  <ArrowUpRight className={cs(styles.arrow, styles.negative)} />
+                ) : (
+                  <ArrowDownLeft className={cs(styles.arrow, styles.positive)} />
+                )}
+              </span>
+            </Wrapper>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 
 const styles = tw({
+  header: `
+    mt-5
+    text-sm
+  `,
+  text: `
+    mb-3
+    text-sm text-current/62.5
+  `,
   items: `
     flex flex-col gap-4
-    mt-5
   `,
   action: `
     relative

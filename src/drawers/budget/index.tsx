@@ -26,6 +26,7 @@ export default function Drawer() {
     handleOnBack,
     handleOnCancel,
     handleOnContinue,
+    handleOnDelete,
     handleOnEdit,
     handleOnNext,
     handleOnSubmit,
@@ -52,6 +53,8 @@ export default function Drawer() {
           <Ui.Drawer.Header>
             <Heading
               budget={budget}
+              date={date}
+              isActive={isActive}
               onBack={handleOnBack}
               step={step}
               total={steps.length - 1}
@@ -60,9 +63,11 @@ export default function Drawer() {
           <Outline
             budget={budget}
             data={data}
+            date={date}
             holdings={holdings}
             isActive={steps[step] === 'outline'}
             onContinue={handleOnContinue}
+            onDelete={handleOnDelete}
             onEdit={handleOnEdit}
           >
             <Actions onCancel={handleOnCancel} />
@@ -128,7 +133,7 @@ export default function Drawer() {
           </Category>
           {budget?.schedule !== 'once' && (
             <Update
-              date={date || undefined}
+              date={date}
               isActive={steps[step] === 'update'}
               onSubmit={handleOnSubmit}
             >

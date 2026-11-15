@@ -16,7 +16,7 @@ export default function Header({ holding, pinned }: Props) {
           {holding.name}
         </span>
         <span className={styles.lid}>
-          View transactions by date
+          Monthly forecast
         </span>
       </h1>
       <Options holding={holding} pinned={pinned} />

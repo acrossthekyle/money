@@ -1,4 +1,6 @@
-import tw, { cs } from '@/styles';
+import { upperFirst } from 'lodash';
+
+import tw from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
 
@@ -21,8 +23,8 @@ export default function Heading({
         <h2 id="drawer-header">
           Manage {holding.name}
         </h2>
-        <p className={cs(styles.lid, styles.capitalize)}>
-          {holding.type.replace(/_/g, ' ')} {holding.type === 'property' ? 'Asset' : 'Account'}
+        <p className={styles.lid}>
+          {upperFirst(holding.type.replace(/_/g, ' '))} {holding.type === 'property' ? 'asset' : 'account'}
         </p>
       </>
     );

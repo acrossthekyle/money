@@ -1,6 +1,6 @@
 'use client';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 
 type Props = {
   isClickable: boolean;
@@ -15,7 +15,7 @@ export default function Wrapper({
   if (isClickable) {
     return (
       <button
-        className={styles.container}
+        className={cs(styles.container, styles.hoverable)}
         onClick={onClick}
         type="button"
       >
@@ -33,6 +33,7 @@ export default function Wrapper({
 
 const styles = tw({
   container: `
+    group
     relative
     flex flex-col items-start
     p-4
@@ -41,5 +42,11 @@ const styles = tw({
     bg-neutral-200/62.5
 
     dark:bg-neutral-800/62.5
+  `,
+  hoverable: `
+    motion-safe:duration-200
+
+    hover:bg-neutral-200
+    hover:dark:bg-neutral-800
   `,
 });

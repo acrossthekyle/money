@@ -1,9 +1,11 @@
-import tw, { cs } from '@/styles';
-import type { Budget } from '@/types';
+import tw from '@/styles';
+import type { Budget, Dateable } from '@/types';
 import Ui from '@/ui';
 
 type Props = {
   budget?: Budget;
+  date: Dateable | null;
+  isActive: boolean;
   onBack: () => void;
   step: number;
   total: number;
@@ -11,18 +13,20 @@ type Props = {
 
 export default function Heading({
   budget,
+  date,
+  isActive,
   onBack,
   step,
   total,
 }: Props) {
-  if (budget) {
+  if (budget && date) {
     return (
       <>
         <h2 id="drawer-header">
-          Manage {budget.name}
+          Manage {budget.name} Transaction
         </h2>
-        <p className={cs(styles.lid, styles.capitalize)}>
-          {budget.schedule} {budget.category}
+        <p className={styles.lid}>
+          <span className={styles.capitalize}>{budget.schedule} {budget.category}</span> on {date.display}
         </p>
       </>
     );
@@ -40,9 +44,11 @@ export default function Heading({
         isDisabled={step === 0}
         onBack={onBack}
       />
-      <Ui.Components.Progress.Container>
-        <Ui.Components.Progress.Bar percent={(step /total) * 100} />
-      </Ui.Components.Progress.Container>
+      {isActive && (
+        <Ui.Components.Progress.Container>
+          <Ui.Components.Progress.Bar percent={(step /total) * 100} />
+        </Ui.Components.Progress.Container>
+      )}
     </>
   );
 };

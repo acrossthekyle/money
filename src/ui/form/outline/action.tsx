@@ -3,15 +3,25 @@
 import tw from '@/styles';
 
 type Props = {
+  isDisabled?: boolean;
   onClick: () => void;
+  title?: string;
 };
 
 export default function Action({
   children,
+  isDisabled,
   onClick,
+  title,
 }: React.PropsWithChildren<Props>) {
   return (
-    <button className={styles.container} onClick={onClick} type="button">
+    <button
+      className={styles.container}
+      disabled={isDisabled}
+      onClick={onClick}
+      title={title}
+      type="button"
+    >
       {children}
     </button>
   );

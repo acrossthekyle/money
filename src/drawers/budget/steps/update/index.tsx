@@ -9,7 +9,7 @@ import Ui from '@/ui';
 import { useModel } from './model';
 
 type Props = {
-  date?: Dateable;
+  date: Dateable | null;
   isActive: boolean;
   onSubmit: (choice: BudgetPutActionInputApplysTo) => void;
 };
@@ -44,17 +44,17 @@ export default function Section({
               />
               <Ui.Form.Option
                 isActive={choice === BudgetPutActionInputApplysTo.This}
-                label={`Only ${format(date?.date, DATE_DISPLAY)}`}
+                label={`Only ${format(date.date, DATE_DISPLAY)}`}
                 onSelect={() => handleOnChange(BudgetPutActionInputApplysTo.This)}
               />
               <Ui.Form.Option
                 isActive={choice === BudgetPutActionInputApplysTo.Prospective}
-                label={`From ${format(date?.date, DATE_DISPLAY)} onwards`}
+                label={`From ${format(date.date, DATE_DISPLAY)} onwards`}
                 onSelect={() => handleOnChange(BudgetPutActionInputApplysTo.Prospective)}
               />
               <Ui.Form.Option
                 isActive={choice === BudgetPutActionInputApplysTo.Future}
-                label={`After ${format(date?.date, DATE_DISPLAY)}`}
+                label={`After ${format(date.date, DATE_DISPLAY)}`}
                 onSelect={() => handleOnChange(BudgetPutActionInputApplysTo.Future)}
               />
             </Ui.Form.Options>
