@@ -13,10 +13,10 @@ export default function Calendar({ date, days }: Props) {
   return (
     <>
       <h3 className={styles.header}>
-        Monthly Forecast
+        Calendar Forecast
       </h3>
       <p className={styles.text}>
-        Day-by-day balance and transactions
+        Select a date to view scheduled transactions
       </p>
       <div className={styles.container}>
         <Navigation date={date} />
@@ -28,12 +28,11 @@ export default function Calendar({ date, days }: Props) {
 
 const styles = tw({
   container: `
-    outline outline-current/5.5
-    bg-(--background)
-    rounded-xl
     p-2
+    rounded-xl
+    bg-neutral-200/62.5
 
-    dark:bg-(--background)/22.5
+    dark:bg-neutral-800/62.5
   `,
   header: `
     text-sm

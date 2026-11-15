@@ -6,7 +6,6 @@ import Exit from './exit';
 import Header from './header';
 import Links from './links';
 import { useModel } from './model';
-import Worth from './worth';
 
 export default function Drawer() {
   const {
@@ -17,7 +16,6 @@ export default function Drawer() {
     onBackdrop,
     onCancel,
     onClose,
-    worth,
   } = useModel();
 
   return (
@@ -34,7 +32,6 @@ export default function Drawer() {
             <Header />
           </Ui.Drawer.Header>
           <Ui.Drawer.Body>
-            <Worth amount={worth} />
             <Links holdings={holdings} onClick={onClose} />
           </Ui.Drawer.Body>
           <Ui.Drawer.Footer>

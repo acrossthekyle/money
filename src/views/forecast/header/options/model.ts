@@ -1,13 +1,8 @@
 'use client';
 
 import { useHolding, useStore } from '@/hooks';
-import type { Holding } from '@/types';
 
-import { usePin } from './usePin';
-
-export function useModel(holding: Holding, pinned: string) {
-  const { onPin } = usePin(holding);
-
+export function useModel() {
   const { onHolding } = useHolding();
   const { holdings } = useStore();
 
@@ -19,7 +14,5 @@ export function useModel(holding: Holding, pinned: string) {
 
   return {
     handleOnEdit,
-    handleOnPin: onPin,
-    isPinned: pinned === holding.id,
   };
 }

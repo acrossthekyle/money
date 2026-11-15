@@ -13,7 +13,7 @@ export default function Container({
 const styles = tw({
   container: `
     relative
-    mt-4 mb-1
+    mt-3
     w-full
   `,
 })

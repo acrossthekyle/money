@@ -1,7 +1,6 @@
 'use client';
 
 import { useHolding, useMenu, useStore } from '@/hooks';
-import type { Holding } from '@/types';
 
 export function useModel() {
   const { onHolding } = useHolding();
@@ -27,12 +26,5 @@ export function useModel() {
     onBackdrop,
     onCancel,
     onClose,
-    worth: items.reduce((accumulator: number, item: Holding) => {
-      if (item.type === 'credit_card') {
-        return accumulator - Number(item.balance);
-      }
-
-      return accumulator + Number(item.balance);
-    }, 0),
   };
 }

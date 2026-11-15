@@ -12,7 +12,7 @@ import Upcoming from './upcoming';
 import { useModel } from './model';
 
 export default function View() {
-  const { date, days, holding, months, pinned } = useModel();
+  const { date, days, holding, months } = useModel();
 
   if (date === null || !holding) {
     return null;
@@ -20,7 +20,7 @@ export default function View() {
 
   return (
     <div className={styles.container}>
-      <Header days={days} holding={holding} pinned={pinned} />
+      <Header days={days} holding={holding} />
       <Calendar date={date} days={days} />
       <Balances days={days} />
       <Upcoming days={days} />
