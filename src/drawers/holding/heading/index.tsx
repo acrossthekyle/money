@@ -1,5 +1,3 @@
-import { upperFirst } from 'lodash';
-
 import tw from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
@@ -21,10 +19,10 @@ export default function Heading({
     return (
       <>
         <h2 id="drawer-header">
-          Manage {holding.name}
+          {holding.name}
         </h2>
         <p className={styles.lid}>
-          {upperFirst(holding.type.replace(/_/g, ' '))} {holding.type === 'property' ? 'asset' : 'account'}
+          {holding.type === 'property' ? 'Asset' : 'Account'}
         </p>
       </>
     );
@@ -43,7 +41,9 @@ export default function Heading({
         onBack={onBack}
       />
       <Ui.Components.Progress.Container>
-        <Ui.Components.Progress.Bar percent={(step/total) * 100} />
+        <Ui.Components.Progress.Bar>
+          <Ui.Components.Progress.Progress percent={(step/total) * 100} />
+        </Ui.Components.Progress.Bar>
       </Ui.Components.Progress.Container>
     </>
   );

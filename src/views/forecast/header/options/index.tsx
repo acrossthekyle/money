@@ -1,8 +1,8 @@
 'use client';
 
-import { Pencil, Pin, PinOff, Trash } from 'lucide-react';
+import { Star } from 'lucide-react';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
 
@@ -15,7 +15,6 @@ type Props = {
 
 export default function Options({ holding, pinned }: Props) {
   const {
-    handleOnDelete,
     handleOnEdit,
     handleOnPin,
     isPinned,
@@ -24,71 +23,29 @@ export default function Options({ holding, pinned }: Props) {
   return (
     <nav aria-label="options" className={styles.container}>
       <button
-        aria-label="pin/unpin portfolio item"
-        className={styles.action}
         onClick={handleOnPin}
         title={isPinned ? 'Unset as default upon login' : 'Set as default upon login'}
         type="button"
       >
-        <span className={styles.label}>{isPinned ? 'Unpin' : 'Pin'}</span>
-        {isPinned ? (
-          <PinOff className={styles.icon} />
-        ) : (
-          <Pin className={styles.icon} />
-        )}
+        <Star className={cs(styles.star, isPinned && styles.fill)} />
       </button>
-      <Ui.Components.Menu.Container>
-        <Ui.Components.Menu.Trigger />
-        <Ui.Components.Menu.Items>
-          <Ui.Components.Menu.Item onClick={handleOnEdit}>
-            <Pencil />
-            <Ui.Components.Menu.Label>Update</Ui.Components.Menu.Label>
-          </Ui.Components.Menu.Item>
-          <Ui.Components.Menu.Item
-            isDestructive
-            isLast
-            onClick={handleOnDelete}
-          >
-            <Trash />
-            <Ui.Components.Menu.Label>Delete</Ui.Components.Menu.Label>
-          </Ui.Components.Menu.Item>
-        </Ui.Components.Menu.Items>
-      </Ui.Components.Menu.Container>
+      <Ui.Components.Button isGhost onClick={handleOnEdit}>
+        Update
+      </Ui.Components.Button>
     </nav>
   );
 };
 
 const styles = tw({
   container: `
-    absolute top-0 right-0
-    flex
-    border border-current/17.5
-    bg-(--background)
-    rounded-lg
-    divide-x divide-current/12.5
-
-    dark:bg-neutral-950
+    absolute top-1 right-0 bottom-19
+    flex flex-col justify-between items-end
   `,
-  action: `
-    flex items-center gap-2
-    p-2
-    text-current/92.5
-    rounded-s-lg
-
-    motion-safe:duration-300
-
-    hover:bg-neutral-50
-    hover:dark:bg-neutral-900
+  star: `
+    stroke-1 stroke-current/82.5
+    size-4.5
   `,
-  label: `
-    text-sm
-
-    sm:text-xs
-  `,
-  icon: `
-    size-3.5
-    stroke-2
-
-    sm:size-3
+  fill: `
+    fill-current/82.5
   `,
 });

@@ -2,9 +2,8 @@
 
 import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 
-import { MONTHS_FULL } from '@/constants';
 import tw, { cs } from '@/styles';
-import type { CalendarDay, Dateable } from '@/types';
+import type { CalendarDay } from '@/types';
 import { currency } from '@/utils';
 
 import { useModel } from './model';
@@ -12,11 +11,10 @@ import { getItems } from './utils';
 import Wrapper from './wrapper';
 
 type Props = {
-  date: Dateable;
   days: CalendarDay[];
 };
 
-export default function Upcoming({ date, days }: Props) {
+export default function Upcoming({ days }: Props) {
   const { handleOnClick } = useModel();
 
   const iterables = getItems(days);
@@ -28,10 +26,10 @@ export default function Upcoming({ date, days }: Props) {
   return (
     <>
       <h3 className={styles.header}>
-        Upcoming
+        Upcoming Transactions
       </h3>
       <p className={styles.text}>
-        Remaining transactions in {MONTHS_FULL[Number(date.month) - 1]}
+        {iterables.length} remaining
       </p>
       <ul className={styles.items}>
         {iterables.map((item, index) => (
@@ -113,8 +111,12 @@ const styles = tw({
   `,
   negative: `
     text-red-500
+
+    dark:text-rose-400
   `,
   positive: `
-    text-green-700 dark:text-lime-500
+    text-green-700
+
+    dark:text-lime-500
   `,
 });

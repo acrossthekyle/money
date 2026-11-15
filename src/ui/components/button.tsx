@@ -38,7 +38,7 @@ const styles = tw({
   container: `
     relative
     w-full
-    py-1.25
+    py-1.25 px-3.5
     rounded-full
     text-center
     whitespace-nowrap

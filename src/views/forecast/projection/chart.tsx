@@ -128,7 +128,7 @@ export default function Chart({ balances }: Props) {
                     <span class="${styles.amount}">
                       <span class="${styles.prefix}">${label}</span>
                       <span class="${value > 0 ? styles.positive : styles.negative}">
-                        $${currency(value)}
+                        $${currency(value, true)}
                       </span>
                     </span>
                   `;

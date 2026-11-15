@@ -24,6 +24,7 @@ export default function Drawer() {
     data,
     handleOnBack,
     handleOnCancel,
+    handleOnDelete,
     handleOnEdit,
     handleOnNext,
     handleOnSubmit,
@@ -64,8 +65,9 @@ export default function Drawer() {
             data={data}
             holding={holding}
             isActive={steps[step] === 'outline'}
-            onSubmit={handleOnSubmit}
+            onDelete={handleOnDelete}
             onEdit={handleOnEdit}
+            onSubmit={handleOnSubmit}
             zone={zone}
           >
             <Actions onCancel={handleOnCancel} />

@@ -46,7 +46,9 @@ export default function Heading({
       />
       {isActive && (
         <Ui.Components.Progress.Container>
-          <Ui.Components.Progress.Bar percent={(step /total) * 100} />
+          <Ui.Components.Progress.Bar>
+            <Ui.Components.Progress.Progress percent={(step/total) * 100} />
+          </Ui.Components.Progress.Bar>
         </Ui.Components.Progress.Container>
       )}
     </>

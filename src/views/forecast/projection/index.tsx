@@ -10,7 +10,9 @@ type Props = {
 };
 
 export default function Projection({ months }: Props) {
-  const balances = months.reduce<Balances[]>((accumulator, days) => {
+  const next = months.slice(1);
+
+  const balances = next.reduce<Balances[]>((accumulator, days) => {
     const filtered = days.filter(({ dateable }) => dateable.isInMonth);
 
     const month = MONTHS_FULL[Number(filtered[0].dateable.month) - 1];
@@ -39,7 +41,7 @@ export default function Projection({ months }: Props) {
         Annual Projection
       </h3>
       <p className={styles.text}>
-        One calendar year from today
+        Next 12 months
       </p>
       <Chart balances={balances} />
     </section>

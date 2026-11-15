@@ -20,10 +20,10 @@ export default function Balances({ days }: Props) {
   return (
     <section aria-label="balance range" className={styles.container}>
       <h3 className={styles.header}>
-        Monthly Balance
+        Balance Range
       </h3>
       <p className={styles.text}>
-        From lowest to highest
+        Lowest to highest
       </p>
       <Chart data={[start, lowest, highest, end]} />
     </section>

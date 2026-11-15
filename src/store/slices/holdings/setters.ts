@@ -6,10 +6,10 @@ import type { Get, Set } from './types';
 
 export function setters(set: Set, get: Get) {
   return {
-    removeHolding: (id: string) => {
+    removeHolding: () => {
       const { holdings } = get();
 
-      const filtered = holdings.items.filter((item: Holding) => item.id !== id);
+      const filtered = holdings.items.filter((item: Holding) => item.id !== holdings.id);
 
       set((state: Store) => {
         state.holdings.items = filtered;

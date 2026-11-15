@@ -156,7 +156,7 @@ export type StoreHoldingsSlice = {
     items: Holding[];
     isNullable: boolean;
     pinned: string;
-    removeHolding: (id: string) => Holding[];
+    removeHolding: () => Holding[];
     set: (items: Holding[]) => void;
     setHolding: (item: Holding) => void;
     setId: (id: string) => void;

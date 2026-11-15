@@ -11,10 +11,18 @@ type Props = {
 
 export default function Calendar({ date, days }: Props) {
   return (
-    <section aria-label="calendar" className={styles.container}>
-      <Navigation date={date} />
-      <Days date={date} days={days} />
-    </section>
+    <>
+      <h3 className={styles.header}>
+        Monthly Forecast
+      </h3>
+      <p className={styles.text}>
+        Day-by-day balance and transactions
+      </p>
+      <div className={styles.container}>
+        <Navigation date={date} />
+        <Days date={date} days={days} />
+      </div>
+    </>
   );
 };
 
@@ -26,5 +34,12 @@ const styles = tw({
     p-2
 
     dark:bg-(--background)/22.5
+  `,
+  header: `
+    text-sm
+  `,
+  text: `
+    mb-3
+    text-sm text-current/62.5
   `,
 });

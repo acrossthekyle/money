@@ -4,6 +4,7 @@ import tw from '@/styles';
 
 import Calendar from './calendar';
 import Balances from './balances';
+import Flow from './flow';
 import Header from './header';
 import Projection from './projection';
 import Upcoming from './upcoming';
@@ -19,10 +20,11 @@ export default function View() {
 
   return (
     <div className={styles.container}>
-      <Header holding={holding} pinned={pinned} />
+      <Header days={days} holding={holding} pinned={pinned} />
       <Calendar date={date} days={days} />
       <Balances days={days} />
-      <Upcoming date={date} days={days} />
+      <Upcoming days={days} />
+      <Flow months={months} />
       <Projection months={months} />
     </div>
   );

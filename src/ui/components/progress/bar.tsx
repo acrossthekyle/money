@@ -1,22 +1,23 @@
 import tw from '@/styles';
 
-type Props = {
-  percent: number;
-};
-
 export default function Bar({
-  percent,
-}: Props) {
+  children,
+}: React.PropsWithChildren) {
   return (
-    <div className={styles.container} style={{ width: `${percent}%`}} />
+    <div className={styles.container}>
+      {children}
+    </div>
   );
 };
 
 const styles = tw({
   container: `
-    bg-(--foreground)/82.5
+    relative
+    flex items-center
+    w-full
     h-1
-
-    motion-safe:duration-300
+    bg-(--foreground)/5.5
+    rounded-full
+    overflow-hidden
   `,
 })
