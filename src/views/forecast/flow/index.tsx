@@ -2,6 +2,7 @@ import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
 import type { CalendarDay } from '@/types';
+import Ui from '@/ui';
 import { currency } from '@/utils';
 
 import { getChange, getFlow } from './utils';
@@ -15,65 +16,57 @@ export default function Flow({ months }: Props) {
   const next = getFlow(months[1]);
 
   return (
-    <>
-      <h3 className={styles.header}>
-        Cash Flow
-      </h3>
-      <p className={styles.text}>
-        Income and expenses
-      </p>
+    <Ui.Components.Card.Container>
+      <Ui.Components.Card.Header>
+        <Ui.Components.Card.Title>
+          Cash Flow
+        </Ui.Components.Card.Title>
+        <Ui.Components.Card.Subtitle>
+          Income and expenses
+        </Ui.Components.Card.Subtitle>
+      </Ui.Components.Card.Header>
       <ul className={styles.items}>
         <li className={styles.item}>
-          <h4 className={styles.heading}>
-            Income
-            <ArrowDownLeft className={cs(styles.arrow, styles.positive)} />
-          </h4>
-          <p className={styles.amount}>
-            ${currency(current.income, true)}
-          </p>
-          <p className={styles.next}>
-            {getChange(current.income, next.income)}% Next month,<br />
-            approximately
-          </p>
+          <Ui.Components.Card.Content>
+            <h4 className={styles.heading}>
+              Income
+              <ArrowDownLeft className={cs(styles.arrow, styles.positive)} />
+            </h4>
+            <p className={styles.amount}>
+              ${currency(current.income, true)}
+            </p>
+            <p className={styles.next}>
+              {getChange(current.income, next.income)}% Next month,<br />
+              approximately
+            </p>
+          </Ui.Components.Card.Content>
         </li>
         <li className={styles.item}>
-          <h4 className={styles.heading}>
-            Expenses
-            <ArrowUpRight className={cs(styles.arrow, styles.negative)} />
-          </h4>
-          <p className={styles.amount}>
-            ${currency(current.expenses, true)}
-          </p>
-          <p className={styles.next}>
-            {getChange(current.expenses, next.expenses)}% Next month,<br />
-            approximately
-          </p>
+          <Ui.Components.Card.Content>
+            <h4 className={styles.heading}>
+              Expenses
+              <ArrowUpRight className={cs(styles.arrow, styles.negative)} />
+            </h4>
+            <p className={styles.amount}>
+              ${currency(current.expenses, true)}
+            </p>
+            <p className={styles.next}>
+              {getChange(current.expenses, next.expenses)}% Next month,<br />
+              approximately
+            </p>
+          </Ui.Components.Card.Content>
         </li>
       </ul>
-    </>
+    </Ui.Components.Card.Container>
   );
 };
 
 const styles = tw({
-  header: `
-    mt-5
-    text-sm
-  `,
-  text: `
-    mb-3
-    text-sm text-current/62.5
-  `,
   items: `
     flex gap-4
   `,
   item: `
-    flex flex-col gap-1
-    p-4
     w-full
-    rounded-xl
-    bg-neutral-200/62.5
-
-    dark:bg-neutral-800/62.5
   `,
   heading: `
     flex items-center justify-between
@@ -81,6 +74,7 @@ const styles = tw({
     text-sm
   `,
   amount: `
+    my-1
     text-lg
 
     sm:text-base

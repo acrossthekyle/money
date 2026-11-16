@@ -1,6 +1,6 @@
 import { MONTHS_FULL } from '@/constants';
-import tw from '@/styles';
 import type { CalendarDay } from '@/types';
+import Ui from '@/ui';
 
 import Chart from './chart';
 import type { Balances } from './types';
@@ -36,28 +36,16 @@ export default function Projection({ months }: Props) {
   }, []);
 
   return (
-    <section aria-label="balance projection" className={styles.container}>
-      <h3 className={styles.header}>
-        Annual Projection
-      </h3>
-      <p className={styles.text}>
-        Next 12 months
-      </p>
+    <Ui.Components.Card.Container>
+      <Ui.Components.Card.Header>
+        <Ui.Components.Card.Title>
+          Annual Projection
+        </Ui.Components.Card.Title>
+        <Ui.Components.Card.Subtitle>
+          Next 12 months
+        </Ui.Components.Card.Subtitle>
+      </Ui.Components.Card.Header>
       <Chart balances={balances} />
-    </section>
+    </Ui.Components.Card.Container>
   );
 };
-
-const styles = tw({
-  container: `
-    flex flex-col
-    mt-5
-  `,
-  header: `
-    text-sm
-  `,
-  text: `
-    mb-3
-    text-sm text-current/62.5
-  `,
-});

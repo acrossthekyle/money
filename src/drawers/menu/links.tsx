@@ -1,19 +1,19 @@
 'use client';
 
-import { ChevronRight } from 'lucide-react';
+import { Check, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 import tw from '@/styles';
 import type { Holding } from '@/types';
-
-import Avatar from './avatar';
+import { currency } from '@/utils';
 
 type Props = {
+  active: string;
   holdings: Holding[];
   onClick: () => void;
 };
 
-export default function Links({ holdings, onClick }: Props) {
+export default function Links({ active, holdings, onClick }: Props) {
   return (
     <nav>
       <ul className={styles.items}>
@@ -25,13 +25,16 @@ export default function Links({ holdings, onClick }: Props) {
               onClick={onClick}
             >
               <span className={styles.name}>
-                <Avatar type={holding.type} />
                 {holding.name}
               </span>
               <span className={styles.type}>
-                {holding.type.replace(/_/g, ' ')}
+                {holding.type.replace(/_/g, ' ')} • ${currency(holding.balance, true)}
               </span>
-              <ChevronRight className={styles.chevron} />
+              {active === holding.id ? (
+                <Check className={styles.check} />
+              ) : (
+                <ChevronRight className={styles.chevron} />
+              )}
             </Link>
           </li>
         ))}
@@ -41,44 +44,34 @@ export default function Links({ holdings, onClick }: Props) {
 };
 
 const styles = tw({
-  header: `
-    py-4
-    text-sm text-current/62.5
-  `,
   items: `
-    flex flex-col gap-3
-    mt-4
+    flex flex-col gap-5
+    mt-2
   `,
   link: `
-    flex items-center
-    bg-(--foreground)/7.5
-    p-2
-    rounded-lg
-
-    motion-safe:duration-300
-
-    hover:bg-(--foreground)/12.5
+    relative
+    flex flex-col gap-1.5
+  `,
+  name: `
+    leading-[1]
 
     sm:text-sm
   `,
-  name: `
-    flex items-center gap-3
-    pl-1
-  `,
   type: `
-    text-tiny text-current/62.5
-    border border-dashed border-current/32.5
-    bg-(--background)/17.5
-    py-0.75 px-2
-    ml-auto mr-2
-    rounded-md
-    uppercase
+    text-sm text-current/62.5
     leading-[1]
-
-    sm:text-xtiny
+    capitalize
   `,
   chevron: `
+    absolute top-1/2 right-0
+    -translate-y-1/2
+    size-4.5
+    stroke-2
+  `,
+  check: `
+    absolute top-1/2 right-0
+    -translate-y-1/2
     size-4
-    stroke-1
+    stroke-2
   `,
 });

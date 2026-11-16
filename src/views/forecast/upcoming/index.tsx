@@ -4,6 +4,7 @@ import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
 import type { CalendarDay } from '@/types';
+import Ui from '@/ui';
 import { currency } from '@/utils';
 
 import { useModel } from './model';
@@ -24,13 +25,15 @@ export default function Upcoming({ days }: Props) {
   }
 
   return (
-    <>
-      <h3 className={styles.header}>
-        Upcoming Transactions
-      </h3>
-      <p className={styles.text}>
-        {iterables.length} remaining
-      </p>
+    <Ui.Components.Card.Container>
+      <Ui.Components.Card.Header>
+        <Ui.Components.Card.Title>
+          Upcoming Transactions
+        </Ui.Components.Card.Title>
+        <Ui.Components.Card.Subtitle>
+          {iterables.length} remaining
+        </Ui.Components.Card.Subtitle>
+      </Ui.Components.Card.Header>
       <ul className={styles.items}>
         {iterables.map((item, index) => (
           <li key={index}>
@@ -54,19 +57,11 @@ export default function Upcoming({ days }: Props) {
           </li>
         ))}
       </ul>
-    </>
+    </Ui.Components.Card.Container>
   );
 };
 
 const styles = tw({
-  header: `
-    mt-5
-    text-sm
-  `,
-  text: `
-    mb-3
-    text-sm text-current/62.5
-  `,
   items: `
     flex flex-col gap-4
   `,

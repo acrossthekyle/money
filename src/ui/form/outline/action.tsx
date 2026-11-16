@@ -1,5 +1,7 @@
 'use client';
 
+import { ArrowRight } from 'lucide-react';
+
 import tw from '@/styles';
 
 type Props = {
@@ -23,29 +25,29 @@ export default function Action({
       type="button"
     >
       {children}
+      <ArrowRight className={styles.arrow} />
     </button>
   );
 };
 
 const styles = tw({
   container: `
-    absolute top-1/2 right-0
-    -translate-y-1/2
-    py-1.25 px-4
-    rounded-full
-    text-sm text-(--foreground)
-    whitespace-nowrap
+    flex flex-col-reverse
+    w-full
+    text-left
     select-none
-    bg-transparent
-    border border-current/10.5
 
     motion-safe:duration-300
 
     disabled:opacity-50
     disabled:!cursor-default
+  `,
+  arrow: `
+    absolute top-1/2 right-0
+    -translate-y-1/2
+    size-4.5
+    stroke-2
 
-    not-disabled:hover:bg-(--foreground)/4.5
-
-    sm:text-xs
+    sm:size-4
   `,
 });

@@ -44,80 +44,73 @@ export default function Section({
       <Ui.Drawer.Body>
         <Ui.Form.Outline>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Amount</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>
-              {data.type === 'debit' ? '-' : ''}${currency(data.amount)}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('amount')}>
-              Change
+              <Ui.Form.OutlineItemHeading>Amount</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {data.type === 'debit' ? '-' : ''}${currency(data.amount)}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>
-              {data.name}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('name')}>
-              Change
+              <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {data.name}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Transfer</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>
-              {data.transferee ? (
-                <>
-                  {data.type === 'debit' && 'As income to '}
-                  {data.type === 'credit' && 'As expense from '}
-                  {holdings.find(item => item.id === data.transferee)?.name}
-                </>
-              ) : (
-                <>No transfer specified</>
-              )}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('type')}>
-              Change
+              <Ui.Form.OutlineItemHeading>Transfer</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {data.transferee ? (
+                  <>
+                    {data.type === 'debit' && 'As income to '}
+                    {data.type === 'credit' && 'As expense from '}
+                    {holdings.find(item => item.id === data.transferee)?.name}
+                  </>
+                ) : (
+                  <>No transfer specified</>
+                )}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>
-              {hasStarted ? 'Started' : 'Starts'} on
-            </Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>
-              {!!data.start ? start : 'No date specified'}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction
               isDisabled={hasStarted}
               onClick={() => onEdit('start')}
               title={hasStarted ? `Transaction started on ${start}` : undefined}
             >
-              Change
+              <Ui.Form.OutlineItemHeading>
+                {hasStarted ? 'Started' : 'Starts'} on
+              </Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {!!data.start ? start : 'No date specified'}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Repeats</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>
-              {SCHEDULES.find(item => item.value === data.schedule)?.name}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('schedule')}>
-              Change
+              <Ui.Form.OutlineItemHeading>Repeats</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {SCHEDULES.find(item => item.value === data.schedule)?.name}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Ends on</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>
-              {!!data.end ? format(parseISO(data.end), DATE_DISPLAY) : 'No date specified'}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('end')}>
-              Change
+              <Ui.Form.OutlineItemHeading>Ends on</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {!!data.end ? format(parseISO(data.end), DATE_DISPLAY) : 'No date specified'}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Categorized as</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>
-              {CATEGORIES.find(item => item.value === data.category)?.name}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('category')}>
-              Change
+              <Ui.Form.OutlineItemHeading>Categorized as</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {CATEGORIES.find(item => item.value === data.category)?.name}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
         </Ui.Form.Outline>

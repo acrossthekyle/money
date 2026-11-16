@@ -21,6 +21,6 @@ export default function Wrapper({
 
 const styles = tw({
   container: `
-    h-full
+    h-auto
   `,
 });

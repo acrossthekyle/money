@@ -23,7 +23,7 @@ export function useModel() {
 
     onToast({
       title: 'Updated',
-      body: `Lights turned ${updated === 'light' ? 'on' : 'off'}` ,
+      body: `Light mode ${updated === 'light' ? 'enabled' : 'disabled'}` ,
     });
   };
 

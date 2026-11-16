@@ -62,7 +62,6 @@ export default function Day({ date, day }: Props) {
               cs(
                 styles.balance,
                 isNegative && styles.negative,
-                String(day.balance).split('.')[0].length > 4 && styles.shrink,
               )
             }
           >
@@ -124,14 +123,9 @@ const styles = tw({
     group-hover:!dark:text-(--foreground)
   `,
   balance: `
-    text-tiny text-current/72.5
+    text-[min(2vw,0.9rem)] text-current/72.5
 
-    sm:text-xs
-  `,
-  shrink: `
-    text-xtiny
-
-    sm:text-tiny
+    xs:text-tiny
   `,
   negative: `
     !text-red-400

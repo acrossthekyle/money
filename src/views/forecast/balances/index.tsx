@@ -1,5 +1,5 @@
-import tw from '@/styles';
 import type { CalendarDay } from '@/types';
+import Ui from '@/ui';
 
 import Chart from './chart';
 
@@ -18,29 +18,16 @@ export default function Balances({ days }: Props) {
   const end = balances[balances.length - 1];
 
   return (
-    <section aria-label="balance range" className={styles.container}>
-      <h3 className={styles.header}>
-        Balance Range
-      </h3>
-      <p className={styles.text}>
-        Lowest to highest
-      </p>
+    <Ui.Components.Card.Container>
+      <Ui.Components.Card.Header>
+        <Ui.Components.Card.Title>
+          Balance Range
+        </Ui.Components.Card.Title>
+        <Ui.Components.Card.Subtitle>
+          Lowest to highest
+        </Ui.Components.Card.Subtitle>
+      </Ui.Components.Card.Header>
       <Chart data={[start, lowest, highest, end]} />
-    </section>
+    </Ui.Components.Card.Container>
   );
 };
-
-const styles = tw({
-  container: `
-    flex flex-col
-    mt-5
-    text-sm
-  `,
-  header: `
-    text-sm
-  `,
-  text: `
-    mb-3
-    text-sm text-current/62.5
-  `,
-});

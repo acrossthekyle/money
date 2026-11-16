@@ -1,4 +1,4 @@
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import type { Budget, Dateable } from '@/types';
 import Ui from '@/ui';
 
@@ -25,7 +25,7 @@ export default function Heading({
         <h2 id="drawer-header">
           Manage {budget.name} Transaction
         </h2>
-        <p className={styles.lid}>
+        <p className={cs(styles.lid, styles.spacer)}>
           <span className={styles.capitalize}>{budget.schedule} {budget.category}</span> on {date.display}
         </p>
       </>
@@ -60,6 +60,9 @@ const styles = tw({
     text-current/62.5
 
     sm:text-sm
+  `,
+  spacer: `
+    mb-3
   `,
   capitalize: `
     capitalize

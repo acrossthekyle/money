@@ -23,12 +23,9 @@ export default function Toggle() {
 
 const styles = tw({
   container: `
-    p-2
   `,
   icon: `
     size-5
-    stroke-1
-
-    sm:size-4.5
+    stroke-2
   `,
 });

@@ -12,7 +12,6 @@ const styles = tw({
   container: `
     flex flex-col
     w-full
-    h-full min-h-svh
     antialiased
     bg-(--background)
     text-(--foreground)

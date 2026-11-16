@@ -3,12 +3,12 @@
 import Ui from '@/ui';
 
 import Exit from './exit';
-import Header from './header';
 import Links from './links';
 import { useModel } from './model';
 
 export default function Drawer() {
   const {
+    active,
     handleOnAdd,
     holdings,
     instance,
@@ -28,11 +28,8 @@ export default function Drawer() {
     >
       <Ui.Drawer.Inner isMenu>
         <Ui.Drawer.Content isActive={isActive} isMenu>
-          <Ui.Drawer.Header onClose={onClose}>
-            <Header />
-          </Ui.Drawer.Header>
           <Ui.Drawer.Body>
-            <Links holdings={holdings} onClick={onClose} />
+            <Links active={active} holdings={holdings} onClick={onClose} />
           </Ui.Drawer.Body>
           <Ui.Drawer.Footer>
             <Ui.Components.Button isPrimary onClick={handleOnAdd}>

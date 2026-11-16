@@ -1,5 +1,5 @@
-import tw from '@/styles';
 import type { CalendarDay, Dateable } from '@/types';
+import Ui from '@/ui';
 
 import Days from './days';
 import Navigation from './navigation';
@@ -11,34 +11,19 @@ type Props = {
 
 export default function Calendar({ date, days }: Props) {
   return (
-    <>
-      <h3 className={styles.header}>
-        Calendar Forecast
-      </h3>
-      <p className={styles.text}>
-        Select a date to view scheduled transactions
-      </p>
-      <div className={styles.container}>
+    <Ui.Components.Card.Container>
+      <Ui.Components.Card.Header>
+        <Ui.Components.Card.Title>
+          Monthly Forecast
+        </Ui.Components.Card.Title>
+        <Ui.Components.Card.Subtitle>
+          Select a date to view scheduled transactions
+        </Ui.Components.Card.Subtitle>
+      </Ui.Components.Card.Header>
+      <Ui.Components.Card.Content>
         <Navigation date={date} />
         <Days date={date} days={days} />
-      </div>
-    </>
+      </Ui.Components.Card.Content>
+    </Ui.Components.Card.Container>
   );
 };
-
-const styles = tw({
-  container: `
-    p-2
-    rounded-xl
-    bg-neutral-200/62.5
-
-    dark:bg-neutral-800/62.5
-  `,
-  header: `
-    text-sm
-  `,
-  text: `
-    mb-3
-    text-sm text-current/62.5
-  `,
-});

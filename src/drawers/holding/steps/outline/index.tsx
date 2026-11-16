@@ -40,53 +40,48 @@ export default function Section({
         <Updated updated={holding?.updated} zone={zone} />
         <Ui.Form.Outline>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Type</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>
-              {upperFirst(data.type.replace(/_/g, ' '))}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('type')}>
-              Change
+              <Ui.Form.OutlineItemHeading>Type</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {upperFirst(data.type.replace(/_/g, ' '))}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>{data.name}</Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('name')}>
-              Change
+              <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>{data.name}</Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>
-              Current balance
-            </Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>
-              {Number(data.balance) < 0 ? '-' : ''}${currency(data.balance)}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('balance')}>
-              Change
+              <Ui.Form.OutlineItemHeading>
+                Current balance
+              </Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {Number(data.balance) < 0 ? '-' : ''}${currency(data.balance)}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           {data.type === 'credit_card' && (
             <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineItemHeading>
-                Balance limit
-              </Ui.Form.OutlineItemHeading>
-              <Ui.Form.OutlineItemText>
-                ${currency(data.limit)}
-              </Ui.Form.OutlineItemText>
               <Ui.Form.OutlineAction onClick={() => onEdit('limit')}>
-                Change
+                <Ui.Form.OutlineItemHeading>
+                  Balance limit
+                </Ui.Form.OutlineItemHeading>
+                <Ui.Form.OutlineItemText>
+                  ${currency(data.limit)}
+                </Ui.Form.OutlineItemText>
               </Ui.Form.OutlineAction>
             </Ui.Form.OutlineItem>
           )}
           {data.type !== 'credit_card' && (
             <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineItemHeading>Interest</Ui.Form.OutlineItemHeading>
-              <Ui.Form.OutlineItemText>
-                {!!data.interest ? currency(data.interest) : '0.00'} %
-              </Ui.Form.OutlineItemText>
               <Ui.Form.OutlineAction onClick={() => onEdit('interest')}>
-                Change
+                <Ui.Form.OutlineItemHeading>Interest</Ui.Form.OutlineItemHeading>
+                <Ui.Form.OutlineItemText>
+                  {!!data.interest ? currency(data.interest) : '0.00'} %
+                </Ui.Form.OutlineItemText>
               </Ui.Form.OutlineAction>
             </Ui.Form.OutlineItem>
           )}

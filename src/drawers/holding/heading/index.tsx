@@ -1,4 +1,4 @@
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 import type { Holding } from '@/types';
 import Ui from '@/ui';
 
@@ -33,7 +33,7 @@ export default function Heading({
       <h2 id="drawer-header">
         Add to portfolio
       </h2>
-      <p className={styles.lid}>
+      <p className={cs(styles.lid, styles.spacer)}>
         {step === total ? `Review` : `Step ${step + 1}`}
       </p>
       <Ui.Form.Back
@@ -54,6 +54,9 @@ const styles = tw({
     text-current/62.5
 
     sm:text-sm
+  `,
+  spacer: `
+    mb-3
   `,
   capitalize: `
     capitalize

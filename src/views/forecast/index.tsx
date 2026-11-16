@@ -32,11 +32,9 @@ export default function View() {
 
 const styles = tw({
   container: `
+    flex flex-col gap-4
     p-4
-    rounded-2xl
-    bg-zinc-50
-    border border-current/7.5
 
-    dark:bg-neutral-900
+    xs:px-0
   `,
 });

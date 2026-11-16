@@ -1,6 +1,7 @@
 'use client';
 
 import tw, { cs } from '@/styles';
+import Ui from '@/ui';
 
 type Props = {
   isClickable: boolean;
@@ -14,20 +15,24 @@ export default function Wrapper({
 }: React.PropsWithChildren<Props>) {
   if (isClickable) {
     return (
-      <button
-        className={cs(styles.container, styles.hoverable)}
-        onClick={onClick}
-        type="button"
-      >
-        {children}
-      </button>
+      <Ui.Components.Card.Content isPadded={false}>
+        <button
+          className={cs(styles.container, styles.hoverable)}
+          onClick={onClick}
+          type="button"
+        >
+          {children}
+        </button>
+      </Ui.Components.Card.Content>
     );
   }
 
   return (
-    <span className={styles.container}>
-      {children}
-    </span>
+    <Ui.Components.Card.Content isPadded={false}>
+      <span className={styles.container}>
+        {children}
+      </span>
+    </Ui.Components.Card.Content>
   );
 };
 
@@ -35,13 +40,9 @@ const styles = tw({
   container: `
     group
     relative
-    flex flex-col items-start
+    flex flex-col items-start gap-1
     p-4
-    rounded-xl
     w-full
-    bg-neutral-200/62.5
-
-    dark:bg-neutral-800/62.5
   `,
   hoverable: `
     motion-safe:duration-200

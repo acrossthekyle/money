@@ -13,7 +13,7 @@ export default function Theme() {
 
   return (
     <Ui.Components.Switch isActive={theme === 'light'} onChange={handleOnTheme}>
-      Lights
+      {theme === 'light' ? 'Disable' : 'Enable'} light mode
     </Ui.Components.Switch>
   );
 };

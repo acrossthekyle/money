@@ -8,7 +8,7 @@ type Balances = {
 
 export function getChange(current: number, next: number) {
   if (current === 0) {
-    return next === 0 ? 0 : Infinity;
+    return next === 0 ? 0 : '+100';
   }
 
   const change = ((next - current) / Math.abs(current)) * 100;

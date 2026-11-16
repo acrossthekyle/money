@@ -18,7 +18,7 @@ export default async function Layout({
       <ToastProvider>
         <StoreProvider data={data}>
           <Menu />
-          <Header isAuthenticated={true} />
+          <Header />
           <Main>
             {children}
           </Main>

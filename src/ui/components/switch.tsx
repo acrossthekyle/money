@@ -14,6 +14,7 @@ export default function Switch({
 }: React.PropsWithChildren<Props>) {
   return (
     <div className={styles.container}>
+      <span className={styles.text}>{children}</span>
       <label className={styles.label}>
         <input
           checked={isActive}
@@ -24,7 +25,6 @@ export default function Switch({
         <div className={styles.bar} />
         <span className={styles.circle} />
       </label>
-      <span className={styles.text}>{children}</span>
     </div>
   );
 };
@@ -34,14 +34,14 @@ const styles = tw({
     flex flex-wrap items-center justify-center space-x-2.5
   `,
   text: `
-    text-sm text-current/92.5
+    text-sm
   `,
   label: `
     relative
     inline-flex items-center gap-2.5
     cursor-pointer
     capitalize
-    outline outline-(--foreground)/92.5
+    outline outline-(--foreground)/82.5
     rounded-full
   `,
   checkbox: `
@@ -59,7 +59,7 @@ const styles = tw({
   circle: `
     absolute left-0.5 top-0.5
     w-2.75 h-2.75
-    bg-(--foreground)/92.5
+    bg-(--foreground)/82.5
     rounded-full
 
     motion-safe:transition-transform

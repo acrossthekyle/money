@@ -9,16 +9,14 @@ export default function Text({
   children,
 }: React.PropsWithChildren<Props>) {
   return (
-    <p className={cs(styles.container, capitalize && styles.capitalize)}>
+    <span className={cs(styles.container, capitalize && styles.capitalize)}>
       {children}
-    </p>
+    </span>
   );
 };
 
 const styles = tw({
   container: `
-    text-current/62.5
-
     sm:text-sm
   `,
   capitalize: `
