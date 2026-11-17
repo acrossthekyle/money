@@ -19,10 +19,17 @@ export function useMenu() {
     context.onDrawer('menu');
   };
 
+  const stackIndex = context.stack.indexOf('menu');
+  const isActive = stackIndex !== -1;
+  const isBase = stackIndex === 0;
+  const isDecked = isActive && stackIndex < context.stack.length - 1;
+
   return {
     ...context,
     instance,
-    isActive: context.isOpen && context.drawer === 'menu',
+    isActive,
+    isBase,
+    isDecked,
     onMenu: handleOnOpen,
   };
 }

@@ -6,7 +6,7 @@ type Props = {
   id: string;
   instance: (node: HTMLDialogElement | null) => void;
   isActive: boolean;
-  isLeft?: boolean;
+  isBase?: boolean;
   onBackdrop: (event: React.MouseEvent<HTMLDialogElement>) => void;
   onCancel: (event: React.KeyboardEvent<HTMLDialogElement>) => void;
 };
@@ -16,18 +16,18 @@ export default function Container({
   id,
   instance,
   isActive,
+  isBase = true,
   onBackdrop,
   onCancel,
 }: React.PropsWithChildren<Props>) {
   return (
     <dialog
       aria-labelledby="drawer-header"
-      className={
-        cs(
-          styles.container,
-          isActive && 'is-active',
-        )
-      }
+      className={cs(
+        styles.container,
+        isBase ? styles.baseBackdrop : styles.stackedBackdrop,
+        isActive && 'is-active',
+      )}
       closedby="none"
       id={id}
       onClick={onBackdrop}
@@ -45,11 +45,17 @@ const styles = tw({
     w-full max-w-full
     h-full max-h-none
     m-0 p-0
-    bg-(--background)/32.5
     outline-none
     overflow-hidden
-    backdrop-blur-sm
+    transition-colors duration-200
 
     backdrop:hidden
+  `,
+  baseBackdrop: `
+    bg-(--background)/32.5
+    backdrop-blur-sm
+  `,
+  stackedBackdrop: `
+    bg-transparent
   `,
 });

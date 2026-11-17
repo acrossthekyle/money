@@ -13,6 +13,8 @@ export default function Drawer() {
     holdings,
     instance,
     isActive,
+    isBase,
+    isDecked,
     onBackdrop,
     onCancel,
     onClose,
@@ -23,11 +25,12 @@ export default function Drawer() {
       id="menu-drawer"
       instance={instance}
       isActive={isActive}
+      isBase={isBase}
       onBackdrop={onBackdrop}
       onCancel={onCancel}
     >
       <Ui.Drawer.Inner isMenu>
-        <Ui.Drawer.Content isActive={isActive} isMenu>
+        <Ui.Drawer.Content isActive={isActive} isDecked={isDecked} isMenu>
           <Ui.Drawer.Body>
             <Links active={active} holdings={holdings} onClick={onClose} />
           </Ui.Drawer.Body>

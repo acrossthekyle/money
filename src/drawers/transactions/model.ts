@@ -9,24 +9,20 @@ import {
 export function useModel() {
   const { onBudget } = useBudget();
   const { budgets, forecasts } = useStore();
-  const { instance, isActive, onBackdrop, onCancel, onClose } = useTransactions();
+  const { instance, isActive, isBase, isDecked, onBackdrop, onCancel, onClose } = useTransactions();
 
   const day = forecasts.selectCalendarDay();
 
   const handleOnAdd = () => {
     budgets.setId('');
 
-    onClose();
-
-    onBudget('transactions-drawer');
+    onBudget();
   };
 
   const handleOnEdit = (id: string) => {
     budgets.setId(id);
 
-    onClose();
-
-    onBudget('transactions-drawer');
+    onBudget();
   };
 
   return {
@@ -35,6 +31,8 @@ export function useModel() {
     handleOnEdit,
     instance,
     isActive,
+    isBase,
+    isDecked,
     onBackdrop,
     onCancel,
     onClose,

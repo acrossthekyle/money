@@ -33,6 +33,8 @@ export default function Drawer() {
     holdings,
     instance,
     isActive,
+    isBase,
+    isDecked,
     isEditing,
     onBackdrop,
     onCancel,
@@ -45,11 +47,12 @@ export default function Drawer() {
       id="budget-drawer"
       instance={instance}
       isActive={isActive}
+      isBase={isBase}
       onBackdrop={onBackdrop}
       onCancel={onCancel}
     >
       <Ui.Drawer.Inner>
-        <Ui.Drawer.Content isActive={isActive}>
+        <Ui.Drawer.Content isActive={isActive} isDecked={isDecked}>
           <Ui.Drawer.Header>
             <Heading
               budget={budget}

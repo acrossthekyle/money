@@ -16,7 +16,7 @@ const DEFAULT_DATA = {
 };
 
 export function useModel() {
-  const { instance, isActive, onBackdrop, onCancel, onClose } = useHolding();
+  const { instance, isActive, isBase, isDecked, onBackdrop, onCancel, onClose } = useHolding();
   const { date, forecasts, holdings } = useStore();
   const { onToast } = useToasts();
 
@@ -136,6 +136,8 @@ export function useModel() {
     holding,
     instance,
     isActive,
+    isBase,
+    isDecked,
     isEditing,
     isPending,
     onBackdrop,

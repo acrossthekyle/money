@@ -19,10 +19,17 @@ export function useHolding() {
     context.onDrawer('holding');
   };
 
+  const stackIndex = context.stack.indexOf('holding');
+  const isActive = stackIndex !== -1;
+  const isBase = stackIndex === 0;
+  const isDecked = isActive && stackIndex < context.stack.length - 1;
+
   return {
     ...context,
     instance,
-    isActive: context.isOpen && context.drawer === 'holding',
+    isActive,
+    isBase,
+    isDecked,
     onHolding: handleOnOpen,
   };
 }

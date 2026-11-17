@@ -3,7 +3,7 @@
 import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/budgets/put';
-import { useBudget, useStore, useToasts, useTransactions } from '@/hooks';
+import { useBudget, useStore, useToasts } from '@/hooks';
 import { BudgetPutActionInputApplysTo } from '@/types';
 
 import type { Data } from './types';
@@ -23,9 +23,8 @@ const DEFAULT_DATA = {
 export function useModel() {
   const { onDelete } = useDelete();
   const { date, budgets, forecasts, holdings } = useStore();
-  const { instance, isActive, onBackdrop, onCancel, onClose, referrer } = useBudget();
+  const { instance, isActive, isBase, isDecked, onBackdrop, onCancel, onClose } = useBudget();
   const { onToast } = useToasts();
-  const { onTransactions } = useTransactions();
 
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
@@ -72,10 +71,6 @@ export function useModel() {
       });
 
       onClose();
-
-      if (referrer === 'transactions-drawer') {
-        onTransactions();
-      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
@@ -138,10 +133,6 @@ export function useModel() {
     onClose();
 
     budgets.setId('');
-
-    if (referrer === 'transactions-drawer') {
-      onTransactions();
-    }
   };
 
   const handleOnContinue = () => {
@@ -168,6 +159,8 @@ export function useModel() {
     holdings: holdings.select(),
     instance,
     isActive,
+    isBase,
+    isDecked,
     isEditing,
     onBackdrop,
     onCancel,

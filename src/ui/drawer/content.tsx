@@ -3,26 +3,26 @@ import tw, { cs } from '@/styles';
 type Props = {
   isActive: boolean;
   isMenu?: boolean;
+  isDecked?: boolean;
 };
 
 export default function Content({
   children,
   isActive,
+  isDecked = false,
   isMenu,
 }: React.PropsWithChildren<Props>) {
   return (
     <div
-      className={
-        cs(
-          styles.container,
-          isMenu ? styles.menu(isActive) : styles.modal(isActive),
-        )
-      }
+      className={cs(
+        styles.container,
+        isMenu ? styles.menu(isActive) : styles.modal(isActive, isDecked),
+      )}
     >
       {children}
     </div>
   );
-};
+}
 
 const styles = tw({
   container: `
@@ -35,8 +35,9 @@ const styles = tw({
     overflow-hidden
     overscroll-contain
     pointer-events-auto
+    origin-right
 
-    motion-safe:duration-200
+    motion-safe:transition-all motion-safe:duration-200
 
     dark:bg-neutral-900
 
@@ -49,14 +50,13 @@ const styles = tw({
 
     sm:border-r
   `),
-  modal: (isActive: boolean) => tw(`
+  modal: (isActive: boolean, isDecked: boolean) => tw(`
     rounded-2xl
     ml-auto
-
-    ${isActive
-      ? `opacity-100 translate-x-0`
-      : `opacity-0 translate-x-24`}
-
     border
+
+    ${!isActive && `opacity-0 translate-x-24 scale-100`}
+    ${isActive && !isDecked && `opacity-100 translate-x-0 scale-100`}
+    ${isActive && isDecked && `opacity-100 -translate-x-13 scale-90`}
   `),
 });

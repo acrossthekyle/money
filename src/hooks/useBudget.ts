@@ -15,15 +15,21 @@ export function useBudget() {
     context.onRegister('budget', node);
   }, [context]);
 
-  const handleOnOpen = (referrer?: string) => {
+  const handleOnOpen = () => {
     context.onDrawer('budget');
-    context.onReferred(referrer);
   };
+
+  const stackIndex = context.stack.indexOf('budget');
+  const isActive = stackIndex !== -1;
+  const isBase = stackIndex === 0;
+  const isDecked = isActive && stackIndex < context.stack.length - 1;
 
   return {
     ...context,
     instance,
-    isActive: context.isOpen && context.drawer === 'budget',
+    isActive,
+    isBase,
+    isDecked,
     onBudget: handleOnOpen,
   };
 }

@@ -19,10 +19,17 @@ export function useTransactions() {
     context.onDrawer('transactions');
   };
 
+  const stackIndex = context.stack.indexOf('transactions');
+  const isActive = stackIndex !== -1;
+  const isBase = stackIndex === 0;
+  const isDecked = isActive && stackIndex < context.stack.length - 1;
+
   return {
     ...context,
     instance,
-    isActive: context.isOpen && context.drawer === 'transactions',
+    isActive,
+    isBase,
+    isDecked,
     onTransactions: handleOnOpen,
   };
 }

@@ -13,6 +13,8 @@ export default function Drawer() {
     handleOnEdit,
     instance,
     isActive,
+    isBase,
+    isDecked,
     onBackdrop,
     onCancel,
     onClose,
@@ -23,11 +25,12 @@ export default function Drawer() {
       id="transactions-drawer"
       instance={instance}
       isActive={isActive}
+      isBase={isBase}
       onBackdrop={onBackdrop}
       onCancel={onCancel}
     >
       <Ui.Drawer.Inner>
-        <Ui.Drawer.Content isActive={isActive}>
+        <Ui.Drawer.Content isActive={isActive} isDecked={isDecked}>
           <Ui.Drawer.Header>
             {day !== undefined && (
               <Heading day={day} />

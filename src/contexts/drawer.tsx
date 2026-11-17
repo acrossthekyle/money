@@ -12,50 +12,61 @@ import {
 } from 'react';
 
 type DrawerContextType = {
-  drawer: string;
   isOpen: boolean;
   onBackdrop: (event: MouseEvent<HTMLDialogElement>) => void;
   onCancel: (event: KeyboardEvent<HTMLDialogElement>) => void;
   onClose: () => void;
   onDrawer: (name: string) => void;
-  onReferred: (value?: string) => void;
   onRegister: (name: string, node: HTMLDialogElement | null) => void;
-  referrer?: string;
+  stack: string[];
 };
 
 export const DrawerContext = createContext<DrawerContextType | null>(null);
 
 export default function DrawerProvider({ children }: PropsWithChildren) {
-  const [drawer, setDrawer] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [referrer, setReferrer] = useState<string | undefined>(undefined);
+  // Tracks active visual state (determines enter/exit animations & depth)
+  const [stack, setStack] = useState<string[]>([]);
+  // Tracks which <dialog> nodes currently have .showModal() active
+  const [openDrawers, setOpenDrawers] = useState<string[]>([]);
 
   const refs = useRef<Record<string, HTMLDialogElement | null>>({});
 
+  const isOpen = openDrawers.length > 0;
+  const topDrawer = stack[stack.length - 1];
+
   const handleOnClose = useCallback(() => {
-    const activeNode = refs.current[drawer];
-
-    setIsOpen(false);
-    setDrawer('');
-    setReferrer(undefined);
-
-    if (!activeNode) {
+    if (stack.length === 0) {
       return;
     }
 
-    const handleTransitionEnd = () => {
-      activeNode.close();
+    const closingName = stack[stack.length - 1];
+    const closingNode = refs.current[closingName];
+
+    setStack(previous => previous.slice(0, -1));
+
+    if (!closingNode) {
+      setOpenDrawers(previous => previous.filter((item) => item !== closingName));
+
+      return;
+    }
+
+    const handleTransitionEnd = (event: TransitionEvent) => {
+      if (event.target !== closingNode && !closingNode.contains(event.target as Node)) {
+        return;
+      }
+
+      closingNode.close();
+
+      setOpenDrawers(previous => previous.filter((item) => item !== closingName));
+
+      closingNode.removeEventListener('transitionend', handleTransitionEnd);
     };
 
-    activeNode.addEventListener('transitionend', handleTransitionEnd, {
-      once: true,
-    });
-  }, [drawer]);
+    closingNode.addEventListener('transitionend', handleTransitionEnd);
+  }, [stack]);
 
   const handleOnEscape = useCallback((event: WindowEventMap['keyup']) => {
-    const activeNode = refs.current[drawer];
-
-    if (!activeNode) {
+    if (!topDrawer) {
       return;
     }
 
@@ -64,7 +75,7 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
 
       handleOnClose();
     }
-  }, [drawer, handleOnClose]);
+  }, [topDrawer, handleOnClose]);
 
   useLayoutEffect(() => {
     if (isOpen) {
@@ -87,15 +98,22 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
       return;
     }
 
-    activeNode.showModal();
+    if (stack.includes(name)) {
+      return;
+    }
+
+    if (!activeNode.open) {
+      activeNode.showModal();
+    }
+
+    setOpenDrawers(previous => [...previous, name]);
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        setIsOpen(true);
-        setDrawer(name);
+        setStack(previous => [...previous, name]);
       });
     });
-  }, []);
+  }, [stack]);
 
   const handleOnCancel = useCallback((event: React.SyntheticEvent<HTMLDialogElement>) => {
     event.preventDefault();
@@ -104,29 +122,25 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
   }, [handleOnClose]);
 
   const handleOnBackdrop = useCallback((event: MouseEvent<HTMLDialogElement>) => {
-    const activeNode = refs.current[drawer];
+    const activeNode = topDrawer ? refs.current[topDrawer] : null;
 
     if (event.target === activeNode) {
       handleOnClose();
     }
-  }, [drawer, handleOnClose]);
-
-  const handleOnReferred = useCallback((value?: string) => {
-    setReferrer(value);
-  }, []);
+  }, [topDrawer, handleOnClose]);
 
   return (
-    <DrawerContext.Provider value={{
-      drawer,
-      isOpen,
-      onBackdrop: handleOnBackdrop,
-      onCancel: handleOnCancel,
-      onClose: handleOnClose,
-      onDrawer: handleOnOpen,
-      onReferred: handleOnReferred,
-      onRegister: handleOnRegister,
-      referrer,
-    }}>
+    <DrawerContext.Provider
+      value={{
+        isOpen,
+        onBackdrop: handleOnBackdrop,
+        onCancel: handleOnCancel,
+        onClose: handleOnClose,
+        onDrawer: handleOnOpen,
+        onRegister: handleOnRegister,
+        stack,
+      }}
+    >
       {children}
     </DrawerContext.Provider>
   );

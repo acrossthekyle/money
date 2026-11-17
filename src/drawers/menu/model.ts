@@ -4,7 +4,7 @@ import { useHolding, useMenu, useStore } from '@/hooks';
 
 export function useModel() {
   const { onHolding } = useHolding();
-  const { instance, isActive, onBackdrop, onCancel, onClose } = useMenu();
+  const { instance, isActive, isBase, isDecked, onBackdrop, onCancel, onClose } = useMenu();
   const { holdings } = useStore();
 
   const items = holdings.select();
@@ -23,6 +23,8 @@ export function useModel() {
     holdings: items,
     instance,
     isActive,
+    isBase,
+    isDecked,
     onBackdrop,
     onCancel,
     onClose,
