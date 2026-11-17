@@ -28,6 +28,11 @@ export default function Heading({
         <p className={cs(styles.lid, styles.spacer)}>
           <span className={styles.capitalize}>{budget.schedule} {budget.category}</span> on {date.display}
         </p>
+        {step > 0 && (
+          <Ui.Form.Back
+            onBack={onBack}
+          />
+        )}
       </>
     );
   }

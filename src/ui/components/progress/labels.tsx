@@ -15,6 +15,7 @@ const styles = tw({
     flex items-center justify-between
     w-full
     pt-2
-    text-sm
+
+    sm:text-sm
   `,
 })

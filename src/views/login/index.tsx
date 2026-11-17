@@ -74,11 +74,6 @@ const styles = tw({
     -translate-y-1/2 -translate-x-1/2
     w-full max-w-xs
     p-4
-    bg-zinc-50
-    rounded-3xl
-    border border-current/7.5
-
-    dark:bg-neutral-900
   `,
   header: `
     flex flex-col items-center

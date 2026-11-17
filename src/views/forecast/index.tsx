@@ -2,8 +2,9 @@
 
 import tw from '@/styles';
 
-import Calendar from './calendar';
 import Balances from './balances';
+import Calendar from './calendar';
+import Delete from './delete';
 import Flow from './flow';
 import Header from './header';
 import Projection from './projection';
@@ -26,6 +27,7 @@ export default function View() {
       <Upcoming days={days} />
       <Flow months={months} />
       <Projection months={months} />
+      <Delete holding={holding} />
     </div>
   );
 };

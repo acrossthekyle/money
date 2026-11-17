@@ -22,8 +22,11 @@ export default function Heading({
           {holding.name}
         </h2>
         <p className={styles.lid}>
-          {holding.type === 'property' ? 'Asset' : 'Account'}
+          Edit {holding.type === 'property' ? 'Asset' : 'Account'}
         </p>
+        {step > 0 && (
+          <Ui.Form.Back onBack={onBack} />
+        )}
       </>
     );
   }

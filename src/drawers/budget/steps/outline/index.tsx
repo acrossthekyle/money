@@ -116,9 +116,6 @@ export default function Section({
         </Ui.Form.Outline>
       </Ui.Drawer.Body>
       <Ui.Drawer.Footer>
-        <Ui.Form.Delete onClick={onDelete}>
-          Delete transaction and update forecast
-        </Ui.Form.Delete>
         <Ui.Components.Button
           isPrimary
           onClick={onContinue}
@@ -126,6 +123,9 @@ export default function Section({
           {budget?.schedule === 'once' ? 'Confirm & Update' : 'Next'}
         </Ui.Components.Button>
         {children}
+        <Ui.Form.Delete onClick={onDelete}>
+          Delete transaction and update forecast
+        </Ui.Form.Delete>
       </Ui.Drawer.Footer>
     </>
   );

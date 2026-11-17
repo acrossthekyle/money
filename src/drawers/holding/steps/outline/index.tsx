@@ -14,7 +14,6 @@ type Props = {
   data: Data;
   holding?: Holding;
   isActive: boolean;
-  onDelete: () => void;
   onEdit: (section: string) => void;
   onSubmit: () => void;
   zone: string;
@@ -25,7 +24,6 @@ export default function Section({
   data,
   holding,
   isActive,
-  onDelete,
   onEdit,
   onSubmit,
   zone,
@@ -88,9 +86,6 @@ export default function Section({
         </Ui.Form.Outline>
       </Ui.Drawer.Body>
       <Ui.Drawer.Footer>
-        <Ui.Form.Delete onClick={onDelete}>
-          Delete from portfolio, including all transactions
-        </Ui.Form.Delete>
         <Ui.Components.Button
           isPrimary
           onClick={onSubmit}

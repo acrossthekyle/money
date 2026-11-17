@@ -11,6 +11,7 @@ export default function Header({ children }: React.PropsWithChildren) {
 const styles = tw({
   container: `
     flex flex-col
-    text-sm
+
+    sm:text-sm
   `,
 });

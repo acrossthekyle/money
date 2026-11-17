@@ -50,7 +50,7 @@ const styles = tw({
   `,
   link: `
     relative
-    flex flex-col gap-1.5
+    flex flex-col gap-2
   `,
   name: `
     leading-[1]

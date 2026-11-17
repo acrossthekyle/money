@@ -34,7 +34,7 @@ const styles = tw({
     flex flex-wrap items-center justify-center space-x-2.5
   `,
   text: `
-    text-sm
+    sm:text-sm
   `,
   label: `
     relative

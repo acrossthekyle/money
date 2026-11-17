@@ -29,11 +29,13 @@ const styles = tw({
     bg-(--foreground)/5.5
     border border-(--foreground)/10.5
     outline-3 outline-transparent
-    rounded-md
+    rounded-lg
 
     motion-safe:duration-300
 
     focus:border-(--foreground)/62.5
     focus:outline-(--foreground)/32.5
+
+    md:text-sm
   `,
 });

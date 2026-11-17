@@ -35,7 +35,6 @@ const styles = tw({
     flex flex-col gap-1
     w-full
     p-3
-    mb-2
     rounded-xl
     select-none
     text-left

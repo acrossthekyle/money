@@ -6,7 +6,6 @@ import { put } from '@/actions/holdings/put';
 import { useHolding, useStore, useToasts } from '@/hooks';
 
 import type { Data } from './types';
-import { useDelete } from './useDelete';
 
 const DEFAULT_DATA = {
   type: '',
@@ -17,7 +16,6 @@ const DEFAULT_DATA = {
 };
 
 export function useModel() {
-  const { onDelete } = useDelete();
   const { instance, isActive, onBackdrop, onCancel, onClose } = useHolding();
   const { date, forecasts, holdings } = useStore();
   const { onToast } = useToasts();
@@ -132,11 +130,6 @@ export function useModel() {
     data,
     handleOnBack,
     handleOnCancel,
-    handleOnDelete: () => {
-      if (holding) {
-        onDelete(holding);
-      }
-    },
     handleOnEdit,
     handleOnNext,
     handleOnSubmit,

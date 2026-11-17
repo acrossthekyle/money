@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function Header({ days, holding }: Props) {
-  const { handleOnEdit, worth } = useModel();
+  const { handleOnBrowse, handleOnEdit, worth } = useModel();
 
   const today = days
     .find(({ dateable }) => dateable.isToday) ??
@@ -49,6 +49,9 @@ export default function Header({ days, holding }: Props) {
           </Ui.Components.Progress.Total>
         </Ui.Components.Progress.Labels>
       </Ui.Components.Progress.Container>
+      <Ui.Components.Button isGhost onClick={handleOnBrowse}>
+        Browse Portfolio
+      </Ui.Components.Button>
     </Ui.Components.Card.Container>
   );
 };

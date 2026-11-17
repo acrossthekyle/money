@@ -50,7 +50,9 @@ const styles = tw({
     w-full
     py-1 px-3
     bg-(--foreground)/5.5
-    rounded-md
+    rounded-lg
+
+    md:text-sm
   `,
   basic: `
     border border-(--foreground)/10.5
@@ -70,7 +72,7 @@ const styles = tw({
     absolute inset-0 z-1
     flex items-center
     px-3
-    rounded-md
+    rounded-lg
     pointer-events-none
     border border-(--foreground)/10.5
     outline-3 outline-transparent
@@ -80,6 +82,8 @@ const styles = tw({
 
     peer-focus:border-(--foreground)/62.5
     peer-focus:outline-(--foreground)/32.5
+
+    md:text-sm
   `,
   placeholder: `
     text-current/50
