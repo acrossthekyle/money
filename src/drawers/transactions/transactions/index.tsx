@@ -6,7 +6,6 @@ import tw, { cs } from '@/styles';
 import type { CalendarDay } from '@/types';
 import { currency } from '@/utils';
 
-import Icon from './icon';
 import { getItems } from './utils';
 import Wrapper from './wrapper';
 
@@ -27,27 +26,21 @@ export default function Transactions({ day, onEdit }: Props) {
               isClickable={!!item.id}
               onClick={() => onEdit(item.id)}
             >
-              <span className={styles.icon}>
-                <Icon type={item.icon} />
-              </span>
-              <span className={styles.info}>
-                <h4 className={styles.name}>
-                  {item.name}
-                </h4>
-                <p className={styles.details}>
-                  {item.isNegative ? (
-                    <ArrowUpRight className={cs(styles.arrow, styles.negative)} />
-                  ) : (
-                    <ArrowDownLeft className={cs(styles.arrow, styles.positive)} />
-                  )}
-                  <span>${currency(item.amount)}</span>
-                  <span>•</span>
-                  <span>
-                    <span className={styles.capitalize}>{item.schedule}</span> {item.category}
-                  </span>
-                  <ArrowRight className={styles.right} />
-                </p>
-              </span>
+              <h4 className={styles.name}>
+                {item.isNegative ? (
+                  <ArrowUpRight className={cs(styles.arrow, styles.negative)} />
+                ) : (
+                  <ArrowDownLeft className={cs(styles.arrow, styles.positive)} />
+                )}
+                <span>{item.name}</span>
+              </h4>
+              <p className={styles.details}>
+                ${currency(item.amount)}{' '}
+                •{' '}
+                <span className={styles.capitalize}>{item.schedule}</span>{' '}
+                {item.category}
+              </p>
+              <ArrowRight className={styles.right} />
             </Wrapper>
           </li>
         ))}
@@ -78,21 +71,15 @@ const styles = tw({
     border border-current/10.5
     rounded-xl
   `,
-  icon: `
-    mt-1.25
-
-    sm:mt-0.5
-  `,
-  info: `
-    relative
-    w-full
-  `,
   name: `
+    flex items-center gap-3
+    mb-1
     font-medium
 
     sm:text-sm
   `,
   arrow: `
+    shrink-0
     size-4.5
     stroke-2
 
@@ -107,9 +94,12 @@ const styles = tw({
     text-lime-600
   `,
   details: `
-    flex items-center gap-1
-    text-sm text-current/62.5
+    text-current/62.5
     lowercase
+    pl-7 pr-7
+    truncate
+
+    sm:text-sm
   `,
   capitalize: `
     capitalize
@@ -120,10 +110,12 @@ const styles = tw({
     sm:text-sm
   `,
   content: `
-    text-sm text-current/62.5
+    text-current/62.5
+
+    md:text-sm
   `,
   right: `
-    absolute top-1/2 right-0
+    absolute top-1/2 right-3
     -translate-y-1/2
     size-4
     stroke-2 stroke-(--foreground)

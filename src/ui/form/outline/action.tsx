@@ -32,10 +32,11 @@ export default function Action({
 
 const styles = tw({
   container: `
-    flex flex-col-reverse gap-1
+    flex flex-col gap-1
     w-full
     text-left
     select-none
+    outline-0
 
     motion-safe:duration-300
 

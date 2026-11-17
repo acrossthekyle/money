@@ -10,7 +10,7 @@ export default function Subtitle({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    text-current/62.5
+    text-base text-current/62.5
 
     sm:text-sm
   `,

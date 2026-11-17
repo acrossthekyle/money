@@ -82,14 +82,16 @@ const styles = tw({
   `,
   date: `
     capitalize
-    text-sm text-current/62.5
+    text-current/62.5
+
+    lg:text-sm
   `,
   amount: `
     absolute right-4
     flex items-center gap-2
-    px-2 py-1
+    px-3 py-1.25
     rounded-full
-    text-xs
+    text-sm
     font-medium
     bg-neutral-300/62.5
 
@@ -97,6 +99,7 @@ const styles = tw({
 
     xs:top-1/2
     xs:-translate-y-1/2
+    lg:text-xs
   `,
   arrow: `
     size-4.5

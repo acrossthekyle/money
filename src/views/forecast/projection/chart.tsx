@@ -63,7 +63,7 @@ export default function Chart({ balances }: Props) {
           plotOptions: {
             bar: {
               horizontal: false,
-              columnWidth: '65%',
+              columnWidth: '70%',
               borderRadius: 3,
               borderRadiusApplication: 'end',
             },
@@ -82,8 +82,8 @@ export default function Chart({ balances }: Props) {
             show: false,
             padding: {
               top: -14,
-              bottom: 0,
-              right: -4,
+              bottom: -16,
+              right: -6,
               left: 0,
             },
           },
@@ -103,8 +103,8 @@ export default function Chart({ balances }: Props) {
               show: true,
               offsetY: -4,
               style: {
-                colors: 'var(--foreground)',
-                fontSize: '10px',
+                colors: 'transparent',
+                fontSize: '1rem',
                 fontFamily: 'inherit',
               },
               formatter: (value: string) => value.split('')[0],
@@ -148,6 +148,11 @@ export default function Chart({ balances }: Props) {
         type="bar"
         height="100%"
       />
+      <ul className={styles.labels}>
+        {categories.map((category, index) => (
+          <li key={index}>{category.split('')[0]}</li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -197,6 +202,15 @@ const styles = tw({
   `,
   positive: `
     text-green-500 dark:text-lime-500
+  `,
+  labels: `
+    absolute bottom-1 left-2.5 right-2.5 z-1000
+    flex justify-between
+    text-sm text-(--foreground)
+
+    lg:text-xs
+    lg:right-3
+    lg:left-3
   `,
 });
 

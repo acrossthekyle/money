@@ -57,7 +57,7 @@ const styles = tw({
   `,
   body: `
     block
-    pl-7
+    pl-7 pr-12
     text-current/62.5
 
     sm:text-sm

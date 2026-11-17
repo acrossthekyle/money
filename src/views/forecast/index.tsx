@@ -35,8 +35,9 @@ export default function View() {
 const styles = tw({
   container: `
     flex flex-col gap-4
-    p-4
+    p-4 pt-0
 
     xs:px-0
+    md:pt-4
   `,
 });

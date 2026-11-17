@@ -79,8 +79,7 @@ const styles = tw({
     flex items-center justify-center
     aspect-square
     rounded-lg
-
-    sm:text-sm
+    text-sm
   `,
   faded: `
     text-current/90
@@ -123,9 +122,10 @@ const styles = tw({
     group-hover:!dark:text-(--foreground)
   `,
   balance: `
-    text-[min(2vw,0.9rem)] text-current/72.5
+    hidden
+    text-tiny text-current/72.5
 
-    xs:text-tiny
+    lg:block
   `,
   negative: `
     !text-red-400

@@ -33,7 +33,6 @@ export default function Wrapper({
 
 const styles = tw({
   container: `
-    flex gap-3
     w-full
     p-3
     rounded-xl
@@ -43,6 +42,7 @@ const styles = tw({
 
     motion-safe:duration-300
 
-    hover:bg-(--background)/5.5
+    hover:bg-zinc-200/62.5
+    hover:dark:bg-neutral-900/62.5
   `,
 });

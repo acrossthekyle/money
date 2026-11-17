@@ -71,11 +71,12 @@ const styles = tw({
   heading: `
     flex items-center justify-between
     w-full
-    text-sm
+
+    lg:text-sm
   `,
   amount: `
     my-1
-    text-lg
+    text-xl
 
     sm:text-base
   `,

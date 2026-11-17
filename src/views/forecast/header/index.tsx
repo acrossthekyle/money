@@ -59,9 +59,14 @@ export default function Header({ days, holding }: Props) {
 const styles = tw({
   header: `
     flex flex-col
+    text-lg
+
+    md:text-base
   `,
   balance: `
     mb-2
-    text-lg
+    text-xl
+
+    lg:text-lg
   `,
 })
