@@ -59,7 +59,7 @@ const styles = tw({
     ${isActive && !isDecked && `opacity-100 scale-100 translate-y-0`}
     ${isActive && isDecked && `opacity-0 scale-95 translate-y-24`}
 
-    sm:max-w-xs
+    sm:max-w-sm
   `),
   menu: (isActive: boolean, isDecked: boolean) => tw(`
     origin-left
