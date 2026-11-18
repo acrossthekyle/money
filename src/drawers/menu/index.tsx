@@ -7,7 +7,6 @@ import { useModel } from './model';
 
 export default function Drawer() {
   const {
-    active,
     handleOnAdd,
     handleOnSelect,
     holdings,
@@ -18,6 +17,7 @@ export default function Drawer() {
     onBackdrop,
     onCancel,
     onClose,
+    pinned,
   } = useModel();
 
   return (
@@ -32,11 +32,15 @@ export default function Drawer() {
       <Ui.Drawer.Inner>
         <Ui.Drawer.Content isActive={isActive} isDecked={isDecked} isMenu>
           <Ui.Drawer.Body>
-            <Links active={active} holdings={holdings} onClick={handleOnSelect} />
+            <Links
+              holdings={holdings}
+              onClick={handleOnSelect}
+              pinned={pinned}
+            />
           </Ui.Drawer.Body>
           <Ui.Drawer.Footer>
             <Ui.Components.Button isPrimary isSquared onClick={handleOnAdd}>
-              Add to Portfolio
+              Add Account/Asset
             </Ui.Components.Button>
             <Ui.Components.Button isGhost isSquared onClick={onClose}>
               Close

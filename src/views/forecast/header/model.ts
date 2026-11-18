@@ -1,7 +1,7 @@
 'use client';
 
 import { useHolding, useOptions, useStore } from '@/hooks';
-import type { Holding } from '@/types';
+import { netWorth } from '@/utils';
 
 export function useModel() {
   const { onHolding } = useHolding();
@@ -23,12 +23,6 @@ export function useModel() {
   return {
     handleOnEdit,
     handleOnMenu,
-    worth: items.reduce((accumulator: number, item: Holding) => {
-      if (item.type === 'credit_card') {
-        return accumulator - Number(item.balance);
-      }
-
-      return accumulator + Number(item.balance);
-    }, 0),
+    worth: netWorth(items),
   };
 }

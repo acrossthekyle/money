@@ -88,7 +88,7 @@ const styles = tw({
     sm:size-4
   `,
   negative: `
-    text-red-500
+    text-red-400
 
     dark:text-rose-400
   `,

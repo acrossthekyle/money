@@ -9,6 +9,7 @@ import { currency } from '@/utils';
 import type { Data } from '../../types';
 
 import Updated from './updated';
+import { getInterestName } from './utils';
 
 type Props = {
   data: Data;
@@ -76,7 +77,9 @@ export default function Section({
           {data.type !== 'credit_card' && (
             <Ui.Form.OutlineItem>
               <Ui.Form.OutlineAction onClick={() => onEdit('interest')}>
-                <Ui.Form.OutlineItemHeading>Interest</Ui.Form.OutlineItemHeading>
+                <Ui.Form.OutlineItemHeading>
+                  {getInterestName(data.type)}
+                </Ui.Form.OutlineItemHeading>
                 <Ui.Form.OutlineItemText>
                   {!!data.interest ? currency(data.interest) : '0.00'} %
                 </Ui.Form.OutlineItemText>

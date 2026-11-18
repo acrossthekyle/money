@@ -47,7 +47,7 @@ export default function Drawer() {
           </Ui.Drawer.Body>
           <Ui.Drawer.Footer>
             <Ui.Components.Button isPrimary isSquared onClick={handleOnBrowse}>
-              Browse Portfolio
+              View Accounts/Assets
             </Ui.Components.Button>
             <Exit />
           </Ui.Drawer.Footer>

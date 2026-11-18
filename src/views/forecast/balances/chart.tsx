@@ -197,10 +197,14 @@ const styles = tw({
     text-current/62.5
   `,
   negative: `
-    text-red-400 dark:text-rose-400
+    text-red-400
+
+    dark:text-rose-400
   `,
   positive: `
-    text-green-500 dark:text-lime-500
+    text-green-500
+
+    dark:text-lime-500
   `,
 });
 

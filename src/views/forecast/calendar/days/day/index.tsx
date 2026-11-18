@@ -85,9 +85,9 @@ const styles = tw({
     text-current/90
   `,
   today: `
-    !bg-(--foreground)/10.5
+    bg-(--foreground)/10.5
 
-    dark:!bg-(--foreground)/7.5
+    dark:bg-(--foreground)/7.5
   `,
   hoverable: `
     hover:bg-(--foreground)/5.5
@@ -129,5 +129,7 @@ const styles = tw({
   `,
   negative: `
     !text-red-400
+
+    dark:!text-rose-400
   `,
 });

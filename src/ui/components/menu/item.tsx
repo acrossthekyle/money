@@ -63,5 +63,7 @@ const styles = tw({
   `,
   destructive: `
     text-red-400
+
+    dark:text-rose-400
   `,
 });

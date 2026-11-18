@@ -8,10 +8,12 @@ export function useModel() {
   const { holdings } = useStore();
 
   const items = holdings.select();
+  const pinned = holdings.selectPinned();
 
   const handleOnAdd = () => {
     holdings.setNullable(true);
 
+    onReset();
     onHolding();
   };
 
@@ -20,7 +22,6 @@ export function useModel() {
   };
 
   return {
-    active: holdings.selectId(),
     handleOnAdd,
     handleOnSelect,
     holdings: items,
@@ -31,5 +32,6 @@ export function useModel() {
     onBackdrop,
     onCancel,
     onClose,
+    pinned,
   };
 }

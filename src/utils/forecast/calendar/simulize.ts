@@ -39,7 +39,7 @@ export function simulize(
     for (let day = 1; day <= totalDays; day++) {
       const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
-      if (dateString > todayIso) {
+      if (dateString >= todayIso) {
         const matches = budgetsMap.get(dateString) || [];
 
         for (let i = 0; i < matches.length; i++) {

@@ -1,41 +1,32 @@
 'use client';
 
-import { Check, ChevronRight } from 'lucide-react';
-import Link from 'next/link';
-
 import tw from '@/styles';
 import type { Holding } from '@/types';
-import { currency } from '@/utils';
+import { netWorth } from '@/utils';
+
+import Link from './link';
+import Worth from './worth';
 
 type Props = {
-  active: string;
   holdings: Holding[];
   onClick: () => void;
+  pinned: string;
 };
 
-export default function Links({ active, holdings, onClick }: Props) {
+export default function Links({ holdings, onClick, pinned }: Props) {
+  const worth = netWorth(holdings);
+
   return (
     <nav>
       <ul className={styles.items}>
         {holdings.map((holding) => (
-          <li key={holding.id}>
+          <li className={styles.item} key={holding.id}>
             <Link
-              className={styles.link}
-              href={`/${holding.id}`}
+              holding={holding}
               onClick={onClick}
-            >
-              <span className={styles.name}>
-                {holding.name}
-              </span>
-              <span className={styles.type}>
-                {holding.type.replace(/_/g, ' ')} • ${currency(holding.balance, true)}
-              </span>
-              {active === holding.id ? (
-                <Check className={styles.check} />
-              ) : (
-                <ChevronRight className={styles.chevron} />
-              )}
-            </Link>
+              pinned={pinned}
+            />
+            <Worth holding={holding} worth={worth} />
           </li>
         ))}
       </ul>
@@ -45,33 +36,14 @@ export default function Links({ active, holdings, onClick }: Props) {
 
 const styles = tw({
   items: `
-    flex flex-col gap-5
-    mt-2
+    flex flex-col gap-3
   `,
-  link: `
-    relative
-    flex flex-col gap-2
-  `,
-  name: `
-    leading-[1]
-
-    sm:text-sm
-  `,
-  type: `
-    text-sm text-current/62.5
-    leading-[1]
-    capitalize
-  `,
-  chevron: `
-    absolute top-1/2 right-0
-    -translate-y-1/2
-    size-4.5
-    stroke-2
-  `,
-  check: `
-    absolute top-1/2 right-0
-    -translate-y-1/2
-    size-4
-    stroke-2
+  item: `
+    flex flex-col gap-4
+    w-full
+    p-3
+    rounded-xl
+    bg-(--background)/22.5
+    border border-current/10.5
   `,
 });

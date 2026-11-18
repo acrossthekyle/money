@@ -35,7 +35,7 @@ export function getHeaders(type: string) {
     return {
       balance: `What's the property asset currently worth?`,
       name: `Enter a name for the property asset`,
-      interest: `What's the anticipated rate of appreciation for the property asset?`,
+      interest: `What's the anticipated rate of appreciation, or depreciation?`,
     };
   }
 

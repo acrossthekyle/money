@@ -14,7 +14,7 @@ import {
 } from 'date-fns';
 
 import { DATE_DISPLAY_ABBREVIATED, DATE_ISO, DATE_URI } from '@/constants';
-import type { Dateable } from '@/types';
+import type { Dateable, Holding } from '@/types';
 
 export function pad(index: number, padding: number = 2) {
   return String(index).padStart(padding, '0');
@@ -96,3 +96,9 @@ export function dateable(
     zone,
   };
 };
+
+export function netWorth(holdings: Holding[]) {
+  return holdings.reduce((accumulator: number, holding: Holding) => {
+    return accumulator + Number(holding.balance);
+  }, 0);
+}
