@@ -4,6 +4,7 @@ import Ui from '@/ui';
 import { currency } from '@/utils';
 
 import type { Data } from '../../types';
+import { getInterestName } from '../utils';
 
 type Props = {
   data: Data;
@@ -51,10 +52,24 @@ export default function Section({
               </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
+          {data.type === 'credit_card' && (
+            <Ui.Form.OutlineItem>
+              <Ui.Form.OutlineAction onClick={() => onEdit('limit')}>
+                <Ui.Form.OutlineItemHeading>
+                  Balance limit
+                </Ui.Form.OutlineItemHeading>
+                <Ui.Form.OutlineItemText>
+                  ${currency(data.limit)}
+                </Ui.Form.OutlineItemText>
+              </Ui.Form.OutlineAction>
+            </Ui.Form.OutlineItem>
+          )}
           {data.type !== 'credit_card' && (
             <Ui.Form.OutlineItem>
               <Ui.Form.OutlineAction onClick={() => onEdit('interest')}>
-                <Ui.Form.OutlineItemHeading>Interest</Ui.Form.OutlineItemHeading>
+                <Ui.Form.OutlineItemHeading>
+                  {getInterestName(data.type)}
+                </Ui.Form.OutlineItemHeading>
                 <Ui.Form.OutlineItemText>
                   {!!data.interest ? `${Number(data.interest) < 0 ? '-' : ''}${currency(data.interest)}` : '0.00'} %
                 </Ui.Form.OutlineItemText>

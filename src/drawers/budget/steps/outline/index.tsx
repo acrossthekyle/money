@@ -60,7 +60,7 @@ export default function Section({
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('type')}>
+            <Ui.Form.OutlineAction onClick={() => onEdit('transferee')}>
               <Ui.Form.OutlineItemHeading>Transfer</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText>
                 {data.transferee ? (

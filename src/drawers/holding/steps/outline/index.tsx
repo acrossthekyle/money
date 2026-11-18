@@ -7,9 +7,9 @@ import Ui from '@/ui';
 import { currency } from '@/utils';
 
 import type { Data } from '../../types';
+import { getInterestName } from '../utils';
 
 import Updated from './updated';
-import { getInterestName } from './utils';
 
 type Props = {
   data: Data;
