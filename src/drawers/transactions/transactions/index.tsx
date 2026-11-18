@@ -40,7 +40,9 @@ export default function Transactions({ day, onEdit }: Props) {
                 <span className={styles.capitalize}>{item.schedule}</span>{' '}
                 {item.category}
               </p>
-              <ArrowRight className={styles.right} />
+              {!!item.id && (
+                <ArrowRight className={styles.right} />
+              )}
             </Wrapper>
           </li>
         ))}

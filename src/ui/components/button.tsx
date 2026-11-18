@@ -4,6 +4,7 @@ type Props = {
   isDisabled?: boolean;
   isGhost?: boolean;
   isPrimary?: boolean;
+  isSquared?: boolean;
   onClick?: () => void;
   type?: 'button' | 'submit';
 };
@@ -13,6 +14,7 @@ export default function Button({
   isDisabled,
   isGhost,
   isPrimary,
+  isSquared,
   onClick,
   type = 'submit',
 }: React.PropsWithChildren<Props>) {
@@ -23,6 +25,7 @@ export default function Button({
           styles.container,
           isPrimary && styles.primary,
           isGhost && styles.ghost,
+          isSquared ? styles.squared : styles.rounded,
         )
       }
       disabled={isDisabled}
@@ -39,7 +42,6 @@ const styles = tw({
     relative
     w-full
     py-1.25 px-3.5
-    rounded-full
     text-center
     whitespace-nowrap
     select-none
@@ -50,6 +52,12 @@ const styles = tw({
     disabled:!cursor-default
 
     sm:text-sm
+  `,
+  rounded: `
+    rounded-full
+  `,
+  squared: `
+    rounded-lg
   `,
   primary: `
     bg-(--foreground)

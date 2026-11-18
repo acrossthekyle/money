@@ -2,13 +2,15 @@ import tw, { cs } from '@/styles';
 
 type Props = {
   className?: string;
-  isMenu?: boolean;
+  isCard?: boolean;
+  isModal?: boolean;
 };
 
 export default function Inner({
   children,
   className = '',
-  isMenu,
+  isCard,
+  isModal,
 }: React.PropsWithChildren<Props>) {
   return (
     <div
@@ -16,7 +18,8 @@ export default function Inner({
         cs(
           styles.container,
           className,
-          !isMenu && styles.modal,
+          isCard && styles.card,
+          isModal && styles.modal,
         )
       }
     >
@@ -29,9 +32,13 @@ const styles = tw({
   container: `
     relative
     flex
-    w-full
     h-dvh
+    w-full
     pointer-events-none
+  `,
+  card: `
+    items-end
+    p-2
   `,
   modal: `
     p-2

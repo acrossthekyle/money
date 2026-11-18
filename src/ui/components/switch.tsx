@@ -31,7 +31,8 @@ export default function Switch({
 
 const styles = tw({
   container: `
-    flex flex-wrap items-center justify-center space-x-2.5
+    flex flex-wrap items-center justify-between space-x-2.5
+    w-full
   `,
   text: `
     sm:text-sm
@@ -41,7 +42,6 @@ const styles = tw({
     inline-flex items-center gap-2.5
     cursor-pointer
     capitalize
-    outline outline-(--foreground)/82.5
     rounded-full
   `,
   checkbox: `
@@ -49,23 +49,23 @@ const styles = tw({
     sr-only
   `,
   bar: `
-    w-7 h-3.75
-    bg-(--background)
+    w-9 h-5
     rounded-full
 
-    motion-safe:transition-colors
     motion-safe:duration-200
+
+    peer-not-checked:dark:bg-neutral-700/62.5
+    peer-checked:bg-(--foreground)
   `,
   circle: `
     absolute left-0.5 top-0.5
-    w-2.75 h-2.75
-    bg-(--foreground)/82.5
+    w-4 h-4
     rounded-full
 
-    motion-safe:transition-transform
     motion-safe:duration-200
-    motion-safe:ease-in-out
 
-    peer-checked:translate-x-3.25
+    peer-not-checked:bg-(--foreground)/82.5
+    peer-checked:translate-x-4
+    peer-checked:bg-(--background)/82.5
   `,
 });

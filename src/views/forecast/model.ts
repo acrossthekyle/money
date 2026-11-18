@@ -14,6 +14,5 @@ export function useModel() {
     days,
     holding: holdings.selectHolding(),
     months,
-    pinned: holdings.selectPinned(),
   };
 };

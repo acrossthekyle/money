@@ -29,8 +29,8 @@ export default function Drawer() {
       onBackdrop={onBackdrop}
       onCancel={onCancel}
     >
-      <Ui.Drawer.Inner>
-        <Ui.Drawer.Content isActive={isActive} isDecked={isDecked}>
+      <Ui.Drawer.Inner isModal>
+        <Ui.Drawer.Content isActive={isActive} isDecked={isDecked} isModal>
           <Ui.Drawer.Header>
             {day !== undefined && (
               <Heading day={day} />

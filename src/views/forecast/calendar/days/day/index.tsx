@@ -125,7 +125,7 @@ const styles = tw({
     hidden
     text-tiny text-current/72.5
 
-    lg:block
+    sm:block
   `,
   negative: `
     !text-red-400

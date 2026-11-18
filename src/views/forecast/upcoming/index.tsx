@@ -16,7 +16,7 @@ type Props = {
 };
 
 export default function Upcoming({ days }: Props) {
-  const { handleOnClick } = useModel();
+  const { handleOnAdd, handleOnEdit } = useModel();
 
   const iterables = getItems(days);
 
@@ -39,7 +39,7 @@ export default function Upcoming({ days }: Props) {
           <li key={index}>
             <Wrapper
               isClickable={!!item.id}
-              onClick={() => handleOnClick(item.id)}
+              onClick={() => handleOnEdit(item.id)}
             >
               <span className={styles.name}>{item.name}</span>
               <span className={styles.date}>
@@ -57,6 +57,9 @@ export default function Upcoming({ days }: Props) {
           </li>
         ))}
       </ul>
+      <Ui.Components.Button isGhost onClick={handleOnAdd}>
+        Add Transaction
+      </Ui.Components.Button>
     </Ui.Components.Card.Container>
   );
 };

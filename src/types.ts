@@ -235,6 +235,7 @@ export type BudgetPutActionInput = {
 export type BudgetPutActionResponse = {
   budgets: Budget[];
   isSuccess: boolean;
+  message: string;
 };
 
 export type HoldingEraseActionInput = {
@@ -268,4 +269,5 @@ export type HoldingPutActionInput = {
 export type HoldingPutActionResponse = {
   holding: Holding;
   isSuccess: boolean;
+  message: string;
 };

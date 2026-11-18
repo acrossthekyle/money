@@ -4,13 +4,14 @@ import { useRouter } from 'next/navigation';
 import { startTransition, useActionState, useEffect } from 'react';
 
 import { erase } from '@/actions/holdings/erase';
-import { useConfirm, useStore, useToasts } from '@/hooks';
+import { useConfirm, useOptions, useStore, useToasts } from '@/hooks';
 import type { Holding } from '@/types';
 
-export function useModel(holding: Holding) {
+export function useModel(holding?: Holding) {
   const router = useRouter();
 
   const { onConfirm } = useConfirm();
+  const { onClose } = useOptions();
   const { holdings } = useStore();
   const { onToast } = useToasts();
 
@@ -21,8 +22,10 @@ export function useModel(holding: Holding) {
       if (!response.isSuccess) {
         onToast({
           title: 'Oops',
-          body: `Something went wrong when deleting ${holding.name}, please try again`,
+          body: `Something went wrong when deleting "${holding?.name}", please try again`,
         });
+
+        onClose();
 
         return;
       }
@@ -33,15 +36,18 @@ export function useModel(holding: Holding) {
 
       onToast({
         title: 'Deleted',
-        body: `${holding.name} removed along with all related transactions`,
+        body: `${holding?.name} removed along with all related transactions`,
       });
+
+      onClose();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   const handleOnClick = async () => {
     const result = await onConfirm({
-      text: `This action cannot be undone. This will permanently delete ${holding.name} and all of its transactions.`,
+      target: '#card-drawer',
+      text: `This action cannot be undone. This will permanently delete ${holding?.name} and all of its transactions.`,
     });
 
     if (!result.isConfirmed) {
@@ -50,7 +56,7 @@ export function useModel(holding: Holding) {
 
     startTransition(async () => {
       await action({
-        id: holding.id,
+        id: holding?.id || '',
       });
     });
   };

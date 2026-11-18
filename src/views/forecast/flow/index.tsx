@@ -36,8 +36,7 @@ export default function Flow({ months }: Props) {
               ${currency(current.income, true)}
             </p>
             <p className={styles.next}>
-              {getChange(current.income, next.income)}% Next month,<br />
-              approximately
+              {getChange(current.income, next.income)}% Next month
             </p>
           </Ui.Components.Card.Content>
         </li>
@@ -51,8 +50,7 @@ export default function Flow({ months }: Props) {
               ${currency(current.expenses, true)}
             </p>
             <p className={styles.next}>
-              {getChange(current.expenses, next.expenses)}% Next month,<br />
-              approximately
+              {getChange(current.expenses, next.expenses)}% Next month
             </p>
           </Ui.Components.Card.Content>
         </li>

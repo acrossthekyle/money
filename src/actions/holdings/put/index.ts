@@ -34,19 +34,23 @@ export async function put(
     return {
       holding: {} as Holding,
       isSuccess: false,
+      message: 'One or more fields are incorrect or missing',
     };
   }
 
   const { holdings } = await getHoldings();
   const { zone } = await getSettings();
 
-  const holding = holdings.find((item: Holding) => item.id === input.id);
+  if (input.id !== null) {
+    const found = holdings.find((item: Holding) => item.id === input.id);
 
-  if (!holding) {
-    return {
-      holding: {} as Holding,
-      isSuccess: false,
-    };
+    if (!found) {
+      return {
+        holding: {} as Holding,
+        isSuccess: false,
+        message: 'Portfolio item does not exist',
+      };
+    }
   }
 
   const result: Holding = {
@@ -65,5 +69,6 @@ export async function put(
   return {
     holding: result,
     isSuccess: true,
+    message: 'Success',
   };
 };

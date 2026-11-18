@@ -15,13 +15,17 @@ const styles = tw({
     relative
     flex flex-col gap-3
     shrink-0
-    p-4 pt-0
+    p-4
     mt-auto
+    bg-zinc-200/22.5
+    border-t border-current/7.5
+
+    dark:bg-neutral-800/22.5
 
     before:absolute
     before:left-0
     before:right-0
-    before:-top-6
+    before:-top-6.25
     before:z-100
     before:h-6
     before:bg-linear-to-t

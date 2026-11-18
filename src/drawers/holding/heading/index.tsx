@@ -22,7 +22,7 @@ export default function Heading({
           {holding.name}
         </h2>
         <p className={styles.lid}>
-          Edit {holding.type === 'property' ? 'Asset' : 'Account'}
+          Edit {holding.type === 'property' ? 'asset' : 'account'}
         </p>
         {step > 0 && (
           <Ui.Form.Back onBack={onBack} />
@@ -34,7 +34,7 @@ export default function Heading({
   return (
     <>
       <h2 id="drawer-header">
-        Add to portfolio
+        Add to Portfolio
       </h2>
       <p className={cs(styles.lid, styles.spacer)}>
         {step === total ? `Review` : `Step ${step + 1}`}

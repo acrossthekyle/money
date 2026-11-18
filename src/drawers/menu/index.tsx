@@ -2,7 +2,6 @@
 
 import Ui from '@/ui';
 
-import Exit from './exit';
 import Links from './links';
 import { useModel } from './model';
 
@@ -10,6 +9,7 @@ export default function Drawer() {
   const {
     active,
     handleOnAdd,
+    handleOnSelect,
     holdings,
     instance,
     isActive,
@@ -29,16 +29,18 @@ export default function Drawer() {
       onBackdrop={onBackdrop}
       onCancel={onCancel}
     >
-      <Ui.Drawer.Inner isMenu>
+      <Ui.Drawer.Inner>
         <Ui.Drawer.Content isActive={isActive} isDecked={isDecked} isMenu>
           <Ui.Drawer.Body>
-            <Links active={active} holdings={holdings} onClick={onClose} />
+            <Links active={active} holdings={holdings} onClick={handleOnSelect} />
           </Ui.Drawer.Body>
           <Ui.Drawer.Footer>
-            <Ui.Components.Button isPrimary onClick={handleOnAdd}>
+            <Ui.Components.Button isPrimary isSquared onClick={handleOnAdd}>
               Add to Portfolio
             </Ui.Components.Button>
-            <Exit />
+            <Ui.Components.Button isGhost isSquared onClick={onClose}>
+              Close
+            </Ui.Components.Button>
           </Ui.Drawer.Footer>
         </Ui.Drawer.Content>
       </Ui.Drawer.Inner>

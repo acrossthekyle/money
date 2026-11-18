@@ -15,7 +15,7 @@ export function useConfirm() {
       reverseButtons: true,
       topLayer: true,
       cancelButtonText: 'Cancel',
-      confirmButtonText: 'Confirm',
+      confirmButtonText: 'Confirm & Delete',
       title: 'Are you absolutely sure?',
       theme: 'auto',
       customClass: styles,
@@ -42,7 +42,7 @@ const styles = tw({
     !bg-zinc-50
     !border !border-(--foreground)/12.5
 
-    dark:!bg-zinc-950
+    dark:!bg-zinc-900
 
     sm:!max-w-76
   `,
@@ -66,10 +66,10 @@ const styles = tw({
   `,
   actions: `
     !col-start-1 !col-end-3
-    !flex !justify-end !gap-2
+    !flex !flex-col-reverse !gap-2
     !w-full
     !mt-0
-    !p-3
+    !p-4
     !bg-(--foreground)/7.5
     !border-t !border-current/12.5
     !text-base
@@ -77,25 +77,29 @@ const styles = tw({
     sm:!text-sm
   `,
   cancelButton: `
-    !inline-flex !items-center !justify-center
-    !py-1 !px-4
+    !flex !items-center !justify-center
+    !w-full
+    !py-1 !px-0
+    !m-0
     !text-base !text-(--foreground)
     !font-normal
     !tracking-wide
     !bg-(--background)/17.5
     !border !border-current/32.5
-    !rounded-full
+    !rounded-lg
 
     sm:!text-sm
   `,
   confirmButton: `
-    !inline-flex !items-center !justify-center
-    !py-1 !px-4
+    !flex !items-center !justify-center
+    !w-full
+    !py-1 !px-0
+    !m-0
     !text-base !text-(--background)
     !font-normal
     !border-0
     !tracking-wide
-    !rounded-full
+    !rounded-lg
     !bg-(--foreground)
 
     sm:!text-sm`,

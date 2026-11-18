@@ -161,20 +161,18 @@ export default function Chart({ data }: Props) {
 const styles = tw({
   container: `
     relative
-    h-36 w-full
+    h-32 w-full
     select-none
     touch-none
     overflow-hidden
 
     before:absolute
-    before:-inset-[2px]
-    before:bottom-[2px]
-    before:bg-[linear-gradient(to_right,var(--foreground)_1px,transparent_1px),linear-gradient(to_bottom,var(--foreground)_1px,transparent_1px)]
-    before:bg-[size:0.9rem_0.9rem]
-    before:opacity-10.5
-
-    sm:before:-bottom-[2px]
-    sm:before:bg-[size:0.925rem_0.925rem]
+    before:inset-0
+    before:bg-[linear-gradient(to_right,transparent_calc(50%-0.5px),var(--foreground)_calc(50%-0.5px),var(--foreground)_calc(50%+0.5px),transparent_calc(50%+0.5px)),linear-gradient(to_bottom,transparent_calc(50%-0.5px),var(--foreground)_calc(50%-0.5px),var(--foreground)_calc(50%+0.5px),transparent_calc(50%+0.5px))]
+    before:bg-[size:0.925rem_0.925rem]
+    before:bg-center
+    before:bg-round
+    before:opacity-[0.105]
   `,
   tooltip: `
     flex flex-col gap-0.5

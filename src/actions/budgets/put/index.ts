@@ -35,6 +35,7 @@ export async function put(
     return {
       budgets: [],
       isSuccess: false,
+      message: 'One or more fields are incorrect or missing',
     };
   }
 
@@ -56,6 +57,7 @@ export async function put(
     return {
       budgets: [result],
       isSuccess: true,
+      message: 'Success',
     };
   }
 
@@ -68,6 +70,7 @@ export async function put(
     return {
       budgets: [],
       isSuccess: false,
+      message: 'Transaction does not exist',
     };
   }
 
@@ -79,6 +82,7 @@ export async function put(
     return {
       budgets: [result],
       isSuccess: true,
+      message: 'Success',
     };
   }
 
@@ -122,12 +126,14 @@ export async function put(
       return {
         budgets: updates,
         isSuccess: true,
+        message: 'Success',
       };
     }
 
     return {
       budgets: [],
       isSuccess: false,
+      message: 'Date not found',
     };
   }
 
@@ -157,12 +163,14 @@ export async function put(
       return {
         budgets: updates,
         isSuccess: true,
+        message: 'Success',
       };
     }
 
     return {
       budgets: [],
       isSuccess: false,
+      message: 'Date not found',
     };
   }
 
@@ -194,17 +202,20 @@ export async function put(
       return {
         budgets: updates,
         isSuccess: true,
+        message: 'Success',
       };
     }
 
     return {
       budgets: [],
       isSuccess: false,
+      message: 'Date not found',
     };
   }
 
   return {
     budgets: [],
     isSuccess: false,
+    message: 'Nothing happened',
   };
 };

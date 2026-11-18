@@ -30,7 +30,7 @@ export function getItems(days: CalendarDay[]) {
         category: `Projected ${day.return.type}`,
         dateable: day.dateable,
         id: '',
-        isNegative: false,
+        isNegative: day.return.amount < 0,
         name: day.return.label,
         schedule: 'monthly',
       });

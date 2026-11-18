@@ -28,9 +28,11 @@ export function getLabel(holding: Holding) {
   }
 
   if (['property'].includes(holding.type)) {
+    const isGreaterThanZero = Number(holding.interest) > 0;
+
     return {
-      label: Number(holding.interest) > 0 ? 'Appreciation' : 'Depreciation',
-      type: 'Worth',
+      label: isGreaterThanZero ? 'Appreciation' : 'Depreciation',
+      type: isGreaterThanZero ? 'Worth' : 'Loss',
     };
   }
 

@@ -33,7 +33,7 @@ export function recalculate(
       runningBalance = runningBalance + creditsSum - debitsSum;
 
       if (day.return && day.return.amount !== null) {
-        runningBalance += day.return.isPositive ? day.return.amount : -day.return.amount;
+        runningBalance += day.return.amount;
       }
 
       day.balance = Math.round(runningBalance * 100) / 100;

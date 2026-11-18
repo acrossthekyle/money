@@ -24,10 +24,10 @@ export default function Updated({ updated, zone }: Props) {
     <Ui.Components.Alert.Container isWarning>
       <Ui.Components.Alert.Title>
         <Flag />
-        Attention required
+        Attention Required
       </Ui.Components.Alert.Title>
       <Ui.Components.Alert.Content>
-        This was last updated {days === null ? 'too long' : `${days} days`} ago. Update the balance now in order to ensure accurate forecasting.
+        This was last updated {days === null ? 'too long' : `${days} days`} ago, balance might be incorrect.
       </Ui.Components.Alert.Content>
     </Ui.Components.Alert.Container>
   );

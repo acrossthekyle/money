@@ -18,15 +18,14 @@ type DrawerContextType = {
   onClose: () => void;
   onDrawer: (name: string) => void;
   onRegister: (name: string, node: HTMLDialogElement | null) => void;
+  onReset: () => void;
   stack: string[];
 };
 
 export const DrawerContext = createContext<DrawerContextType | null>(null);
 
 export default function DrawerProvider({ children }: PropsWithChildren) {
-  // Tracks active visual state (determines enter/exit animations & depth)
   const [stack, setStack] = useState<string[]>([]);
-  // Tracks which <dialog> nodes currently have .showModal() active
   const [openDrawers, setOpenDrawers] = useState<string[]>([]);
 
   const refs = useRef<Record<string, HTMLDialogElement | null>>({});
@@ -129,6 +128,17 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
     }
   }, [topDrawer, handleOnClose]);
 
+  const handleOnReset = useCallback(() => {
+    Object.values(refs.current).forEach((node) => {
+      if (node?.open) {
+        node.close();
+      }
+    });
+
+    setStack([]);
+    setOpenDrawers([]);
+  }, []);
+
   return (
     <DrawerContext.Provider
       value={{
@@ -138,6 +148,7 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
         onClose: handleOnClose,
         onDrawer: handleOnOpen,
         onRegister: handleOnRegister,
+        onReset: handleOnReset,
         stack,
       }}
     >

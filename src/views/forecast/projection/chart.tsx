@@ -81,8 +81,8 @@ export default function Chart({ balances }: Props) {
           grid: {
             show: false,
             padding: {
-              top: -14,
-              bottom: -16,
+              top: 0,
+              bottom: -32,
               right: -6,
               left: 0,
             },
@@ -148,11 +148,6 @@ export default function Chart({ balances }: Props) {
         type="bar"
         height="100%"
       />
-      <ul className={styles.labels}>
-        {categories.map((category, index) => (
-          <li key={index}>{category.split('')[0]}</li>
-        ))}
-      </ul>
     </div>
   );
 }
@@ -160,20 +155,19 @@ export default function Chart({ balances }: Props) {
 const styles = tw({
   container: `
     relative
-    h-36 w-full
+    h-32
+    w-full
     select-none
     touch-none
     overflow-hidden
 
     before:absolute
-    before:-inset-[2px]
-    before:bottom-[2px]
-    before:bg-[linear-gradient(to_right,var(--foreground)_1px,transparent_1px),linear-gradient(to_bottom,var(--foreground)_1px,transparent_1px)]
-    before:bg-[size:0.9rem_0.9rem]
-    before:opacity-10.5
-
-    sm:before:-bottom-[2px]
-    sm:before:bg-[size:0.925rem_0.925rem]
+    before:inset-0
+    before:bg-[linear-gradient(to_right,transparent_calc(50%-0.5px),var(--foreground)_calc(50%-0.5px),var(--foreground)_calc(50%+0.5px),transparent_calc(50%+0.5px)),linear-gradient(to_bottom,transparent_calc(50%-0.5px),var(--foreground)_calc(50%-0.5px),var(--foreground)_calc(50%+0.5px),transparent_calc(50%+0.5px))]
+    before:bg-[size:0.925rem_0.925rem]
+    before:bg-center
+    before:bg-round
+    before:opacity-[0.105]
   `,
   tooltip: `
     flex flex-col gap-0.5
@@ -202,15 +196,6 @@ const styles = tw({
   `,
   positive: `
     text-green-500 dark:text-lime-500
-  `,
-  labels: `
-    absolute bottom-1 left-2.5 right-2.5 z-1000
-    flex justify-between
-    text-sm text-(--foreground)
-
-    lg:text-xs
-    lg:right-3
-    lg:left-3
   `,
 });
 

@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { startTransition, useActionState, useEffect, useState } from 'react';
 
 import { put } from '@/actions/holdings/put';
@@ -16,7 +17,9 @@ const DEFAULT_DATA = {
 };
 
 export function useModel() {
-  const { instance, isActive, isBase, isDecked, onBackdrop, onCancel, onClose } = useHolding();
+  const router = useRouter();
+
+  const { instance, isActive, isBase, isDecked, onBackdrop, onCancel, onClose, onReset } = useHolding();
   const { date, forecasts, holdings } = useStore();
   const { onToast } = useToasts();
 
@@ -40,17 +43,15 @@ export function useModel() {
 
   useEffect(() => {
     if (response) {
+      console.log('response: ', response);
       if (!response.isSuccess) {
         onToast({
           title: 'Oops',
-          body: `Something went wrong when updating ${data.name}, please try again`,
+          body: `Something went wrong when ${holding ? 'updating' : 'creating'} ${data.name}, please try again`,
         });
 
         return;
       }
-
-      holdings.setHolding(response.holding);
-      forecasts.setForecast();
 
       onToast({
         title: holding ? 'Updated' : 'Created',
@@ -58,6 +59,15 @@ export function useModel() {
       });
 
       onClose();
+
+      if (!holding) {
+        router.push(`/${response.holding.id}`);
+      } else {
+        holdings.setHolding(response.holding);
+        forecasts.setForecast();
+      }
+
+      onReset();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);

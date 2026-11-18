@@ -4,7 +4,7 @@ import Ui from '@/ui';
 export default function Exit() {
   return (
     <form action={logout}>
-      <Ui.Components.Button isGhost>
+      <Ui.Components.Button isGhost isSquared>
         Sign Out
       </Ui.Components.Button>
     </form>

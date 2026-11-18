@@ -25,9 +25,9 @@ export default function Wrapper({
   }
 
   return (
-    <span className={styles.container}>
+    <div className={styles.container}>
       {children}
-    </span>
+    </div>
   );
 };
 

@@ -14,5 +14,6 @@ const styles = tw({
     w-full
 
     xs:max-w-104
+    xs:px-4
   `,
 });

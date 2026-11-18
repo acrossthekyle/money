@@ -25,7 +25,7 @@ export default function Container({
       aria-labelledby="drawer-header"
       className={cs(
         styles.container,
-        isBase ? styles.baseBackdrop : styles.stackedBackdrop,
+        isBase ? styles.base : styles.stacked,
         isActive && 'is-active',
       )}
       closedby="none"
@@ -51,11 +51,11 @@ const styles = tw({
 
     backdrop:hidden
   `,
-  baseBackdrop: `
+  base: `
     bg-(--background)/32.5
     backdrop-blur-sm
   `,
-  stackedBackdrop: `
+  stacked: `
     bg-transparent
   `,
 });

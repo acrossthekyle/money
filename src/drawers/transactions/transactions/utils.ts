@@ -29,7 +29,7 @@ export function getItems(day: CalendarDay) {
       category: day.return.type,
       icon: 'return',
       id: '',
-      isNegative: false,
+      isNegative: day.return.amount < 0,
       name: day.return.label,
       schedule: 'monthly',
     });

@@ -1,4 +1,5 @@
 import type { CalendarDay } from '@/types';
+import { currency } from '@/utils';
 import { getBudgetDisplayData } from '@/utils/budgets';
 
 type Balances = {
@@ -14,7 +15,7 @@ export function getChange(current: number, next: number) {
   const change = ((next - current) / Math.abs(current)) * 100;
   const result = Number(change.toFixed(2));
 
-  return result > 0 ? `+${Number(change.toFixed(2))}` : result;
+  return result > 0 ? `+${currency(result, true)}` : `-${currency(result, true)}`;
 };
 
 export function getFlow(days: CalendarDay[]) {
@@ -35,7 +36,11 @@ export function getFlow(days: CalendarDay[]) {
       });
 
       if (day.return.amount !== null) {
-        accumulator.income.push(Number(day.return.amount));
+        if (day.return.amount > 0) {
+          accumulator.income.push(Number(day.return.amount));
+        } else {
+          accumulator.expenses.push(Number(day.return.amount));
+        }
       }
 
       return accumulator;

@@ -30,38 +30,34 @@ export default function Section({
       <Ui.Drawer.Body>
         <Ui.Form.Outline>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Type</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText capitalize>
-              {data.type.replace(/_/g, ' ')}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('type')}>
-              Edit
+              <Ui.Form.OutlineItemHeading>Type</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText capitalize>
+                {data.type.replace(/_/g, ' ')}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>{data.name}</Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('name')}>
-              Edit
+              <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>{data.name}</Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineItemHeading>Balance</Ui.Form.OutlineItemHeading>
-            <Ui.Form.OutlineItemText>
-              {Number(data.balance) < 0 ? '-' : ''}${currency(data.balance)}
-            </Ui.Form.OutlineItemText>
             <Ui.Form.OutlineAction onClick={() => onEdit('balance')}>
-              Edit
+              <Ui.Form.OutlineItemHeading>Balance</Ui.Form.OutlineItemHeading>
+              <Ui.Form.OutlineItemText>
+                {Number(data.balance) < 0 ? '-' : ''}${currency(data.balance)}
+              </Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           {data.type !== 'credit_card' && (
             <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineItemHeading>Interest</Ui.Form.OutlineItemHeading>
-              <Ui.Form.OutlineItemText>
-                {!!data.interest ? currency(data.interest) : '0.00'} %
-              </Ui.Form.OutlineItemText>
               <Ui.Form.OutlineAction onClick={() => onEdit('interest')}>
-                Edit
+                <Ui.Form.OutlineItemHeading>Interest</Ui.Form.OutlineItemHeading>
+                <Ui.Form.OutlineItemText>
+                  {!!data.interest ? `${Number(data.interest) < 0 ? '-' : ''}${currency(data.interest)}` : '0.00'} %
+                </Ui.Form.OutlineItemText>
               </Ui.Form.OutlineAction>
             </Ui.Form.OutlineItem>
           )}
