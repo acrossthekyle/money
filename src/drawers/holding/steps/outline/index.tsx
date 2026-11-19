@@ -81,7 +81,7 @@ export default function Section({
                   {getInterestName(data.type)}
                 </Ui.Form.OutlineItemHeading>
                 <Ui.Form.OutlineItemText>
-                  {!!data.interest ? currency(data.interest) : '0.00'} %
+                  {Number(data.interest) < 0 ? '-' : ''}{!!data.interest ? currency(data.interest.replace('-', '')) : '0.00'} %
                 </Ui.Form.OutlineItemText>
               </Ui.Form.OutlineAction>
             </Ui.Form.OutlineItem>

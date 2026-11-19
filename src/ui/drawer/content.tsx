@@ -77,13 +77,15 @@ const styles = tw({
     rounded-2xl
     ml-auto
     border
-    origin-right
+    origin-bottom
+
+    sm:origin-right
 
     motion-safe:duration-200
 
-    ${!isActive && `opacity-0 translate-x-24 scale-100`}
-    ${isActive && !isDecked && `opacity-100 translate-x-0 scale-100`}
-    ${isActive && isDecked && `opacity-100 -translate-x-13 scale-90`}
+    ${!isActive && `opacity-0 translate-y-12 scale-95 sm:translate-y-0 sm:translate-x-24 sm:scale-100`}
+    ${isActive && !isDecked && `opacity-100 translate-y-0 translate-x-0 scale-100`}
+    ${isActive && isDecked && `opacity-100 translate-y-0 sm:-translate-x-13 scale-90`}
 
     sm:max-w-sm
   `),

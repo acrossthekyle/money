@@ -29,11 +29,10 @@ export default function Section({
       <Ui.Drawer.Body>
         <Ui.Form.Container>
           <Ui.Form.Field>
-            <Ui.Form.Label htmlFor="holding-limit">
+            <Ui.Form.Label htmlFor="currency">
               What's the balance limit?
             </Ui.Form.Label>
             <Ui.Form.Currency
-              id="holding-limit"
               onChange={handleOnChange}
               value={limit}
             />

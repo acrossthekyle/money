@@ -48,11 +48,11 @@ const styles = tw({
     peer
     appearance-none
     w-full
-    py-1 px-3
+    py-1.5 px-3
     bg-(--foreground)/5.5
     rounded-lg
 
-    md:text-sm
+    lg:text-sm
   `,
   basic: `
     border border-(--foreground)/10.5
@@ -83,7 +83,7 @@ const styles = tw({
     peer-focus:border-(--foreground)/62.5
     peer-focus:outline-(--foreground)/32.5
 
-    md:text-sm
+    lg:text-sm
   `,
   placeholder: `
     text-current/50

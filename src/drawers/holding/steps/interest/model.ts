@@ -10,8 +10,8 @@ export function useModel(value: string) {
     setInterest(value);
   }, [value]);
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInterest(event.target.value.replace('% ', ''));
+  const handleOnChange = (value: string) => {
+    setInterest(value.replace('% ', ''));
   };
 
   return {

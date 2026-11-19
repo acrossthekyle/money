@@ -22,7 +22,7 @@ const styles = tw({
     p-2
   `,
   icon: `
-    size-4.5
+    size-6
     stroke-2 stroke-current/82.5
 
     sm:size-5

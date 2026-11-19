@@ -57,9 +57,8 @@ export default function Section({
             </Ui.Form.Options>
           </Ui.Form.Field>
           <Ui.Form.Field>
-            <Ui.Form.Label htmlFor="transaction-amount">Amount</Ui.Form.Label>
+            <Ui.Form.Label htmlFor="currency">Amount</Ui.Form.Label>
             <Ui.Form.Currency
-              id="transaction-amount"
               onChange={handleOnChange}
               value={amount}
             />

@@ -10,8 +10,8 @@ export function useModel(value: string) {
     setBalance(value);
   }, [value]);
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setBalance(event.target.value.replace('$ ', '').replace(/,/g, ''));
+  const handleOnChange = (value: string) => {
+    setBalance(value.replace('$ ', '').replace(/,/g, ''));
   };
 
   return {

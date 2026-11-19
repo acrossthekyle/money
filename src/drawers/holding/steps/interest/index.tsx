@@ -31,9 +31,8 @@ export default function Section({
       <Ui.Drawer.Body>
         <Ui.Form.Container>
           <Ui.Form.Field>
-            <Ui.Form.Label htmlFor="holding-interest">{label}</Ui.Form.Label>
+            <Ui.Form.Label htmlFor="percent">{label}</Ui.Form.Label>
             <Ui.Form.Percent
-              id="holding-interest"
               onChange={handleOnChange}
               value={interest}
             />

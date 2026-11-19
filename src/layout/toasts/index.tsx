@@ -77,11 +77,12 @@ export default function Toasts() {
 const styles = tw({
   container: `
     group
-    fixed bottom-6 right-1/2 z-20000
+    fixed bottom-2 right-1/2 z-20000
     translate-x-1/2
     px-4
     w-full max-w-96
 
+    sm:bottom-6
     sm:right-6
     sm:translate-x-0
     sm:px-0

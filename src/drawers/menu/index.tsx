@@ -7,6 +7,7 @@ import { useModel } from './model';
 
 export default function Drawer() {
   const {
+    current,
     handleOnAdd,
     handleOnSelect,
     holdings,
@@ -34,6 +35,7 @@ export default function Drawer() {
           <Ui.Drawer.Body>
             <Links
               holdings={holdings}
+              current={current}
               onClick={handleOnSelect}
               pinned={pinned}
             />

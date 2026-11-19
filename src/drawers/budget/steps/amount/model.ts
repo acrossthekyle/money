@@ -12,10 +12,8 @@ export function useModel(value: string, type: string) {
     setIsIncome(type === '' ? true : type === 'credit');
   }, [value, type]);
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const cleaned = event.target.value.replace('$ ', '').replace(/,/g, '');
-
-    setAmount(cleaned);
+  const handleOnChange = (value: string) => {
+    setAmount(value.replace('$ ', '').replace(/,/g, ''));
   };
 
   const handleOnType = (updated: boolean) => {

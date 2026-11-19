@@ -10,8 +10,8 @@ export function useModel(value: string) {
     setLimit(value);
   }, [value]);
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLimit(event.target.value.replace('$ ', '').replace(/,/g, ''));
+  const handleOnChange = (value: string) => {
+    setLimit(value.replace('$ ', '').replace(/,/g, ''));
   };
 
   return {

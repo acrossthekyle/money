@@ -29,16 +29,21 @@ const styles = tw({
   container: `
     absolute top-4 right-4
     flex items-center justify-center
-    w-9 h-9
+    w-10 h-10
     bg-(--background)
     border border-current/22.5
     rounded-full
 
     disabled:opacity-50
     disabled:!cursor-default
+
+    sm:w-9
+    sm:h-9
   `,
   arrow: `
-    size-3.5
+    size-4
     stroke-2
+
+    sm:size-3.5
   `,
 });

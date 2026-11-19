@@ -7,6 +7,7 @@ export function useModel() {
   const { instance, isActive, isBase, isDecked, onBackdrop, onCancel, onClose, onReset } = useMenu();
   const { holdings } = useStore();
 
+  const current = holdings.selectId();
   const items = holdings.select();
   const pinned = holdings.selectPinned();
 
@@ -22,6 +23,7 @@ export function useModel() {
   };
 
   return {
+    current,
     handleOnAdd,
     handleOnSelect,
     holdings: items,

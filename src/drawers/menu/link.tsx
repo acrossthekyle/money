@@ -1,18 +1,17 @@
 'use client';
 
-import { Star } from 'lucide-react';
-import Anchor from 'next/link';
+import { Check, Star } from 'lucide-react';
 
 import tw from '@/styles';
 import type { Holding } from '@/types';
 
 type Props = {
+  current: string;
   holding: Holding;
-  onClick: () => void;
   pinned: string;
 };
 
-export default function Link({ holding, onClick, pinned }: Props) {
+export default function Link({ current, holding, pinned }: Props) {
   return (
     <div className={styles.container}>
       <span className={styles.name}>
@@ -24,13 +23,9 @@ export default function Link({ holding, onClick, pinned }: Props) {
       <span className={styles.type}>
         {holding.type.replace(/_/g, ' ')}
       </span>
-      <Anchor
-        className={styles.link}
-        href={`/${holding.id}`}
-        onClick={onClick}
-      >
-        View
-      </Anchor>
+      {current === holding.id && (
+        <Check className={styles.chevron} />
+      )}
     </div>
   );
 };
@@ -43,35 +38,29 @@ const styles = tw({
     text-left
   `,
   name: `
-    flex items-center gap-3
+    flex items-center gap-2
     leading-[1]
 
     sm:text-sm
   `,
   type: `
-    text-sm text-current/62.5
+    text-current/62.5
     leading-[1]
     capitalize
-  `,
-  link: `
-    absolute top-0 right-0
-    py-1.25 px-3.5
-    text-(--foreground)
-    rounded-lg
-    whitespace-nowrap
-    select-none
-    bg-transparent
-    border border-current/10.5
-
-    motion-safe:duration-300
-
-    hover:bg-(--foreground)/4.5
 
     sm:text-sm
   `,
   star: `
-    size-3.5
+    size-4
     fill-current
     stroke-0
+
+    sm:size-3.5
+  `,
+  chevron: `
+    absolute top-1 right-1
+    size-4
+
+    sm:size-3.5
   `,
 });
