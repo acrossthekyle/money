@@ -10,7 +10,14 @@ export default function Container({ children }: React.PropsWithChildren) {
 
 const styles = tw({
   container: `
-    flex flex-col gap-3
+    flex flex-col gap-0
+    mt-1
+    divide-y-2 divide-zinc-50
     w-full
+    rounded-xl
+    bg-neutral-200/62.5
+
+    dark:divide-neutral-900
+    dark:bg-neutral-800/62.5
   `,
 });

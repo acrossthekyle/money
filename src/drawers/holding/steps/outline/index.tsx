@@ -13,6 +13,7 @@ import Updated from './updated';
 
 type Props = {
   data: Data;
+  hasChanged: boolean;
   holding?: Holding;
   isActive: boolean;
   onEdit: (section: string) => void;
@@ -23,6 +24,7 @@ type Props = {
 export default function Section({
   children,
   data,
+  hasChanged,
   holding,
   isActive,
   onEdit,
@@ -90,6 +92,7 @@ export default function Section({
       </Ui.Drawer.Body>
       <Ui.Drawer.Footer>
         <Ui.Components.Button
+          isDisabled={!hasChanged}
           isPrimary
           onClick={onSubmit}
         >

@@ -14,7 +14,6 @@ type Props = {
   data: Data;
   holdings: Holding[];
   isActive: boolean;
-  onEdit: (section: string) => void;
   onSubmit: () => void;
 };
 
@@ -23,7 +22,6 @@ export default function Section({
   data,
   holdings,
   isActive,
-  onEdit,
   onSubmit,
 }: React.PropsWithChildren<Props>) {
   if (!isActive) {
@@ -33,9 +31,12 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
+        <Ui.Form.Paragraph>
+          Review the following before submitting.
+        </Ui.Form.Paragraph>
         <Ui.Form.Outline>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('amount')}>
+            <Ui.Form.OutlineAction>
               <Ui.Form.OutlineItemHeading>Amount</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText>
                 {data.type === 'debit' ? '-' : ''}${currency(data.amount)}
@@ -43,7 +44,7 @@ export default function Section({
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('name')}>
+            <Ui.Form.OutlineAction>
               <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText>
                 {data.name}
@@ -51,7 +52,7 @@ export default function Section({
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('transferee')}>
+            <Ui.Form.OutlineAction>
               <Ui.Form.OutlineItemHeading>Transfer</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText>
                 {!!data.transferee ? (
@@ -67,7 +68,7 @@ export default function Section({
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('start')}>
+            <Ui.Form.OutlineAction>
               <Ui.Form.OutlineItemHeading>Starts on</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText>
                 {format(parseISO(String(data.start)), DATE_DISPLAY)}
@@ -75,7 +76,7 @@ export default function Section({
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('schedule')}>
+            <Ui.Form.OutlineAction>
               <Ui.Form.OutlineItemHeading>Repeats</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText>
                 {SCHEDULES.find(item => item.value === data.schedule)?.name}
@@ -83,7 +84,7 @@ export default function Section({
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('end')}>
+            <Ui.Form.OutlineAction>
               <Ui.Form.OutlineItemHeading>Ends on</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText>
                 {!!data.end ? format(parseISO(data.end), DATE_DISPLAY) : '--'}
@@ -91,7 +92,7 @@ export default function Section({
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('category')}>
+            <Ui.Form.OutlineAction>
               <Ui.Form.OutlineItemHeading>Categorized as</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText>
                 {CATEGORIES.find(item => item.value === data.category)?.name}

@@ -32,7 +32,7 @@ const styles = tw({
     w-10 h-10
     bg-(--background)
     border border-current/22.5
-    rounded-full
+    rounded-xl
 
     disabled:opacity-50
     disabled:!cursor-default

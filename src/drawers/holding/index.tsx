@@ -22,11 +22,11 @@ import {
 export default function Drawer() {
   const {
     data,
-    handleOnBack,
     handleOnCancel,
     handleOnEdit,
     handleOnNext,
     handleOnSubmit,
+    hasChanged,
     holding,
     instance,
     isActive,
@@ -58,20 +58,24 @@ export default function Drawer() {
           <Ui.Drawer.Header>
             <Heading
               holding={holding}
-              onBack={handleOnBack}
               step={step}
               total={steps.length - 1}
             />
           </Ui.Drawer.Header>
           <Outline
             data={data}
+            hasChanged={hasChanged}
             holding={holding}
             isActive={steps[step] === 'outline'}
             onEdit={handleOnEdit}
             onSubmit={handleOnSubmit}
             zone={zone}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Outline>
           <Type
             isActive={steps[step] === 'type'}
@@ -79,7 +83,11 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.type}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Type>
           <Name
             label={headers.name}
@@ -89,7 +97,11 @@ export default function Drawer() {
             placeholder={placeholder}
             value={data.name}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Name>
           <Balance
             label={headers.balance}
@@ -98,7 +110,11 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.balance}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Balance>
           <Limit
             isActive={steps[step] === 'limit'}
@@ -106,7 +122,11 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.limit}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Limit>
           <Interest
             label={headers.interest}
@@ -115,16 +135,23 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.interest}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Interest>
           <Submit
             data={data}
             isActive={steps[step] === 'submit'}
             isPending={isPending}
-            onEdit={handleOnEdit}
             onSubmit={handleOnSubmit}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Submit>
         </Ui.Drawer.Content>
       </Ui.Drawer.Inner>

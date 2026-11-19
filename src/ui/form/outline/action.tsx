@@ -1,12 +1,12 @@
 'use client';
 
-import { ArrowRight } from 'lucide-react';
+import { Pen } from 'lucide-react';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 
 type Props = {
   isDisabled?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   title?: string;
 };
 
@@ -16,17 +16,27 @@ export default function Action({
   onClick,
   title,
 }: React.PropsWithChildren<Props>) {
+  if (onClick) {
+    return (
+      <button
+        className={cs(styles.container, styles.hoverable)}
+        disabled={isDisabled}
+        onClick={onClick}
+        title={title}
+        type="button"
+      >
+        {children}
+        {!isDisabled && (
+          <Pen className={styles.icon} />
+        )}
+      </button>
+    );
+  }
+
   return (
-    <button
-      className={styles.container}
-      disabled={isDisabled}
-      onClick={onClick}
-      title={title}
-      type="button"
-    >
+    <div className={styles.container}>
       {children}
-      <ArrowRight className={styles.arrow} />
-    </button>
+    </div>
   );
 };
 
@@ -34,6 +44,7 @@ const styles = tw({
   container: `
     flex flex-col gap-1
     w-full
+    p-3
     text-left
     select-none
     outline-0
@@ -43,12 +54,15 @@ const styles = tw({
     disabled:opacity-50
     disabled:!cursor-default
   `,
-  arrow: `
-    absolute top-1/2 right-0
+  hoverable: `
+    not-disabled:hover:bg-(--background)/7.5
+  `,
+  icon: `
+    absolute top-1/2 right-3
     -translate-y-1/2
-    size-4.5
+    size-4
     stroke-2
 
-    sm:size-4
+    sm:size-3
   `,
 });

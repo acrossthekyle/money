@@ -23,13 +23,13 @@ export default function Drawer() {
     budget,
     data,
     date,
-    handleOnBack,
     handleOnCancel,
     handleOnContinue,
     handleOnDelete,
     handleOnEdit,
     handleOnNext,
     handleOnSubmit,
+    hasChanged,
     holdings,
     instance,
     isActive,
@@ -57,8 +57,6 @@ export default function Drawer() {
             <Heading
               budget={budget}
               date={date}
-              isActive={isActive}
-              onBack={handleOnBack}
               step={step}
               total={steps.length - 1}
             />
@@ -67,13 +65,18 @@ export default function Drawer() {
             budget={budget}
             data={data}
             date={date}
+            hasChanged={hasChanged}
             holdings={holdings}
             isActive={steps[step] === 'outline'}
             onContinue={handleOnContinue}
             onDelete={handleOnDelete}
             onEdit={handleOnEdit}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Outline>
           <Amount
             isActive={steps[step] === 'amount'}
@@ -82,7 +85,11 @@ export default function Drawer() {
             value={data.amount}
             type={data.type}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Amount>
           <Name
             isActive={steps[step] === 'name'}
@@ -90,7 +97,11 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.name}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Name>
           <Transferee
             holdings={holdings}
@@ -100,7 +111,11 @@ export default function Drawer() {
             value={data.transferee}
             type={data.type}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Transferee>
           <Start
             isActive={steps[step] === 'start'}
@@ -108,7 +123,11 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.start}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Start>
           <Schedule
             isActive={steps[step] === 'schedule'}
@@ -116,7 +135,11 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.schedule}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Schedule>
           <End
             isActive={steps[step] === 'end'}
@@ -124,7 +147,11 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.end}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </End>
           <Category
             isActive={steps[step] === 'category'}
@@ -132,7 +159,11 @@ export default function Drawer() {
             onNext={handleOnNext}
             value={data.category}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Category>
           {budget?.schedule !== 'once' && (
             <Update
@@ -141,17 +172,24 @@ export default function Drawer() {
               onDelete={handleOnDelete}
               onSubmit={handleOnSubmit}
             >
-              <Actions onCancel={handleOnCancel} />
+              <Actions
+                isEditing={isEditing}
+                onCancel={handleOnCancel}
+                step={step}
+              />
             </Update>
           )}
           <Submit
             data={data}
             holdings={holdings}
             isActive={steps[step] === 'submit'}
-            onEdit={handleOnEdit}
             onSubmit={handleOnSubmit}
           >
-            <Actions onCancel={handleOnCancel} />
+            <Actions
+              isEditing={isEditing}
+              onCancel={handleOnCancel}
+              step={step}
+            />
           </Submit>
         </Ui.Drawer.Content>
       </Ui.Drawer.Inner>

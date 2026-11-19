@@ -26,6 +26,7 @@ export function useModel() {
   const { instance, isActive, isBase, isDecked, onBackdrop, onCancel, onClose } = useBudget();
   const { onToast } = useToasts();
 
+  const [hasChanged, setHasChanged] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
   const [data, setData] = useState<Data>(DEFAULT_DATA);
@@ -80,7 +81,7 @@ export function useModel() {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(0);
       setIsEditing(false);
-
+      setHasChanged(false);
       setData({
         ...DEFAULT_DATA,
         ...(budget || {}),
@@ -90,6 +91,8 @@ export function useModel() {
   }, [budget, dateable, isActive]);
 
   const handleOnNext = (key: string, value: string, isIncome?: boolean) => {
+    setHasChanged(true);
+
     setData({
       ...data,
       [key]: value,
@@ -109,14 +112,6 @@ export function useModel() {
     setIsEditing(false);
   };
 
-  const handleOnBack = () => {
-    if (!isEditing && steps[step] !== 'update') {
-      setStep(previous => previous - 1);
-    } else {
-      setStep(0);
-    }
-  };
-
   const handleOnSubmit = (choice?: BudgetPutActionInputApplysTo) => {
     startTransition(async () => {
       await action({
@@ -130,9 +125,16 @@ export function useModel() {
   };
 
   const handleOnCancel = () => {
-    onClose();
+    if (isEditing) {
+      setStep(0);
+      setIsEditing(false);
+    } else if (step > 0) {
+      setStep(previous => previous - 1);
+    } else {
+      onClose();
 
-    budgets.setId('');
+      budgets.setId('');
+    }
   };
 
   const handleOnContinue = () => {
@@ -149,13 +151,13 @@ export function useModel() {
     budget,
     data,
     date: dateable,
-    handleOnBack,
     handleOnCancel,
     handleOnContinue,
     handleOnDelete: () => onDelete(budget?.id || undefined),
     handleOnEdit,
     handleOnNext,
     handleOnSubmit,
+    hasChanged,
     holdings: holdings.select(),
     instance,
     isActive,

@@ -27,7 +27,7 @@ export default function Updated({ updated, zone }: Props) {
         Attention Required
       </Ui.Components.Alert.Title>
       <Ui.Components.Alert.Content>
-        This was last updated {days === null ? 'too long' : `${days} days`} ago, balance might be incorrect.
+        Last updated {days === null ? 'too long' : `${days} days`} ago
       </Ui.Components.Alert.Content>
     </Ui.Components.Alert.Container>
   );

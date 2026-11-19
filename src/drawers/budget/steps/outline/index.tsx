@@ -14,6 +14,7 @@ type Props = {
   budget?: Budget;
   data: Data;
   date: Dateable | null;
+  hasChanged: boolean;
   holdings: Holding[];
   isActive: boolean;
   onContinue: () => void;
@@ -26,6 +27,7 @@ export default function Section({
   children,
   data,
   date,
+  hasChanged,
   holdings,
   isActive,
   onContinue,
@@ -114,18 +116,21 @@ export default function Section({
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
         </Ui.Form.Outline>
+        <div className="mt-4">
+          <Ui.Form.Delete onClick={onDelete}>
+            Delete transaction and update forecast
+          </Ui.Form.Delete>
+        </div>
       </Ui.Drawer.Body>
       <Ui.Drawer.Footer>
         <Ui.Components.Button
+          isDisabled={!hasChanged}
           isPrimary
           onClick={onContinue}
         >
           {budget?.schedule === 'once' ? 'Confirm & Update' : 'Next'}
         </Ui.Components.Button>
         {children}
-        <Ui.Form.Delete onClick={onDelete}>
-          Delete transaction and update forecast
-        </Ui.Form.Delete>
       </Ui.Drawer.Footer>
     </>
   );

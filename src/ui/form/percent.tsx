@@ -67,7 +67,7 @@ const styles = tw({
     appearance-none
     relative
     w-full
-    py-1.5 pl-12.5 pr-3
+    py-1.5 pl-13.5 pr-3
     bg-(--foreground)/5.5
     border border-(--foreground)/10.5
     outline-3 outline-transparent

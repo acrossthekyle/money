@@ -10,7 +10,6 @@ type Props = {
   data: Data;
   isActive: boolean;
   isPending: boolean;
-  onEdit: (section: string) => void;
   onSubmit: () => void;
 };
 
@@ -19,7 +18,6 @@ export default function Section({
   data,
   isActive,
   isPending,
-  onEdit,
   onSubmit,
 }: React.PropsWithChildren<Props>) {
   if (!isActive) {
@@ -29,9 +27,12 @@ export default function Section({
   return (
     <>
       <Ui.Drawer.Body>
+        <Ui.Form.Paragraph>
+          Review the following before submitting.
+        </Ui.Form.Paragraph>
         <Ui.Form.Outline>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('type')}>
+            <Ui.Form.OutlineAction>
               <Ui.Form.OutlineItemHeading>Type</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText capitalize>
                 {data.type.replace(/_/g, ' ')}
@@ -39,13 +40,13 @@ export default function Section({
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('name')}>
+            <Ui.Form.OutlineAction>
               <Ui.Form.OutlineItemHeading>Name</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText>{data.name}</Ui.Form.OutlineItemText>
             </Ui.Form.OutlineAction>
           </Ui.Form.OutlineItem>
           <Ui.Form.OutlineItem>
-            <Ui.Form.OutlineAction onClick={() => onEdit('balance')}>
+            <Ui.Form.OutlineAction>
               <Ui.Form.OutlineItemHeading>Balance</Ui.Form.OutlineItemHeading>
               <Ui.Form.OutlineItemText>
                 {Number(data.balance) < 0 ? '-' : ''}${currency(data.balance)}
@@ -54,7 +55,7 @@ export default function Section({
           </Ui.Form.OutlineItem>
           {data.type === 'credit_card' && (
             <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineAction onClick={() => onEdit('limit')}>
+              <Ui.Form.OutlineAction>
                 <Ui.Form.OutlineItemHeading>
                   Balance limit
                 </Ui.Form.OutlineItemHeading>
@@ -66,7 +67,7 @@ export default function Section({
           )}
           {data.type !== 'credit_card' && (
             <Ui.Form.OutlineItem>
-              <Ui.Form.OutlineAction onClick={() => onEdit('interest')}>
+              <Ui.Form.OutlineAction>
                 <Ui.Form.OutlineItemHeading>
                   {getInterestName(data.type)}
                 </Ui.Form.OutlineItemHeading>

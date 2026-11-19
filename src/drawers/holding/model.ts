@@ -23,6 +23,7 @@ export function useModel() {
   const { date, forecasts, holdings } = useStore();
   const { onToast } = useToasts();
 
+  const [hasChanged, setHasChanged] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [step, setStep] = useState(0);
   const [data, setData] = useState<Data>(DEFAULT_DATA);
@@ -43,7 +44,6 @@ export function useModel() {
 
   useEffect(() => {
     if (response) {
-      console.log('response: ', response);
       if (!response.isSuccess) {
         onToast({
           title: 'Oops',
@@ -77,7 +77,7 @@ export function useModel() {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep(0);
       setIsEditing(false);
-
+      setHasChanged(false);
       setData({
         ...DEFAULT_DATA,
         ...(holding || {}),
@@ -86,10 +86,19 @@ export function useModel() {
   }, [holding, isActive]);
 
   const handleOnCancel = () => {
-    onClose();
+    if (isEditing) {
+      setStep(0);
+      setIsEditing(false);
+    } else if (step > 0) {
+      setStep(previous => previous - 1);
+    } else {
+      onClose();
+    }
   };
 
   const handleOnNext = (key: string, value: string | boolean) => {
+    setHasChanged(true);
+
     const wasCreditCard = data.type === 'credit_card';
     const isCreditCard = key === 'type' ? value === 'credit_card' : false;
 
@@ -113,14 +122,6 @@ export function useModel() {
     setIsEditing(false);
   };
 
-  const handleOnBack = () => {
-    if (!isEditing) {
-      setStep(previous => previous - 1);
-    } else {
-      setStep(0);
-    }
-  };
-
   const handleOnSubmit = () => {
     startTransition(async () => {
       await action({
@@ -138,11 +139,11 @@ export function useModel() {
 
   return {
     data,
-    handleOnBack,
     handleOnCancel,
     handleOnEdit,
     handleOnNext,
     handleOnSubmit,
+    hasChanged,
     holding,
     instance,
     isActive,
