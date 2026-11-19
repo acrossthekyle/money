@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
+import { MONTHS_FULL } from '@/constants';
 import tw from '@/styles';
 import { currency } from '@/utils';
 
@@ -16,7 +17,7 @@ type Props = {
 };
 
 export default function Chart({ balances }: Props) {
-  const categories = balances.map(({ month }) => month);
+  const categories = balances.map(({ month }) => MONTHS_FULL[month]);
 
   const series = [
     {
@@ -117,7 +118,7 @@ export default function Chart({ balances }: Props) {
             intersect: false,
             shared: true,
             custom: function({ series, dataPointIndex, w }) {
-              const title = `${balances[dataPointIndex].month} ${balances[dataPointIndex].year}`;
+              const title = `${MONTHS_FULL[balances[dataPointIndex].month]} ${balances[dataPointIndex].year}`;
 
               const rows = series
                 .map((series: number[], index: number) => {

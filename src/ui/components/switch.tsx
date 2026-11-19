@@ -54,6 +54,7 @@ const styles = tw({
 
     motion-safe:duration-200
 
+    peer-not-checked:bg-zinc-300/62.5
     peer-not-checked:dark:bg-neutral-700/62.5
     peer-checked:bg-(--foreground)
   `,

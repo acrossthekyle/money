@@ -2,6 +2,7 @@ import type { CalendarDay } from '@/types';
 import Ui from '@/ui';
 
 import Chart from './chart';
+import Table from './table';
 
 type Props = {
   days: CalendarDay[];
@@ -10,11 +11,18 @@ type Props = {
 export default function Balances({ days }: Props) {
   const filtered = days.filter(({ dateable }) => dateable.isInMonth && !dateable.isBeforeToday);
 
-  const balances = filtered.map((day: CalendarDay) => day.balance);
+  const balances = filtered.map((day: CalendarDay) => ({
+    date: day.dateable,
+    balance: day.balance,
+  }));
 
   const start = balances[0];
-  const lowest = Math.min(...balances);
-  const highest = Math.max(...balances);
+  const lowest = balances.reduce((lowest, current) => {
+    return current.balance < lowest.balance ? current : lowest;
+  });
+  const highest = balances.reduce((highest, current) => {
+    return current.balance > highest.balance ? current : highest;
+  });
   const end = balances[balances.length - 1];
 
   return (
@@ -27,7 +35,12 @@ export default function Balances({ days }: Props) {
           Lowest to highest
         </Ui.Components.Card.Subtitle>
       </Ui.Components.Card.Header>
-      <Chart data={[start, lowest, highest, end]} />
+      <Chart
+        data={[start.balance, lowest.balance, highest.balance, end.balance]}
+      />
+      <Ui.Components.Card.Content>
+        <Table start={start} lowest={lowest} highest={highest} end={end} />
+      </Ui.Components.Card.Content>
     </Ui.Components.Card.Container>
   );
 };
