@@ -58,16 +58,16 @@ export function useModel() {
         body: holding ? `${data.name} successfully updated` : `${data.name} added to portfolio`,
       });
 
-      onClose();
-
       if (!holding) {
+        onReset();
+
         router.push(`/${response.holding.id}`);
       } else {
+        onClose();
+
         holdings.setHolding(response.holding);
         forecasts.setForecast();
       }
-
-      onReset();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);

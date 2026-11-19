@@ -13,7 +13,7 @@ export function useModel(value: string, type: string) {
   }, [value, type]);
 
   const handleOnChange = (value: string) => {
-    setAmount(value.replace('$ ', '').replace(/,/g, ''));
+    setAmount(value.replace(/,/g, ''));
   };
 
   const handleOnType = (updated: boolean) => {
@@ -24,7 +24,7 @@ export function useModel(value: string, type: string) {
     amount,
     handleOnChange,
     handleOnType,
-    isBlocked: !amount,
+    isBlocked: !amount.replace('-', ''),
     isIncome,
   };
 };

@@ -39,16 +39,15 @@ export default function Currency({ onChange, value }: Props) {
           <Plus className={styles.icon} />
         )}
       </button>
-      {/* // @ts-expect-error - props are ok */}
+      <span className={styles.prefix}>$</span>
       <Input
         allowNegativeValue={false}
         className={styles.input}
         id="currency"
         name="currency"
-        placeholder="$ 0.00"
+        placeholder="0.00"
         decimalsLimit={2}
         decimalScale={2}
-        prefix="$ "
         inputMode="decimal"
         onValueChange={handleOnChange}
         value={value.replace(/-/g, '')}
@@ -65,7 +64,7 @@ const styles = tw({
     appearance-none
     relative
     w-full
-    py-1.5 pl-10 pr-3
+    py-1.5 pl-12.5 pr-3
     bg-(--foreground)/5.5
     border border-(--foreground)/10.5
     outline-3 outline-transparent
@@ -82,12 +81,17 @@ const styles = tw({
     absolute top-1/2 left-1 z-10
     -translate-y-1/2
     flex items-center justify-center
-    w-6.5 h-6.5
-    border border-(--foreground)/22.5
-    rounded-lg
-    bg-(--background)/62.5
+    w-8 h-8
   `,
   icon: `
-    size-3.5
+    size-4.5
+
+    sm:size-4
+  `,
+  prefix: `
+    absolute top-1/2 left-9.5 z-10
+    -translate-y-1/2
+
+    lg:text-sm
   `,
 });

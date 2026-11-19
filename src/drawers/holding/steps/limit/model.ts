@@ -11,7 +11,7 @@ export function useModel(value: string) {
   }, [value]);
 
   const handleOnChange = (value: string) => {
-    setLimit(value.replace('$ ', '').replace(/,/g, ''));
+    setLimit(value.replace(/,/g, ''));
   };
 
   return {

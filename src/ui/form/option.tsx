@@ -40,7 +40,7 @@ const styles = tw({
     flex items-center
     w-full
     rounded-md
-    py-2 px-4
+    py-2 px-3
     whitespace-nowrap
     select-none
     border border-current/10.5

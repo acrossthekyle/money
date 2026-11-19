@@ -11,7 +11,7 @@ export function useModel(value: string) {
   }, [value]);
 
   const handleOnChange = (value: string) => {
-    setInterest(value.replace('% ', ''));
+    setInterest(value);
   };
 
   return {

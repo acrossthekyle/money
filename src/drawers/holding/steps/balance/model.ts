@@ -11,7 +11,7 @@ export function useModel(value: string) {
   }, [value]);
 
   const handleOnChange = (value: string) => {
-    setBalance(value.replace('$ ', '').replace(/,/g, ''));
+    setBalance(value.replace(/,/g, ''));
   };
 
   return {
