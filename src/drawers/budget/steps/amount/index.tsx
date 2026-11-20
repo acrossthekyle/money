@@ -59,6 +59,7 @@ export default function Section({
           <Ui.Form.Field>
             <Ui.Form.Label htmlFor="currency">Amount</Ui.Form.Label>
             <Ui.Form.Currency
+              canToggle={false}
               onChange={handleOnChange}
               value={amount}
             />

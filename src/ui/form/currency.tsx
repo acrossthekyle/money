@@ -5,14 +5,15 @@ import { useEffect, useState } from 'react';
 
 import Input from 'react-currency-input-field';
 
-import tw from '@/styles';
+import tw, { cs } from '@/styles';
 
 type Props = {
+  canToggle?: boolean;
   onChange: (value: string) => void;
   value: string;
 };
 
-export default function Currency({ onChange, value }: Props) {
+export default function Currency({ canToggle = true, onChange, value }: Props) {
   const [isNegative, setIsNegative] = useState(Number(value) < 0);
 
   useEffect(() => {
@@ -32,17 +33,19 @@ export default function Currency({ onChange, value }: Props) {
 
   return (
     <div className={styles.container}>
-      <button className={styles.toggle} onClick={handleOnToggle} type="button">
-        {isNegative ? (
-          <Minus className={styles.icon} />
-        ) : (
-          <Plus className={styles.icon} />
-        )}
-      </button>
-      <span className={styles.prefix}>$</span>
+      {canToggle && (
+        <button className={styles.toggle} onClick={handleOnToggle} type="button">
+          {isNegative ? (
+            <Minus className={styles.icon} />
+          ) : (
+            <Plus className={styles.icon} />
+          )}
+        </button>
+      )}
+      <span className={cs(styles.prefix, canToggle && styles.push)}>$</span>
       <Input
         allowNegativeValue={false}
-        className={styles.input}
+        className={cs(styles.input, canToggle && styles.togglable)}
         id="currency"
         name="currency"
         placeholder="0.00"
@@ -64,7 +67,7 @@ const styles = tw({
     appearance-none
     relative
     w-full
-    py-1.5 pl-12.5 pr-3
+    py-1.5 pl-6 pr-3
     bg-(--foreground)/5.5
     border border-(--foreground)/10.5
     outline-3 outline-transparent
@@ -76,6 +79,9 @@ const styles = tw({
     focus:outline-(--foreground)/32.5
 
     lg:text-sm
+  `,
+  togglable: `
+    pl-12.5
   `,
   toggle: `
     absolute top-1/2 left-1 z-10
@@ -89,9 +95,12 @@ const styles = tw({
     sm:size-4
   `,
   prefix: `
-    absolute top-1/2 left-9.5 z-10
+    absolute top-1/2 left-3 z-10
     -translate-y-1/2
 
     lg:text-sm
+  `,
+  push: `
+    left-9.5
   `,
 });
