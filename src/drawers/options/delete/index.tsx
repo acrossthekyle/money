@@ -14,7 +14,7 @@ export default function Delete({ holding }: Props) {
 
   return (
     <Ui.Form.Delete onClick={handleOnClick}>
-      Delete from portfolio
+      Delete {holding?.type === 'property' ? 'asset' : 'account'} from portfolio
     </Ui.Form.Delete>
   );
 };

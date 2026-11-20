@@ -7,6 +7,7 @@ import { currency } from '@/utils';
 
 import Menu from './menu';
 import { useModel } from './model';
+import { balance } from './utils';
 
 type Props = {
   days: CalendarDay[];
@@ -20,7 +21,7 @@ export default function Header({ days, holding }: Props) {
     .find(({ dateable }) => dateable.isToday) ??
     days.filter(({ dateable }) => dateable.isInMonth)[0];
 
-  const percent = (today.balance / worth) * 100;
+  const { amount, percent, total } = balance(today, holding, worth);
 
   return (
     <Ui.Components.Card.Container>
@@ -43,10 +44,10 @@ export default function Header({ days, holding }: Props) {
           </Ui.Components.Progress.Bar>
           <Ui.Components.Progress.Labels>
             <Ui.Components.Progress.Amount>
-              {holding.type === 'credit_card' ? '0' : currency(percent)}% of Net Worth
+              {amount}
             </Ui.Components.Progress.Amount>
             <Ui.Components.Progress.Total>
-              ${currency(worth, true)}
+              {total}
             </Ui.Components.Progress.Total>
           </Ui.Components.Progress.Labels>
         </Ui.Components.Progress.Container>
@@ -65,5 +66,12 @@ const styles = tw({
     leading-[1]
 
     sm:text-base
+  `,
+  remaining: `
+    absolute top-5.25 right-4
+    text-sm text-current/62.5
+    leading-[1]
+
+    sm:text-xs
   `,
 })

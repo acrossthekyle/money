@@ -40,9 +40,6 @@ export default function Drawer() {
               <li>
                 <Pin holding={holding} />
               </li>
-              <li>
-                <Delete holding={holding} />
-              </li>
             </ul>
           </Ui.Drawer.Body>
           <Ui.Drawer.Footer>
@@ -50,6 +47,7 @@ export default function Drawer() {
               View Accounts/Assets
             </Ui.Components.Button>
             <Exit />
+            <Delete holding={holding} />
           </Ui.Drawer.Footer>
         </Ui.Drawer.Content>
       </Ui.Drawer.Inner>

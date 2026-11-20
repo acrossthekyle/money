@@ -3,6 +3,7 @@ const data = [
     "name": "Credit Card",
     "balance": "17.01",
     "type": "credit_card",
+    "limit": "8000.00",
     "interest": "",
     "id": "3cec391d-5ebd-4b41-b369-076c707819f2"
   },
@@ -11,6 +12,7 @@ const data = [
     "balance": "746.56",
     "type": "credit_card",
     "id": "969442fd-d008-4851-9dc4-cb93430904ee",
+    "limit": "5000.00",
     "interest": ""
   },
   {

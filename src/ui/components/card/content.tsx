@@ -27,6 +27,7 @@ export default function Content({
 
 const styles = tw({
   container: `
+    relative
     w-full
     rounded-xl
     bg-neutral-200/62.5
