@@ -12,6 +12,7 @@ const styles = tw({
   container: `
     relative
     flex flex-col gap-4
+    w-full
     p-4
     rounded-2xl
     bg-zinc-50

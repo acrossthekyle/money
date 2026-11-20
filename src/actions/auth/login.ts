@@ -56,5 +56,9 @@ export async function login(
     path: '/',
   });
 
-  redirect(`/${holding.id}`);
+  if (holding === null) {
+    redirect('/onboarding');
+  } else {
+    redirect(`/${holding.id}`);
+  }
 };

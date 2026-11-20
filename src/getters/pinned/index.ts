@@ -4,12 +4,18 @@ import { get as getHoldings } from '../holdings';
 import { get as getSettings } from '../settings';
 
 type Return = {
-  holding: Holding;
+  holding: Holding | null;
 };
 
 export async function get(): Promise<Return> {
   const { holdings } = await getHoldings();
   const { pinned } = await getSettings();
+
+  if (holdings.length === 0) {
+    return {
+      holding: null,
+    };
+  }
 
   const holding = holdings.find(({ id }) => id === pinned);
 
