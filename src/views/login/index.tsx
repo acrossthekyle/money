@@ -22,48 +22,64 @@ export default function View() {
       <main className={styles.container}>
         <h1 className={styles.header}>
           <Stone className={styles.stone} />
-          BASALT
+          Basalt
         </h1>
-        <p className={styles.paragraph}>
-          Sign in. Start planning.
-        </p>
-        <form action={action} className={styles.form}>
-          <Ui.Form.Field>
-            <Ui.Form.Label htmlFor="username">Username</Ui.Form.Label>
-            <Ui.Form.Input
-              id="username"
-              name="username"
-              placeholder=""
-              type="text"
-              defaultValue={data.username}
-              required
-              disabled={isPending}
-              onChange={handleOnUsername}
-            />
-          </Ui.Form.Field>
-          <Ui.Form.Field>
-            <Ui.Form.Label htmlFor="password">Password</Ui.Form.Label>
-            <Ui.Form.Input
-              id="password"
-              name="password"
-              type="password"
-              placeholder=""
-              required
-              disabled={isPending}
-              onChange={handleOnPassword}
-            />
-          </Ui.Form.Field>
-          <Ui.Components.Button isPrimary isDisabled={isPending}>
-            {isPending ? 'Processing...' : 'Sign In'}
-          </Ui.Components.Button>
-        </form>
+        <div className={styles.inner}>
+          <Ui.Components.Card.Container>
+            <h2 className={styles.heading}>
+              <span className={styles.title}>Account Access</span>
+              <span className={styles.info}>
+                Enter your credentials below
+              </span>
+            </h2>
+            <form action={action} className={styles.form}>
+              <Ui.Form.Field>
+                <Ui.Form.Label htmlFor="username">Username</Ui.Form.Label>
+                <Ui.Form.Input
+                  id="username"
+                  name="username"
+                  placeholder=""
+                  type="text"
+                  defaultValue={data.username}
+                  required
+                  disabled={isPending}
+                  onChange={handleOnUsername}
+                />
+              </Ui.Form.Field>
+              <Ui.Form.Field>
+                <Ui.Form.Label htmlFor="password">Password</Ui.Form.Label>
+                <Ui.Form.Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder=""
+                  required
+                  disabled={isPending}
+                  onChange={handleOnPassword}
+                />
+              </Ui.Form.Field>
+              <Ui.Components.Button isDisabled={isPending} isPrimary isSquared>
+                {isPending ? 'Processing...' : 'Login'}
+              </Ui.Components.Button>
+              <p className={styles.paragraph}>
+                Don't have an account? <Link
+                  className={styles.demo}
+                  href="https://project-basalt.demos.acrossthekyle.com"
+                  target="_blank"
+                >
+                  View demo <ArrowUpRight className={styles.arrow} />
+                </Link>
+              </p>
+              <Link
+                className={styles.credit}
+                href="https://acrossthekyle.com"
+              >
+                About the developer
+              </Link>
+            </form>
+          </Ui.Components.Card.Container>
+        </div>
       </main>
-      <footer className={styles.footer}>
-        <Link className={styles.link} href="https://acrossthekyle.com" target="_blank">
-          <span>About the developer</span>
-          <ArrowUpRight className={styles.arrow} />
-        </Link>
-      </footer>
     </>
   );
 };
@@ -72,36 +88,53 @@ const styles = tw({
   container: `
     absolute top-1/2 left-1/2
     -translate-y-1/2 -translate-x-1/2
-    w-full max-w-xs
+    w-full
+
+    xs:max-w-90
+    xs:px-4
+  `,
+  inner: `
     p-4
+
+    xs:px-0
   `,
   header: `
-    flex flex-col items-center
+    flex items-center justify-center gap-2
     mb-2
-    font-bold
+    font-semibold
   `,
   stone: `
-    mb-2
+    size-4.5
   `,
   paragraph: `
-    pb-6
+    text-center text-current/62.5
+
+    sm:text-sm
+  `,
+  heading: `
+    flex flex-col gap-1
     text-center
 
     sm:text-sm
   `,
+  title: `
+    font-semibold
+  `,
+  info: `
+    text-current/62.5
+  `,
   form: `
-    flex flex-col gap-4
+    flex flex-col gap-5
   `,
-  footer: `
-    fixed bottom-4
-    w-full
+  demo: `
+    inline-flex items-center gap-0.5
+    underline
+    underline-offset-4
   `,
-  link: `
-    flex justify-center items-center gap-2
-    text-xs
-    uppercase
+  credit: `
+    text-current/82.5 text-center
 
-    sm:text-tiny
+    sm:text-sm
   `,
   arrow: `
     size-4
