@@ -47,6 +47,7 @@ const styles = tw({
     p-3
     select-none
     outline-0
+    text-left
 
     motion-safe:duration-300
 

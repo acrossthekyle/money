@@ -37,9 +37,12 @@ const styles = tw({
     p-3
     rounded-xl
     select-none
-    bg-zinc-200/32.5 dark:bg-zinc-800/42.5
+    bg-zinc-200/32.5
+    text-left
 
     motion-safe:duration-300
+
+    dark:bg-zinc-800/42.5
 
     hover:bg-zinc-200/62.5
     hover:dark:bg-zinc-800/62.5
