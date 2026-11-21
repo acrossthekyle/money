@@ -42,7 +42,7 @@ const styles = tw({
     relative
     w-full
     py-1.75 px-3.5
-    text-center
+    !text-center
     whitespace-nowrap
     select-none
 

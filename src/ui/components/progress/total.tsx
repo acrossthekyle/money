@@ -12,6 +12,6 @@ export default function Total({
 
 const styles = tw({
   container: `
-
+    text-current/62.5
   `,
 })

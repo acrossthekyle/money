@@ -169,7 +169,6 @@ export default function Drawer() {
             <Update
               date={date}
               isActive={steps[step] === 'update'}
-              onDelete={handleOnDelete}
               onSubmit={handleOnSubmit}
             >
               <Actions

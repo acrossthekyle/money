@@ -99,6 +99,10 @@ export function dateable(
 
 export function netWorth(holdings: Holding[]) {
   return holdings.reduce((accumulator: number, holding: Holding) => {
+    if (holding.type === 'credit_card') {
+      return accumulator;
+    }
+
     return accumulator + Number(holding.balance);
   }, 0);
 }

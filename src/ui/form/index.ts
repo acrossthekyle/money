@@ -1,4 +1,3 @@
-export { default as Back } from './back';
 export { default as Container } from './container';
 export { default as Content } from './content';
 export { default as Currency } from './currency';
@@ -8,7 +7,6 @@ export { default as Header } from './header';
 export { default as Hint } from './hint';
 export { default as Input } from './input';
 export { default as Label } from './label';
-export { default as Legend } from './legend';
 export { default as Option } from './option';
 export { default as Options } from './options';
 export { default as OutlineAction } from './outline/action';
@@ -18,5 +16,4 @@ export { default as OutlineItemHeading } from './outline/heading';
 export { default as OutlineItemText } from './outline/text';
 export { default as Paragraph } from './paragraph';
 export { default as Percent } from './percent';
-export { default as Steps } from './steps';
 

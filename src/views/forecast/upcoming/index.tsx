@@ -1,15 +1,11 @@
 'use client';
 
-import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
-
-import tw, { cs } from '@/styles';
 import type { CalendarDay } from '@/types';
 import Ui from '@/ui';
-import { currency } from '@/utils';
 
 import { useModel } from './model';
+import Table from './table';
 import { getItems } from './utils';
-import Wrapper from './wrapper';
 
 type Props = {
   days: CalendarDay[];
@@ -34,90 +30,10 @@ export default function Upcoming({ days }: Props) {
           {iterables.length} remaining
         </Ui.Components.Card.Subtitle>
       </Ui.Components.Card.Header>
-      <ul className={styles.items}>
-        {iterables.map((item, index) => (
-          <li key={index}>
-            <Wrapper
-              isClickable={!!item.id}
-              onClick={() => handleOnEdit(item.id)}
-            >
-              <span className={styles.name}>{item.name}</span>
-              <span className={styles.date}>
-                {item.dateable.display} • {item.category}
-              </span>
-              <span className={styles.amount}>
-                <span>${currency(item.amount, true)}</span>
-                {item.isNegative ? (
-                  <ArrowUpRight className={cs(styles.arrow, styles.negative)} />
-                ) : (
-                  <ArrowDownLeft className={cs(styles.arrow, styles.positive)} />
-                )}
-              </span>
-            </Wrapper>
-          </li>
-        ))}
-      </ul>
+      <Table items={iterables} onClick={handleOnEdit} />
       <Ui.Components.Button isGhost onClick={handleOnAdd}>
         Add Transaction
       </Ui.Components.Button>
     </Ui.Components.Card.Container>
   );
 };
-
-const styles = tw({
-  items: `
-    flex flex-col gap-4
-  `,
-  action: `
-    relative
-    flex flex-col items-start
-    p-4
-    rounded-xl
-    w-full
-    bg-(--foreground)/10.5
-
-    dark:bg-(--foreground)/5.5
-  `,
-  name: `
-    font-medium
-
-    sm:text-sm
-  `,
-  date: `
-    capitalize
-    text-current/62.5
-
-    lg:text-sm
-  `,
-  amount: `
-    absolute right-4
-    flex items-center gap-2
-    px-3 py-1.25
-    rounded-full
-    text-sm
-    font-medium
-    bg-neutral-300/62.5
-
-    dark:bg-neutral-900/62.5
-
-    xs:top-1/2
-    xs:-translate-y-1/2
-    lg:text-xs
-  `,
-  arrow: `
-    size-4.5
-    stroke-1
-
-    sm:size-4
-  `,
-  negative: `
-    text-red-400
-
-    dark:text-rose-400
-  `,
-  positive: `
-    text-green-700
-
-    dark:text-lime-500
-  `,
-});

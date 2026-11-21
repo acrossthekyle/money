@@ -27,7 +27,7 @@ export default function Days({ date, days }: Props) {
 
 const styles = tw({
   grid: `
-    grid grid-cols-7 gap-2
+    grid grid-cols-7 gap-1
   `,
   heading: `
     flex items-center justify-center

@@ -15,31 +15,16 @@ export default function Day({ date, day }: Props) {
   const {
     handleOnClick,
     hasItems,
-    isFaded,
     isDisabled,
     isToday,
-    isHoverable,
     isNegative,
     isSelected,
   } = useModel(date, day);
 
   return (
-    <li
-      className={
-        cs(
-          styles.container,
-          hasItems && styles.occupied,
-          isFaded && styles.faded,
-          isHoverable && styles.hoverable,
-          isSelected && styles.selected,
-          isToday && styles.today,
-        )
-      }
-    >
+    <li className={styles.container}>
       {!day.dateable.isInMonth && (
-        <span
-          className={cs(styles.action, styles.disabled)}
-        >
+        <span className={cs(styles.action, styles.placeholder)}>
           {day.dateable.day}
         </span>
       )}
@@ -48,8 +33,10 @@ export default function Day({ date, day }: Props) {
           className={
             cs(
               styles.action,
-              hasItems && styles.dark,
-              isDisabled && styles.disabled,
+              hasItems && styles.occupied,
+              (!isToday && !hasItems && !isSelected && !isDisabled) && styles.hoverable,
+              (!hasItems && isSelected) && styles.selected,
+              (!hasItems && isToday) && styles.today,
             )
           }
           disabled={isDisabled}
@@ -81,45 +68,41 @@ const styles = tw({
     rounded-lg
     text-sm
   `,
-  faded: `
-    text-current/90
-  `,
-  today: `
-    bg-(--foreground)/10.5
-
-    dark:bg-(--foreground)/7.5
-  `,
-  hoverable: `
-    hover:bg-(--foreground)/5.5
-    hover:text-(--foreground)
-
-    hover:dark:bg-(--foreground)/2.5
-  `,
-  occupied: `
-    !bg-(--foreground)/90
-  `,
-  selected: `
-    bg-(--foreground)/10.5
-    outline outline-current/22.5
-
-    dark:bg-(--foreground)/12.5
-  `,
   action: `
     flex flex-col items-center justify-center
+    w-full h-full
     p-1
     select-none
-    rounded-xl
+    rounded-lg
+    outline outline-transparent
+
+    motion-safe:duration-300
 
     disabled:cursor-default
+    disabled:text-current/72.5
   `,
-  disabled: `
+  placeholder: `
+    rounded-lg
     text-current/62.5
   `,
-  dark: `
-    text-(--background)
+  today: `
+    bg-zinc-200/42.5
 
-    group-hover:!text-(--background)
-    group-hover:!dark:text-(--foreground)
+    dark:bg-neutral-700/42.5
+  `,
+  hoverable: `
+    hover:bg-zinc-200/62.5
+    hover:dark:bg-neutral-700/62.5
+  `,
+  occupied: `
+    bg-(--foreground)/90
+    text-(--background)
+  `,
+  selected: `
+    bg-zinc-200/62.5
+    !outline-current/22.5
+
+    dark:bg-neutral-700/62.5
   `,
   balance: `
     hidden
@@ -128,8 +111,8 @@ const styles = tw({
     sm:block
   `,
   negative: `
-    !text-red-400
+    text-red-400
 
-    dark:!text-rose-400
+    dark:text-rose-400
   `,
 });

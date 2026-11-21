@@ -11,7 +11,6 @@ import { useModel } from './model';
 type Props = {
   date: Dateable | null;
   isActive: boolean;
-  onDelete: () => void;
   onSubmit: (choice: BudgetPutActionInputApplysTo) => void;
 };
 
@@ -19,7 +18,6 @@ export default function Section({
   children,
   date,
   isActive,
-  onDelete,
   onSubmit,
 }: React.PropsWithChildren<Props>) {
   const { choice, handleOnChange, isBlocked } = useModel();
@@ -37,7 +35,6 @@ export default function Section({
         </Ui.Form.Paragraph>
         <Ui.Form.Container>
           <Ui.Form.Field>
-            <Ui.Form.Legend>Choose one</Ui.Form.Legend>
             <Ui.Form.Options>
               <Ui.Form.Option
                 isActive={choice === BudgetPutActionInputApplysTo.All}
@@ -72,9 +69,6 @@ export default function Section({
           Confirm & Update
         </Ui.Components.Button>
         {children}
-        <Ui.Form.Delete onClick={onDelete}>
-          Delete transaction and update forecast
-        </Ui.Form.Delete>
       </Ui.Drawer.Footer>
     </>
   );

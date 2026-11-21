@@ -15,12 +15,10 @@ export function useModel(current: Dateable, day: CalendarDay) {
 
   return {
     handleOnClick,
-    hasItems: day.dateable.isInMonth && (day.budgets.length > 0 || day.return.amount !== null),
-    isFaded: !day.dateable.isInMonth,
-    isDisabled: !day.dateable.isInMonth || day.dateable.isBeforeToday,
+    hasItems: day.budgets.length > 0 || day.return.amount !== null,
+    isDisabled: day.dateable.isBeforeToday,
     isToday: day.dateable.isToday,
-    isHoverable: day.dateable.isInMonth && !day.dateable.isBeforeToday,
-    isNegative: day.dateable.isInMonth && !day.dateable.isBeforeToday && day.balance < 0,
+    isNegative: !day.dateable.isBeforeToday && day.balance < 0,
     isSelected: day.dateable.iso === current.iso,
   };
 };

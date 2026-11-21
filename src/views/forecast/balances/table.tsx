@@ -1,5 +1,5 @@
-import tw, { cs } from '@/styles';
 import type { Dateable } from '@/types';
+import Ui from '@/ui';
 import { currency } from '@/utils';
 
 type Balance = {
@@ -16,88 +16,67 @@ type Props = {
 
 export default function Table({ start, lowest, highest, end }: Props) {
   return (
-    <ul className={styles.container}>
-      <li className={styles.item}>
-        <h3 className={styles.heading}>
-          <span className={styles.label}>Starting Balance</span>
-          <span className={styles.when}>{start.date.display}</span>
-        </h3>
-        <p
-          className={cs(styles.value, start.balance < 0 && styles.negative)}
-        >
-          ${currency(start.balance, true)}
-        </p>
-      </li>
-      <li className={styles.item}>
-        <h3 className={styles.heading}>
-          <span className={styles.label}>Lowest</span>
-          <span className={styles.when}>{lowest.date.display}</span>
-        </h3>
-        <p
-          className={cs(styles.value, lowest.balance < 0 && styles.negative)}
-        >
-          ${currency(lowest.balance, true)}
-        </p>
-      </li>
-      <li className={styles.item}>
-        <h3 className={styles.heading}>
-          <span className={styles.label}>Highest</span>
-          <span className={styles.when}>{highest.date.display}</span>
-        </h3>
-        <p
-          className={cs(styles.value, highest.balance < 0 && styles.negative)}
-        >
-          ${currency(highest.balance, true)}
-        </p>
-      </li>
-      <li className={styles.item}>
-        <h3 className={styles.heading}>
-          <span className={styles.label}>Ending Balance</span>
-          <span className={styles.when}>{end.date.display}</span>
-        </h3>
-        <p
-          className={cs(styles.value, end.balance < 0 && styles.negative)}
-        >
-          ${currency(end.balance, true)}
-        </p>
-      </li>
-    </ul>
+    <Ui.Components.List.Container>
+      <Ui.Components.List.Item>
+        <Ui.Components.List.Heading>
+          <Ui.Components.List.Title>
+            Starting Balance
+          </Ui.Components.List.Title>
+          <Ui.Components.List.Lid>
+            {start.date.display}
+          </Ui.Components.List.Lid>
+        </Ui.Components.List.Heading>
+        <Ui.Components.Badge.Container>
+          <Ui.Components.Badge.Content isDanger={start.balance < 0}>
+            ${currency(start.balance, true)}
+          </Ui.Components.Badge.Content>
+        </Ui.Components.Badge.Container>
+      </Ui.Components.List.Item>
+      <Ui.Components.List.Item>
+        <Ui.Components.List.Heading>
+          <Ui.Components.List.Title>
+            Lowest
+          </Ui.Components.List.Title>
+          <Ui.Components.List.Lid>
+            {lowest.date.display}
+          </Ui.Components.List.Lid>
+        </Ui.Components.List.Heading>
+        <Ui.Components.Badge.Container>
+          <Ui.Components.Badge.Content isDanger={lowest.balance < 0}>
+            ${currency(lowest.balance, true)}
+          </Ui.Components.Badge.Content>
+        </Ui.Components.Badge.Container>
+      </Ui.Components.List.Item>
+      <Ui.Components.List.Item>
+        <Ui.Components.List.Heading>
+          <Ui.Components.List.Title>
+            Highest
+          </Ui.Components.List.Title>
+          <Ui.Components.List.Lid>
+            {highest.date.display}
+          </Ui.Components.List.Lid>
+        </Ui.Components.List.Heading>
+        <Ui.Components.Badge.Container>
+          <Ui.Components.Badge.Content isDanger={highest.balance < 0}>
+            ${currency(highest.balance, true)}
+          </Ui.Components.Badge.Content>
+        </Ui.Components.Badge.Container>
+      </Ui.Components.List.Item>
+      <Ui.Components.List.Item>
+        <Ui.Components.List.Heading>
+          <Ui.Components.List.Title>
+            Ending Balance
+          </Ui.Components.List.Title>
+          <Ui.Components.List.Lid>
+            {end.date.display}
+          </Ui.Components.List.Lid>
+        </Ui.Components.List.Heading>
+        <Ui.Components.Badge.Container>
+          <Ui.Components.Badge.Content isDanger={end.balance < 0}>
+            ${currency(end.balance, true)}
+          </Ui.Components.Badge.Content>
+        </Ui.Components.Badge.Container>
+      </Ui.Components.List.Item>
+    </Ui.Components.List.Container>
   );
 };
-
-const styles = tw({
-  container: `
-    flex flex-col gap-3
-
-    sm:text-sm
-  `,
-  item: `
-    flex items-center justify-between
-  `,
-  heading: `
-    flex flex-col gap-1
-  `,
-  label: `
-    font-medium
-  `,
-  when: `
-    text-current/62.5
-  `,
-  value: `
-    flex items-center gap-2
-    px-3 py-1.25
-    rounded-full
-    text-sm
-    font-medium
-    bg-neutral-300/62.5
-
-    dark:bg-neutral-900/62.5
-
-    lg:text-xs
-  `,
-  negative: `
-    text-red-500
-
-    dark:text-rose-400
-  `,
-});

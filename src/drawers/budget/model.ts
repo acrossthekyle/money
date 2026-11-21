@@ -129,7 +129,11 @@ export function useModel() {
       setStep(0);
       setIsEditing(false);
     } else if (step > 0) {
-      setStep(previous => previous - 1);
+      if (steps[step] === 'update') {
+        setStep(0);
+      } else {
+        setStep(previous => previous - 1);
+      }
     } else {
       onClose();
 

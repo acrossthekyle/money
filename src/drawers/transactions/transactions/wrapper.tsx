@@ -36,7 +36,6 @@ const styles = tw({
     w-full
     p-3
     rounded-xl
-    text-left
     bg-transparent
     outline-0
 

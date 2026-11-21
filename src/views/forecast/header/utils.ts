@@ -10,7 +10,7 @@ export function balance(day: CalendarDay, holding: Holding, worth: number) {
     return {
       amount: limit === 0 ? 'Set account limit for available balance' : `$${currency(amount, true)} Available`,
       percent,
-      total: limit === 0 ? '' : `$${currency(limit, true)}`,
+      total: limit === 0 ? '' : `$${currency(limit, true)} Limit`,
     };
   }
 

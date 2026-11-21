@@ -35,7 +35,6 @@ const styles = tw({
     relative
     flex flex-col gap-2
     w-full
-    text-left
   `,
   name: `
     flex items-center gap-2

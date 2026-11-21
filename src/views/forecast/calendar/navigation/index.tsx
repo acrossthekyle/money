@@ -90,9 +90,15 @@ const styles = tw({
   navigate: `
     col-span-1
     flex items-center justify-center
+    rounded-lg
+
+    motion-safe:duration-300
 
     disabled:opacity-50
     disabled:!cursor-not-allowed
+
+    not-disabled:hover:bg-zinc-200/62.5
+    not-disabled:hover:dark:bg-neutral-700/62.5
   `,
   arrow: `
     size-5
@@ -103,6 +109,12 @@ const styles = tw({
   field: `
     relative
     flex items-center justify-center
+    rounded-lg
+
+    motion-safe:duration-300
+
+    hover:bg-zinc-200/62.5
+    hover:dark:bg-neutral-700/62.5
   `,
   months: `
     col-span-3
@@ -123,6 +135,7 @@ const styles = tw({
     flex items-center justify-between
     pointer-events-none
     select-none
+    px-2
 
     sm:text-sm
   `,

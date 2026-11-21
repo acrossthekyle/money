@@ -37,7 +37,6 @@ const styles = tw({
     p-3
     rounded-xl
     select-none
-    text-left
     bg-zinc-200/32.5 dark:bg-zinc-800/42.5
 
     motion-safe:duration-300

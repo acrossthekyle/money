@@ -37,6 +37,7 @@ html {
 body {
   button {
     cursor: pointer;
+    text-align: left;
   }
 
   button[disabled] {

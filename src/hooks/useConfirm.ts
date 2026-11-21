@@ -38,7 +38,7 @@ const styles = tw({
     !pb-0
     !overflow-hidden
     !rounded-2xl
-    text-left text-(--foreground)
+    !text-left !text-(--foreground)
     !bg-zinc-50
     !border !border-(--foreground)/12.5
 

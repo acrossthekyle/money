@@ -24,7 +24,7 @@ export function useModel(value: string, type: string) {
     amount,
     handleOnChange,
     handleOnType,
-    isBlocked: !amount.replace('-', ''),
+    isBlocked: !amount,
     isIncome,
   };
 };

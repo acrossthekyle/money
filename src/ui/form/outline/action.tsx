@@ -45,7 +45,6 @@ const styles = tw({
     flex flex-col gap-1
     w-full
     p-3
-    text-left
     select-none
     outline-0
 
