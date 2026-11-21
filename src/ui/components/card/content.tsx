@@ -47,6 +47,8 @@ const styles = tw({
     dark:bg-neutral-800/62.5
   `,
   hoverable: `
+    text-left
+
     motion-safe:duration-200
 
     hover:bg-neutral-200
