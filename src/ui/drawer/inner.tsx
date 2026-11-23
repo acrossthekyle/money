@@ -38,13 +38,9 @@ const styles = tw({
   `,
   card: `
     items-end
-    px-2
-
-    sm:p-2
+    p-2
   `,
   modal: `
-    px-2
-
-    sm:p-2
+    p-2
   `,
 });

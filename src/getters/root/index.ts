@@ -8,18 +8,20 @@ type Return = {
   budgets: Budget[];
   holdings: Holding[];
   pinned: string,
+  updated: string | null;
   zone: string;
 };
 
 export async function get(): Promise<Return> {
   const { budgets } = await getBudgets();
   const { holdings } = await getHoldings();
-  const { pinned, zone } = await getSettings();
+  const { pinned, updated, zone } = await getSettings();
 
   return {
     budgets,
     holdings,
     pinned,
+    updated,
     zone,
   };
 }

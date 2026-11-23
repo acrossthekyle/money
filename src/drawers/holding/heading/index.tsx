@@ -59,4 +59,4 @@ const styles = tw({
   capitalize: `
     capitalize
   `,
-})
+});

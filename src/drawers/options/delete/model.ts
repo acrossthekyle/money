@@ -46,7 +46,7 @@ export function useModel(holding?: Holding) {
 
   const handleOnClick = async () => {
     const result = await onConfirm({
-      target: '#card-drawer',
+      target: '#options-drawer',
       text: `This action cannot be undone. This will permanently delete ${holding?.name} and all of its transactions.`,
     });
 

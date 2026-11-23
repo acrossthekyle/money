@@ -1,8 +1,10 @@
+export { useBalances } from './useBalances';
 export { useBudget } from './useBudget';
 export { useConfirm } from './useConfirm';
 export { useHolding } from './useHolding';
 export { useMenu } from './useMenu';
 export { useOptions } from './useOptions';
+export { useStale } from './useStale';
 export { useStore } from './useStore';
 export { useToasts } from './useToasts';
 export { useTransactions } from './useTransactions';

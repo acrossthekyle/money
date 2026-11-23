@@ -23,7 +23,7 @@ export default function Drawer() {
 
   return (
     <Ui.Drawer.Container
-      id="card-drawer"
+      id="options-drawer"
       instance={instance}
       isActive={isActive}
       isBase={isBase}

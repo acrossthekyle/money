@@ -45,10 +45,10 @@ const styles = tw({
   `,
   inner: `
     flex flex-col items-center justify-center gap-4
-    py-6
+    py-4
   `,
   symbol: `
-    mb-4
+    mb-2
     p-2.5
     rounded-xl
     bg-neutral-200/62.5

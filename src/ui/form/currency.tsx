@@ -9,11 +9,19 @@ import tw, { cs } from '@/styles';
 
 type Props = {
   canToggle?: boolean;
+  id?: string;
+  isDisabled?: boolean;
   onChange: (value: string) => void;
   value: string;
 };
 
-export default function Currency({ canToggle = true, onChange, value }: Props) {
+export default function Currency({
+  canToggle = true,
+  id = 'currency',
+  isDisabled,
+  onChange,
+  value,
+}: Props) {
   const [isNegative, setIsNegative] = useState(Number(value) < 0);
 
   useEffect(() => {
@@ -32,7 +40,7 @@ export default function Currency({ canToggle = true, onChange, value }: Props) {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={cs(styles.container, isDisabled && styles.disabled)}>
       {canToggle && (
         <button className={styles.toggle} onClick={handleOnToggle} type="button">
           {isNegative ? (
@@ -46,7 +54,8 @@ export default function Currency({ canToggle = true, onChange, value }: Props) {
       <Input
         allowNegativeValue={false}
         className={cs(styles.input, canToggle && styles.togglable)}
-        id="currency"
+        disabled={isDisabled}
+        id={id}
         name="currency"
         placeholder="0.00"
         decimalsLimit={2}
@@ -62,6 +71,9 @@ export default function Currency({ canToggle = true, onChange, value }: Props) {
 const styles = tw({
   container: `
     relative
+  `,
+  disabled: `
+    opacity-50
   `,
   input: `
     appearance-none
