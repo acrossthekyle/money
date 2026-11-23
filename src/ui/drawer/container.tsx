@@ -7,8 +7,8 @@ type Props = {
   instance: (node: HTMLDialogElement | null) => void;
   isActive: boolean;
   isBase?: boolean;
-  onBackdrop: (event: React.MouseEvent<HTMLDialogElement>) => void;
-  onCancel: (event: React.KeyboardEvent<HTMLDialogElement>) => void;
+  onBackdrop?: (event: React.MouseEvent<HTMLDialogElement>) => void;
+  onCancel?: (event: React.KeyboardEvent<HTMLDialogElement>) => void;
 };
 
 export default function Container({

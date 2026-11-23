@@ -1,31 +1,34 @@
-import { ReactNode } from 'react';
-
-import { DrawerProvider, StaleProvider, ToastProvider } from '@/contexts';
+import { DrawerProvider, SyncProvider, ToastProvider } from '@/contexts';
+import { db } from '@/db';
 import {
-  Balances,
   Budget,
   Holding,
+  Link,
   Menu,
   Options,
-  Stale,
+  Sync,
   Transactions,
 } from '@/drawers';
-import { get } from '@/getters/root';
 import { Main, Toasts } from '@/layout';
 import StoreProvider from '@/store';
 
-export default async function Layout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  const data = await get();
+export default async function Layout({ children }: React.PropsWithChildren) {
+  const { budgets } = await db.tables.budgets();
+  const { holdings } = await db.tables.holdings();
+  const { pinned, synced, token, zone } = await db.tables.settings();
 
   return (
     <DrawerProvider>
       <ToastProvider>
-        <StoreProvider data={data}>
-          <StaleProvider updated={data.updated} zone={data.zone}>
+        <StoreProvider
+          data={{
+            budgets,
+            holdings,
+            pinned,
+            zone,
+          }}
+        >
+          <SyncProvider synced={synced} zone={zone}>
             <Main>
               {children}
             </Main>
@@ -35,9 +38,9 @@ export default async function Layout({
             <Holding />
             <Transactions />
             <Toasts />
-            <Stale />
-            <Balances />
-          </StaleProvider>
+            <Sync canSync={!!token} />
+            <Link />
+          </SyncProvider>
         </StoreProvider>
       </ToastProvider>
     </DrawerProvider>

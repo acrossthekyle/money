@@ -1,10 +1,10 @@
-export { useBalances } from './useBalances';
 export { useBudget } from './useBudget';
 export { useConfirm } from './useConfirm';
 export { useHolding } from './useHolding';
+export { useLink } from './useLink';
 export { useMenu } from './useMenu';
 export { useOptions } from './useOptions';
-export { useStale } from './useStale';
+export { useSync } from './useSync';
 export { useStore } from './useStore';
 export { useToasts } from './useToasts';
 export { useTransactions } from './useTransactions';

@@ -3,36 +3,36 @@
 import { differenceInDays, parseISO } from 'date-fns';
 import { useEffect } from 'react';
 
-import { useStale } from '@/hooks';
+import { useSync } from '@/hooks';
 import { date } from '@/utils';
 
 type Props = {
-  updated?: string | null;
+  synced?: string | null;
   zone: string;
 };
 
-export default function StaleProvider({
+export default function SyncProvider({
   children,
-  updated,
+  synced,
   zone,
 }: React.PropsWithChildren<Props>) {
-  const { onStale } = useStale();
+  const { onSync } = useSync();
 
   useEffect(() => {
-    if (sessionStorage.getItem('stale_triggered') === 'true') {
+    if (sessionStorage.getItem('sync_triggered') === 'true') {
       return;
     }
 
-    const days = updated
-      ? differenceInDays(date(zone), parseISO(updated))
+    const days = synced
+      ? differenceInDays(date(zone), parseISO(synced))
       : null;
 
     const isStale = days === null || (days !== null && days > 1);
 
     if (isStale) {
-      sessionStorage.setItem('stale_triggered', 'true');
+      sessionStorage.setItem('sync_triggered', 'true');
 
-      onStale();
+      onSync();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

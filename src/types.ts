@@ -1,10 +1,11 @@
 export type Holding = {
-  id: string;
-  name: string;
   balance: string;
-  limit?: string;
-  type: string;
+  id: string;
   interest: string;
+  limit?: string;
+  name: string;
+  plaid?: string;
+  type: string;
   updated?: string;
 };
 
@@ -26,12 +27,21 @@ export type Budget = {
   };
 };
 
-export type Setting = {
+export type Generic = {
   id: string;
   value: string;
 };
 
-export type Record = Holding | Budget | Setting;
+export type Record = Generic | Holding | Budget;
+
+export type Syncable = {
+  id: string;
+  name: string;
+  official: string;
+  mask: string;
+  type: string;
+  balance: number;
+};
 
 export type CalendarTransaction = {
   budget: Budget;
@@ -270,4 +280,8 @@ export type HoldingPutActionResponse = {
   holding: Holding;
   isSuccess: boolean;
   message: string;
+};
+
+export type DrawerLinkData = {
+  unsynced: Syncable[];
 };

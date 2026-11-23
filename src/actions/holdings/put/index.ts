@@ -5,8 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DATE_ISO } from '@/constants';
 import { db } from '@/db';
-import { get as getHoldings } from '@/getters/holdings';
-import { get as getSettings } from '@/getters/settings';
 import type {
   Holding,
   HoldingPutActionInput,
@@ -38,8 +36,8 @@ export async function put(
     };
   }
 
-  const { holdings } = await getHoldings();
-  const { zone } = await getSettings();
+  const { holdings } = await db.tables.holdings();
+  const { zone } = await db.tables.settings();
 
   if (input.id !== null) {
     const found = holdings.find((item: Holding) => item.id === input.id);

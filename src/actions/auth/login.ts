@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation';
 import * as z from 'zod';
 
 import { db } from '@/db';
-import { get as getPinned } from '@/getters/pinned';
 
 const Form = z.object({
   username: z.string(),
@@ -39,7 +38,7 @@ export async function login(
     return;
   }
 
-  const { holding } = await getPinned();
+  const { holding } = await db.queries.getPinned();
 
   await db.write('settings', {
     id: 'timezone',
@@ -59,6 +58,6 @@ export async function login(
   if (holding === null) {
     redirect('/onboarding');
   } else {
-    redirect(`/${holding.id}`);
+    redirect(`/${holding}`);
   }
 };

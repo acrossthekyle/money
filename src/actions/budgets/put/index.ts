@@ -3,8 +3,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { db } from '@/db';
-import { get as getBudgets } from '@/getters/budgets';
-import { get as getSettings } from '@/getters/settings';
 import type {
   Budget,
   BudgetPutActionInput,
@@ -61,8 +59,8 @@ export async function put(
     };
   }
 
-  const { budgets } = await getBudgets();
-  const { zone } = await getSettings();
+  const { budgets } = await db.tables.budgets();
+  const { zone } = await db.tables.settings();
 
   const budget = budgets.find((item: Budget) => item.id === input.id);
 

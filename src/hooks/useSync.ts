@@ -4,7 +4,7 @@ import { useCallback, useContext } from 'react';
 
 import { DrawerContext } from '@/contexts/drawer';
 
-export function useStale() {
+export function useSync() {
   const context = useContext(DrawerContext);
 
   if (context === null) {
@@ -12,14 +12,14 @@ export function useStale() {
   }
 
   const instance = useCallback((node: HTMLDialogElement | null) => {
-    context.onRegister('stale', node);
+    context.onRegister('sync', node);
   }, [context]);
 
   const handleOnOpen = () => {
-    context.onDrawer('stale');
+    context.onDrawer('sync');
   };
 
-  const stackIndex = context.stack.indexOf('stale');
+  const stackIndex = context.stack.indexOf('sync');
   const isActive = stackIndex !== -1;
   const isBase = stackIndex === 0;
   const isDecked = isActive && stackIndex < context.stack.length - 1;
@@ -30,6 +30,6 @@ export function useStale() {
     isActive,
     isBase,
     isDecked,
-    onStale: handleOnOpen,
+    onSync: handleOnOpen,
   };
 }

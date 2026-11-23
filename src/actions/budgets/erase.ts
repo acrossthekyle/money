@@ -1,7 +1,6 @@
 'use server';
 
 import { db } from '@/db';
-import { get } from '@/getters/budgets';
 import type {
   Budget,
   BudgetEraseActionInput,
@@ -12,7 +11,7 @@ export async function erase(
   state: BudgetEraseActionResponse | null,
   input: BudgetEraseActionInput,
 ): Promise<BudgetEraseActionResponse> {
-  const { budgets } = await get();
+  const { budgets } = await db.tables.budgets();
 
   const budget = budgets.find((item: Budget) => item.id === input.id);
 

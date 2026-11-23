@@ -12,11 +12,12 @@ import {
 } from 'react';
 
 type DrawerContextType = {
+  data: unknown;
   isOpen: boolean;
   onBackdrop: (event: MouseEvent<HTMLDialogElement>) => void;
   onCancel: (event: KeyboardEvent<HTMLDialogElement>) => void;
   onClose: () => void;
-  onDrawer: (name: string) => void;
+  onDrawer: (name: string, data?: unknown) => void;
   onRegister: (name: string, node: HTMLDialogElement | null) => void;
   onReset: () => void;
   stack: string[];
@@ -25,8 +26,9 @@ type DrawerContextType = {
 export const DrawerContext = createContext<DrawerContextType | null>(null);
 
 export default function DrawerProvider({ children }: PropsWithChildren) {
-  const [stack, setStack] = useState<string[]>([]);
+  const [data, setData] = useState<unknown>();
   const [openDrawers, setOpenDrawers] = useState<string[]>([]);
+  const [stack, setStack] = useState<string[]>([]);
 
   const refs = useRef<Record<string, HTMLDialogElement | null>>({});
 
@@ -57,6 +59,7 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
       closingNode.close();
 
       setOpenDrawers(previous => previous.filter((item) => item !== closingName));
+      setData(undefined);
 
       closingNode.removeEventListener('transitionend', handleTransitionEnd);
     };
@@ -66,6 +69,10 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
 
   const handleOnEscape = useCallback((event: WindowEventMap['keyup']) => {
     if (!topDrawer) {
+      return;
+    }
+
+    if (topDrawer === 'link' || topDrawer === 'sync') {
       return;
     }
 
@@ -90,7 +97,7 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
     refs.current[name] = node;
   }, []);
 
-  const handleOnOpen = useCallback((name: string) => {
+  const handleOnOpen = useCallback(<T = unknown>(name: string, data?: T) => {
     const activeNode = refs.current[name];
 
     if (!activeNode) {
@@ -106,6 +113,7 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
     }
 
     setOpenDrawers(previous => [...previous, name]);
+    setData(data ?? undefined);
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -142,6 +150,7 @@ export default function DrawerProvider({ children }: PropsWithChildren) {
   return (
     <DrawerContext.Provider
       value={{
+        data,
         isOpen,
         onBackdrop: handleOnBackdrop,
         onCancel: handleOnCancel,

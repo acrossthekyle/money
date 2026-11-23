@@ -4,7 +4,7 @@ import { useCallback, useContext } from 'react';
 
 import { DrawerContext } from '@/contexts/drawer';
 
-export function useBalances() {
+export function useLink<T = unknown>() {
   const context = useContext(DrawerContext);
 
   if (context === null) {
@@ -12,24 +12,25 @@ export function useBalances() {
   }
 
   const instance = useCallback((node: HTMLDialogElement | null) => {
-    context.onRegister('balances', node);
+    context.onRegister('link', node);
   }, [context]);
 
-  const handleOnOpen = () => {
-    context.onDrawer('balances');
+  const handleOnOpen = (data?: T) => {
+    context.onDrawer('link', data);
   };
 
-  const stackIndex = context.stack.indexOf('balances');
+  const stackIndex = context.stack.indexOf('link');
   const isActive = stackIndex !== -1;
   const isBase = stackIndex === 0;
   const isDecked = isActive && stackIndex < context.stack.length - 1;
 
   return {
     ...context,
+    input: context.data as T | null,
     instance,
     isActive,
     isBase,
     isDecked,
-    onBalances: handleOnOpen,
+    onLink: handleOnOpen,
   };
 }

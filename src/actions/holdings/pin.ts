@@ -1,7 +1,6 @@
 'use server';
 
 import { db } from '@/db';
-import { get as getSettings } from '@/getters/settings';
 import type {
   HoldingPinActionInput,
   HoldingPinActionResponse,
@@ -11,7 +10,7 @@ export async function pin(
   state: HoldingPinActionResponse | null,
   input: HoldingPinActionInput,
 ): Promise<HoldingPinActionResponse> {
-  const { pinned } = await getSettings();
+  const { pinned } = await db.tables.settings();
 
   const result = pinned === input.id ? '' : input.id;
 
