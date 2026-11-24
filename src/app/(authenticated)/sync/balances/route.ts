@@ -13,12 +13,18 @@ import { synchronize } from './utils';
 
 export async function POST() {
   try {
+    if (!process.env.PLAID_ENABLED) {
+      return NextResponse.json({}, {
+        status: 401,
+      });
+    }
+
     const { holdings } = await db.tables.holdings();
     const { token, zone } = await db.tables.settings();
 
     if (token === null) {
       return NextResponse.json({}, {
-        status: 500,
+        status: 401,
       });
     }
 

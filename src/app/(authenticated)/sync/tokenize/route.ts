@@ -5,6 +5,12 @@ import { client } from '../client';
 
 export async function POST() {
   try {
+    if (!process.env.PLAID_ENABLED) {
+      return NextResponse.json({}, {
+        status: 401,
+      });
+    }
+
     const response = await client.linkTokenCreate({
       user: {
         client_user_id: process.env.APP_USER_HSID || 'basalt-user',

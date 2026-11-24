@@ -6,6 +6,12 @@ import { client } from '../client';
 
 export async function POST(request: Request) {
   try {
+    if (!process.env.PLAID_ENABLED) {
+      return NextResponse.json({}, {
+        status: 401,
+      });
+    }
+
     const { token } = await request.json();
 
     const exchange = await client.itemPublicTokenExchange({
