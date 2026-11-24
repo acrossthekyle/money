@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import { useLink, useSync } from '@/hooks';
-import type { DrawerLinkData } from '@/types';
+import { useLink, useStore, useSync } from '@/hooks';
+import type { DrawerLinkData, Holding } from '@/types';
 
 import { useConnect } from './useConnect';
 
@@ -15,7 +15,7 @@ export function useModel(canSync: boolean) {
   const [unsynced, setUnsynced] = useState([]);
 
   const { onLink } = useLink<DrawerLinkData>();
-
+  const { forecasts, holdings } = useStore();
   const {
     instance,
     isActive,
@@ -52,10 +52,19 @@ export function useModel(canSync: boolean) {
 
     setIsSyncing(false);
 
+    if (result.synced.length > 0) {
+      result.synced.forEach((updated: Holding) => {
+        holdings.setHolding(updated);
+      });
+
+      forecasts.setForecast();
+    }
+
     if (result.unsynced.length > 0) {
       setUnsynced(result.unsynced);
       setIsSynced(null);
     } else {
+      setUnsynced([]);
       setIsSynced(true);
     }
   };

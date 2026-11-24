@@ -34,15 +34,6 @@ export type Generic = {
 
 export type Record = Generic | Holding | Budget;
 
-export type Syncable = {
-  id: string;
-  name: string;
-  official: string;
-  mask: string;
-  type: string;
-  balance: number;
-};
-
 export type CalendarTransaction = {
   budget: Budget;
   holding: {
@@ -282,6 +273,31 @@ export type HoldingPutActionResponse = {
   message: string;
 };
 
+export type HoldingSyncActionInput = {
+  data: SyncableSelection[];
+};
+
+export type HoldingSyncActionResponse = {
+  result: Holding[];
+  isSuccess: boolean;
+  message: string;
+};
+
 export type DrawerLinkData = {
   unsynced: Syncable[];
+};
+
+export type SyncableSelection = {
+  balance: number;
+  linked: string;
+  syncable: string;
+};
+
+export type Syncable = {
+  id: string;
+  name: string;
+  official: string;
+  mask: string;
+  type: string;
+  balance: number;
 };

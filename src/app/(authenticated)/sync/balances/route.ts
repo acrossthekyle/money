@@ -1,5 +1,4 @@
 import { format } from 'date-fns';
-import { snakeCase } from 'lodash';
 import { NextResponse } from 'next/server';
 import type { AccountBase } from 'plaid/legacy';
 
@@ -29,7 +28,7 @@ export async function POST() {
     });
 
     const syncable: Syncable[] = response.data.accounts.map((account: AccountBase) => ({
-      id: snakeCase(`${account.name}_${account.official_name}_${account.mask}`),
+      id: account.account_id,
       name: account.name,
       official: account.official_name || '',
       mask: account.mask || '',
@@ -37,14 +36,15 @@ export async function POST() {
       balance: account.balances.current || 0,
     }));
 
+    const { synced, unsynced } = await synchronize(syncable, holdings);
+
     await db.write('settings', {
       id: 'synced',
       value: format(date(zone), DATE_ISO),
     });
 
-    const { unsynced } = await synchronize(syncable, holdings);
-
     return NextResponse.json({
+      synced,
       unsynced,
     });
   } catch {

@@ -4,12 +4,14 @@ import tw, { cs } from '@/styles';
 
 type Props = {
   isActive: boolean;
+  isDisabled?: boolean;
   label: string;
   onSelect: () => void;
 };
 
 export default function Section({
   isActive,
+  isDisabled,
   label,
   onSelect,
 }: Props) {
@@ -17,6 +19,7 @@ export default function Section({
     <>
       <button
         className={styles.container}
+        disabled={isDisabled}
         onClick={onSelect}
         type="button"
       >
@@ -44,9 +47,11 @@ const styles = tw({
     whitespace-nowrap
     select-none
     border border-current/10.5
-    cursor-pointer
     bg-(--foreground)/5.5
     outline-0
+
+    disabled:opacity-50
+    disabled:!cursor-default
 
     sm:text-sm
   `,

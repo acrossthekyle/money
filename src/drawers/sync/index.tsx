@@ -23,6 +23,13 @@ export default function Drawer({ canSync }: Props) {
     isSyncing,
   } = useModel(canSync);
 
+  const mustConnect = isSynced === false && !isSyncing && !hasError && !canSync;
+  const mustFinish = isSynced === true && !isSyncing && !hasError && canSync;
+  const mustLink = isSynced === null && !isSyncing && !hasError && canSync;
+  const mustLoad = isSynced === false && isSyncing && !hasError && canSync;
+  const mustStop = isSynced === false && !isSyncing && hasError && canSync;
+  const mustSync = isSynced === false && !isSyncing && !hasError && canSync;
+
   return (
     <Ui.Drawer.Container
       id="stale-drawer"
@@ -34,69 +41,51 @@ export default function Drawer({ canSync }: Props) {
         <Ui.Drawer.Content isActive={isActive} isCard isDecked={isDecked}>
           <Ui.Drawer.Body>
             <div className={styles.symbol}>
-              {isSynced === false && isSyncing && (
-                <LoaderCircle className={cs(styles.icon, styles.spin)} />
+              {mustConnect && (
+                <TriangleExclamationPoint className={styles.icon} />
               )}
-              {isSynced === false && !isSyncing && !hasError && canSync && (
-                <Clock className={styles.icon} />
-              )}
-              {(isSynced === true || isSynced === null) && !isSyncing && (
+              {(mustFinish || mustLink) && (
                 <Check className={styles.icon} />
               )}
-              {isSynced === false && !isSyncing && !hasError && !canSync && (
+              {mustLoad && (
+                <LoaderCircle className={cs(styles.icon, styles.spin)} />
+              )}
+              {mustStop && (
                 <TriangleExclamationPoint className={styles.icon} />
               )}
-              {isSynced === false && !isSyncing && hasError && (
-                <TriangleExclamationPoint className={styles.icon} />
+              {mustSync && (
+                <Clock className={styles.icon} />
               )}
             </div>
-            {!hasError && canSync && (
-              <>
-                <h2 className={styles.header}>
-                  {isSyncing && 'Syncing...'}
-                  {(!isSyncing && isSynced === true) && 'Synced'}
-                  {(!isSyncing && isSynced === null) && 'Semi-Synced'}
-                  {(!isSyncing && isSynced === false) && 'Out of Sync'}
-                </h2>
-                <p className={styles.paragraph}>
-                  {(!isSyncing && isSynced === false) && 'The balances of one or more accounts were synced more than one day ago.'}
-                  {(!isSyncing && (isSynced === true || isSynced === null)) && 'The balances from the financial insitution need to be linked with your portfolio.'}
-                  {(isSyncing && isSynced === false) && 'Retrieving balances from financial institution, one moment please.'}
-                </p>
-              </>
-            )}
-            {!hasError && !canSync && (
-              <>
-                <h2 className={styles.header}>
-                  Connection Required
-                </h2>
-                <p className={styles.paragraph}>
-                  The balances of one or more accounts are not connected to the financial institution.
-                </p>
-              </>
-            )}
-            {hasError && (
-              <>
-                <h2 className={styles.header}>
-                  Error
-                </h2>
-                <p className={styles.paragraph}>
-                  Something went wrong syncing the balances, please try again.
-                </p>
-              </>
-            )}
+            <h2 className={styles.header}>
+              {mustConnect && 'Connection Required'}
+              {mustFinish && 'Synced'}
+              {mustLink && 'Semi-Synced'}
+              {mustLoad && 'Syncing...'}
+              {mustStop && 'Error'}
+              {mustSync && 'Out of Sync'}
+            </h2>
+            <p className={styles.paragraph}>
+              {mustConnect && 'The balances of one or more accounts are not connected to the financial institution.'}
+              {mustFinish && 'The balances from the financial insitution have been successfully synced.'}
+              {mustLink && 'The balances from the financial insitution need to be linked with your portfolio.'}
+              {mustLoad && 'Retrieving balances from financial institution, one moment please.'}
+              {mustStop && 'Something went wrong syncing the balances, please try again.'}
+              {mustSync && 'The balances of one or more accounts were synced more than one day ago.'}
+            </p>
             <div className={styles.footer}>
               <div className={styles.action}>
                 <Ui.Components.Button
-                  isDisabled={canSync ? isSyncing : false}
+                  isDisabled={mustLoad}
                   isPrimary
                   isSquared
                   onClick={handleOnConfirm}
                 >
-                  {(canSync && isSynced === false) && 'Sync Balances'}
-                  {(canSync && isSynced === null) && 'Link Balances'}
-                  {(canSync && isSynced === true) && 'Done'}
-                  {!canSync && 'Connect'}
+                  {mustConnect && 'Connect'}
+                  {mustFinish && 'Done'}
+                  {mustLink && 'Link Balances'}
+                  {mustLoad && 'Processing...'}
+                  {(mustStop || mustSync) && 'Sync Balances'}
                 </Ui.Components.Button>
               </div>
             </div>

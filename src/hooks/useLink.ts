@@ -26,7 +26,7 @@ export function useLink<T = unknown>() {
 
   return {
     ...context,
-    input: context.data as T | null,
+    data: context.data as T | null,
     instance,
     isActive,
     isBase,

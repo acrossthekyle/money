@@ -1,24 +1,27 @@
 'use client';
 
-import { useLink } from '@/hooks';
+import { useLink, useStore } from '@/hooks';
 import type { DrawerLinkData } from '@/types';
 
 export function useModel() {
   const {
-    input,
+    data,
     instance,
     isActive,
     isBase,
     isDecked,
-    onClose,
   } = useLink<DrawerLinkData>();
 
+  const {
+    holdings,
+  } = useStore();
+
   return {
+    choices: holdings.select(),
     instance,
     isActive,
     isBase,
     isDecked,
-    onClose,
-    unsynced: input?.unsynced || [],
+    unsynced: data?.unsynced || [],
   };
 };
