@@ -31,10 +31,10 @@ export default function Steps({ choices, unsynced }: Props) {
     <>
       <Ui.Drawer.Header>
         <h2 className={styles.header} id="drawer-header">
-          Link Balances
+          Sync Portfolio
         </h2>
         <p className={styles.lid}>
-          Sync {step + 1} of {total + 1}: {unsynced[step].name} {unsynced[step].type} ${currency(unsynced[step].balance, true)}
+          Account {step + 1} of {total + 1}
         </p>
         <Ui.Components.Progress.Container>
           <Ui.Components.Progress.Bar>
@@ -45,6 +45,17 @@ export default function Steps({ choices, unsynced }: Props) {
         </Ui.Components.Progress.Container>
       </Ui.Drawer.Header>
       <Ui.Drawer.Body>
+        <Ui.Form.Header>
+          {unsynced[step].name} {unsynced[step].mask}
+        </Ui.Form.Header>
+        <Ui.Form.Paragraph>
+          <span className={styles.capitalize}>{unsynced[step].institution}</span>
+          {' '}•{' '}
+          ${currency(unsynced[step].balance, true)}
+        </Ui.Form.Paragraph>
+        <Ui.Form.Paragraph>
+          Choose which account/asset this belongs to:
+        </Ui.Form.Paragraph>
         <Ui.Form.Container>
           <Ui.Form.Field>
             <Ui.Form.Options>
@@ -85,8 +96,7 @@ const styles = tw({
 
     sm:text-sm
   `,
-  items: `
-    flex flex-col gap-4
-    mt-1
+  capitalize: `
+    capitalize
   `,
 });

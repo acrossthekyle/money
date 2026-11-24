@@ -30,6 +30,7 @@ export async function POST() {
     const syncable: Syncable[] = response.data.accounts.map((account: AccountBase) => ({
       id: account.account_id,
       name: account.name,
+      institution: response.data.item.institution_name || 'N/A',
       official: account.official_name || '',
       mask: account.mask || '',
       type: account.subtype || 'unknown',

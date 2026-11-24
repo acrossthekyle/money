@@ -295,6 +295,7 @@ export type SyncableSelection = {
 
 export type Syncable = {
   id: string;
+  institution: string;
   name: string;
   official: string;
   mask: string;
