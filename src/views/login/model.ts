@@ -36,7 +36,7 @@ export function useModel() {
     data,
     handleOnPassword,
     handleOnUsername,
-    isBlocked: !data.username || !data.password,
+    isBlocked: (!data.username && !data.password),
     isPending,
   };
 };
