@@ -9,6 +9,7 @@ import { useConnect } from './useConnect';
 
 export function useModel(canSync: boolean) {
   const [canConnect, setCanConnect] = useState(false);
+  const [errorCount, setErrorCount] = useState(0);
   const [hasError, setHasError] = useState(false);
   const [isSynced, setIsSynced] = useState<boolean | null>(false);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -42,6 +43,7 @@ export function useModel(canSync: boolean) {
     const response = await fetch('/sync/balances', { method: 'POST' });
 
     if (!response.ok) {
+      setErrorCount(previous => previous + 1);
       setHasError(true);
       setIsSyncing(false);
 
@@ -50,6 +52,7 @@ export function useModel(canSync: boolean) {
 
     const result = await response.json();
 
+    setErrorCount(0);
     setIsSyncing(false);
 
     if (result.synced.length > 0) {
@@ -91,6 +94,12 @@ export function useModel(canSync: boolean) {
   }, [canConnect, isReady, onClose, handleOnConnect]);
 
   const handleOnConfirm = async () => {
+    if (errorCount > 1) {
+      onClose();
+
+      return;
+    }
+
     if (canSync) {
       if (isSynced === true) {
         onClose();
@@ -113,6 +122,7 @@ export function useModel(canSync: boolean) {
   return {
     handleOnConfirm,
     hasError: hasError || hasConnectionError,
+    hasErroredTooMuch: errorCount > 1,
     instance,
     isActive,
     isBase,

@@ -15,6 +15,7 @@ export default function Drawer({ canSync }: Props) {
   const {
     handleOnConfirm,
     hasError,
+    hasErroredTooMuch,
     instance,
     isActive,
     isBase,
@@ -24,11 +25,12 @@ export default function Drawer({ canSync }: Props) {
   } = useModel(canSync);
 
   const mustConnect = isSynced === false && !isSyncing && !hasError && !canSync;
-  const mustFinish = isSynced === true && !isSyncing && !hasError && canSync;
-  const mustLink = isSynced === null && !isSyncing && !hasError && canSync;
-  const mustLoad = isSynced === false && isSyncing && !hasError && canSync;
-  const mustStop = isSynced === false && !isSyncing && hasError && canSync;
-  const mustSync = isSynced === false && !isSyncing && !hasError && canSync;
+  const mustExit = isSynced === false && !isSyncing && canSync && hasErroredTooMuch;
+  const mustFinish = isSynced === true && !isSyncing && !hasError && canSync && !hasErroredTooMuch;
+  const mustLink = isSynced === null && !isSyncing && !hasError && canSync && !hasErroredTooMuch;
+  const mustLoad = isSynced === false && isSyncing && !hasError && canSync && !hasErroredTooMuch;
+  const mustStop = isSynced === false && !isSyncing && hasError && canSync && !hasErroredTooMuch;
+  const mustSync = isSynced === false && !isSyncing && !hasError && canSync && !hasErroredTooMuch;
 
   return (
     <Ui.Drawer.Container
@@ -42,6 +44,9 @@ export default function Drawer({ canSync }: Props) {
           <Ui.Drawer.Body>
             <div className={styles.symbol}>
               {mustConnect && (
+                <TriangleExclamationPoint className={styles.icon} />
+              )}
+              {mustExit && (
                 <TriangleExclamationPoint className={styles.icon} />
               )}
               {(mustFinish || mustLink) && (
@@ -59,6 +64,7 @@ export default function Drawer({ canSync }: Props) {
             </div>
             <h2 className={styles.header}>
               {mustConnect && 'Connection Required'}
+              {mustExit && 'System Unavailable'}
               {mustFinish && 'Synced'}
               {mustLink && 'Semi-Synced'}
               {mustLoad && 'Syncing...'}
@@ -67,6 +73,7 @@ export default function Drawer({ canSync }: Props) {
             </h2>
             <p className={styles.paragraph}>
               {mustConnect && 'The balances of one or more accounts are not connected to the financial institution.'}
+              {mustExit && 'Something went wrong multiple times, please try again tomorrow.'}
               {mustFinish && 'The balances from the financial insitution have been successfully synced.'}
               {mustLink && 'The balances from the financial insitution need to be linked with your portfolio.'}
               {mustLoad && 'Retrieving balances from financial institution, one moment please.'}
@@ -82,6 +89,7 @@ export default function Drawer({ canSync }: Props) {
                   onClick={handleOnConfirm}
                 >
                   {mustConnect && 'Connect'}
+                  {mustExit && 'Cancel'}
                   {mustFinish && 'Done'}
                   {mustLink && 'Link Balances'}
                   {mustLoad && 'Processing...'}
