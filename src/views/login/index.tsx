@@ -18,6 +18,7 @@ export default function View({ isDemo }: Props) {
     data,
     handleOnPassword,
     handleOnUsername,
+    isBlocked,
     isPending,
   } = useModel();
 
@@ -62,7 +63,11 @@ export default function View({ isDemo }: Props) {
                   onChange={handleOnPassword}
                 />
               </Ui.Form.Field>
-              <Ui.Components.Button isDisabled={isPending} isPrimary isSquared>
+              <Ui.Components.Button
+                isDisabled={isBlocked || isPending}
+                isPrimary
+                isSquared
+              >
                 {isPending ? 'Processing...' : 'Login'}
               </Ui.Components.Button>
               {isDemo && (

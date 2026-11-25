@@ -1,10 +1,15 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { Resend } from 'resend';
 import * as z from 'zod';
 
+import { IS_DEMO } from '@/constants';
 import { db } from '@/db';
+
+import { generate, hash } from './utils';
+
+const resend = new Resend(process.env.RESEND_KEY);
 
 const Form = z.object({
   username: z.string(),
@@ -38,26 +43,33 @@ export async function login(
     return;
   }
 
-  const { holding } = await db.queries.getPinned();
+  const otp = IS_DEMO ? '123456' : generate();
 
-  await db.write('settings', {
-    id: 'timezone',
-    value: validated.data.zone,
-  });
+  await db.writeAll('settings', [
+    {
+      id: 'otp',
+      value: hash(otp),
+    },
+    {
+      id: 'otp_expires',
+      value: new Date(Date.now() + 10 * 60 * 1000).toString(),
+    },
+  ]);
 
-  const cookieStore = await cookies();
+  if (!IS_DEMO) {
+    const { error } = await resend.emails.send({
+      from: process.env.RESEND_FROM!,
+      to: [process.env.MFA_USERNAME!],
+      subject: 'Basalt OTP Code',
+      text: `The verification code is ${otp}. It expires in 10 minutes.`,
+    });
 
-  cookieStore.set('app_session', process.env.AUTH_COOKIE_VALUE!, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: Number(process.env.AUTH_SESSION_TIME || 60 * 60),
-    path: '/',
-  });
+    if (error) {
+      redirect('/login');
 
-  if (holding === null) {
-    redirect('/onboarding');
-  } else {
-    redirect(`/${holding}`);
+      return;
+    }
   }
+
+  redirect('/login/otp');
 };
