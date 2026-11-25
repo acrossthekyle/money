@@ -52,8 +52,10 @@ const styles = tw({
     backdrop:hidden
   `,
   base: `
-    bg-(--background)/32.5
-    backdrop-blur-sm
+    bg-(--background)
+
+    sm:bg-(--background)/32.5
+    sm:backdrop-blur-sm
   `,
   stacked: `
     bg-transparent
