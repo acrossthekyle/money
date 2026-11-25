@@ -6,6 +6,7 @@ import {
   Link,
   Menu,
   Options,
+  Policies,
   Sync,
   Transactions,
 } from '@/drawers';
@@ -16,6 +17,8 @@ export default async function Layout({ children }: React.PropsWithChildren) {
   const { budgets } = await db.tables.budgets();
   const { holdings } = await db.tables.holdings();
   const { pinned, synced, token, zone } = await db.tables.settings();
+
+  const isDemo = process.env.APP_ENVIRONMENT === 'demo';
 
   return (
     <DrawerProvider>
@@ -28,18 +31,21 @@ export default async function Layout({ children }: React.PropsWithChildren) {
             zone,
           }}
         >
-          <SyncProvider synced={synced} zone={zone}>
+          <SyncProvider isDemo={isDemo} synced={synced} zone={zone}>
             <Main>
               {children}
             </Main>
             <Menu />
-            <Options />
+            <Options isDemo={isDemo} />
             <Budget />
             <Holding />
             <Transactions />
             <Toasts />
-            <Sync canSync={!!token} />
+            {!isDemo && (
+              <Sync canSync={!!token} />
+            )}
             <Link />
+            <Policies />
           </SyncProvider>
         </StoreProvider>
       </ToastProvider>

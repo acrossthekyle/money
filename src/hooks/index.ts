@@ -4,6 +4,7 @@ export { useHolding } from './useHolding';
 export { useLink } from './useLink';
 export { useMenu } from './useMenu';
 export { useOptions } from './useOptions';
+export { usePolicies } from './usePolicies';
 export { useSync } from './useSync';
 export { useStore } from './useStore';
 export { useToasts } from './useToasts';

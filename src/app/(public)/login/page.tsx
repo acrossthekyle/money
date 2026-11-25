@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <Suspense fallback={<Ui.Loaders.Spinner />}>
-      <View />
+      <View isDemo={process.env.APP_ENVIRONMENT === 'demo'} />
     </Suspense>
   );
 }

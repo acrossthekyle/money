@@ -9,9 +9,14 @@ import { useModel } from './model';
 import Pin from './pin';
 import Theme from './theme';
 
-export default function Drawer() {
+type Props = {
+  isDemo: boolean;
+};
+
+export default function Drawer({ isDemo }: Props) {
   const {
     handleOnBrowse,
+    handleOnPolicies,
     holding,
     instance,
     isActive,
@@ -48,6 +53,15 @@ export default function Drawer() {
             </Ui.Components.Button>
             <Exit />
             <Delete holding={holding} />
+            {!isDemo && (
+              <button
+                className={styles.policies}
+                onClick={handleOnPolicies}
+                type="button"
+              >
+                View Policies
+              </button>
+            )}
           </Ui.Drawer.Footer>
         </Ui.Drawer.Content>
       </Ui.Drawer.Inner>
@@ -58,5 +72,9 @@ export default function Drawer() {
 const styles = tw({
   list: `
     flex flex-col gap-4
+  `,
+  policies: `
+    flex justify-center
+    text-sm text-current/62.5
   `,
 });

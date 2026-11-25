@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight, Stone } from 'lucide-react';
+import { ArrowUpRight, Beaker, Stone } from 'lucide-react';
 import Link from 'next/link';
 
 import tw from '@/styles';
@@ -8,7 +8,11 @@ import Ui from '@/ui';
 
 import { useModel } from './model';
 
-export default function View() {
+type Props = {
+  isDemo: boolean;
+};
+
+export default function View({ isDemo }: Props) {
   const {
     action,
     data,
@@ -61,8 +65,18 @@ export default function View() {
               <Ui.Components.Button isDisabled={isPending} isPrimary isSquared>
                 {isPending ? 'Processing...' : 'Login'}
               </Ui.Components.Button>
+              {isDemo && (
+                <Ui.Components.Alert.Container isWarning>
+                  <Ui.Components.Alert.Title>
+                    <Beaker /> Demo Mode
+                  </Ui.Components.Alert.Title>
+                  <Ui.Components.Alert.Content>
+                    All data is read-only
+                  </Ui.Components.Alert.Content>
+                </Ui.Components.Alert.Container>
+              )}
               <p className={styles.paragraph}>
-                Don't have an account? <Link
+                Want to see how it works? <Link
                   className={styles.demo}
                   href="https://project-basalt.demos.acrossthekyle.com"
                   target="_blank"
@@ -70,12 +84,20 @@ export default function View() {
                   View demo <ArrowUpRight className={styles.arrow} />
                 </Link>
               </p>
-              <Link
-                className={styles.credit}
-                href="https://acrossthekyle.com"
-              >
-                About the developer
-              </Link>
+              <p className={styles.links}>
+                <Link
+                  className={styles.link}
+                  href="/policies/privacy"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  className={styles.link}
+                  href="https://acrossthekyle.com"
+                >
+                  About the developer
+                </Link>
+              </p>
             </form>
           </Ui.Components.Card.Container>
         </div>
@@ -131,7 +153,10 @@ const styles = tw({
     underline
     underline-offset-4
   `,
-  credit: `
+  links: `
+    flex justify-center gap-6
+  `,
+  link: `
     text-current/82.5 text-center
 
     sm:text-sm

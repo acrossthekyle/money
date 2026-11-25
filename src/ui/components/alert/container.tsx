@@ -27,8 +27,6 @@ export default function Container({
 const styles = tw({
   container: `
     flex flex-col gap-1
-    mt-1
-    mb-4
     border
     rounded-lg
     p-3

@@ -5,11 +5,15 @@ export default function proxy(request: NextRequest) {
   const sessionToken = request.cookies.get('app_session')?.value;
   const { pathname } = request.nextUrl;
 
-  if (pathname === '/login') {
+  if (pathname === '/login' || pathname.includes('/policies')) {
     return NextResponse.next();
   }
 
   if (!sessionToken || sessionToken !== process.env.AUTH_COOKIE_VALUE) {
+    if (pathname.startsWith('/sync')) {
+      return NextResponse.json({}, { status: 401 });
+    }
+
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
