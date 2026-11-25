@@ -142,6 +142,12 @@ export function useModel() {
   };
 
   const handleOnContinue = () => {
+    if (budget?.schedule === 'once') {
+      handleOnSubmit();
+
+      return;
+    }
+
     setStep(steps.length - 2);
   };
 

@@ -3,6 +3,7 @@
 import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 
 import tw, { cs } from '@/styles';
+import type { Dateable } from '@/types';
 import Ui from '@/ui';
 import { currency } from '@/utils';
 
@@ -10,7 +11,7 @@ import type { Filtered } from './types';
 
 type Props = {
   items: Filtered[];
-  onClick: (id: string) => void;
+  onClick: (id: string, dateable: Dateable) => void;
 };
 
 export default function Table({ items, onClick }: Props) {
@@ -20,7 +21,7 @@ export default function Table({ items, onClick }: Props) {
         <Ui.Components.List.Item key={index}>
           <Ui.Components.Card.Content
             isInline
-            onClick={!!item.id ? () => onClick(item.id) : undefined}
+            onClick={!!item.id ? () => onClick(item.id, item.dateable) : undefined}
           >
             <Ui.Components.List.Heading>
               <Ui.Components.List.Title>
