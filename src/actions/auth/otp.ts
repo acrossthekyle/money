@@ -28,33 +28,35 @@ export async function otp(
     return;
   }
 
-  const { otp, otp_expires } = await db.tables.settings();
+  if (!IS_DEMO) {
+    const { otp, otp_expires } = await db.tables.settings();
 
-  if (otp === null || otp_expires === null) {
-    redirect('/login');
+    if (otp === null || otp_expires === null) {
+      redirect('/login');
 
-    return;
-  }
+      return;
+    }
 
-  if (new Date() > new Date(otp_expires)) {
+    if (new Date() > new Date(otp_expires)) {
+      await db.erase('settings', 'otp');
+
+      redirect('/login');
+
+      return;
+    }
+
+    const isValid = verify(validated.data.otp, otp);
+
+    if (!isValid) {
+      await db.erase('settings', 'otp');
+
+      redirect('/login');
+
+      return;
+    }
+
     await db.erase('settings', 'otp');
-
-    redirect('/login');
-
-    return;
   }
-
-  const isValid = IS_DEMO ? true : verify(validated.data.otp, otp);
-
-  if (!isValid) {
-    await db.erase('settings', 'otp');
-
-    redirect('/login');
-
-    return;
-  }
-
-  await db.erase('settings', 'otp');
 
   const cookieStore = await cookies();
 
