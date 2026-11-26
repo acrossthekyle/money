@@ -11,11 +11,7 @@ import Upcoming from './upcoming';
 
 import { useModel } from './model';
 
-type Props = {
-  isDemo: boolean;
-};
-
-export default function View({ isDemo }: Props) {
+export default function View() {
   const { date, days, holding, months } = useModel();
 
   if (date === null || !holding) {
@@ -24,7 +20,7 @@ export default function View({ isDemo }: Props) {
 
   return (
     <div className={styles.container}>
-      <Header days={days} holding={holding} isDemo={isDemo} />
+      <Header days={days} holding={holding} />
       <Calendar date={date} days={days} />
       <Balances days={days} />
       <Flow months={months} />

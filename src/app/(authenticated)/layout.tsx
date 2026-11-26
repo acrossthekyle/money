@@ -30,7 +30,7 @@ export default async function Layout({ children }: React.PropsWithChildren) {
             zone,
           }}
         >
-          <SyncProvider isDemo={IS_DEMO} synced={synced} zone={zone}>
+          <SyncProvider synced={synced} zone={zone}>
             <Main>
               {children}
             </Main>
@@ -40,9 +40,7 @@ export default async function Layout({ children }: React.PropsWithChildren) {
             <Holding />
             <Transactions />
             <Toasts />
-            {!IS_DEMO && (
-              <Sync canSync={!!token} />
-            )}
+            <Sync canSync={!!token} />
             <Link />
             <Policies />
           </SyncProvider>

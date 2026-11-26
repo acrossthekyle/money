@@ -7,21 +7,19 @@ import { useSync } from '@/hooks';
 import { date } from '@/utils';
 
 type Props = {
-  isDemo: boolean;
   synced?: string | null;
   zone: string;
 };
 
 export default function SyncProvider({
   children,
-  isDemo,
   synced,
   zone,
 }: React.PropsWithChildren<Props>) {
   const { onSync } = useSync();
 
   useEffect(() => {
-    if (isDemo || sessionStorage.getItem('sync_triggered') === 'true') {
+    if (sessionStorage.getItem('sync_triggered') === 'true') {
       return;
     }
 

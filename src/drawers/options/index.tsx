@@ -59,7 +59,7 @@ export default function Drawer({ isDemo }: Props) {
                 onClick={handleOnPolicies}
                 type="button"
               >
-                View Policies
+                Access Control, Data Retention & Security Policies
               </button>
             )}
           </Ui.Drawer.Footer>
@@ -75,6 +75,7 @@ const styles = tw({
   `,
   policies: `
     flex justify-center
-    text-sm text-current/62.5
+    mt-1
+    text-sm !text-center text-current/62.5
   `,
 });

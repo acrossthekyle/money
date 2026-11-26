@@ -1,7 +1,5 @@
 'use client';
 
-import { Beaker } from 'lucide-react';
-
 import tw from '@/styles';
 import type { CalendarDay, Holding } from '@/types'
 import Ui from '@/ui';
@@ -14,10 +12,9 @@ import { balance } from './utils';
 type Props = {
   days: CalendarDay[];
   holding: Holding;
-  isDemo: boolean;
 };
 
-export default function Header({ days, holding, isDemo }: Props) {
+export default function Header({ days, holding }: Props) {
   const { handleOnEdit, handleOnMenu, worth } = useModel();
 
   const today = days
@@ -58,16 +55,6 @@ export default function Header({ days, holding, isDemo }: Props) {
       <Ui.Components.Button isGhost onClick={handleOnEdit}>
         Edit {holding.type === 'property' ? 'Asset' : 'Account'}
       </Ui.Components.Button>
-      {isDemo && (
-        <Ui.Components.Alert.Container isWarning>
-          <Ui.Components.Alert.Title>
-            <Beaker /> Demo Mode
-          </Ui.Components.Alert.Title>
-          <Ui.Components.Alert.Content>
-            All data is read-only
-          </Ui.Components.Alert.Content>
-        </Ui.Components.Alert.Container>
-      )}
     </Ui.Components.Card.Container>
   );
 };

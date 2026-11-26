@@ -1,6 +1,6 @@
 'use client';
 
-import { Beaker, Stone } from 'lucide-react';
+import { Stone } from 'lucide-react';
 import Link from 'next/link';
 
 import tw from '@/styles';
@@ -26,7 +26,7 @@ export default function View({ isDemo }: Props) {
       <main className={styles.container}>
         <h1 className={styles.header}>
           <Stone className={styles.stone} />
-          Basalt
+          Basalt {isDemo && '[demo]'}
         </h1>
         <div className={styles.inner}>
           <Ui.Components.Card.Container>
@@ -38,7 +38,6 @@ export default function View({ isDemo }: Props) {
             </h2>
             <form action={action} className={styles.form}>
               <Ui.Form.Field>
-                <Ui.Form.Label htmlFor="code">6 Digit Code</Ui.Form.Label>
                 <Ui.Form.Input
                   id="code"
                   name="code"
@@ -58,16 +57,6 @@ export default function View({ isDemo }: Props) {
               >
                 {isPending ? 'Processing...' : 'Submit'}
               </Ui.Components.Button>
-              {isDemo && (
-                <Ui.Components.Alert.Container isWarning>
-                  <Ui.Components.Alert.Title>
-                    <Beaker /> Demo Mode
-                  </Ui.Components.Alert.Title>
-                  <Ui.Components.Alert.Content>
-                    Use code 123456
-                  </Ui.Components.Alert.Content>
-                </Ui.Components.Alert.Container>
-              )}
               <p className={styles.paragraph}>
                 Back to <Link
                   className={styles.link}

@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight, Beaker, Stone } from 'lucide-react';
+import { ArrowUpRight, Stone } from 'lucide-react';
 import Link from 'next/link';
 
 import tw from '@/styles';
@@ -27,7 +27,7 @@ export default function View({ isDemo }: Props) {
       <main className={styles.container}>
         <h1 className={styles.header}>
           <Stone className={styles.stone} />
-          Basalt
+          Basalt {isDemo && '[demo]'}
         </h1>
         <div className={styles.inner}>
           <Ui.Components.Card.Container>
@@ -70,16 +70,6 @@ export default function View({ isDemo }: Props) {
               >
                 {isPending ? 'Processing...' : 'Login'}
               </Ui.Components.Button>
-              {isDemo && (
-                <Ui.Components.Alert.Container isWarning>
-                  <Ui.Components.Alert.Title>
-                    <Beaker /> Demo Mode
-                  </Ui.Components.Alert.Title>
-                  <Ui.Components.Alert.Content>
-                    All data is read-only
-                  </Ui.Components.Alert.Content>
-                </Ui.Components.Alert.Container>
-              )}
               <p className={styles.paragraph}>
                 Want to see how it works? <Link
                   className={styles.demo}
