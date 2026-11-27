@@ -42,29 +42,17 @@ export default function View() {
           </Heading>
           <Form action={action} ref={form}>
             <Ui.Form.Field>
-              <div className={styles.otp}>
+              <div className={styles.fields}>
                 {digits.map((digit, index) => (
-                  <div className={styles.field} key={index}>
-                    <input
-                      aria-label={`character ${index + 1} of 6`}
-                      autoComplete="one-time-code"
-                      autoCorrect="off"
-                      className={styles.input}
-                      inputMode="numeric"
-                      maxLength={6}
-                      onChange={(event) => handleOnChange(event, index)}
-                      onKeyDown={(event) => handleOnKeyDown(event, index)}
-                      onPaste={(event) => handleOnPaste(event, index)}
-                      pattern="\d{1}"
-                      ref={(element) => {
-                        refs.current[index] = element;
-                      }}
-                      required
-                      spellCheck="false"
-                      type="text"
-                      value={digit}
-                    />
-                  </div>
+                  <Ui.Form.Otp
+                    index={index}
+                    key={index}
+                    onChange={(event) => handleOnChange(event, index)}
+                    onKeyDown={(event) => handleOnKeyDown(event, index)}
+                    onPaste={(event) => handleOnPaste(event, index)}
+                    onRef={(element) => { refs.current[index] = element }}
+                    value={digit}
+                  />
                 ))}
               </div>
             </Ui.Form.Field>
@@ -91,17 +79,8 @@ export default function View() {
 };
 
 const styles = tw({
-  otp: `
+  fields: `
     flex justify-center space-x-2
-  `,
-  field: `
-    w-fit
-  `,
-  input: `
-    h-8 w-8
-    border border-current/12.5
-    text-center
-    rounded-lg
   `,
   back: `
     inline-flex items-center gap-0.5

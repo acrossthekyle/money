@@ -9,6 +9,7 @@ export { default as Input } from './input';
 export { default as Label } from './label';
 export { default as Option } from './option';
 export { default as Options } from './options';
+export { default as Otp } from './otp';
 export { default as OutlineAction } from './outline/action';
 export { default as Outline } from './outline/container';
 export { default as OutlineItem } from './outline/item';

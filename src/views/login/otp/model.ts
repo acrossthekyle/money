@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useRef, useState } from 'react';
+import { useActionState, useRef, useState } from 'react';
 
 import { otp } from '@/actions/auth/otp';
 
@@ -8,7 +8,6 @@ export function useModel() {
   const [digits, setDigits] = useState<string[]>(['', '', '', '', '', '']);
   const refs = useRef<(HTMLInputElement | null)[]>([]);
   const form = useRef<HTMLFormElement | null>(null);
-  const guard = useRef<string>('');
 
   const code = digits.join('');
 
@@ -19,18 +18,6 @@ export function useModel() {
   });
 
   const [, action, isPending] = useActionState(otpable, null);
-
-  useEffect(() => {
-    if (code.length === 6 && !isPending && guard.current !== code) {
-      guard.current = code;
-
-      form.current?.requestSubmit();
-    }
-
-    if (code.length < 6) {
-      guard.current = '';
-    }
-  }, [code, isPending]);
 
   const autoFill = (value: string, startAt: number = 0) => {
     const cleaned = value.replace(/\D/g, '');
@@ -100,6 +87,10 @@ export function useModel() {
     event.preventDefault();
 
     autoFill(event.clipboardData.getData('text'), index);
+
+    setTimeout(() => {
+      form.current?.requestSubmit();
+    }, 300);
   };
 
   return {
