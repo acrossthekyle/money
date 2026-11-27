@@ -4,7 +4,6 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import * as z from 'zod';
 
-import { IS_DEMO } from '@/constants';
 import { db } from '@/db';
 
 import { verify } from './utils';
@@ -28,35 +27,33 @@ export async function otp(
     return;
   }
 
-  if (!IS_DEMO) {
-    const { otp, otp_expires } = await db.tables.settings();
+  const { otp, otp_expires } = await db.tables.settings();
 
-    if (otp === null || otp_expires === null) {
-      redirect('/login');
+  if (otp === null || otp_expires === null) {
+    redirect('/login');
 
-      return;
-    }
-
-    if (new Date() > new Date(otp_expires)) {
-      await db.erase('settings', 'otp');
-
-      redirect('/login');
-
-      return;
-    }
-
-    const isValid = verify(validated.data.otp, otp);
-
-    if (!isValid) {
-      await db.erase('settings', 'otp');
-
-      redirect('/login');
-
-      return;
-    }
-
-    await db.erase('settings', 'otp');
+    return;
   }
+
+  if (new Date() > new Date(otp_expires)) {
+    await db.erase('settings', 'otp');
+
+    redirect('/login');
+
+    return;
+  }
+
+  const isValid = verify(validated.data.otp, otp);
+
+  if (!isValid) {
+    await db.erase('settings', 'otp');
+
+    redirect('/login');
+
+    return;
+  }
+
+  await db.erase('settings', 'otp');
 
   const cookieStore = await cookies();
 

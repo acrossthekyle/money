@@ -9,11 +9,7 @@ import { useModel } from './model';
 import Pin from './pin';
 import Theme from './theme';
 
-type Props = {
-  isDemo: boolean;
-};
-
-export default function Drawer({ isDemo }: Props) {
+export default function Drawer() {
   const {
     handleOnBrowse,
     handleOnPolicies,
@@ -53,15 +49,13 @@ export default function Drawer({ isDemo }: Props) {
             </Ui.Components.Button>
             <Exit />
             <Delete holding={holding} />
-            {!isDemo && (
-              <button
-                className={styles.policies}
-                onClick={handleOnPolicies}
-                type="button"
-              >
-                Access Control, Data Retention & Security Policies
-              </button>
-            )}
+            <button
+              className={styles.policies}
+              onClick={handleOnPolicies}
+              type="button"
+            >
+              Access Control, Data Retention & Security Policies
+            </button>
           </Ui.Drawer.Footer>
         </Ui.Drawer.Content>
       </Ui.Drawer.Inner>

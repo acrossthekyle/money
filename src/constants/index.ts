@@ -16,5 +16,3 @@ export const MONTHS_FULL = [
   'July', 'August', 'September',
   'October', 'November', 'December',
 ];
-
-export const IS_DEMO = process.env.APP_ENVIRONMENT === 'demo';

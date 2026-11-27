@@ -5,6 +5,7 @@ import { Geist, Lobster, Roboto_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { ReactNode, Suspense } from 'react';
 
+import { DrawerProvider } from '@/contexts';
 import { Body, Scripting, Wrapper } from '@/layout';
 
 export const metadata: Metadata = {
@@ -62,14 +63,16 @@ export default function RootLayout({
 }) {
   return (
     <Wrapper className={`${sans.variable} ${mono.variable} ${serif.variable}`}>
-      <Body>
-        <Scripting />
-        <ThemeProvider>
-          <Suspense fallback={null}>
-            {children}
-          </Suspense>
-        </ThemeProvider>
-      </Body>
+      <DrawerProvider>
+        <Body>
+          <Scripting />
+          <ThemeProvider>
+            <Suspense fallback={null}>
+              {children}
+            </Suspense>
+          </ThemeProvider>
+        </Body>
+      </DrawerProvider>
     </Wrapper>
   );
 }

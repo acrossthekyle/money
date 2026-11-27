@@ -3,8 +3,11 @@
 import { useActionState, useState } from 'react';
 
 import { login } from '@/actions/auth/login';
+import { usePrivacy } from '@/hooks';
 
 export function useModel() {
+  const { onPrivacy } = usePrivacy();
+
   const [data, setData] = useState({
     password: '',
     username: '',
@@ -31,10 +34,15 @@ export function useModel() {
     });
   };
 
+  const handleOnPrivacy = () => {
+    onPrivacy();
+  };
+
   return {
     action,
     data,
     handleOnPassword,
+    handleOnPrivacy,
     handleOnUsername,
     isBlocked: (!data.username && !data.password),
     isPending,

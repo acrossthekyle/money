@@ -5,7 +5,7 @@ export default function proxy(request: NextRequest) {
   const sessionToken = request.cookies.get('app_session')?.value;
   const { pathname } = request.nextUrl;
 
-  if (pathname.includes('/login') || pathname.includes('/policies')) {
+  if (pathname.includes('/login')) {
     return NextResponse.next();
   }
 

@@ -1,121 +1,109 @@
 'use client';
 
-import { Stone } from 'lucide-react';
 import Link from 'next/link';
 
 import tw from '@/styles';
 import Ui from '@/ui';
 
+import {
+  Branding,
+  Footer,
+  Form,
+  Heading,
+  Inner,
+  Lid,
+  Main,
+  Title,
+} from '../components';
+
 import { useModel } from './model';
 
-type Props = {
-  isDemo: boolean;
-};
-
-export default function View({ isDemo }: Props) {
+export default function View() {
   const {
     action,
-    data,
-    handleOnCode,
+    digits,
+    form,
+    handleOnChange,
+    handleOnKeyDown,
+    handleOnPaste,
     isBlocked,
     isPending,
+    refs,
   } = useModel();
 
   return (
-    <>
-      <main className={styles.container}>
-        <h1 className={styles.header}>
-          <Stone className={styles.stone} />
-          Basalt {isDemo && '[demo]'}
-        </h1>
-        <div className={styles.inner}>
-          <Ui.Components.Card.Container>
-            <h2 className={styles.heading}>
-              <span className={styles.title}>Account Access</span>
-              <span className={styles.info}>
-                Enter the O.T.P. code below
-              </span>
-            </h2>
-            <form action={action} className={styles.form}>
-              <Ui.Form.Field>
-                <Ui.Form.Input
-                  id="code"
-                  name="code"
-                  placeholder=""
-                  inputMode="decimal"
-                  type="number"
-                  defaultValue={data.otp}
-                  required
-                  disabled={isPending}
-                  onChange={handleOnCode}
-                />
-              </Ui.Form.Field>
-              <Ui.Components.Button
-                isDisabled={isBlocked || isPending}
-                isPrimary
-                isSquared
+    <Main>
+      <Branding />
+      <Inner>
+        <Ui.Components.Card.Container>
+          <Heading>
+            <Title>One-Time Password</Title>
+            <Lid>Enter the verification code</Lid>
+          </Heading>
+          <Form action={action} ref={form}>
+            <Ui.Form.Field>
+              <div className={styles.otp}>
+                {digits.map((digit, index) => (
+                  <div className={styles.field} key={index}>
+                    <input
+                      aria-label={`character ${index + 1} of 6`}
+                      autoComplete="one-time-code"
+                      autoCorrect="off"
+                      className={styles.input}
+                      inputMode="numeric"
+                      maxLength={6}
+                      onChange={(event) => handleOnChange(event, index)}
+                      onKeyDown={(event) => handleOnKeyDown(event, index)}
+                      onPaste={(event) => handleOnPaste(event, index)}
+                      pattern="\d{1}"
+                      ref={(element) => {
+                        refs.current[index] = element;
+                      }}
+                      required
+                      spellCheck="false"
+                      type="text"
+                      value={digit}
+                    />
+                  </div>
+                ))}
+              </div>
+            </Ui.Form.Field>
+            <Ui.Components.Button
+              isDisabled={isBlocked || isPending}
+              isPrimary
+              isSquared
+            >
+              {isPending ? 'Processing...' : 'Submit'}
+            </Ui.Components.Button>
+            <Footer>
+              Back to <Link
+                className={styles.back}
+                href="/login"
               >
-                {isPending ? 'Processing...' : 'Submit'}
-              </Ui.Components.Button>
-              <p className={styles.paragraph}>
-                Back to <Link
-                  className={styles.link}
-                  href="/login"
-                >
-                  Login
-                </Link>
-              </p>
-            </form>
-          </Ui.Components.Card.Container>
-        </div>
-      </main>
-    </>
+                Login
+              </Link>
+            </Footer>
+          </Form>
+        </Ui.Components.Card.Container>
+      </Inner>
+    </Main>
   );
 };
 
 const styles = tw({
-  container: `
-    absolute top-1/2 left-1/2
-    -translate-y-1/2 -translate-x-1/2
-    w-full
-
-    xs:max-w-90
-    xs:px-4
+  otp: `
+    flex justify-center space-x-2
   `,
-  inner: `
-    p-4
-
-    xs:px-0
+  field: `
+    w-fit
   `,
-  header: `
-    flex items-center justify-center gap-2
-    mb-2
-    font-semibold
-  `,
-  stone: `
-    size-4.5
-  `,
-  paragraph: `
-    text-center text-current/62.5
-
-    sm:text-sm
-  `,
-  heading: `
-    flex flex-col gap-1
+  input: `
+    h-8 w-8
+    border border-current/12.5
     text-center
-
-    sm:text-sm
+    rounded-lg
   `,
-  title: `
-    font-semibold
-  `,
-  info: `
-    text-current/62.5
-  `,
-  form: `
-    flex flex-col gap-5
-  `,
-  link: `
+  back: `
     inline-flex items-center gap-0.5
     text-current/82.5
     underline

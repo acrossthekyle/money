@@ -4,5 +4,6 @@ export { default as Link } from './link';
 export { default as Menu } from './menu';
 export { default as Options } from './options';
 export { default as Policies } from './policies';
+export { default as Privacy } from './privacy';
 export { default as Sync } from './sync';
 export { default as Transactions } from './transactions';

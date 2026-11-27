@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation';
 import { Resend } from 'resend';
 import * as z from 'zod';
 
-import { IS_DEMO } from '@/constants';
 import { db } from '@/db';
 
 import { generate, hash } from './utils';
@@ -43,7 +42,7 @@ export async function login(
     return;
   }
 
-  const otp = IS_DEMO ? '123456' : generate();
+  const otp = generate();
 
   await db.writeAll('settings', [
     {
@@ -56,19 +55,17 @@ export async function login(
     },
   ]);
 
-  if (!IS_DEMO) {
-    const { error } = await resend.emails.send({
-      from: process.env.RESEND_FROM!,
-      to: [process.env.MFA_USERNAME!],
-      subject: 'Basalt OTP Code',
-      text: `The verification code is ${otp}. It expires in 10 minutes.`,
-    });
+  const { error } = await resend.emails.send({
+    from: process.env.RESEND_FROM!,
+    to: [process.env.MFA_USERNAME!],
+    subject: 'Basalt OTP Code',
+    text: `The verification code is ${otp}. It expires in 10 minutes.`,
+  });
 
-    if (error) {
-      redirect('/login');
+  if (error) {
+    redirect('/login');
 
-      return;
-    }
+    return;
   }
 
   redirect('/login/otp');
